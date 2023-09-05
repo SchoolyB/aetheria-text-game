@@ -1,7 +1,9 @@
 #include <stdbool.h> 
 #include <stdio.h>
-#include "setPerks.c"
+#include "setPlayerInfo.c"
 #include "Perks.h"
+#include "PlayerInfoAndStats.h"
+
 
 // This function asks the player for their first name and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
 int setPlayerFirstName(){
@@ -196,15 +198,6 @@ int setPlayerAge(){
 
 
 // PLAYER PROFESSION STUFF
-
-
-struct profession {
-  char name[20];
-  char description[100];
-  char perks[1][10];
-  // char flaws[3][10]; maybe add this later
-  } playersProfession;
-
 int setPlayerProfession(){
   bool playerHasProfession;
   bool isSoldier;
@@ -271,6 +264,7 @@ int setPlayerProfession(){
         playerHasProfession = true;
         isFarmer = true;
         setFarmerPerks(); //see setPerks.c for this function and Perks.h for the structs
+        solidifyPlayerInfo();
       }
 
       break;
@@ -281,4 +275,3 @@ int setPlayerProfession(){
 
 }
 
-// TODO somehow add a stat pool to the player upon creation so that certain perks can be added to the player's stats.
