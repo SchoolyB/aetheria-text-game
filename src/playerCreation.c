@@ -254,6 +254,7 @@ int setPlayerProfession(){
           isSoldier = true;
           isMerchant = false;
           isFarmer = false;
+          setPlayerGender();
           break;    
         case 'n':
           setPlayerProfession();
@@ -274,6 +275,7 @@ int setPlayerProfession(){
           isSoldier = false;
           isMerchant = true;
           isFarmer = false;
+          setPlayerGender();
           break;    
         case 'n':
           setPlayerProfession();
@@ -294,6 +296,7 @@ int setPlayerProfession(){
           isSoldier = false;
           isMerchant = false;
           isFarmer = true;
+          setPlayerGender();
           break;    
         case 'n':
           setPlayerProfession();
@@ -311,16 +314,14 @@ int setPlayerProfession(){
 
 // this function sets the gender of the hero if they choose to have one
 int setPlayerGender(){
-  char playerGenderDecision;
-  char confirmPlayerGender;
+  char playerGenderDecision; // this is the initial check to see if the player has a gender or not
+  char confirmPlayerGender; //this is the check to confirm what gender the player choose
   char playerGender;
   bool hasGender;
   bool isMale;
   bool isFemale;
   printf("Do you have a gender? (y/n)\n");
-
   scanf(" %c", &playerGenderDecision);
-
   switch(playerGenderDecision){
     case 'y':
     printf("Tell me your gender (m for male /f for female)\n");
@@ -366,19 +367,27 @@ int setPlayerGender(){
         printf("Please enter a valid choice\n");
         setPlayerGender();
       }
-    break;
+    break; 
     case 'n':
-    printf("Very well then\n");
-    // TODO progress to next function
+    char confirmNoGender; //this is the check to confirm the player doesnt have a gender
+    printf("Are you sure you do not have a gender? (y/n)\n");
+    scanf(" %c", &confirmNoGender);
+      switch(confirmNoGender){
+        case 'y':
+        printf("Very well then\n");
+        hasGender = false;
+        isMale = false;
+        isFemale = false;
+        break;
+        case 'n':
+        setPlayerGender();
+        break;
+        default:
+        printf("Please enter y or n\n");
+        setPlayerGender();        
+      }
     break;
     default:
-    printf("Please enter y or n\n");
+
   }
 }
-
-
-// int setPlayerBaseStats(){
-
-
-
-// }
