@@ -1,8 +1,8 @@
 #include <stdbool.h> 
 #include <stdio.h>
 #include "setPlayerInfo.c"
-#include "Perks.h"
-#include "PlayerInfoAndStats.h"
+#include "./headers/Perks.h"
+#include "./headers/PlayerInfoAndStats.h"
 
 
 // This function asks the player for their first name and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
@@ -52,14 +52,14 @@ int playerDynastyCheck(){
     if(confirmNoGreatHouse == 'y'){
       printf("Very well then. \n");
     }
-    else if(confirmNoGreatHouse == 'n'){
+    else if(confirmNoGreatHouse == 'n'){  
       printf("Ah so you do come from a great house Tell me more about it.\n");
       setPlayerDynastyName();
-  }
+    }
     else{
       printf("Please enter y or n\n");
       playerDynastyCheck();
-  }
+    }
   }
 }
 
@@ -85,7 +85,6 @@ int setPlayerDynastyName(){
     setPlayerDynastyName();
   }
 }
-
 int setPlayerOrigin(){
   char playerOriginDecision;
   char possibleOrigins[5][20]  = {
@@ -265,7 +264,7 @@ int setPlayerProfession(){
         playerHasProfession = true;
         isFarmer = true;
         setFarmerPerks(); //see setPerks.c for this function and Perks.h for the structs
-        solidifyPlayerInfo();
+        // solidifyPlayerInfo();
       }
 
       break;
@@ -273,6 +272,4 @@ int setPlayerProfession(){
       printf("Please enter a valid choice\n");
       setPlayerProfession();
   }
-
 }
-

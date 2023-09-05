@@ -15,6 +15,4 @@ struct perk_3{
   char name[10];
   char description[100];
 };
-
-
 #endif

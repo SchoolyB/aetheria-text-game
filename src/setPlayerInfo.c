@@ -1,6 +1,6 @@
 #include <string.h>
-#include "PlayerInfoAndStats.h"
-#include "Perks.h"
+#include "./headers/PlayerInfoAndStats.h"
+#include "./headers/Perks.h"
 
 int solidifyPlayerInfo(){
   struct player_info first_name;
@@ -18,10 +18,8 @@ int solidifyPlayerInfo(){
   struct player_info is_soldier;
   struct player_info is_merchant;
   struct player_info is_farmer;
-strcpy(first_name.player_first_name, "First Name");
-printf("%s\n", first_name.player_first_name);
+strcpy(first_name.player_first_name, "first_name");
 }
-
 int setSoldierPerks(){
   struct perk_1 soldier_perk_1;
   struct perk_2 soldier_perk_2;

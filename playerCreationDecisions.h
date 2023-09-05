@@ -1,2 +1,0 @@
-int playerFirstNameDecision();
-int playerDynastyCheck(); 
