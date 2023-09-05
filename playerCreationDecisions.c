@@ -189,7 +189,8 @@ int setPlayerAge(){
     average_age_player = false;
     old_age_player = true;
   }
-  else{
+  // this else if prevents a hero from being too young or too old
+  else if(playerAge < 17 || playerAge > 400){
     printf("Please enter a valid age.\n");
     setPlayerAge();
   }
