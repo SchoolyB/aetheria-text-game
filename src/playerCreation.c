@@ -156,36 +156,66 @@ int setPlayerAge(){
   printf("How old are you? (21/30/50)\n");
   scanf(" %d", &playerAge);
   printf("You are %d years old. Is this correct? (y/n)\n", playerAge);
-
   scanf(" %c", &confirmPlayerAge);
-  if(confirmPlayerAge == 'n'){
-    setPlayerAge();
-  }
-  else if(confirmPlayerAge == 'y'){
-    playerHasAge = true;
-    printf("%d\n" , playerAge);
-    setPlayerProfession();
-  }
-  else{
-    printf("Please enter y or n\n");
-    setPlayerAge();
-  }
+  
   switch(playerAge){
+    // In the even that the player decides to be 21 years old
     case 21:
-      playerAgeIs21 = true;
-      playerAgeIs30 = false;
-      playerAgeIs50 = false;
+      switch(confirmPlayerAge){
+        case 'y':
+          printf("Very well then\n");
+          playerHasAge = true;
+          playerAgeIs21 = true;
+          playerAgeIs30 = false;
+          playerAgeIs50 = false;
+          break;    
+        case 'n':
+          setPlayerAge();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerAge();
+        }
       break;
+    // In the event that the player decides to be 30 yrs old 
     case 30:
-      playerAgeIs21 = false;
-      playerAgeIs30 = true;
-      playerAgeIs50 = false;
+      switch(confirmPlayerAge){
+        case 'y':
+          printf("Very well then\n");
+          playerHasAge = true;
+          playerAgeIs21 = false;
+          playerAgeIs30 = true;
+          playerAgeIs50 = false;
+          break;    
+        case 'n':
+          setPlayerAge();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerAge();
+        }
       break;
+    // In the event that the player decides to be 50 yrs old
     case 50:
-      playerAgeIs21 = false;
-      playerAgeIs30 = false;
-      playerAgeIs50 = true;
-      break;  
+      switch(confirmPlayerAge){
+        case 'y':
+          printf("Very well then\n");
+          playerHasAge = true;
+          playerAgeIs21 = false;
+          playerAgeIs30 = false;
+          playerAgeIs50 = true;
+          break;    
+        case 'n':
+          setPlayerAge();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerAge();
+        }
+      break;
+      default:
+      printf("Please enter a valid choice\n");
+      setPlayerAge();
   }
 }
 
