@@ -11,9 +11,9 @@ struct player_info{
   bool player_has_dynasty;
   bool player_has_origin;
   bool player_has_age;
-  bool player_is_young_age;
-  bool player_is_average_age;
-  bool player_is_old_age;
+  bool player_is_21;
+  bool player_is_30;
+  bool player_is_50;
   bool player_has_profession;
   bool player_is_soldier;
   bool player_is_merchant;

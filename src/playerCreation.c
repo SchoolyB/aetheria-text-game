@@ -8,83 +8,81 @@
 // This function asks the player for their first name and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
 int setPlayerFirstName(){
     bool playerHasFirstName; //does the player have a first name? true or false 
-    char playerFirstName[20];
+    char playerFirstName[12];
     char confirmPlayerFirstName;
     printf("What is your first name?\n");
     scanf("%s", playerFirstName);
     printf("Your first name is %s. Is this correct? (y/n)\n", playerFirstName);
     scanf(" %c", &confirmPlayerFirstName);
 
-    if (confirmPlayerFirstName == 'n'){
-      setPlayerFirstName(); // If the player does not confirm their name, the function is called again.
-      playerHasFirstName = false;
-    }
-
-    else if (confirmPlayerFirstName == 'y'){
-      printf("Welcome, %s\n", playerFirstName);
-      playerHasFirstName = true;
-    }
-
-    else{
-      printf("Please enter y or n\n");
-      setPlayerFirstName();
+    switch(confirmPlayerFirstName){
+      case 'y':
+        playerHasFirstName = true;
+        printf("Very well then %s\n", playerFirstName);
+        break;
+      case 'n':
+        playerHasFirstName = false;
+        setPlayerFirstName();
+        break;
+        default:
+        printf("Please enter y or n\n");
+        setPlayerFirstName();
     }
     return 0;
 };
 
 // This function asks the player if they come from a great house. If they do, they are asked to enter their house name. If they do not, they are asked to confirm that they do not come from a great house. If they do not confirm that they do not come from a great house, they are asked to enter their house name. If they do confirm that they do not come from a great house, the function ends.
-int playerDynastyCheck(){
+int playerDynastyCheck(playerFirstName){
   bool playerHasDynasty; //does player come from a great house? true or false this is going to be a stat 
   char playerDynastyDecision;  //whether or not the player comes from a great house
+  char confirmNoGreatHouse;
   printf("Do you come from a great house? (y/n)\n");
   scanf(" %c", &playerDynastyDecision);
-  if (playerDynastyDecision == 'y'){
-    playerHasDynasty = true;
+
+switch(playerDynastyDecision){
+  case 'y':
+    bool playerHasDynasty;
+    char confirmPlayerDynastyName; //whether or not the player confirms their house name
+    char playerDynastyName[20]; //the name of the player's house
     printf("Ah so you do come from a great house Tell me more about it.\n");
-    setPlayerDynastyName();  
-  }
-  else if(playerDynastyDecision == 'n'){
-    char confirmNoGreatHouse;
-    playerHasDynasty = false;
-    printf("Are you sure that you do not come from a great house? \n");
+    printf("Please tell me your house's name. \n");
+    scanf("%s", playerDynastyName); //player enters their house name
+    printf("So you hail from house %s. Is this correct? (y/n)\n", playerDynastyName);
+    scanf(" %c", &confirmPlayerDynastyName); //player confirms their house name
+    
+    switch(confirmPlayerDynastyName){
+      case 'y':
+        printf("Very well then. \n");
+        playerHasDynasty = true;
+        setPlayerOrigin();
+        break;
+      case 'n':
+        playerDynastyCheck();
+        break;
+        default:
+        printf("Please enter y or n\n");
+        playerDynastyCheck();
+    }
+    break;
+  case 'n':
+    printf("Are you sure that you do not come from a great house? (y/n) \n");
     scanf(" %c", &confirmNoGreatHouse);
-
-    if(confirmNoGreatHouse == 'y'){
-      printf("Very well then. \n");
-    }
-    else if(confirmNoGreatHouse == 'n'){  
-      printf("Ah so you do come from a great house Tell me more about it.\n");
-      setPlayerDynastyName();
-    }
-    else{
-      printf("Please enter y or n\n");
-      playerDynastyCheck();
-    }
-  }
-}
-
-// this function asks the player to enter their house name and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
-int setPlayerDynastyName(){
-  char playerDynastyName[20]; //the name of the player's house
-  char confirmPlayerDynastyName; //whether or not the player confirms their house name
-
-  printf("Please tell me your house's name. \n");
-  scanf("%s", playerDynastyName); //player enters their house name
-  printf("Your house name is %s. Is this correct? (y/n)\n", playerDynastyName);
-  scanf(" %c", &confirmPlayerDynastyName); //player confirms their house name
-
-  if (confirmPlayerDynastyName == 'y'){
-    printf("Very well then. \n");
-    setPlayerOrigin();
-  }
-  else if(confirmPlayerDynastyName == 'n'){
-    setPlayerDynastyName();
-  }
-  else{
+      if(confirmNoGreatHouse == 'y'){
+        printf("Very well then\n");
+        playerHasDynasty = false;
+        setPlayerOrigin();
+        }
+      else if(confirmNoGreatHouse == 'n'){  
+        playerDynastyCheck();
+      }
+    break;
+    default:
     printf("Please enter y or n\n");
-    setPlayerDynastyName();
+    playerDynastyCheck();
   }
 }
+
+// This function asks the player for their continent of origin and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
 int setPlayerOrigin(){
   char playerOriginDecision;
   char possibleOrigins[5][20]  = {
@@ -150,52 +148,46 @@ else if (confirmPlayerOriginDecision == 'y'){
 int setPlayerAge(){
   bool playerHasAge; 
   char confirmPlayerAge;
-  int playerAge;
-  bool young_age_player; 
-  bool average_age_player;
-  bool old_age_player;
+  int  playerAge;
+  bool playerAgeIs21; 
+  bool playerAgeIs30;
+  bool playerAgeIs50;
 
-  printf("How old are you?\n");
+  printf("How old are you? (21/30/50)\n");
   scanf(" %d", &playerAge);
   printf("You are %d years old. Is this correct? (y/n)\n", playerAge);
-  
+
   scanf(" %c", &confirmPlayerAge);
   if(confirmPlayerAge == 'n'){
     setPlayerAge();
   }
   else if(confirmPlayerAge == 'y'){
     playerHasAge = true;
+    printf("%d\n" , playerAge);
     setPlayerProfession();
   }
   else{
     printf("Please enter y or n\n");
     setPlayerAge();
   }
-  
-  
-  if(playerAge >= 18 && playerAge <= 25){
-    young_age_player = true;
-    average_age_player = false;
-    old_age_player = false;
+  switch(playerAge){
+    case 21:
+      playerAgeIs21 = true;
+      playerAgeIs30 = false;
+      playerAgeIs50 = false;
+      break;
+    case 30:
+      playerAgeIs21 = false;
+      playerAgeIs30 = true;
+      playerAgeIs50 = false;
+      break;
+    case 50:
+      playerAgeIs21 = false;
+      playerAgeIs30 = false;
+      playerAgeIs50 = true;
+      break;  
   }
-  else if(playerAge >= 26 && playerAge <= 40){
-    young_age_player = false;
-    average_age_player = true;
-    old_age_player = false;
-  }
-  else if(playerAge >= 41 && playerAge <= 60){
-    young_age_player = false;
-    average_age_player = false;
-    old_age_player = true;
-  }
-  // this else if prevents a hero from being too young or too old
-  else if(playerAge < 17 || playerAge > 400){
-    printf("Please enter a valid age.\n");
-    setPlayerAge();
-  }
-  
 }
-
 
 // PLAYER PROFESSION STUFF
 int setPlayerProfession(){
@@ -211,9 +203,13 @@ int setPlayerProfession(){
     "C: Farmer"
   };
 
-  printf("What is your profession?\n");
-  scanf(" %c", &playersProfession);
 
+  // TODO FIGURE OUT HOW TO MAKE THIS PRINT OUT IN A COLUMN
+  printf("What is your profession?\n");
+  for (int i = 0; i < 3; i++){ // prints out the possible origins for the player to choose from
+    printf("%s\n ", starterProfession[i]);
+  }
+  scanf(" %c", &playersProfession);
   switch(playersProfession){
     case 'a':
       printf("You are a soldier\n");

@@ -8,7 +8,7 @@ printf("Welcome to the World of Haelyos\n");
 
 setPlayerFirstName();
 playerDynastyCheck();
-// solidifyPlayerInfo();
+solidifyPlayerInfo();
 
 
 

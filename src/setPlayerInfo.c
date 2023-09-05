@@ -11,14 +11,15 @@ int solidifyPlayerInfo(){
   struct player_info has_dynasty;
   struct player_info has_origin;
   struct player_info has_age;
-  struct player_info is_young_age; 
-  struct player_info is_average_age;
-  struct player_info is_old_age;
+  struct player_info is_21; 
+  struct player_info is_30;
+  struct player_info is_50;
   struct player_info has_profession;
   struct player_info is_soldier;
   struct player_info is_merchant;
   struct player_info is_farmer;
 strcpy(first_name.player_first_name, "first_name");
+printf("%s\n", first_name.player_first_name);
 }
 int setSoldierPerks(){
   struct perk_1 soldier_perk_1;
