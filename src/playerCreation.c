@@ -121,27 +121,26 @@ int setPlayerOrigin(){
     default:
     printf("Please enter a valid choice\n");
     setPlayerOrigin();
- }
-printf("Is this correct? (y/n)\n");
-confirmPlayerOrigin();
+  }
+  printf("Is this correct? (y/n)\n");
+  confirmPlayerOrigin();
 }
 
 // This function confirms that the player has entered their continent of origin correctly. If they have not, the function is called again. If they have, the function ends.
 int confirmPlayerOrigin(){
-bool playerHasOrigin; //does the player come from a continent? true or false
-char confirmPlayerOriginDecision;
+  bool playerHasOrigin; //does the player come from a continent? true or false
+  char confirmPlayerOriginDecision;
 
-scanf(" %c", &confirmPlayerOriginDecision);
-if (confirmPlayerOriginDecision == 'n'){
-  playerHasOrigin = false;
-  setPlayerOrigin();
-}
-else if (confirmPlayerOriginDecision == 'y'){
-  playerHasOrigin = true;
-  printf("Very well then.\n");
-  setPlayerAge();
-  // printf("tests");
-}
+  scanf(" %c", &confirmPlayerOriginDecision);
+  if (confirmPlayerOriginDecision == 'n'){
+    playerHasOrigin = false;
+    setPlayerOrigin();
+  }
+  else if (confirmPlayerOriginDecision == 'y'){
+    playerHasOrigin = true;
+    printf("Very well then.\n");
+    setPlayerAge();
+  }
 }
 
 // This function asks the player for their age and confirms that they have entered it correctly. If they have not, the function is called again. If they have, the function ends.
@@ -168,6 +167,7 @@ int setPlayerAge(){
           playerAgeIs21 = true;
           playerAgeIs30 = false;
           playerAgeIs50 = false;
+          setPlayerProfession();
           break;    
         case 'n':
           setPlayerAge();
@@ -186,6 +186,7 @@ int setPlayerAge(){
           playerAgeIs21 = false;
           playerAgeIs30 = true;
           playerAgeIs50 = false;
+          setPlayerProfession();
           break;    
         case 'n':
           setPlayerAge();
@@ -204,6 +205,7 @@ int setPlayerAge(){
           playerAgeIs21 = false;
           playerAgeIs30 = false;
           playerAgeIs50 = true;
+          setPlayerProfession();
           break;    
         case 'n':
           setPlayerAge();
@@ -217,6 +219,7 @@ int setPlayerAge(){
       printf("Please enter a valid choice\n");
       setPlayerAge();
   }
+
 }
 
 // PLAYER PROFESSION STUFF
@@ -227,75 +230,155 @@ int setPlayerProfession(){
   bool isFarmer;
   char playersProfession;
   char confirmPlayerProfession;
-  char starterProfession[3][10] = {
+  char starterProfession[3][20] = {
     "A: Soldier",
     "B: Merchant",
     "C: Farmer"
   };
 
-
-  // TODO FIGURE OUT HOW TO MAKE THIS PRINT OUT IN A COLUMN
   printf("What is your profession?\n");
   for (int i = 0; i < 3; i++){ // prints out the possible origins for the player to choose from
-    printf("%s\n ", starterProfession[i]);
+    printf("%s\n", starterProfession[i]);
   }
+
   scanf(" %c", &playersProfession);
   switch(playersProfession){
     case 'a':
       printf("You are a soldier\n");
       printf("Is this correct? (y/n)\n");
-
       scanf(" %c", &confirmPlayerProfession);
-
-      if(confirmPlayerProfession == 'n'){
-        setPlayerProfession();
-      }
-      else if(confirmPlayerProfession == 'y'){
-        playerHasProfession = true;
-        isSoldier = true;
-        setSoldierPerks(); //see setPerks.c for this function and Perks.h for the structs
-      }
-      break;
-
+      switch(confirmPlayerProfession){
+        case 'y':
+          printf("Very well then\n");
+          playerHasProfession = true;
+          isSoldier = true;
+          isMerchant = false;
+          isFarmer = false;
+          break;    
+        case 'n':
+          setPlayerProfession();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerProfession();
+        }
+    break;
     case 'b':
       printf("You are a merchant\n");
       printf("Is this correct? (y/n)\n");
-
       scanf(" %c", &confirmPlayerProfession);
-
-      if(confirmPlayerProfession == 'n'){
-        setPlayerProfession();
-      }
-      else if(confirmPlayerProfession == 'y'){
-        playerHasProfession = true;
-        isMerchant = true;
-        setMerchantPerks(); //see setPerks.c for this function and Perks.h for the structs
-      }
-      else{
-        printf("Please enter y or n\n");
-        setPlayerProfession();
-      }
-      break;
-
+      switch(confirmPlayerProfession){
+        case 'y':
+          printf("Very well then\n");
+          playerHasProfession = true;
+          isSoldier = false;
+          isMerchant = true;
+          isFarmer = false;
+          break;    
+        case 'n':
+          setPlayerProfession();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerProfession();
+        }
+    break;
     case 'c':
       printf("You are a farmer\n");
       printf("Is this correct? (y/n)\n");
-
       scanf(" %c", &confirmPlayerProfession);
-
-      if(confirmPlayerProfession == 'n'){
-        setPlayerProfession();
-      }
-      else if(confirmPlayerProfession == 'y'){
-        playerHasProfession = true;
-        isFarmer = true;
-        setFarmerPerks(); //see setPerks.c for this function and Perks.h for the structs
-        // solidifyPlayerInfo();
-      }
-
-      break;
+      switch(confirmPlayerProfession){
+        case 'y':
+          printf("Very well then\n");
+          playerHasProfession = true;
+          isSoldier = false;
+          isMerchant = false;
+          isFarmer = true;
+          break;    
+        case 'n':
+          setPlayerProfession();
+          break;
+          default:
+          printf("Please enter y or n\n");
+          setPlayerProfession();
+        }
+    break;
     default:
-      printf("Please enter a valid choice\n");
-      setPlayerProfession();
+      printf("THIS IS PRINTING OUT FOR SOME REASON\n");
+      // setPlayerProfession();
   }
 }
+
+// this function sets the gender of the hero if they choose to have one
+int setPlayerGender(){
+  char playerGenderDecision;
+  char confirmPlayerGender;
+  char playerGender;
+  bool hasGender;
+  bool isMale;
+  bool isFemale;
+  printf("Do you have a gender? (y/n)\n");
+
+  scanf(" %c", &playerGenderDecision);
+
+  switch(playerGenderDecision){
+    case 'y':
+    printf("Tell me your gender (m for male /f for female)\n");
+    scanf(" %c", &playerGender);
+      switch(playerGender){
+        case 'm':
+        printf("You are a male is that correct?\n");
+        scanf(" %c", &confirmPlayerGender);
+          switch(confirmPlayerGender){
+            case 'y':
+            printf("Very well then\n");
+            hasGender = true;
+            isMale = true;
+            isFemale = false;
+            break;
+            case 'n':
+            setPlayerGender();
+            break;
+            default:
+            printf("Please enter y or n\n");
+            setPlayerGender();
+          }
+        break;
+        case 'f':
+        printf("you are a female is that correct?\n");
+        scanf(" %c", &confirmPlayerGender);
+          switch(confirmPlayerGender){
+            case 'y':
+            printf("Very well then\n");
+            hasGender = true;
+            isMale = false;
+            isFemale = true;
+            break;
+            case 'n':
+            setPlayerGender();
+            break;
+            default:
+            printf("Please enter y or n\n");
+            setPlayerGender();
+          }
+        break;
+        default:
+        printf("Please enter a valid choice\n");
+        setPlayerGender();
+      }
+    break;
+    case 'n':
+    printf("Very well then\n");
+    // TODO progress to next function
+    break;
+    default:
+    printf("Please enter y or n\n");
+  }
+}
+
+
+// int setPlayerBaseStats(){
+
+
+
+// }
