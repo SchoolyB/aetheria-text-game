@@ -11,9 +11,9 @@ char hero_gender[10];
 char hero_homeland[10];
 
 int main() {
-    // getFirstName();
-    // dynastyNameCheck();
-getHeroHomeland();  
+    getFirstName();
+    dynastyNameCheck();
+
     return 0;
 }
 
@@ -23,6 +23,7 @@ int getFirstName() {
     fgets(firstNameInput, sizeof(firstNameInput), stdin);
 
     // Remove the trailing newline character from the input
+    // !This step is important and must be had for every function that uses fgets to store data
     size_t len = strlen(firstNameInput);
     if (len > 0 && firstNameInput[len - 1] == '\n') {
         firstNameInput[len - 1] = '\0';
@@ -35,6 +36,7 @@ int getFirstName() {
 
 int dynastyNameCheck() {
     char dynastyNameDecision[10];
+    char confirmDynastyDecision[10];
     printf("Do you have a dynasty name? (y/n): ");
     fgets(dynastyNameDecision, sizeof(dynastyNameDecision), stdin);
 
@@ -43,21 +45,51 @@ int dynastyNameCheck() {
     if (len > 0 && dynastyNameDecision[len - 1] == '\n') {
         dynastyNameDecision[len - 1] = '\0';
     }
-
-// TODO need to format this to not be so ugly
-    // Compare dynastyNameDecision with strings using strcmp
-    if (strcmp(dynastyNameDecision, "y") == 0 || strcmp(dynastyNameDecision, "Y") == 0 ||
-        strcmp(dynastyNameDecision, "yes") == 0 || strcmp(dynastyNameDecision, "Yes") == 0) {
-        printf("Pass\n");
-        getDynastyName();
-
-    } else if (strcmp(dynastyNameDecision, "n") == 0 || strcmp(dynastyNameDecision, "N") == 0 ||
-               strcmp(dynastyNameDecision, "no") == 0 || strcmp(dynastyNameDecision, "No") == 0) {
-        printf("Fail\n");
-    } else {
-        printf("Error\n");
+  // Compare dynastyNameDecision with strings using strcmp
+  if (strcmp(dynastyNameDecision, "y") == 0 ||
+    strcmp(dynastyNameDecision, "Y") == 0 ||
+    strcmp(dynastyNameDecision, "yes") == 0||
+    strcmp(dynastyNameDecision, "Yes") == 0){
+    getDynastyName();
     }
-    return 0;
+   else if (strcmp(dynastyNameDecision, "n") == 0 ||
+    strcmp(dynastyNameDecision, "N") == 0 ||
+    strcmp(dynastyNameDecision, "no") == 0 ||
+    strcmp(dynastyNameDecision, "No") == 0){
+    sleep(1);
+    printf("You have chosen not to have a dynasty name\n");
+    sleep(1);
+    printf("Are you sure you do not come from a great dynasty? (y/n): ");
+    fgets(confirmDynastyDecision, sizeof(confirmDynastyDecision), stdin);
+
+    // Remove the trailing newline character from the input
+    size_t len = strlen(confirmDynastyDecision);
+    if (len > 0 && confirmDynastyDecision[len - 1] == '\n') {
+        confirmDynastyDecision[len - 1] = '\0';
+    }
+    if (strcmp(confirmDynastyDecision, "y") == 0 ||
+    strcmp(confirmDynastyDecision, "Y") == 0 ||
+    strcmp(confirmDynastyDecision, "yes") == 0 ||
+    strcmp(confirmDynastyDecision, "Yes") == 0){
+      printf("You have chosen not to have a dynasty name\n");
+      getHeroGender();
+    }
+    else if (strcmp(confirmDynastyDecision, "n") == 0 ||
+    strcmp(confirmDynastyDecision, "N") == 0 ||
+    strcmp(confirmDynastyDecision, "no") == 0 ||
+    strcmp(confirmDynastyDecision, "No") == 0){
+      getDynastyName();
+    }
+    else{
+      printf("Please make a valid decision \n");
+      dynastyNameCheck();
+    }
+
+
+  } else {
+      printf("Error\n");
+  }
+  return 0;
 }
 
 // This function is what gets the dynasty name if the player has chooses to have one
@@ -89,14 +121,17 @@ int confirmDynastyName(){
     if (len > 0 && confirmDynastyNameInput[len - 1] == '\n') {
         confirmDynastyNameInput[len - 1] = '\0';
     }
-  // TODO need to format this to not be so ugly
-    if (strcmp(confirmDynastyNameInput, "y") == 0 || strcmp(confirmDynastyNameInput, "Y") == 0 ||
-        strcmp(confirmDynastyNameInput, "yes") == 0 || strcmp(confirmDynastyNameInput, "Yes") == 0) {
-        heroGenderCheck();
+    if (strcmp(confirmDynastyNameInput, "y") == 0 ||
+      strcmp(confirmDynastyNameInput, "Y") == 0 ||
+      strcmp(confirmDynastyNameInput, "yes") == 0 ||
+      strcmp(confirmDynastyNameInput, "Yes") == 0){
+      heroGenderCheck();
         printf("Pass\n");
     
-    } else if (strcmp(confirmDynastyNameInput, "n") == 0 || strcmp(confirmDynastyNameInput, "N") == 0 ||
-               strcmp(confirmDynastyNameInput, "no") == 0 || strcmp(confirmDynastyNameInput, "No") == 0) {
+    } else if (strcmp(confirmDynastyNameInput, "n") == 0 ||
+      strcmp(confirmDynastyNameInput, "N") == 0 ||
+      strcmp(confirmDynastyNameInput, "no") == 0 ||
+      strcmp(confirmDynastyNameInput, "No") == 0){
         printf("Fail\n");
         getDynastyName();
     } else {
@@ -127,12 +162,12 @@ int heroGenderCheck(){
       strcmp(heroGenderDecision, "no") == 0 ||
       strcmp(heroGenderDecision, "No") == 0) {
         printf("Faileroni\n");
+        getHeroHomeland();
     } else {
         printf("Error\n");
     }
     return 0;
 }
-
 
 // Rather than specifying male or female I figure it would be easier to just let the player choose whatever they want
 // But still preform a check for male or female.
@@ -173,14 +208,13 @@ int getHeroGender(){
       }
 }
 
-
 int confirmHeroGender(){
   char confirmHeroGenderInput[10];
   printf("Is this correct? (y/n): ");
   fgets(confirmHeroGenderInput, sizeof(confirmHeroGenderInput), stdin);
 
 
-size_t len = strlen(confirmHeroGenderInput);
+  size_t len = strlen(confirmHeroGenderInput);
   if(len > 0 && confirmHeroGenderInput[len - 1] == '\n'){
     confirmHeroGenderInput[len - 1] = '\0';
   }
@@ -190,6 +224,7 @@ size_t len = strlen(confirmHeroGenderInput);
     strcmp(confirmHeroGenderInput, "yes") == 0 ||
     strcmp(confirmHeroGenderInput, "Yes") == 0){
         printf("This one passed too\n");
+        getHeroHomeland();
 
     } else if (strcmp(confirmHeroGenderInput, "n") == 0 ||
       strcmp(confirmHeroGenderInput, "N") == 0 || 
@@ -204,6 +239,198 @@ size_t len = strlen(confirmHeroGenderInput);
 }
 // This is function is huge. TODO figure out how to make it smaller
 int getHeroHomeland(){
+  char heroOriginDecision[10];
+  char heroOriginInput[10];
+  char possibleOrigins[5][15] = {
+  "1: Empyrea",
+  "2: Wesward",
+  "3: Magdalar",
+  "4: Ashvadan",
+  "5: Nadafia"
+  };
+
+  printf("Which of these Countries do you hail from? \n");
+  for (int i = 0; i < 5; i++){
+  printf("%s \n", possibleOrigins[i]);
+  }
+  fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
+
+  // Remove the trailing newline character from the input
+  size_t len = strlen(heroOriginInput);
+  if(len > 0 && heroOriginInput[len - 1] == '\n'){
+    heroOriginInput[len - 1] = '\0';
+    }
+
+  if(strcmp(heroOriginInput, "1") == 0 ||
+    strcmp(heroOriginInput, "Empyrea") == 0 ||
+    strcmp(heroOriginInput, "empyrea") == 0 ||
+    strcmp(heroOriginInput, "EMPYERA") == 0){
+      showEmpyreaDescription();
+      printf("Is Empyrea the country you hail from? (y/n):\n");
+
+      fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroOriginDecision);
+      if(len > 0 && heroOriginDecision[len - 1] == '\n'){
+        heroOriginDecision[len - 1] = '\0';
+      }
+        if(strcmp(heroOriginDecision, "y") == 0 ||
+        strcmp(heroOriginDecision, "Y") == 0 ||
+        strcmp(heroOriginDecision, "yes") == 0 ||
+        strcmp(heroOriginDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Empyrea");
+          printf("So you are from %s \n", hero_homeland);
+        }
+        else if(strcmp(heroOriginDecision, "n") == 0 ||
+        strcmp(heroOriginDecision, "N") == 0 ||
+        strcmp(heroOriginDecision, "no") == 0 ||
+        strcmp(heroOriginDecision, "No") == 0){
+          getHeroHomeland();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomeland();
+        }
+      
+      }
+    else if(strcmp(heroOriginInput, "2") == 0 ||
+    strcmp(heroOriginInput, "Wesward") == 0 ||
+    strcmp(heroOriginInput, "wesward") == 0 ||
+    strcmp(heroOriginInput, "WESTWARD") == 0){
+      showWeswardDescription();
+      printf("Is Wesward the country you hail from? (y/n):\n");
+      
+      fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroOriginDecision);
+      if(len > 0 && heroOriginDecision[len - 1] == '\n'){
+        heroOriginDecision[len - 1] = '\0';
+      }
+        if(strcmp(heroOriginDecision, "y") == 0 ||
+        strcmp(heroOriginDecision, "Y") == 0 ||
+        strcmp(heroOriginDecision, "yes") == 0 ||
+        strcmp(heroOriginDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Wesward");
+          printf("So you are from %s \n", hero_homeland);
+        }
+        else if(strcmp(heroOriginDecision, "n") == 0 ||
+        strcmp(heroOriginDecision, "N") == 0 ||
+        strcmp(heroOriginDecision, "no") == 0 ||
+        strcmp(heroOriginDecision, "No") == 0){
+          getHeroHomeland();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomeland();
+        }
+    }
+    else if(strcmp(heroOriginInput, "3") == 0 ||
+    strcmp(heroOriginInput, "Magdalar") == 0 ||
+    strcmp(heroOriginInput, "magdalar") == 0 ||
+    strcmp(heroOriginInput, "Magdalar") == 0){
+      showMagdalarDescription();
+      printf("Is Magdalar the country you hail from? (y/n): \n");
+      
+      fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroOriginDecision);
+      if(len > 0 && heroOriginDecision[len - 1] == '\n'){
+        heroOriginDecision[len - 1] = '\0';
+      }
+        if(strcmp(heroOriginDecision, "y") == 0 ||
+        strcmp(heroOriginDecision, "Y") == 0 ||
+        strcmp(heroOriginDecision, "yes") == 0 ||
+        strcmp(heroOriginDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Magdalar");
+          printf("So you are from %s \n", hero_homeland);
+        }
+        else if(strcmp(heroOriginDecision, "n") == 0 ||
+        strcmp(heroOriginDecision, "N") == 0 ||
+        strcmp(heroOriginDecision, "no") == 0 ||
+        strcmp(heroOriginDecision, "No") == 0){
+          getHeroHomeland();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomeland();
+        }
+    }
+    else if(strcmp(heroOriginInput, "4") == 0 ||
+    strcmp(heroOriginInput, "Ashvadan") == 0 ||
+    strcmp(heroOriginInput, "ashvadan") == 0 ||
+    strcmp(heroOriginInput, "ASHVADAN") == 0){
+      showAshvadanDescription();
+      printf("Is Ashvadan the country you hail from? (y/n): \n");
+      
+      fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
+      
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroOriginDecision);
+      if(len > 0 && heroOriginDecision[len - 1] == '\n'){
+        heroOriginDecision[len - 1] = '\0';
+      }
+        if(strcmp(heroOriginDecision, "y") == 0 ||
+        strcmp(heroOriginDecision, "Y") == 0 ||
+        strcmp(heroOriginDecision, "yes") == 0 ||
+        strcmp(heroOriginDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Ashvadan");
+          printf("So you are from %s \n", hero_homeland);
+        }
+        else if(strcmp(heroOriginDecision, "n") == 0 ||
+        strcmp(heroOriginDecision, "N") == 0 ||
+        strcmp(heroOriginDecision, "no") == 0 ||
+        strcmp(heroOriginDecision, "No") == 0){
+          getHeroHomeland();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomeland();
+        }
+    }
+
+    else if(strcmp(heroOriginInput, "5") == 0 ||
+    strcmp(heroOriginInput, "Nadafia") == 0 ||
+    strcmp(heroOriginInput, "nadafia") == 0 ||
+    strcmp(heroOriginInput, "NADAFIA") == 0){
+      showNadafiaDescription();
+      printf("Is Nadafia the country you hail from? (y/n):\n");
+      
+      fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroOriginDecision);
+      if(len > 0 && heroOriginDecision[len - 1] == '\n'){
+        heroOriginDecision[len - 1] = '\0';
+      }
+        if(strcmp(heroOriginDecision, "y") == 0 ||
+        strcmp(heroOriginDecision, "Y") == 0 ||
+        strcmp(heroOriginDecision, "yes") == 0 ||
+        strcmp(heroOriginDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Nadafia");
+          printf("So you are from %s \n", hero_homeland);
+        }
+        else if(strcmp(heroOriginDecision, "n") == 0 ||
+        strcmp(heroOriginDecision, "N") == 0 ||
+        strcmp(heroOriginDecision, "no") == 0 ||
+        strcmp(heroOriginDecision, "No") == 0){
+          getHeroHomeland();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomeland();
+        }
+      }
+    else{
+      printf("Please make a valid decision \n");
+    }
+}
+
+// This function is only here in the even that someone wants to pick a country without reading the descriptions again
+int getHeroHomelandWithoutDescriptions(){
+  char confirmHomelandDecision[10];
   char heroOriginInput[10];
   char possibleOrigins[5][15] = {"1: Empyrea", "2: Wesward", "3: Magdalar", "4: Ashvadan", "5: Nadafia"};
   printf("Which of these Countries do you hail from? \n");
@@ -222,188 +449,355 @@ int getHeroHomeland(){
     strcmp(heroOriginInput, "Empyrea") == 0 ||
     strcmp(heroOriginInput, "empyrea") == 0 ||
     strcmp(heroOriginInput, "EMPYERA") == 0){
-      showEmpyreaDescription();
       printf("Is Empyrea the country you hail from? (y/n): ");
-      confirmHeroHomeLand();
+
+      fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmHomelandDecision);
+      if(len > 0 && confirmHomelandDecision[len - 1] == '\n'){
+        confirmHomelandDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmHomelandDecision, "y") == 0 ||
+        strcmp(confirmHomelandDecision, "Y") == 0 ||
+        strcmp(confirmHomelandDecision, "yes") == 0 ||
+        strcmp(confirmHomelandDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Empyrea");
+        }
+        else if(strcmp(confirmHomelandDecision, "n") == 0 ||
+        strcmp(confirmHomelandDecision, "N") == 0 ||
+        strcmp(confirmHomelandDecision, "no") == 0 ||
+        strcmp(confirmHomelandDecision, "No") == 0){
+          getHeroHomelandWithoutDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomelandWithoutDescriptions();
+        }
+      
+      
+  
       }
     else if(strcmp(heroOriginInput, "2") == 0 ||
     strcmp(heroOriginInput, "Wesward") == 0 ||
     strcmp(heroOriginInput, "wesward") == 0 ||
     strcmp(heroOriginInput, "WESTWARD") == 0){
-      showWeswardDescription();
       printf("Is Wesward the country you hail from? (y/n): ");
-      confirmHeroHomeLand();
+
+      fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmHomelandDecision);
+      if(len > 0 && confirmHomelandDecision[len - 1] == '\n'){
+        confirmHomelandDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmHomelandDecision, "y") == 0 ||
+        strcmp(confirmHomelandDecision, "Y") == 0 ||
+        strcmp(confirmHomelandDecision, "yes") == 0 ||
+        strcmp(confirmHomelandDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Wesward");
+        }
+        else if(strcmp(confirmHomelandDecision, "n") == 0 ||
+        strcmp(confirmHomelandDecision, "N") == 0 ||
+        strcmp(confirmHomelandDecision, "no") == 0 ||
+        strcmp(confirmHomelandDecision, "No") == 0){
+          getHeroHomelandWithoutDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomelandWithoutDescriptions();
+        }
     }
     else if(strcmp(heroOriginInput, "3") == 0 ||
     strcmp(heroOriginInput, "Magdalar") == 0 ||
     strcmp(heroOriginInput, "magdalar") == 0 ||
     strcmp(heroOriginInput, "Magdalar") == 0){
-      showMagdalarDescription();
       printf("Is Magdalar the country you hail from? (y/n): ");
-      confirmHeroHomeLand();
+
+      fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmHomelandDecision);
+      if(len > 0 && confirmHomelandDecision[len - 1] == '\n'){
+        confirmHomelandDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmHomelandDecision, "y") == 0 ||
+        strcmp(confirmHomelandDecision, "Y") == 0 ||
+        strcmp(confirmHomelandDecision, "yes") == 0 ||
+        strcmp(confirmHomelandDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Magdalar");
+        }
+        else if(strcmp(confirmHomelandDecision, "n") == 0 ||
+        strcmp(confirmHomelandDecision, "N") == 0 ||
+        strcmp(confirmHomelandDecision, "no") == 0 ||
+        strcmp(confirmHomelandDecision, "No") == 0){
+          getHeroHomelandWithoutDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomelandWithoutDescriptions();
+        }
     }
     else if(strcmp(heroOriginInput, "4") == 0 ||
     strcmp(heroOriginInput, "Ashvadan") == 0 ||
     strcmp(heroOriginInput, "ashvadan") == 0 ||
     strcmp(heroOriginInput, "ASHVADAN") == 0){
-      showAshvadanDescription();
       printf("Is Ashvadan the country you hail from? (y/n): ");
-      confirmHeroHomeLand();
+
+      fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmHomelandDecision);
+      if(len > 0 && confirmHomelandDecision[len - 1] == '\n'){
+        confirmHomelandDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmHomelandDecision, "y") == 0 ||
+        strcmp(confirmHomelandDecision, "Y") == 0 ||
+        strcmp(confirmHomelandDecision, "yes") == 0 ||
+        strcmp(confirmHomelandDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Ashvadan");
+        }
+        else if(strcmp(confirmHomelandDecision, "n") == 0 ||
+        strcmp(confirmHomelandDecision, "N") == 0 ||
+        strcmp(confirmHomelandDecision, "no") == 0 ||
+        strcmp(confirmHomelandDecision, "No") == 0){
+          getHeroHomelandWithoutDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomelandWithoutDescriptions();
+        }
     }
 
     else if(strcmp(heroOriginInput, "5") == 0 ||
     strcmp(heroOriginInput, "Nadafia") == 0 ||
     strcmp(heroOriginInput, "nadafia") == 0 ||
     strcmp(heroOriginInput, "NADAFIA") == 0){
-      showNadafiaDescription();
       printf("Is Nadafia the country you hail from? (y/n): ");
-      confirmHeroHomeLand();
+
+      fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmHomelandDecision);
+      if(len > 0 && confirmHomelandDecision[len - 1] == '\n'){
+        confirmHomelandDecision[len - 1] = '\0';
       }
+        if(strcmp(confirmHomelandDecision, "y") == 0 ||
+        strcmp(confirmHomelandDecision, "Y") == 0 ||
+        strcmp(confirmHomelandDecision, "yes") == 0 ||
+        strcmp(confirmHomelandDecision, "Yes") == 0){
+          strcpy(hero_homeland, "Nadafia");
+        }
+        else if(strcmp(confirmHomelandDecision, "n") == 0 ||
+        strcmp(confirmHomelandDecision, "N") == 0 ||
+        strcmp(confirmHomelandDecision, "no") == 0 ||
+        strcmp(confirmHomelandDecision, "No") == 0){
+          getHeroHomelandWithoutDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroHomelandWithoutDescriptions();
+        }
+    }
     else{
       printf("Please make a valid decision \n");
+      getHeroHomelandWithoutDescriptions();
     }
 }
 
-// This function is only here in the even that someone wants to pick a country without reading the descriptions again
-int getHeroHomelandWithoutDescriptions(){
-char heroOriginInput[10];
-  char possibleOrigins[5][15] = {"1: Empyrea", "2: Wesward", "3: Magdalar", "4: Ashvadan", "5: Nadafia"};
-  printf("Which of these Countries do you hail from? \n");
-  for (int i = 0; i < 5; i++){
-  printf("%s \n", possibleOrigins[i]);
-  }
-  fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
+int seeHomelandDescriptions(){ 
+  char seeDescriptionInput[10];
+  char confirmDescriptionDecision[10];
+  printf("Which country would you like to learn about? \n");
+  printf("1: Empyrea \n");
+  printf("2: Wesward \n");
+  printf("3: Magdalar \n");
+  printf("4: Ashvadan \n");
+  printf("5: Nadafia \n");
+  // TODO maybe provide an option to see all of them???
+
+  fgets(seeDescriptionInput, sizeof(seeDescriptionInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroOriginInput);
-  if(len > 0 && heroOriginInput[len - 1] == '\n'){
-    heroOriginInput[len - 1] = '\0';
-    }
+  size_t len = strlen(seeDescriptionInput);
+  if(len > 0 && seeDescriptionInput[len - 1] == '\n'){
+    seeDescriptionInput[len - 1] = '\0';
+  }
 
-  if(strcmp(heroOriginInput, "1") == 0 ||
-    strcmp(heroOriginInput, "Empyrea") == 0 ||
-    strcmp(heroOriginInput, "empyrea") == 0 ||
-    strcmp(heroOriginInput, "EMPYERA") == 0){
-      // showEmpyreaDescription();
-      printf("Is Empyrea the country you hail from? (y/n): ");
-    // TODO ADD A FUNCTION TO CONFIRM THE HERO'S HOMELAND
+  // START OF EMPYREA DESCRIPTION CHECK
+  if(strcmp(seeDescriptionInput, "1") == 0 ||
+    strcmp(seeDescriptionInput, "Empyrea") == 0 ||
+    strcmp(seeDescriptionInput, "empyrea") == 0 ||
+    strcmp(seeDescriptionInput, "EMPYERA") == 0){
+      showEmpyreaDescription();
+      printf("Is Empyrea the country you hail from? (y/n):\n");
+      fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmDescriptionDecision);
+      if(len > 0 && confirmDescriptionDecision[len - 1] == '\n'){
+        confirmDescriptionDecision[len - 1] = '\0';
       }
-    else if(strcmp(heroOriginInput, "2") == 0 ||
-    strcmp(heroOriginInput, "Wesward") == 0 ||
-    strcmp(heroOriginInput, "wesward") == 0 ||
-    strcmp(heroOriginInput, "WESTWARD") == 0){
-      // showWeswardDescription();
-      printf("Is Wesward the country you hail from? (y/n): ");
+        if(strcmp(confirmDescriptionDecision, "y") == 0 ||
+        strcmp(confirmDescriptionDecision, "Y") == 0 ||
+        strcmp(confirmDescriptionDecision, "yes") == 0 ||
+        strcmp(confirmDescriptionDecision, "Yes") == 0){
+          printf("This is a test to check that the user entered Empyrea\n");
+          getHeroHomelandWithoutDescriptions();
+        }
+        else if(strcmp(confirmDescriptionDecision, "n") == 0 ||
+        strcmp(confirmDescriptionDecision, "N") == 0 ||
+        strcmp(confirmDescriptionDecision, "no") == 0 ||
+        strcmp(confirmDescriptionDecision, "No") == 0){
+          seeHomelandDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          seeHomelandDescriptions();
+        }
     }
-    else if(strcmp(heroOriginInput, "3") == 0 ||
-    strcmp(heroOriginInput, "Magdalar") == 0 ||
-    strcmp(heroOriginInput, "magdalar") == 0 ||
-    strcmp(heroOriginInput, "Magdalar") == 0){
-      // showMagdalarDescription();
-      printf("Is Magdalar the country you hail from? (y/n): ");
+      // END OF EMPYREA DESCRIPTION CHECK
 
-    }
-    else if(strcmp(heroOriginInput, "4") == 0 ||
-    strcmp(heroOriginInput, "Ashvadan") == 0 ||
-    strcmp(heroOriginInput, "ashvadan") == 0 ||
-    strcmp(heroOriginInput, "ASHVADAN") == 0){
-      // showAshvadanDescription();
-      printf("Is Ashvadan the country you hail from? (y/n): ");
-    }
 
-    else if(strcmp(heroOriginInput, "5") == 0 ||
-    strcmp(heroOriginInput, "Nadafia") == 0 ||
-    strcmp(heroOriginInput, "nadafia") == 0 ||
-    strcmp(heroOriginInput, "NADAFIA") == 0){
-      // showNadafiaDescription();
-      printf("Is Nadafia the country you hail from? (y/n): ");
+    // START OF WESWARD DESCRIPTION CHECK
+    else if(strcmp(seeDescriptionInput, "2") == 0 ||
+    strcmp(seeDescriptionInput, "Wesward") == 0 ||
+    strcmp(seeDescriptionInput, "wesward") == 0 ||
+    strcmp(seeDescriptionInput, "WESTWARD") == 0){
+      showWeswardDescription();
+      printf("Is Wesward the country you hail from? (y/n):\n ");
+      fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmDescriptionDecision);
+      if(len > 0 && confirmDescriptionDecision[len - 1] == '\n'){
+        confirmDescriptionDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmDescriptionDecision, "y") == 0 ||
+        strcmp(confirmDescriptionDecision, "Y") == 0 ||
+        strcmp(confirmDescriptionDecision, "yes") == 0 ||
+        strcmp(confirmDescriptionDecision, "Yes") == 0){
+          getHeroHomelandWithoutDescriptions();
+          printf("This is a test to check that the user entered Wesward\n");
+        }
+        else if(strcmp(confirmDescriptionDecision, "n") == 0 ||
+        strcmp(confirmDescriptionDecision, "N") == 0 ||
+        strcmp(confirmDescriptionDecision, "no") == 0 ||
+        strcmp(confirmDescriptionDecision, "No") == 0){
+          seeHomelandDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          seeHomelandDescriptions();
+        }
     }
+    // END OF WESWARD DESCRIPTION CHECK
+
+    // START OF MAGDALAR DESCRIPTION CHECK
+    else if(strcmp(seeDescriptionInput, "3") == 0 ||
+    strcmp(seeDescriptionInput, "Magdalar") == 0 ||
+    strcmp(seeDescriptionInput, "magdalar") == 0 ||
+    strcmp(seeDescriptionInput, "Magdalar") == 0){
+      showMagdalarDescription();
+      printf("Is Magdalar the country you hail from? (y/n):\n ");
+      fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmDescriptionDecision);
+      if(len > 0 && confirmDescriptionDecision[len - 1] == '\n'){
+        confirmDescriptionDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmDescriptionDecision, "y") == 0 ||
+        strcmp(confirmDescriptionDecision, "Y") == 0 ||
+        strcmp(confirmDescriptionDecision, "yes") == 0 ||
+        strcmp(confirmDescriptionDecision, "Yes") == 0){
+          getHeroHomelandWithoutDescriptions();
+          printf("This is a test to check that the user entered Magdalar\n");
+        }
+        else if(strcmp(confirmDescriptionDecision, "n") == 0 ||
+        strcmp(confirmDescriptionDecision, "N") == 0 ||
+        strcmp(confirmDescriptionDecision, "no") == 0 ||
+        strcmp(confirmDescriptionDecision, "No") == 0){
+          seeHomelandDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          seeHomelandDescriptions();
+        }
+      
+    }
+      // END OF MAGDALAR DESCRIPTION CHECK
+
+    // START OF ASHVADAN DESCRIPTION CHECK
+    else if(strcmp(seeDescriptionInput, "4") == 0 ||
+    strcmp(seeDescriptionInput, "Ashvadan") == 0 ||
+    strcmp(seeDescriptionInput, "ashvadan") == 0 ||
+    strcmp(seeDescriptionInput, "ASHVADAN") == 0){
+      showAshvadanDescription();
+      printf("Is Ashvadan the country you hail from? (y/n):\n ");
+      fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmDescriptionDecision);
+      if(len > 0 && confirmDescriptionDecision[len - 1] == '\n'){
+        confirmDescriptionDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmDescriptionDecision, "y") == 0 ||
+        strcmp(confirmDescriptionDecision, "Y") == 0 ||
+        strcmp(confirmDescriptionDecision, "yes") == 0 ||
+        strcmp(confirmDescriptionDecision, "Yes") == 0){
+          getHeroHomelandWithoutDescriptions(); 
+          printf("This is a test to check that the user entered Ashvadan\n");
+        }
+        else if(strcmp(confirmDescriptionDecision, "n") == 0 ||
+        strcmp(confirmDescriptionDecision, "N") == 0 ||
+        strcmp(confirmDescriptionDecision, "no") == 0 ||
+        strcmp(confirmDescriptionDecision, "No") == 0){
+          seeHomelandDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          seeHomelandDescriptions();
+        }
+      
+    }
+      // END OF ASHVADAN DESCRIPTION CHECK
+
+    // START OF NADAFIA DESCRIPTION CHECK
+    else if(strcmp(seeDescriptionInput, "5") == 0 ||
+    strcmp(seeDescriptionInput, "Nadafia") == 0 ||
+    strcmp(seeDescriptionInput, "nadafia") == 0 ||
+    strcmp(seeDescriptionInput, "NADAFIA") == 0){
+      showNadafiaDescription();
+      printf("Is Nadafia the country you hail from? (y/n):\n ");
+      fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(confirmDescriptionDecision);
+      if(len > 0 && confirmDescriptionDecision[len - 1] == '\n'){
+        confirmDescriptionDecision[len - 1] = '\0';
+      }
+        if(strcmp(confirmDescriptionDecision, "y") == 0 ||
+        strcmp(confirmDescriptionDecision, "Y") == 0 ||
+        strcmp(confirmDescriptionDecision, "yes") == 0 ||
+        strcmp(confirmDescriptionDecision, "Yes") == 0){
+          getHeroHomelandWithoutDescriptions();
+          printf("This is a test to check that the user entered Nadafia\n");
+        }
+        else if(strcmp(confirmDescriptionDecision, "n") == 0 ||
+        strcmp(confirmDescriptionDecision, "N") == 0 ||
+        strcmp(confirmDescriptionDecision, "no") == 0 ||
+        strcmp(confirmDescriptionDecision, "No") == 0){
+          seeHomelandDescriptions();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          seeHomelandDescriptions();
+        }
+      }
+      // END OF NADAFIA DESCRIPTION CHECK
+
     else{
-      printf("Please make a valid decision \n");
+      printf("ERROR: Please make a valid decision \n");
     }
-}
-
-int confirmHeroHomeLand(){
-  char seeDescriptionsDecision[10];
-  char seeDescriptionInput[10];
-  char confirmHeroHomeLandInput[10];
-  printf("Is this correct? (y/n): ");
-  fgets(confirmHeroHomeLandInput, sizeof(confirmHeroHomeLandInput), stdin);
-
-  if(strcmp(confirmHeroHomeLandInput, "y") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "Y") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "yes") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "Yes") == 0){
-    // DO STUFF
-  }
-  else if(strcmp(confirmHeroHomeLandInput, "n") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "N") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "no") == 0 ||
-  strcmp(confirmHeroHomeLandInput, "No") == 0){
-    printf("Would you like to see the description of a country? (y/n): ");
-    if(strcmp(seeDescriptionInput, "y") == 0 ||
-    strcmp(seeDescriptionInput, "Y") == 0 ||
-    strcmp(seeDescriptionInput, "yes") == 0 ||
-    strcmp(seeDescriptionInput, "Yes") == 0 ){ 
-      printf("Which country would you like to see the description of? \n");
-      printf("1: Empyrea \n");
-      printf("2: Wesward \n");
-      printf("3: Magdalar \n");
-      printf("4: Ashvadan \n");
-      printf("5: Nadafia \n");
-      fgets(seeDescriptionInput, sizeof(seeDescriptionInput), stdin);
-
-      if(strcmp(seeDescriptionInput, "1") == 0 ||
-      strcmp(seeDescriptionInput, "Empyrea") == 0 ||
-      strcmp(seeDescriptionInput, "empyrea") == 0 ||
-      strcmp(seeDescriptionInput, "EMPYERA") == 0){
-        showEmpyreaDescription();
-        getHeroHomelandWithoutDescriptions();
-      }
-      else if(strcmp(seeDescriptionInput, "2") == 0 ||
-      strcmp(seeDescriptionInput, "Wesward") == 0 ||
-      strcmp(seeDescriptionInput, "wesward") == 0 ||
-      strcmp(seeDescriptionInput, "WESTWARD") == 0){
-        showWeswardDescription();
-        getHeroHomelandWithoutDescriptions();
-
-      }
-      else if(strcmp(seeDescriptionInput, "3") == 0 ||
-      strcmp(seeDescriptionInput, "Magdalar") == 0 ||
-      strcmp(seeDescriptionInput, "magdalar") == 0 ||
-      strcmp(seeDescriptionInput, "Magdalar") == 0){
-        showMagdalarDescription();
-        getHeroHomelandWithoutDescriptions();
-      }
-      else if(strcmp(seeDescriptionInput, "4") == 0 ||
-      strcmp(seeDescriptionInput, "Ashvadan") == 0 ||
-      strcmp(seeDescriptionInput, "ashvadan") == 0 ||
-      strcmp(seeDescriptionInput, "ASHVADAN") == 0){
-        showAshvadanDescription();
-        getHeroHomelandWithoutDescriptions();
-      }
-      else if(strcmp(seeDescriptionInput, "5") == 0 ||
-      strcmp(seeDescriptionInput, "Nadafia") == 0 ||
-      strcmp(seeDescriptionInput, "nadafia") == 0 ||
-      strcmp(seeDescriptionInput, "NADAFIA") == 0){
-        showNadafiaDescription();
-        getHeroHomelandWithoutDescriptions();
-      }
-      else{
-        printf("Please make a valid decision \n");
-        getHeroHomeland();
-      }
-    }  
-    else if(strcmp(seeDescriptionInput, "n") == 0 ||
-    strcmp(seeDescriptionInput, "N") == 0 ||
-    strcmp(seeDescriptionInput, "no") == 0 ||
-    strcmp(seeDescriptionInput, "No") == 0 ){
-// TODO COME BACK TO LATER FOR NOW IN THE EVENT OF NO THIS WILL JUST CRASH GAME
-    }
-  }
-  else{
-    printf("Please make a valid decision \n");
-    confirmHeroHomeLand();
-  }
-
 }

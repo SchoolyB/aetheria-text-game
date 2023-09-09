@@ -7,5 +7,5 @@ int heroGenderCheck();
 int getHeroGender();
 int confirmHeroGender();
 int getHeroHomeland();
-int confirmHeroHomeland();
+int getHeroHomelandWithoutDescriptions();
 int seeHomelandDescriptions();
