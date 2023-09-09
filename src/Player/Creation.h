@@ -9,3 +9,4 @@ int confirmHeroGender();
 int getHeroHomeland();
 int getHeroHomelandWithoutDescriptions();
 int seeHomelandDescriptions();
+int getHeroProfession();

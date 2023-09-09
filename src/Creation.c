@@ -9,11 +9,13 @@ char hero_first_name[10];
 char hero_dynasty_name[10];
 char hero_gender[10];
 char hero_homeland[10];
+char hero_profession[15];
+char hero_class[10];  
 
 int main() {
-    getFirstName();
-    dynastyNameCheck();
-
+    // getFirstName();
+    // dynastyNameCheck();
+getHeroProfession();
     return 0;
 }
 
@@ -800,4 +802,280 @@ int seeHomelandDescriptions(){
     else{
       printf("ERROR: Please make a valid decision \n");
     }
+}
+
+int getHeroProfession(){
+  char heroProfessionConfirmation[10];
+  char heroProfessionInput[15];
+  char heroProfessionChoice[15];
+  char possibleProfessions[9][15] = {
+    "1: Blacksmith",
+    "2: Merchant",
+    "3: Farmer",
+    "4: Hunter",
+    "5: Soldier",
+    "6: Sailor",
+    "7: Scholar",
+    "8: Thief",
+    "9: None"};
+
+  printf("What is your profession? \n");
+  for (int i = 0; i < 9; i++){
+    printf("%s \n", possibleProfessions[i]);
+  }
+  fgets(heroProfessionInput, sizeof(heroProfessionInput), stdin);
+
+  // Remove the trailing newline character from the input
+  size_t len = strlen(heroProfessionInput);
+  if(len > 0 && heroProfessionInput[len - 1] == '\n'){
+    heroProfessionInput[len - 1] = '\0';
+  }
+
+  if(strcmp(heroProfessionInput, "1") == 0 ||
+    strcmp(heroProfessionInput, "Blacksmith") == 0 ||
+    strcmp(heroProfessionInput, "blacksmith") == 0 ||
+    strcmp(heroProfessionInput, "BLACKSMITH") == 0){
+      strcpy(heroProfessionChoice, "Blacksmith");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+
+      fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
+
+      // Remove the trailing newline character from the input
+      size_t len = strlen(heroProfessionConfirmation);
+      if(len > 0 && heroProfessionConfirmation[len - 1] == '\n'){
+        heroProfessionConfirmation[len - 1] = '\0';
+      }
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+        strcpy(hero_profession, "Blacksmith");
+          
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+    
+    else if(strcmp(heroProfessionInput, "2") == 0 ||
+      strcmp(heroProfessionInput, "Merchant") == 0 ||
+      strcmp(heroProfessionInput, "merchant") == 0 ||
+      strcmp(heroProfessionInput, "MERCHANT") == 0){
+      strcpy(heroProfessionChoice, "Merchant");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){ 
+          strcpy(hero_profession, "Merchant");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+
+    else if(strcmp(heroProfessionInput, "3") == 0 ||
+      strcmp(heroProfessionInput, "Farmer") == 0 ||
+      strcmp(heroProfessionInput, "farmer") == 0 ||
+      strcmp(heroProfessionInput, "FARMER") == 0){
+      strcpy(heroProfessionChoice, "Farmer");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Farmer");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+
+    }
+
+    else if(strcmp(heroProfessionInput, "4") == 0 ||
+      strcmp(heroProfessionInput, "Hunter") == 0 ||
+      strcmp(heroProfessionInput, "hunter") == 0 ||
+      strcmp(heroProfessionInput, "HUNTER") == 0){
+      strcpy(heroProfessionChoice, "Hunter");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Hunter");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+
+    else if(strcmp(heroProfessionInput, "5") == 0 ||
+      strcmp(heroProfessionInput, "Soldier") == 0 ||
+      strcmp(heroProfessionInput, "soldier") == 0 ||
+      strcmp(heroProfessionInput, "SOLDIER") == 0){
+      strcpy(heroProfessionChoice, "Soldier");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+        
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Soldier");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+
+    else if(strcmp(heroProfessionInput, "6") == 0 ||
+      strcmp(heroProfessionInput, "Sailor") == 0 ||
+      strcmp(heroProfessionInput, "sailor") == 0 ||
+      strcmp(heroProfessionInput, "SAILOR") == 0){
+      strcpy(heroProfessionChoice, "Sailor");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Sailor");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+
+    else if(strcmp(heroProfessionInput, "7") == 0 ||
+      strcmp(heroProfessionInput, "Scholar") == 0 ||
+      strcmp(heroProfessionInput, "scholar") == 0 ||
+      strcmp(heroProfessionInput, "SCHOLAR") == 0){
+      strcpy(heroProfessionChoice, "Scholar");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Scholar");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+
+    }
+
+    else if(strcmp(heroProfessionInput, "8") == 0 ||
+      strcmp(heroProfessionInput, "Thief") == 0 ||
+      strcmp(heroProfessionInput, "thief") == 0 ||
+      strcmp(heroProfessionInput, "THIEF") == 0){
+      strcpy(heroProfessionChoice, "Thief");
+      printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "Thief");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+    }
+
+    else if(strcmp(heroProfessionInput, "9") == 0 ||
+      strcmp(heroProfessionInput, "None") == 0 ||
+      strcmp(heroProfessionInput, "none") == 0 ||
+      strcmp(heroProfessionInput, "NONE") == 0){
+      printf("So you you do not have a profession is that correct? (y/n)\n");
+        // Do stuff
+
+        if(strcmp(heroProfessionConfirmation, "y") == 0 ||
+        strcmp(heroProfessionConfirmation, "Y") == 0 ||
+        strcmp(heroProfessionConfirmation, "yes") == 0 ||
+        strcmp(heroProfessionConfirmation, "Yes") == 0){
+          strcpy(hero_profession, "None");
+        }
+        else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
+        strcmp(heroProfessionConfirmation, "N") == 0 ||
+        strcmp(heroProfessionConfirmation, "no") == 0 ||
+        strcmp(heroProfessionConfirmation, "No") == 0){
+          getHeroProfession();
+        }
+        else{
+          printf("Please make a valid decision \n");
+          getHeroProfession();
+        }
+
+    }
+    else{
+      printf("Please make a valid decision \n");
+      getHeroProfession();
+    }
+
+
 }
