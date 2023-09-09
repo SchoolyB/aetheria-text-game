@@ -1,4 +1,5 @@
 // Function prototypes
+int startHeroCreation();
 int getFirstName();
 int dynastyNameCheck();
 int getDynastyName();

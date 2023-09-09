@@ -13,11 +13,10 @@ char hero_profession[15];
 char hero_class[10];  
 
 int main() {
-    // getFirstName();
-    // dynastyNameCheck();
-getHeroProfession();
-    return 0;
+  startHeroCreation();
+  return 0;
 }
+
 
 int getFirstName() {
     char firstNameInput[10];
@@ -35,7 +34,7 @@ int getFirstName() {
     printf("Your first name is: %s\n", hero_first_name);
     return 0;
 }
-
+//===========================================================================================================//
 int dynastyNameCheck() {
     char dynastyNameDecision[10];
     char confirmDynastyDecision[10];
@@ -93,7 +92,7 @@ int dynastyNameCheck() {
   }
   return 0;
 }
-
+//===========================================================================================================//
 // This function is what gets the dynasty name if the player has chooses to have one
 int getDynastyName() {
     char dynastyNameInput[20];
@@ -111,7 +110,7 @@ int getDynastyName() {
     confirmDynastyName();
     return 0;
 }
-
+//===========================================================================================================//
 int confirmDynastyName(){
   char confirmDynastyNameInput[10];
   printf("Is this correct? (y/n): ");
@@ -141,6 +140,7 @@ int confirmDynastyName(){
     }
   
 }
+//===========================================================================================================//
 // The results of this function running will have no effect on the game itself
 int heroGenderCheck(){
   char heroGenderDecision[10];
@@ -170,7 +170,7 @@ int heroGenderCheck(){
     }
     return 0;
 }
-
+//===========================================================================================================//
 // Rather than specifying male or female I figure it would be easier to just let the player choose whatever they want
 // But still preform a check for male or female.
 int getHeroGender(){
@@ -209,7 +209,7 @@ int getHeroGender(){
         printf("Please make a valid decision \n");
       }
 }
-
+//===========================================================================================================//
 int confirmHeroGender(){
   char confirmHeroGenderInput[10];
   printf("Is this correct? (y/n): ");
@@ -239,6 +239,7 @@ int confirmHeroGender(){
     }
     return 0;
 }
+//===========================================================================================================//
 // This is function is huge. TODO figure out how to make it smaller
 int getHeroHomeland(){
   char heroOriginDecision[10];
@@ -283,6 +284,7 @@ int getHeroHomeland(){
         strcmp(heroOriginDecision, "Yes") == 0){
           strcpy(hero_homeland, "Empyrea");
           printf("So you are from %s \n", hero_homeland);
+          getHeroProfession();
         }
         else if(strcmp(heroOriginDecision, "n") == 0 ||
         strcmp(heroOriginDecision, "N") == 0 ||
@@ -316,6 +318,7 @@ int getHeroHomeland(){
         strcmp(heroOriginDecision, "Yes") == 0){
           strcpy(hero_homeland, "Wesward");
           printf("So you are from %s \n", hero_homeland);
+          getHeroProfession();
         }
         else if(strcmp(heroOriginDecision, "n") == 0 ||
         strcmp(heroOriginDecision, "N") == 0 ||
@@ -348,6 +351,7 @@ int getHeroHomeland(){
         strcmp(heroOriginDecision, "Yes") == 0){
           strcpy(hero_homeland, "Magdalar");
           printf("So you are from %s \n", hero_homeland);
+          getHeroProfession();
         }
         else if(strcmp(heroOriginDecision, "n") == 0 ||
         strcmp(heroOriginDecision, "N") == 0 ||
@@ -380,6 +384,7 @@ int getHeroHomeland(){
         strcmp(heroOriginDecision, "Yes") == 0){
           strcpy(hero_homeland, "Ashvadan");
           printf("So you are from %s \n", hero_homeland);
+          getHeroProfession();
         }
         else if(strcmp(heroOriginDecision, "n") == 0 ||
         strcmp(heroOriginDecision, "N") == 0 ||
@@ -413,6 +418,7 @@ int getHeroHomeland(){
         strcmp(heroOriginDecision, "Yes") == 0){
           strcpy(hero_homeland, "Nadafia");
           printf("So you are from %s \n", hero_homeland);
+          getHeroProfession();
         }
         else if(strcmp(heroOriginDecision, "n") == 0 ||
         strcmp(heroOriginDecision, "N") == 0 ||
@@ -427,9 +433,10 @@ int getHeroHomeland(){
       }
     else{
       printf("Please make a valid decision \n");
+      getHeroHomeland();
     }
 }
-
+//===========================================================================================================//
 // This function is only here in the even that someone wants to pick a country without reading the descriptions again
 int getHeroHomelandWithoutDescriptions(){
   char confirmHomelandDecision[10];
@@ -465,6 +472,7 @@ int getHeroHomelandWithoutDescriptions(){
         strcmp(confirmHomelandDecision, "yes") == 0 ||
         strcmp(confirmHomelandDecision, "Yes") == 0){
           strcpy(hero_homeland, "Empyrea");
+          getHeroProfession();
         }
         else if(strcmp(confirmHomelandDecision, "n") == 0 ||
         strcmp(confirmHomelandDecision, "N") == 0 ||
@@ -498,6 +506,7 @@ int getHeroHomelandWithoutDescriptions(){
         strcmp(confirmHomelandDecision, "yes") == 0 ||
         strcmp(confirmHomelandDecision, "Yes") == 0){
           strcpy(hero_homeland, "Wesward");
+          getHeroProfession();
         }
         else if(strcmp(confirmHomelandDecision, "n") == 0 ||
         strcmp(confirmHomelandDecision, "N") == 0 ||
@@ -528,6 +537,7 @@ int getHeroHomelandWithoutDescriptions(){
         strcmp(confirmHomelandDecision, "yes") == 0 ||
         strcmp(confirmHomelandDecision, "Yes") == 0){
           strcpy(hero_homeland, "Magdalar");
+          getHeroProfession();
         }
         else if(strcmp(confirmHomelandDecision, "n") == 0 ||
         strcmp(confirmHomelandDecision, "N") == 0 ||
@@ -558,6 +568,7 @@ int getHeroHomelandWithoutDescriptions(){
         strcmp(confirmHomelandDecision, "yes") == 0 ||
         strcmp(confirmHomelandDecision, "Yes") == 0){
           strcpy(hero_homeland, "Ashvadan");
+          getHeroProfession();
         }
         else if(strcmp(confirmHomelandDecision, "n") == 0 ||
         strcmp(confirmHomelandDecision, "N") == 0 ||
@@ -589,6 +600,7 @@ int getHeroHomelandWithoutDescriptions(){
         strcmp(confirmHomelandDecision, "yes") == 0 ||
         strcmp(confirmHomelandDecision, "Yes") == 0){
           strcpy(hero_homeland, "Nadafia");
+          getHeroProfession();
         }
         else if(strcmp(confirmHomelandDecision, "n") == 0 ||
         strcmp(confirmHomelandDecision, "N") == 0 ||
@@ -606,7 +618,7 @@ int getHeroHomelandWithoutDescriptions(){
       getHeroHomelandWithoutDescriptions();
     }
 }
-
+//===========================================================================================================//
 int seeHomelandDescriptions(){ 
   char seeDescriptionInput[10];
   char confirmDescriptionDecision[10];
@@ -803,7 +815,7 @@ int seeHomelandDescriptions(){
       printf("ERROR: Please make a valid decision \n");
     }
 }
-
+//===========================================================================================================//
 int getHeroProfession(){
   char heroProfessionConfirmation[10];
   char heroProfessionInput[15];
@@ -1018,7 +1030,6 @@ int getHeroProfession(){
           printf("Please make a valid decision \n");
           getHeroProfession();
         }
-
     }
 
     else if(strcmp(heroProfessionInput, "8") == 0 ||
@@ -1046,7 +1057,7 @@ int getHeroProfession(){
           getHeroProfession();
         }
     }
-
+    // TODO found bug when choosing none option. need to fix
     else if(strcmp(heroProfessionInput, "9") == 0 ||
       strcmp(heroProfessionInput, "None") == 0 ||
       strcmp(heroProfessionInput, "none") == 0 ||
@@ -1070,12 +1081,17 @@ int getHeroProfession(){
           printf("Please make a valid decision \n");
           getHeroProfession();
         }
-
     }
     else{
       printf("Please make a valid decision \n");
       getHeroProfession();
     }
+}
 
 
+
+// KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
+int startHeroCreation(){
+    getFirstName();
+    dynastyNameCheck();
 }
