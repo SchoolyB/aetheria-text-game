@@ -12,12 +12,6 @@ char hero_homeland[10];
 char hero_profession[15];
 char hero_class[10];  
 
-
-// TODO delete this function after the startHeroCreation function is moved over to the main.c file
-int main() {
-  startHeroCreation();
-  return 0;
-}
 //===========================================================================================================//
 int getFirstName() {
     char firstNameInput[10];
@@ -1365,7 +1359,7 @@ int getHeroClass(){
 
 // ??? possibly add race option during hero creation
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE 
-// TODO include this function in the main file then call it from there
+
 int startHeroCreation(){
   sleep(1);
   printf("Welcome to the world of Aethoria! \n"); //temp name
