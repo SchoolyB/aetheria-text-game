@@ -11,3 +11,4 @@ int getHeroHomeland();
 int getHeroHomelandWithoutDescriptions();
 int seeHomelandDescriptions();
 int getHeroProfession();
+int getHeroClass();
