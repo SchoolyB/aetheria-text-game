@@ -1,39 +1,36 @@
 #include <stdio.h>
 #include <unistd.h> // for usleep
+#include <string.h> // for strlen
+#include <time.h> // for time
+#include "../../../utils/Escape.c"
+#include "../Prototypes/Chapter1.h"
 
 
 
 int startChapter() {
-    // Open the file for reading
-    FILE *file = fopen("Chapter1.txt", "r");
-    // Check if the file was successfully opened
-    if (file == NULL) {
-        perror("Error opening the file");
-        return 1; // Exit the function with an error code
-    }
-    // Read and print the content of chapter1 from the file
-    char buffer[200]; // Assuming lines in the file are no longer than 100 characters
 
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        // Print each line from the file character by character with a delay
-        for (int i = 0; buffer[i] != '\0'; i++) {
-            putchar(buffer[i]);
-            fflush(stdout);
-            usleep(45000);
-        }
-    }
-    printf("\n");
-    // Close the file
-    fclose(file);
+    getEscapeDecision();
     return 0;
 }
 
 int getEscapeDecision(){
-// make a function that takes offers the player 2 options run or fight
-// if they choose run they get a random number between 1 and 10
-// if the number is greater than 5 they escape
-// if the number is less than 5 they get caught and have to fight
-// if they choose fight they have to fight
-// if they win they escape
-// if the lose they still escape but they are injured
-}
+    char input[10];
+    printf("What will you do?\n");
+    fgets(input, sizeof(input), stdin);
+    if (strcmp(input, "1") == 0 ||
+        strcmp(input, "Run") == 0 ||
+        strcmp(input, "run") == 0) {
+            // printf("You chose to run!\n");
+            // TODO figure out why this isnt working
+            printf("TEST");
+            // escape();
+        }
+        else if(strcmp(input, "2") == 0 ||
+        strcmp(input, "Fight") == 0 ||
+        strcmp(input, "fight") == 0) {
+            printf("You chose to fight!\n");
+            // Do something here;
+        }
+    return 0;
+} 
+
