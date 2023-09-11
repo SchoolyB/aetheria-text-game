@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "./Player/Creation.h"
-#include "./Countries/Description.c"
-
+#include "../Prototypes/Creation.h"
+#include "../../Countries/Description.c"
+#include "../Global_Variables/Hero.h"
 char hero_first_name[10];
 char hero_dynasty_name[10];
 char hero_gender[10];
@@ -1355,14 +1355,12 @@ int getHeroClass(){
 }
 
 
-
-
 // ??? possibly add race option during hero creation
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE 
 
 int startHeroCreation(){
   sleep(1);
-  printf("Welcome to the world of Aethoria! \n"); //temp name
+  printf("Welcome to the world of Aethoria! \n"); // TODO temp name
   sleep(1);
   printf("Let's begin by creating your character! \n");
   sleep(1);

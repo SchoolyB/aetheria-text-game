@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "./Creation.c"
+#include "./Hero/Source/Creation.c"
 
 // Function to log messages to a file
 void logMessage(FILE *logFile, const char *message) {
     time_t currentTime;
     time(&currentTime);
     fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message);
+    fflush(logFile);
+
 }
 
 int main() {
@@ -18,6 +20,7 @@ int main() {
     }
     logMessage(logFile, "Program started.");
     startHeroCreation(); 
+    printf("%s\n", hero_first_name);
     logMessage(logFile, "Program ended.");
     fclose(logFile);
     return 0;
