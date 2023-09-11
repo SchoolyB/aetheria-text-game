@@ -3,6 +3,7 @@
 #include <time.h>
 #include "./Hero/Source/Creation.c"
 #include "./Hero/Source/StatPool.c"
+#include "./Chapters/Chapter1/Source/Chapter1.c"
 // Function to log messages to a file
 void logMessage(FILE *logFile, const char *message) {
     time_t currentTime;
@@ -19,8 +20,9 @@ int main() {
         exit(1);
     }
     logMessage(logFile, "Program started.");
-    startHeroCreation(); 
-    setAllHeroStats();
+    // startHeroCreation(); 
+    // setAllHeroStats();
+    startChapter();
     printf("%s\n", hero_first_name);
     logMessage(logFile, "Program ended.");
     fclose(logFile);
