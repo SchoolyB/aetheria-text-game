@@ -1,0 +1,9 @@
+int setHeroHealth();
+int setHeroMana();
+int setHeroStrength();
+int setHeroDexterity();
+int setHeroIntelligence();
+int setHeroLuck();
+int heroLevel();
+int setAllHeroStats();
+int setHeroLvl();
