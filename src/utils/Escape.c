@@ -4,6 +4,8 @@
 #include <time.h> // for time
 #include <stdbool.h>
 
+bool escaped;
+
 int escape(){
     bool escaped;
     char input[10];
