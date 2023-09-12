@@ -5,6 +5,8 @@
 #include "../Prototypes/Creation.h"
 #include "../../Countries/Description.c"
 #include "../Global_Variables/Hero.h"
+
+// Global variables to be used in other files. See "Hero.h" 
 char hero_first_name[10];
 char hero_dynasty_name[10];
 char hero_gender[10];
@@ -901,6 +903,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Blacksmith");
+        getHeroClass();
           
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
@@ -933,6 +936,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Merchant");
+        getHeroClass();
           
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
@@ -965,7 +969,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Farmer");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -997,7 +1001,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Hunter");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -1029,7 +1033,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Soldier");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -1061,7 +1065,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Sailor");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -1093,7 +1097,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Scholar");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -1125,7 +1129,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "Thief");
-          
+        getHeroClass();  
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
         strcmp(heroProfessionConfirmation, "N") == 0 ||
@@ -1160,6 +1164,7 @@ int getHeroProfession(){
         strcmp(heroProfessionConfirmation, "yes") == 0 ||
         strcmp(heroProfessionConfirmation, "Yes") == 0){
         strcpy(hero_profession, "None");
+        getHeroClass();
           
         }
         else if(strcmp(heroProfessionConfirmation, "n") == 0 ||
@@ -1183,14 +1188,13 @@ int getHeroProfession(){
 int getHeroClass(){
   char heroClassConfirmation[10];
   char heroClassInput[15];
-  char possibleClasses[5][10] ={
-
+  char possibleClasses[5][15] ={
     "1: Warrior",
     "2: Mage",
     "3: Rogue",
     "4: Cleric",
-    "5: Bard"
-  };
+    "5: Bard"};
+
   printf("Which of the following classes do you specialize in? \n");
   for (int i = 0; i < 5; i++){
     printf("%s \n", possibleClasses[i]);
@@ -1207,7 +1211,7 @@ int getHeroClass(){
   if (strcmp(heroClassInput, "1") == 0 ||
       strcmp(heroClassInput, "Warrior") == 0 ||
       strcmp(heroClassInput, "warrior") == 0){
-        printf("So you are a mighty %s is that correct? (y/n)\n", heroClassInput);
+        printf("So you are a mighty warrior is that correct? (y/n)\n");
         fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
         // Remove the trailing newline character from the input
@@ -1236,7 +1240,7 @@ int getHeroClass(){
     else if(strcmp(heroClassInput, "2") == 0 ||
     strcmp(heroClassInput, "Mage") == 0 ||
     strcmp(heroClassInput, "mage") == 0){
-      printf("So you are a powerful %s is that correct? (y/n)\n", heroClassInput);
+      printf("So you are a powerful mage is that correct? (y/n)\n");
       fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
       // Remove the trailing newline character from the input
@@ -1265,7 +1269,7 @@ int getHeroClass(){
       else if(strcmp(heroClassInput, "3") == 0 ||
       strcmp(heroClassInput, "Rogue") == 0 ||
       strcmp(heroClassInput, "rogue") == 0){
-        printf("So you are a sneaky %s is that correct? (y/n)\n", heroClassInput);
+        printf("So you are a sneaky rogue is that correct? (y/n)\n");
         fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
         // Remove the trailing newline character from the input
@@ -1294,7 +1298,7 @@ int getHeroClass(){
         else if(strcmp(heroClassInput, "4") == 0 ||
         strcmp(heroClassInput, "Cleric") == 0 ||
         strcmp(heroClassInput, "cleric") == 0){
-          printf("So you are a holy %s is that correct? (y/n)\n", heroClassInput);
+          printf("So you are a holy cleric is that correct? (y/n)\n");
           fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
           // Remove the trailing newline character from the input
@@ -1323,7 +1327,7 @@ int getHeroClass(){
         else if(strcmp(heroClassInput, "5") == 0 ||
         strcmp(heroClassInput, "Bard") == 0 ||
         strcmp(heroClassInput, "bard") == 0){
-          printf("So you are a talented %s is that correct? (y/n)\n", heroClassInput);
+          printf("So you are a talented bard is that correct? (y/n)\n");
           fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
           // Remove the trailing newline character from the input
@@ -1354,7 +1358,7 @@ int getHeroClass(){
         }
 }
 
-
+//===========================================================================================================//
 // ??? possibly add race option during hero creation
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE 
 
