@@ -1,2 +1,1 @@
-int startChapter();
-int getEscapeDecision();
+int startChapterOne();

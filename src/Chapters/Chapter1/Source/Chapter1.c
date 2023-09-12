@@ -1,36 +1,42 @@
 #include <stdio.h>
-#include <unistd.h> // for usleep
-#include <string.h> // for strlen
-#include <time.h> // for time
-#include "../../../utils/Escape.c"
+#include <stdbool.h>
+#include <unistd.h>
+#include "../../../utils/Escape.h"
 #include "../Prototypes/Chapter1.h"
 
+bool escaped;
 
+int startChapterOne()
+{
+    // Open the file for reading
+    FILE *file = fopen("Chapter1.txt", "r");
 
-int startChapter() {
+    // Check if the file was successfully opened
+    if (file == NULL)
+    {
+        perror("Error opening the file");
+        return 1; // Return an error code
+    }
 
-    getEscapeDecision();
+    // Read and print the content of Chapter1 from the file
+    char buffer[100]; // Assuming lines in the file are no longer than 100 characters
+
+    while (fgets(buffer, sizeof(buffer), file) != NULL)
+    {
+        // Print each line from the file character by character with a delay
+        for (int i = 0; buffer[i] != '\0'; i++)
+        {
+            putchar(buffer[i]);
+            fflush(stdout);
+            usleep(50000); // Adjust the delay as needed (in microseconds)
+        }
+    }
+
+    printf("\n");
+
+    // Close the file
+    fclose(file);
+
+    escape();
     return 0;
 }
-
-int getEscapeDecision(){
-    char input[10];
-    printf("What will you do?\n");
-    fgets(input, sizeof(input), stdin);
-    if (strcmp(input, "1") == 0 ||
-        strcmp(input, "Run") == 0 ||
-        strcmp(input, "run") == 0) {
-            // printf("You chose to run!\n");
-            // TODO figure out why this isnt working
-            printf("TEST");
-            // escape();
-        }
-        else if(strcmp(input, "2") == 0 ||
-        strcmp(input, "Fight") == 0 ||
-        strcmp(input, "fight") == 0) {
-            printf("You chose to fight!\n");
-            // Do something here;
-        }
-    return 0;
-} 
-

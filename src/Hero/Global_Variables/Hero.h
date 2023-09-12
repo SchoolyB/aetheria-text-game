@@ -20,3 +20,4 @@ extern int hero_luck;
 extern int hero_level;
 
 #endif
+

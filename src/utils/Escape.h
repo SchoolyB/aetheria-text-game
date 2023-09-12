@@ -1,9 +1,8 @@
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef ESCAPE_H
+#define ESCAPE_H
 
 extern bool escaped;
 
 // Function prototype
-int escape(void);
-
+int escape();
 #endif
