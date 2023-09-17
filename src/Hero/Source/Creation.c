@@ -1560,7 +1560,7 @@ void logCreationData(FILE *logFile, const char *category, const char *value)
   fflush(logFile);
 }
 
-int log()
+int appendToLog()
 {
   FILE *logFile = fopen("logs/creation.log", "a");
   if (logFile == NULL)
@@ -1589,6 +1589,6 @@ int startHeroCreation(logFile)
   sleep(1);
   usleep(500000);
   getFirstName();
-  log(); // this logs all the info from the hero creation see logs/creation.log
+  appendToLog(); // this logs all the info from the hero creation see logs/creation.log
   printf("Welcome to the world of Aethoria! %s %s %s! \n", hero_class, hero_first_name, hero_dynasty_name);
 }

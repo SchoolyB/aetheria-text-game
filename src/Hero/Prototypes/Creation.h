@@ -13,4 +13,4 @@ int seeHomelandDescriptions();
 int getHeroProfession();
 int getHeroClass();
 void logCreationData();
-int log();
+int appendToLog();

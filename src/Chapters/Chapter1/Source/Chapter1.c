@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "../../../utils/Escape.h"
+#include "../../../Utils/Functions/Escape.h"
 #include "../Prototypes/Chapter1.h"
 
 bool escaped;
