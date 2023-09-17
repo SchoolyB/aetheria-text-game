@@ -1554,17 +1554,41 @@ int getHeroClass()
   }
 }
 
+void logCreationData(FILE *logFile, const char *category, const char *value)
+{
+  fprintf(logFile, "%s: %s\n", category, value);
+  fflush(logFile);
+}
+
+int log()
+{
+  FILE *logFile = fopen("logs/creation.log", "a");
+  if (logFile == NULL)
+  {
+    perror("Error opening file");
+    exit(1);
+  }
+
+  fprintf(logFile, "Hero Information: \n");
+  logCreationData(logFile, "First Name", hero_first_name);
+  logCreationData(logFile, "Dynasty Name", hero_dynasty_name);
+  logCreationData(logFile, "Gender", hero_gender);
+  logCreationData(logFile, "Home of Origin", hero_homeland);
+  logCreationData(logFile, "Profession", hero_profession);
+  logCreationData(logFile, "Class", hero_class);
+  fclose(logFile);
+  return 0;
+}
 //===========================================================================================================//
 // ??? possibly add race option during hero creation
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
-
-int startHeroCreation()
+int startHeroCreation(logFile)
 {
-
   sleep(1);
   printf("Let's begin by creating your character! \n");
   sleep(1);
   usleep(500000);
   getFirstName();
+  log(); // this logs all the info from the hero creation see logs/creation.log
   printf("Welcome to the world of Aethoria! %s %s %s! \n", hero_class, hero_first_name, hero_dynasty_name);
 }

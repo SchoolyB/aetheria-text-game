@@ -1,3 +1,4 @@
 a.out
-.log
+*.log
 .vscode
+logs

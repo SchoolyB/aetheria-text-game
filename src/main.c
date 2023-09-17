@@ -5,18 +5,12 @@
 #include "./Hero/Source/StatPool.c"
 #include "./Chapters/Chapter1/Source/Chapter1.c"
 #include "./utils/Escape.c"
+#include "./utils/Logger.c"
 // Function to log messages to a file
-void logMessage(FILE *logFile, const char *message)
-{
-    time_t currentTime;
-    time(&currentTime);
-    fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message);
-    fflush(logFile);
-}
 
 int main()
 {
-    FILE *logFile = fopen(".log", "a"); // "a" mode appends to the file if it exists
+    FILE *logFile = fopen("logs/runtime.log", "a"); // "a" mode appends to the file if it exists
     if (logFile == NULL)
     {
         perror("Error opening the log file");

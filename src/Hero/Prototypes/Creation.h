@@ -12,3 +12,5 @@ int getHeroHomelandWithoutDescriptions();
 int seeHomelandDescriptions();
 int getHeroProfession();
 int getHeroClass();
+void logCreationData();
+int log();
