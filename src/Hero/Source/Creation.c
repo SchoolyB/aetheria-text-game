@@ -1553,13 +1553,13 @@ int getHeroClass()
     getHeroClass();
   }
 }
-
+//===========================================================================================================//
 void logCreationData(FILE *logFile, const char *category, const char *value)
 {
   fprintf(logFile, "%s: %s\n", category, value);
   fflush(logFile);
 }
-
+//===========================================================================================================//
 int appendToLog()
 {
   FILE *logFile = fopen("logs/creation.log", "a");
@@ -1582,7 +1582,7 @@ int appendToLog()
 //===========================================================================================================//
 // ??? possibly add race option during hero creation
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
-int startHeroCreation(logFile)
+int startHeroCreation()
 {
   sleep(1);
   printf("Let's begin by creating your character! \n");

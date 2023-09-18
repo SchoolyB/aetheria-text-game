@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "./Functions/Logger.h"
+#include "./../Hero/Source/Creation.c"
 
 #define MAX_INPUT_LENGTH 100
 
@@ -37,11 +38,30 @@ int command_line_entry(FILE *logFile)
       }
     }
 
-    if (strcmp(input, "exit") == 0 ||
-        strcmp(input, "quit") == 0)
+    else if (strcmp(input, "exit") == 0 ||
+             strcmp(input, "quit") == 0)
     {
       printf("Exiting...\n");
+      logMessage(logFile, "Exiting Program.");
       exit(0);
+    }
+
+    else if (strcmp(input, "Start") == 0 ||
+             strcmp(input, "start") == 0)
+    {
+      logMessage(logFile, "Program started.");
+      startHeroCreation();
+
+      return 0;
+    }
+    else if (strcmp(input, "Save") == 0 ||
+             strcmp(input, "save") == 0)
+    {
+    }
+
+    else
+    {
+      printf("Invalid command.\n");
     }
   }
 
