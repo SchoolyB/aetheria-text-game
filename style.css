@@ -1,0 +1,28 @@
+body{
+  padding: 0;
+  margin: 0;
+}
+
+
+
+
+
+
+/*=====================FOOTER=====================*/
+footer{
+  display: flex;
+  justify-content: center;
+  border-top: solid 1px black;
+}
+#footerContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footerPara{
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+}

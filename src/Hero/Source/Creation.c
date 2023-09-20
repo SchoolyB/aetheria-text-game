@@ -5,6 +5,7 @@
 #include "../Prototypes/Creation.h"
 #include "../../Countries/Description.c"
 #include "../Global_Variables/Hero.h"
+#include "../../Utils/Macros/Macros.h"
 
 // Global variables to be used in other files. See "Hero.h"
 char hero_first_name[10];
@@ -24,11 +25,12 @@ int getFirstName()
 
   // Remove the trailing newline character from the input
   // !This step is important and must be had for every function that uses fgets to store data
-  size_t len = strlen(firstNameInput);
-  if (len > 0 && firstNameInput[len - 1] == '\n')
-  {
-    firstNameInput[len - 1] = '\0';
-  }
+  // size_t len = strlen(firstNameInput);
+  // if (len > 0 && firstNameInput[len - 1] == '\n')
+  // {
+  //   firstNameInput[len - 1] = '\0';
+  // }
+  REMOVE_NEWLINE_CHARACTER(firstNameInput);
   // this copies the input from the user into the hero_first_name variable
   strcpy(hero_first_name, firstNameInput);
   printf("Your first name is: %s\n", hero_first_name);
@@ -38,29 +40,19 @@ int getFirstName()
   fgets(firstNameConfirmation, sizeof(firstNameConfirmation), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len2 = strlen(firstNameConfirmation);
-  if (len2 > 0 && firstNameConfirmation[len2 - 1] == '\n')
-  {
-    firstNameConfirmation[len2 - 1] = '\0';
-  }
-  if (strcmp(firstNameConfirmation, "y") == 0 ||
-      strcmp(firstNameConfirmation, "Y") == 0 ||
-      strcmp(firstNameConfirmation, "yes") == 0 ||
-      strcmp(firstNameConfirmation, "Yes") == 0)
+  REMOVE_NEWLINE_CHARACTER(firstNameConfirmation);
+  if (IS_YES(firstNameConfirmation))
   {
     printf("You have chosen %s as your first name\n", hero_first_name);
     dynastyNameCheck();
   }
-  else if (strcmp(firstNameConfirmation, "n") == 0 ||
-           strcmp(firstNameConfirmation, "N") == 0 ||
-           strcmp(firstNameConfirmation, "no") == 0 ||
-           strcmp(firstNameConfirmation, "No") == 0)
+  else if (IS_NO(firstNameConfirmation))
   {
     getFirstName();
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     getFirstName();
   }
 }
@@ -73,23 +65,13 @@ int dynastyNameCheck()
   fgets(dynastyNameDecision, sizeof(dynastyNameDecision), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(dynastyNameDecision);
-  if (len > 0 && dynastyNameDecision[len - 1] == '\n')
-  {
-    dynastyNameDecision[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(dynastyNameDecision);
   // Compare dynastyNameDecision with strings using strcmp
-  if (strcmp(dynastyNameDecision, "y") == 0 ||
-      strcmp(dynastyNameDecision, "Y") == 0 ||
-      strcmp(dynastyNameDecision, "yes") == 0 ||
-      strcmp(dynastyNameDecision, "Yes") == 0)
+  if (IS_YES(dynastyNameDecision))
   {
     getDynastyName();
   }
-  else if (strcmp(dynastyNameDecision, "n") == 0 ||
-           strcmp(dynastyNameDecision, "N") == 0 ||
-           strcmp(dynastyNameDecision, "no") == 0 ||
-           strcmp(dynastyNameDecision, "No") == 0)
+  else if (IS_NO(dynastyNameDecision))
   {
     sleep(1);
     printf("You have chosen not to have a dynasty name\n");
@@ -103,30 +85,24 @@ int dynastyNameCheck()
     {
       confirmDynastyDecision[len - 1] = '\0';
     }
-    if (strcmp(confirmDynastyDecision, "y") == 0 ||
-        strcmp(confirmDynastyDecision, "Y") == 0 ||
-        strcmp(confirmDynastyDecision, "yes") == 0 ||
-        strcmp(confirmDynastyDecision, "Yes") == 0)
+    if (IS_YES(confirmDynastyDecision))
     {
       printf("You have chosen not to have a dynasty name\n");
       heroGenderCheck();
     }
-    else if (strcmp(confirmDynastyDecision, "n") == 0 ||
-             strcmp(confirmDynastyDecision, "N") == 0 ||
-             strcmp(confirmDynastyDecision, "no") == 0 ||
-             strcmp(confirmDynastyDecision, "No") == 0)
+    else if (IS_NO(confirmDynastyDecision))
     {
       getDynastyName();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       dynastyNameCheck();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     dynastyNameCheck();
   }
   return 1;
@@ -140,11 +116,7 @@ int getDynastyName()
   fgets(dynastyNameInput, sizeof(dynastyNameInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(dynastyNameInput);
-  if (len > 0 && dynastyNameInput[len - 1] == '\n')
-  {
-    dynastyNameInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(dynastyNameInput);
   // this copies the input from the user into the hero_dynasty_name variable
   strcpy(hero_dynasty_name, dynastyNameInput);
   printf("Your dynasty name is: %s\n", hero_dynasty_name);
@@ -159,22 +131,12 @@ int confirmDynastyName()
   fgets(confirmDynastyNameInput, sizeof(confirmDynastyNameInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(confirmDynastyNameInput);
-  if (len > 0 && confirmDynastyNameInput[len - 1] == '\n')
-  {
-    confirmDynastyNameInput[len - 1] = '\0';
-  }
-  if (strcmp(confirmDynastyNameInput, "y") == 0 ||
-      strcmp(confirmDynastyNameInput, "Y") == 0 ||
-      strcmp(confirmDynastyNameInput, "yes") == 0 ||
-      strcmp(confirmDynastyNameInput, "Yes") == 0)
+  REMOVE_NEWLINE_CHARACTER(confirmDynastyNameInput);
+  if (IS_YES(confirmDynastyNameInput))
   {
     heroGenderCheck();
   }
-  else if (strcmp(confirmDynastyNameInput, "n") == 0 ||
-           strcmp(confirmDynastyNameInput, "N") == 0 ||
-           strcmp(confirmDynastyNameInput, "no") == 0 ||
-           strcmp(confirmDynastyNameInput, "No") == 0)
+  else if (IS_NO(confirmDynastyNameInput))
   {
     getDynastyName();
   }
@@ -193,59 +155,36 @@ int heroGenderCheck()
   fgets(heroGenderDecision, sizeof(heroGenderDecision), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroGenderDecision);
-  if (len > 0 && heroGenderDecision[len - 1] == '\n')
-  {
-    heroGenderDecision[len - 1] = '\0';
-  }
-
-  if (strcmp(heroGenderDecision, "y") == 0 ||
-      strcmp(heroGenderDecision, "Y") == 0 ||
-      strcmp(heroGenderDecision, "yes") == 0 ||
-      strcmp(heroGenderDecision, "Yes") == 0)
+  REMOVE_NEWLINE_CHARACTER(heroGenderDecision);
+  if (IS_YES(heroGenderDecision))
   {
     getHeroGender();
   }
-  else if (strcmp(heroGenderDecision, "n") == 0 ||
-           strcmp(heroGenderDecision, "N") == 0 ||
-           strcmp(heroGenderDecision, "no") == 0 ||
-           strcmp(heroGenderDecision, "No") == 0)
+  else if (IS_NO(heroGenderDecision))
   {
     printf("Are you sure you do not have a gender? (y/n): ");
     fgets(heroGenderDecisionConfirmation, sizeof(heroGenderDecisionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroGenderDecisionConfirmation);
-    if (len > 0 && heroGenderDecisionConfirmation[len - 1] == '\n')
-    {
-      heroGenderDecisionConfirmation[len - 1] = '\0';
-    }
+    REMOVE_NEWLINE_CHARACTER(heroGenderDecisionConfirmation);
 
-    if (strcmp(heroGenderDecisionConfirmation, "y") == 0 ||
-        strcmp(heroGenderDecisionConfirmation, "Y") == 0 ||
-        strcmp(heroGenderDecisionConfirmation, "yes") == 0 ||
-        strcmp(heroGenderDecisionConfirmation, "Yes") == 0 ||
-        strcmp(heroGenderDecisionConfirmation, "YES") == 0)
+    if (IS_YES(heroGenderDecisionConfirmation))
     {
       getHeroHomeland();
     }
-    else if (strcmp(heroGenderDecisionConfirmation, "n") == 0 ||
-             strcmp(heroGenderDecisionConfirmation, "N") == 0 ||
-             strcmp(heroGenderDecisionConfirmation, "no") == 0 ||
-             strcmp(heroGenderDecisionConfirmation, "No") == 0 ||
-             strcmp(heroGenderDecisionConfirmation, "NO") == 0)
+    else if (IS_NO(heroGenderDecisionConfirmation))
     {
       getHeroGender();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       heroGenderCheck();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     heroGenderCheck();
   }
   return 0;
@@ -261,11 +200,7 @@ int getHeroGender()
   fgets(heroGenderInput, sizeof(heroGenderInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroGenderInput);
-  if (len > 0 && heroGenderInput[len - 1] == '\n')
-  {
-    heroGenderInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(heroGenderInput);
   strcpy(hero_gender, heroGenderInput);
   printf("You are a %s \n", hero_gender);
 
@@ -289,7 +224,7 @@ int getHeroGender()
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
   }
 }
 //===========================================================================================================//
@@ -299,23 +234,12 @@ int confirmHeroGender()
   printf("Is this correct? (y/n): ");
   fgets(confirmHeroGenderInput, sizeof(confirmHeroGenderInput), stdin);
 
-  size_t len = strlen(confirmHeroGenderInput);
-  if (len > 0 && confirmHeroGenderInput[len - 1] == '\n')
-  {
-    confirmHeroGenderInput[len - 1] = '\0';
-  }
-
-  if (strcmp(confirmHeroGenderInput, "y") == 0 ||
-      strcmp(confirmHeroGenderInput, "Y") == 0 ||
-      strcmp(confirmHeroGenderInput, "yes") == 0 ||
-      strcmp(confirmHeroGenderInput, "Yes") == 0)
+  REMOVE_NEWLINE_CHARACTER(confirmHeroGenderInput);
+  if (IS_YES(confirmHeroGenderInput))
   {
     getHeroHomeland();
   }
-  else if (strcmp(confirmHeroGenderInput, "n") == 0 ||
-           strcmp(confirmHeroGenderInput, "N") == 0 ||
-           strcmp(confirmHeroGenderInput, "no") == 0 ||
-           strcmp(confirmHeroGenderInput, "No") == 0)
+  else if (IS_NO(confirmHeroGenderInput))
   {
     getHeroGender();
   }
@@ -346,12 +270,7 @@ int getHeroHomeland()
   fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroOriginInput);
-  if (len > 0 && heroOriginInput[len - 1] == '\n')
-  {
-    heroOriginInput[len - 1] = '\0';
-  }
-
+  REMOVE_NEWLINE_CHARACTER(heroOriginInput);
   if (strcmp(heroOriginInput, "1") == 0 ||
       strcmp(heroOriginInput, "Empyrea") == 0 ||
       strcmp(heroOriginInput, "empyrea") == 0 ||
@@ -363,30 +282,20 @@ int getHeroHomeland()
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroOriginDecision);
-    if (len > 0 && heroOriginDecision[len - 1] == '\n')
-    {
-      heroOriginDecision[len - 1] = '\0';
-    }
-    if (strcmp(heroOriginDecision, "y") == 0 ||
-        strcmp(heroOriginDecision, "Y") == 0 ||
-        strcmp(heroOriginDecision, "yes") == 0 ||
-        strcmp(heroOriginDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
+    if (IS_YES(heroOriginDecision))
     {
       strcpy(hero_homeland, "Empyrea");
       printf("So you are from %s \n", hero_homeland);
       getHeroProfession();
     }
-    else if (strcmp(heroOriginDecision, "n") == 0 ||
-             strcmp(heroOriginDecision, "N") == 0 ||
-             strcmp(heroOriginDecision, "no") == 0 ||
-             strcmp(heroOriginDecision, "No") == 0)
+    else if (IS_NO(heroOriginDecision))
     {
       getHeroHomeland();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomeland();
     }
   }
@@ -401,30 +310,20 @@ int getHeroHomeland()
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroOriginDecision);
-    if (len > 0 && heroOriginDecision[len - 1] == '\n')
-    {
-      heroOriginDecision[len - 1] = '\0';
-    }
-    if (strcmp(heroOriginDecision, "y") == 0 ||
-        strcmp(heroOriginDecision, "Y") == 0 ||
-        strcmp(heroOriginDecision, "yes") == 0 ||
-        strcmp(heroOriginDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
+    if (IS_YES(heroOriginDecision))
     {
       strcpy(hero_homeland, "Wesward");
       printf("So you are from %s \n", hero_homeland);
       getHeroProfession();
     }
-    else if (strcmp(heroOriginDecision, "n") == 0 ||
-             strcmp(heroOriginDecision, "N") == 0 ||
-             strcmp(heroOriginDecision, "no") == 0 ||
-             strcmp(heroOriginDecision, "No") == 0)
+    else if (IS_NO(heroOriginDecision))
     {
       getHeroHomeland();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomeland();
     }
   }
@@ -439,30 +338,20 @@ int getHeroHomeland()
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroOriginDecision);
-    if (len > 0 && heroOriginDecision[len - 1] == '\n')
-    {
-      heroOriginDecision[len - 1] = '\0';
-    }
-    if (strcmp(heroOriginDecision, "y") == 0 ||
-        strcmp(heroOriginDecision, "Y") == 0 ||
-        strcmp(heroOriginDecision, "yes") == 0 ||
-        strcmp(heroOriginDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
+    if (IS_YES(heroOriginDecision))
     {
       strcpy(hero_homeland, "Magdalar");
       printf("So you are from %s \n", hero_homeland);
       getHeroProfession();
     }
-    else if (strcmp(heroOriginDecision, "n") == 0 ||
-             strcmp(heroOriginDecision, "N") == 0 ||
-             strcmp(heroOriginDecision, "no") == 0 ||
-             strcmp(heroOriginDecision, "No") == 0)
+    else if (IS_NO(heroOriginDecision))
     {
       getHeroHomeland();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomeland();
     }
   }
@@ -477,30 +366,20 @@ int getHeroHomeland()
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroOriginDecision);
-    if (len > 0 && heroOriginDecision[len - 1] == '\n')
-    {
-      heroOriginDecision[len - 1] = '\0';
-    }
-    if (strcmp(heroOriginDecision, "y") == 0 ||
-        strcmp(heroOriginDecision, "Y") == 0 ||
-        strcmp(heroOriginDecision, "yes") == 0 ||
-        strcmp(heroOriginDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
+    if (IS_YES(heroOriginDecision))
     {
       strcpy(hero_homeland, "Ashvadan");
       printf("So you are from %s \n", hero_homeland);
       getHeroProfession();
     }
-    else if (strcmp(heroOriginDecision, "n") == 0 ||
-             strcmp(heroOriginDecision, "N") == 0 ||
-             strcmp(heroOriginDecision, "no") == 0 ||
-             strcmp(heroOriginDecision, "No") == 0)
+    else if (IS_NO(heroOriginDecision))
     {
       getHeroHomeland();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomeland();
     }
   }
@@ -516,36 +395,26 @@ int getHeroHomeland()
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroOriginDecision);
-    if (len > 0 && heroOriginDecision[len - 1] == '\n')
-    {
-      heroOriginDecision[len - 1] = '\0';
-    }
-    if (strcmp(heroOriginDecision, "y") == 0 ||
-        strcmp(heroOriginDecision, "Y") == 0 ||
-        strcmp(heroOriginDecision, "yes") == 0 ||
-        strcmp(heroOriginDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
+    if (IS_YES(heroOriginDecision))
     {
       strcpy(hero_homeland, "Nadafia");
       printf("So you are from %s \n", hero_homeland);
       getHeroProfession();
     }
-    else if (strcmp(heroOriginDecision, "n") == 0 ||
-             strcmp(heroOriginDecision, "N") == 0 ||
-             strcmp(heroOriginDecision, "no") == 0 ||
-             strcmp(heroOriginDecision, "No") == 0)
+    else if (IS_NO(heroOriginDecision))
     {
       getHeroHomeland();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomeland();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     getHeroHomeland();
   }
 }
@@ -564,11 +433,7 @@ int getHeroHomelandWithoutDescriptions()
   fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroOriginInput);
-  if (len > 0 && heroOriginInput[len - 1] == '\n')
-  {
-    heroOriginInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(heroOriginInput);
 
   if (strcmp(heroOriginInput, "1") == 0 ||
       strcmp(heroOriginInput, "Empyrea") == 0 ||
@@ -580,29 +445,19 @@ int getHeroHomelandWithoutDescriptions()
     fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmHomelandDecision);
-    if (len > 0 && confirmHomelandDecision[len - 1] == '\n')
-    {
-      confirmHomelandDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmHomelandDecision, "y") == 0 ||
-        strcmp(confirmHomelandDecision, "Y") == 0 ||
-        strcmp(confirmHomelandDecision, "yes") == 0 ||
-        strcmp(confirmHomelandDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
+    if (IS_YES(confirmHomelandDecision))
     {
       strcpy(hero_homeland, "Empyrea");
       getHeroProfession();
     }
-    else if (strcmp(confirmHomelandDecision, "n") == 0 ||
-             strcmp(confirmHomelandDecision, "N") == 0 ||
-             strcmp(confirmHomelandDecision, "no") == 0 ||
-             strcmp(confirmHomelandDecision, "No") == 0)
+    else if (IS_NO(confirmHomelandDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomelandWithoutDescriptions();
     }
   }
@@ -616,29 +471,19 @@ int getHeroHomelandWithoutDescriptions()
     fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmHomelandDecision);
-    if (len > 0 && confirmHomelandDecision[len - 1] == '\n')
-    {
-      confirmHomelandDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmHomelandDecision, "y") == 0 ||
-        strcmp(confirmHomelandDecision, "Y") == 0 ||
-        strcmp(confirmHomelandDecision, "yes") == 0 ||
-        strcmp(confirmHomelandDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
+    if (IS_YES(confirmHomelandDecision))
     {
       strcpy(hero_homeland, "Wesward");
       getHeroProfession();
     }
-    else if (strcmp(confirmHomelandDecision, "n") == 0 ||
-             strcmp(confirmHomelandDecision, "N") == 0 ||
-             strcmp(confirmHomelandDecision, "no") == 0 ||
-             strcmp(confirmHomelandDecision, "No") == 0)
+    else if (IS_NO(confirmHomelandDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomelandWithoutDescriptions();
     }
   }
@@ -652,29 +497,19 @@ int getHeroHomelandWithoutDescriptions()
     fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmHomelandDecision);
-    if (len > 0 && confirmHomelandDecision[len - 1] == '\n')
-    {
-      confirmHomelandDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmHomelandDecision, "y") == 0 ||
-        strcmp(confirmHomelandDecision, "Y") == 0 ||
-        strcmp(confirmHomelandDecision, "yes") == 0 ||
-        strcmp(confirmHomelandDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
+    if (IS_YES(confirmHomelandDecision))
     {
       strcpy(hero_homeland, "Magdalar");
       getHeroProfession();
     }
-    else if (strcmp(confirmHomelandDecision, "n") == 0 ||
-             strcmp(confirmHomelandDecision, "N") == 0 ||
-             strcmp(confirmHomelandDecision, "no") == 0 ||
-             strcmp(confirmHomelandDecision, "No") == 0)
+    else if (IS_NO(confirmHomelandDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomelandWithoutDescriptions();
     }
   }
@@ -688,29 +523,19 @@ int getHeroHomelandWithoutDescriptions()
     fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmHomelandDecision);
-    if (len > 0 && confirmHomelandDecision[len - 1] == '\n')
-    {
-      confirmHomelandDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmHomelandDecision, "y") == 0 ||
-        strcmp(confirmHomelandDecision, "Y") == 0 ||
-        strcmp(confirmHomelandDecision, "yes") == 0 ||
-        strcmp(confirmHomelandDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
+    if (IS_YES(confirmHomelandDecision))
     {
       strcpy(hero_homeland, "Ashvadan");
       getHeroProfession();
     }
-    else if (strcmp(confirmHomelandDecision, "n") == 0 ||
-             strcmp(confirmHomelandDecision, "N") == 0 ||
-             strcmp(confirmHomelandDecision, "no") == 0 ||
-             strcmp(confirmHomelandDecision, "No") == 0)
+    else if (IS_NO(confirmHomelandDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomelandWithoutDescriptions();
     }
   }
@@ -725,35 +550,25 @@ int getHeroHomelandWithoutDescriptions()
     fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmHomelandDecision);
-    if (len > 0 && confirmHomelandDecision[len - 1] == '\n')
-    {
-      confirmHomelandDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmHomelandDecision, "y") == 0 ||
-        strcmp(confirmHomelandDecision, "Y") == 0 ||
-        strcmp(confirmHomelandDecision, "yes") == 0 ||
-        strcmp(confirmHomelandDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
+    if (IS_YES(confirmHomelandDecision))
     {
       strcpy(hero_homeland, "Nadafia");
       getHeroProfession();
     }
-    else if (strcmp(confirmHomelandDecision, "n") == 0 ||
-             strcmp(confirmHomelandDecision, "N") == 0 ||
-             strcmp(confirmHomelandDecision, "no") == 0 ||
-             strcmp(confirmHomelandDecision, "No") == 0)
+    else if (IS_NO(confirmHomelandDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroHomelandWithoutDescriptions();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     getHeroHomelandWithoutDescriptions();
   }
 }
@@ -773,11 +588,7 @@ int seeHomelandDescriptions()
   fgets(seeDescriptionInput, sizeof(seeDescriptionInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(seeDescriptionInput);
-  if (len > 0 && seeDescriptionInput[len - 1] == '\n')
-  {
-    seeDescriptionInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(seeDescriptionInput);
 
   // START OF EMPYREA DESCRIPTION CHECK
   if (strcmp(seeDescriptionInput, "1") == 0 ||
@@ -790,28 +601,18 @@ int seeHomelandDescriptions()
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDescriptionDecision);
-    if (len > 0 && confirmDescriptionDecision[len - 1] == '\n')
-    {
-      confirmDescriptionDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmDescriptionDecision, "y") == 0 ||
-        strcmp(confirmDescriptionDecision, "Y") == 0 ||
-        strcmp(confirmDescriptionDecision, "yes") == 0 ||
-        strcmp(confirmDescriptionDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
+    if (IS_YES(confirmDescriptionDecision))
     {
       getHeroHomelandWithoutDescriptions();
     }
-    else if (strcmp(confirmDescriptionDecision, "n") == 0 ||
-             strcmp(confirmDescriptionDecision, "N") == 0 ||
-             strcmp(confirmDescriptionDecision, "no") == 0 ||
-             strcmp(confirmDescriptionDecision, "No") == 0)
+    else if (IS_NO(confirmDescriptionDecision))
     {
       seeHomelandDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       seeHomelandDescriptions();
     }
   }
@@ -828,29 +629,19 @@ int seeHomelandDescriptions()
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDescriptionDecision);
-    if (len > 0 && confirmDescriptionDecision[len - 1] == '\n')
-    {
-      confirmDescriptionDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmDescriptionDecision, "y") == 0 ||
-        strcmp(confirmDescriptionDecision, "Y") == 0 ||
-        strcmp(confirmDescriptionDecision, "yes") == 0 ||
-        strcmp(confirmDescriptionDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
+    if (IS_YES(confirmDescriptionDecision))
     {
       getHeroHomelandWithoutDescriptions();
       printf("This is a test to check that the user entered Wesward\n");
     }
-    else if (strcmp(confirmDescriptionDecision, "n") == 0 ||
-             strcmp(confirmDescriptionDecision, "N") == 0 ||
-             strcmp(confirmDescriptionDecision, "no") == 0 ||
-             strcmp(confirmDescriptionDecision, "No") == 0)
+    else if (IS_NO(confirmDescriptionDecision))
     {
       seeHomelandDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       seeHomelandDescriptions();
     }
   }
@@ -867,29 +658,19 @@ int seeHomelandDescriptions()
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDescriptionDecision);
-    if (len > 0 && confirmDescriptionDecision[len - 1] == '\n')
-    {
-      confirmDescriptionDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmDescriptionDecision, "y") == 0 ||
-        strcmp(confirmDescriptionDecision, "Y") == 0 ||
-        strcmp(confirmDescriptionDecision, "yes") == 0 ||
-        strcmp(confirmDescriptionDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
+    if (IS_YES(confirmDescriptionDecision))
     {
       getHeroHomelandWithoutDescriptions();
       printf("This is a test to check that the user entered Magdalar\n");
     }
-    else if (strcmp(confirmDescriptionDecision, "n") == 0 ||
-             strcmp(confirmDescriptionDecision, "N") == 0 ||
-             strcmp(confirmDescriptionDecision, "no") == 0 ||
-             strcmp(confirmDescriptionDecision, "No") == 0)
+    else if (IS_NO(confirmDescriptionDecision))
     {
       seeHomelandDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       seeHomelandDescriptions();
     }
   }
@@ -906,29 +687,19 @@ int seeHomelandDescriptions()
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDescriptionDecision);
-    if (len > 0 && confirmDescriptionDecision[len - 1] == '\n')
-    {
-      confirmDescriptionDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmDescriptionDecision, "y") == 0 ||
-        strcmp(confirmDescriptionDecision, "Y") == 0 ||
-        strcmp(confirmDescriptionDecision, "yes") == 0 ||
-        strcmp(confirmDescriptionDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
+    if (IS_YES(confirmDescriptionDecision))
     {
       getHeroHomelandWithoutDescriptions();
       printf("This is a test to check that the user entered Ashvadan\n");
     }
-    else if (strcmp(confirmDescriptionDecision, "n") == 0 ||
-             strcmp(confirmDescriptionDecision, "N") == 0 ||
-             strcmp(confirmDescriptionDecision, "no") == 0 ||
-             strcmp(confirmDescriptionDecision, "No") == 0)
+    else if (IS_NO(confirmDescriptionDecision))
     {
       seeHomelandDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       seeHomelandDescriptions();
     }
   }
@@ -945,29 +716,19 @@ int seeHomelandDescriptions()
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDescriptionDecision);
-    if (len > 0 && confirmDescriptionDecision[len - 1] == '\n')
-    {
-      confirmDescriptionDecision[len - 1] = '\0';
-    }
-    if (strcmp(confirmDescriptionDecision, "y") == 0 ||
-        strcmp(confirmDescriptionDecision, "Y") == 0 ||
-        strcmp(confirmDescriptionDecision, "yes") == 0 ||
-        strcmp(confirmDescriptionDecision, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
+    if (IS_YES(confirmDescriptionDecision))
     {
       getHeroHomelandWithoutDescriptions();
       printf("This is a test to check that the user entered Nadafia\n");
     }
-    else if (strcmp(confirmDescriptionDecision, "n") == 0 ||
-             strcmp(confirmDescriptionDecision, "N") == 0 ||
-             strcmp(confirmDescriptionDecision, "no") == 0 ||
-             strcmp(confirmDescriptionDecision, "No") == 0)
+    else if (IS_NO(confirmDescriptionDecision))
     {
       seeHomelandDescriptions();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       seeHomelandDescriptions();
     }
   }
@@ -1003,11 +764,7 @@ int getHeroProfession()
   fgets(heroProfessionInput, sizeof(heroProfessionInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroProfessionInput);
-  if (len > 0 && heroProfessionInput[len - 1] == '\n')
-  {
-    heroProfessionInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(heroProfessionInput);
 
   if (strcmp(heroProfessionInput, "1") == 0 ||
       strcmp(heroProfessionInput, "Blacksmith") == 0 ||
@@ -1020,29 +777,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Blacksmith");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1057,29 +804,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Merchant");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1094,29 +831,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Farmer");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1131,29 +858,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Hunter");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1168,29 +885,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Soldier");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1205,29 +912,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Sailor");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1242,29 +939,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Scholar");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1279,29 +966,19 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "Thief");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
@@ -1319,35 +996,25 @@ int getHeroProfession()
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroProfessionConfirmation);
-    if (len > 0 && heroProfessionConfirmation[len - 1] == '\n')
-    {
-      heroProfessionConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroProfessionConfirmation, "y") == 0 ||
-        strcmp(heroProfessionConfirmation, "Y") == 0 ||
-        strcmp(heroProfessionConfirmation, "yes") == 0 ||
-        strcmp(heroProfessionConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
+    if (IS_YES(heroProfessionConfirmation))
     {
       strcpy(hero_profession, "None");
       getHeroClass();
     }
-    else if (strcmp(heroProfessionConfirmation, "n") == 0 ||
-             strcmp(heroProfessionConfirmation, "N") == 0 ||
-             strcmp(heroProfessionConfirmation, "no") == 0 ||
-             strcmp(heroProfessionConfirmation, "No") == 0)
+    else if (IS_NO(heroProfessionConfirmation))
     {
       getHeroProfession();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroProfession();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     getHeroProfession();
   }
 }
@@ -1372,11 +1039,7 @@ int getHeroClass()
   fgets(heroClassInput, sizeof(heroClassInput), stdin);
 
   // Remove the trailing newline character from the input
-  size_t len = strlen(heroClassInput);
-  if (len > 0 && heroClassInput[len - 1] == '\n')
-  {
-    heroClassInput[len - 1] = '\0';
-  }
+  REMOVE_NEWLINE_CHARACTER(heroClassInput);
 
   if (strcmp(heroClassInput, "1") == 0 ||
       strcmp(heroClassInput, "Warrior") == 0 ||
@@ -1386,28 +1049,18 @@ int getHeroClass()
     fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroClassConfirmation);
-    if (len > 0 && heroClassConfirmation[len - 1] == '\n')
-    {
-      heroClassConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroClassConfirmation, "y") == 0 ||
-        strcmp(heroClassConfirmation, "Y") == 0 ||
-        strcmp(heroClassConfirmation, "yes") == 0 ||
-        strcmp(heroClassConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
+    if (IS_YES(heroClassConfirmation))
     {
       strcpy(hero_class, "Warrior");
     }
-    else if (strcmp(heroClassConfirmation, "n") == 0 ||
-             strcmp(heroClassConfirmation, "N") == 0 ||
-             strcmp(heroClassConfirmation, "no") == 0 ||
-             strcmp(heroClassConfirmation, "No") == 0)
+    else if (IS_NO(heroClassConfirmation))
     {
       getHeroClass();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroClass();
     }
   }
@@ -1420,28 +1073,18 @@ int getHeroClass()
     fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroClassConfirmation);
-    if (len > 0 && heroClassConfirmation[len - 1] == '\n')
-    {
-      heroClassConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroClassConfirmation, "y") == 0 ||
-        strcmp(heroClassConfirmation, "Y") == 0 ||
-        strcmp(heroClassConfirmation, "yes") == 0 ||
-        strcmp(heroClassConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
+    if (IS_YES(heroClassConfirmation))
     {
       strcpy(hero_class, "Mage");
     }
-    else if (strcmp(heroClassConfirmation, "n") == 0 ||
-             strcmp(heroClassConfirmation, "N") == 0 ||
-             strcmp(heroClassConfirmation, "no") == 0 ||
-             strcmp(heroClassConfirmation, "No") == 0)
+    else if (IS_NO(heroClassConfirmation))
     {
       getHeroClass();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroClass();
     }
   }
@@ -1454,28 +1097,18 @@ int getHeroClass()
     fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroClassConfirmation);
-    if (len > 0 && heroClassConfirmation[len - 1] == '\n')
-    {
-      heroClassConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroClassConfirmation, "y") == 0 ||
-        strcmp(heroClassConfirmation, "Y") == 0 ||
-        strcmp(heroClassConfirmation, "yes") == 0 ||
-        strcmp(heroClassConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
+    if (IS_YES(heroClassConfirmation))
     {
       strcpy(hero_class, "Rogue");
     }
-    else if (strcmp(heroClassConfirmation, "n") == 0 ||
-             strcmp(heroClassConfirmation, "N") == 0 ||
-             strcmp(heroClassConfirmation, "no") == 0 ||
-             strcmp(heroClassConfirmation, "No") == 0)
+    else if (IS_NO(heroClassConfirmation))
     {
       getHeroClass();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroClass();
     }
   }
@@ -1488,28 +1121,18 @@ int getHeroClass()
     fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroClassConfirmation);
-    if (len > 0 && heroClassConfirmation[len - 1] == '\n')
-    {
-      heroClassConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroClassConfirmation, "y") == 0 ||
-        strcmp(heroClassConfirmation, "Y") == 0 ||
-        strcmp(heroClassConfirmation, "yes") == 0 ||
-        strcmp(heroClassConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
+    if (IS_YES(heroClassConfirmation))
     {
       strcpy(hero_class, "Cleric");
     }
-    else if (strcmp(heroClassConfirmation, "n") == 0 ||
-             strcmp(heroClassConfirmation, "N") == 0 ||
-             strcmp(heroClassConfirmation, "no") == 0 ||
-             strcmp(heroClassConfirmation, "No") == 0)
+    else if (IS_NO(heroClassConfirmation))
     {
       getHeroClass();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroClass();
     }
   }
@@ -1522,34 +1145,24 @@ int getHeroClass()
     fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(heroClassConfirmation);
-    if (len > 0 && heroClassConfirmation[len - 1] == '\n')
-    {
-      heroClassConfirmation[len - 1] = '\0';
-    }
-    if (strcmp(heroClassConfirmation, "y") == 0 ||
-        strcmp(heroClassConfirmation, "Y") == 0 ||
-        strcmp(heroClassConfirmation, "yes") == 0 ||
-        strcmp(heroClassConfirmation, "Yes") == 0)
+    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
+    if (IS_YES(heroClassConfirmation))
     {
       strcpy(hero_class, "Bard");
     }
-    else if (strcmp(heroClassConfirmation, "n") == 0 ||
-             strcmp(heroClassConfirmation, "N") == 0 ||
-             strcmp(heroClassConfirmation, "no") == 0 ||
-             strcmp(heroClassConfirmation, "No") == 0)
+    else if (IS_NO(heroClassConfirmation))
     {
       getHeroClass();
     }
     else
     {
-      printf("Please make a valid decision \n");
+      MAKE_VALID_DECISION;
       getHeroClass();
     }
   }
   else
   {
-    printf("Please make a valid decision \n");
+    MAKE_VALID_DECISION;
     getHeroClass();
   }
 }

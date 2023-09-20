@@ -1,18 +1,17 @@
 #include <stdio.h>
-#include "../Hero/Global_Variables/Hero.h"
-#include "../Enemies/Common.h"
+#include "../../Hero/Global_Variables/Hero.h"
+#include "../../Enemies/Enemies.h"
 
 int hero_health;
 
-int startFight()
-{
-
-  return 0;
-}
+char enemy1_name[15];
+int enemy1_health;
+char enemy2_name[15];
+int enemy2_health;
 
 //===========================================================================================================//
 
-int spawnCommonEnemy(struct Common_Enemy *enemy)
+int spawnCommonEnemy()
 {
   // this initializes the random number generator
   srand(time(NULL)); // time() is used to get the current time as a seed, and NULL is used to indicate that we don't need to pass any parameters to the function
@@ -28,6 +27,11 @@ int spawnCommonEnemy(struct Common_Enemy *enemy)
   };
 
   int random_number = rand() % 7; // rand() is used to generate random numbers, % 7 is used to get a number between 0 and 6
+}
+//===========================================================================================================//
+
+int startFight()
+{
 
   return 0;
 }

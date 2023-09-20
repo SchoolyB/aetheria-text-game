@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "./Hero/Source/Creation.c"
 #include "./Hero/Source/StatPool.c"
 #include "./Chapters/Chapter1/Source/Chapter1.c"
-#include "./utils/Escape.c"
-#include "./utils/Logger.c"
+#include "./Utils/Functions/Escape.c"
+#include "./Utils/Functions/Logger.c"
+#include "./Utils/Functions/Fight.c"
+#include "./Utils/Commands.c"
 // Function to log messages to a file
 
 int main()
@@ -16,10 +17,10 @@ int main()
         perror("Error opening the log file");
         exit(1);
     }
-    logMessage(logFile, "Program started.");
-    startHeroCreation();
+    command_line_entry(logFile);
     setAllHeroStats();
     startChapterOne();
+    // startFight();
     logMessage(logFile, "Program ended.");
     fclose(logFile);
     return 0;
