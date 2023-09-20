@@ -1183,12 +1183,14 @@ int appendToLog()
   }
 
   fprintf(logFile, "Hero Information: \n");
+  fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
   logCreationData(logFile, "First Name", hero_first_name);
   logCreationData(logFile, "Dynasty Name", hero_dynasty_name);
   logCreationData(logFile, "Gender", hero_gender);
   logCreationData(logFile, "Home of Origin", hero_homeland);
   logCreationData(logFile, "Profession", hero_profession);
   logCreationData(logFile, "Class", hero_class);
+  logCreationData(logFile, "+===========================+", NULL);
   fclose(logFile);
   return 0;
 }
