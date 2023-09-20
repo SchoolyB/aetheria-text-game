@@ -8,9 +8,9 @@
 </head>
 <body>
   <header>Untitled Text Based Game</header>
-
+  <div id="content-container">
   <div class="gameInfo" id="gameInformationContainer">
-    <h1>Info</h1>
+    <h1 class="heading">Info</h1>
     <div class="gameInfo" id="aboutTheGame">
       <p class="para">
         I am currently taking a break from large framework projects to work on a small and fun text based game written entirely in
@@ -56,9 +56,12 @@
         <li>
           Basic Commands:
           <ul>
-            <li>Start</li>
-            <li>Restart</li>
-            <li>Quit</li>
+            <li>start</li>
+            <li>/restart</li>
+            <li>/quit</li>
+            <li>/exit</li>
+            <li>/heroinfo</li>
+            <li>/gameinfo</li>
           </ul>
         </li>
         <li>
@@ -73,14 +76,17 @@
   </div>
 
 
-  <div class="media" id="mediaContainer">
-  <h1>Media</h1>
-    <div class="media" id="screenshots">
-      <img id="screenshot1" src="/assets/Screenshot1.png" alt="Image of Terminal">
+  <div id="mediaContainer">
+  <h1 class="heading">Media</h1>
+    <div class="mediaContainer" id="screenshots">
+      <img class="media" id="screenshot1" src="/assets/screenshot1.png" alt="Image of Terminal">
+      <img class="media" id="screenshot2" src="/assets/screenshot2.png" alt="Image of Terminal">
+      <img class="media" id="screenshot3" src="/assets/screenshot3.png" alt="Image of Terminal">
+      <img class="media" id="screenshot4" src="/assets/screenshot4.png" alt="Image of Terminal">
     </div>
     <div class="media" id="videos"></div>
   </div>
-
+</div>
 
   <footer>
     <div id="footerContainer">

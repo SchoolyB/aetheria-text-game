@@ -4,7 +4,8 @@
 #include <unistd.h>
 #include "./Functions/Logger.h"
 #include "./../Hero/Source/Creation.c"
-#include "Macros/Macros.h"
+#include "./Macros/Macros.h"
+#include "../Utils/Global_Project_Variables.h"
 //?+++++For other Macros See: Macros/Macros.h+++++?
 
 #define MAX_INPUT_LENGTH 100 // this is a non-global macro
@@ -14,7 +15,14 @@ char commands[10][100] = {
     "/restart ---> This Command will restart the program\n",
     "/exit ---> This Command will exit the program\n",
     "/quit ---> This Command will exit the program\n",
-    "/commands ---> This Command will list all available commands\n"};
+    "/commands ---> This Command will list all available commands\n",
+    "/heroinfo ---> This Command logs all the heros current info to CLI\n",
+    "/gameinfo ---> This Command logs info about the game\n",
+    //"inventory ---> This Command will list all items currently in inventory\n",
+    //"save ---> This Command will save the game\n",
+    //"load ---> This Command will load the game\n",
+    };
+
 
 int command_line_entry(FILE *logFile)
 { // Accept logFile as an argument
@@ -47,16 +55,12 @@ int command_line_entry(FILE *logFile)
       }
     }
 
-    else if (strcmp(input, "Start") == 0 ||
-             strcmp(input, "start") == 0 ||
-             strcmp(input, "START") == 0)
+    else if (strcmp(input, "start") == 0)
     {
       logMessage(logFile, "Program started.");
       startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
-
       return 0;
     }
-
     else if (strcmp(input, "/exit") == 0 ||
              strcmp(input, "/quit") == 0)
     {
@@ -67,7 +71,6 @@ int command_line_entry(FILE *logFile)
       REMOVE_NEWLINE_CHARACTER(exitConfirmation);
       if (IS_YES(exitConfirmation))
       {
-
         printf("Exiting...\n");
         logMessage(logFile, "Exited Program.");
         exit(0);
@@ -80,35 +83,34 @@ int command_line_entry(FILE *logFile)
     // }
     else if (strcmp(input, "/commands") == 0)
     {
-      printf("\x1b[32mA\x1b[0m");
-      printf("\x1b[32mV\x1b[0m");
-      printf("\x1b[32mA\x1b[0m");
-      printf("\x1b[32mI\x1b[0m");
-      printf("\x1b[32mL\x1b[0m");
-      printf("\x1b[32mA\x1b[0m");
-      printf("\x1b[32mB\x1b[0m");
-      printf("\x1b[32mL\x1b[0m");
-      printf("\x1b[32mE\x1b[0m");
-
-      printf("\x1b[32m \x1b[0m"); // space
-
-      printf("\x1b[32mC\x1b[0m");
-      printf("\x1b[32mO\x1b[0m");
-      printf("\x1b[32mM\x1b[0m");
-      printf("\x1b[32mM\x1b[0m");
-      printf("\x1b[32mA\x1b[0m");
-      printf("\x1b[32mN\x1b[0m");
-      printf("\x1b[32mD\x1b[0m");
-      printf("\x1b[32mS\x1b[0m");
-      printf("\x1b[32m:\x1b[0m\n");
-      
-      for (int i = 0; i < 5; i++)
+      printf("\x1b[32mAVAILABLE COMMANDS: \x1b[0m\n");
+      for (int i = 0; i < 7; i++)
       {
         printf("%s\n", commands[i]);
       }
       logMessage(logFile, "Requested to see list of available commands.\n");
     }
 
+    else if(strcmp(input, "/heroinfo") == 0){
+      logMessage(logFile, "Requested hero information.\n");
+      printf("\x1b[32mHERO INFORMATION: \x1b[0m\n");
+      // TODO add if var is null then print "Not set"
+      printf("First Name: %s\n", hero_first_name);
+      printf("Dynasty Name: %s \n", hero_dynasty_name);
+      printf("Gender: %s \n", hero_gender);
+      printf("Country of Origin: %s \n", hero_homeland);
+      printf("Profession: %s \n", hero_profession);
+      printf("Class: %s \n", hero_class);
+    }
+
+    else if(strcmp(input, "/gameinfo") == 0){
+      logMessage(logFile, "Requested game information.\n");
+      printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
+      printf("Game Version: %f\n", GAME_VERSION);
+      printf("Game Name: Untitled Text Game\n");
+      printf("Game Author: Marshall Burns\n");
+      printf("Game Description: COMING SOON\n");
+    }
     else
     {
       printf("Invalid command.\n");

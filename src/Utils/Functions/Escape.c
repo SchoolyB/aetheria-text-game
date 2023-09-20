@@ -4,6 +4,7 @@
 #include <time.h>   // for time
 #include <stdbool.h>
 #include "Escape.h"
+#include "../Macros/Macros.h"
 
 bool escaped;
 
@@ -19,13 +20,7 @@ int escape()
         printf("%d. %s\n", i + 1, options[i]);
     }
     fgets(input, sizeof(input), stdin);
-
-    size_t len = strlen(input);
-    if (len > 0 && input[len - 1] == '\n')
-    {
-        input[--len] = '\0';
-    }
-
+    REMOVE_NEWLINE_CHARACTER(input);
     if (strcmp(input, "1") == 0 ||
         strcmp(input, "run") == 0 ||
         strcmp(input, "Run") == 0)

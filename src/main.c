@@ -19,7 +19,8 @@ int main()
     }
     command_line_entry(logFile);
     setAllHeroStats();
-    startChapterOne();
+    command_line_entry(logFile);
+    // startChapterOne();
     // startFight();
     logMessage(logFile, "Program ended.");
     fclose(logFile);

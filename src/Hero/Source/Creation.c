@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "../Prototypes/Creation.h"
 #include "../../Countries/Description.c"
-#include "../Global_Variables/Hero.h"
+#include "../../Utils/Global_Project_Variables.h"
 #include "../../Utils/Macros/Macros.h"
 
 // Global variables to be used in other files. See "Hero.h"
@@ -80,11 +80,7 @@ int dynastyNameCheck()
     fgets(confirmDynastyDecision, sizeof(confirmDynastyDecision), stdin);
 
     // Remove the trailing newline character from the input
-    size_t len = strlen(confirmDynastyDecision);
-    if (len > 0 && confirmDynastyDecision[len - 1] == '\n')
-    {
-      confirmDynastyDecision[len - 1] = '\0';
-    }
+    REMOVE_NEWLINE_CHARACTER(confirmDynastyDecision);
     if (IS_YES(confirmDynastyDecision))
     {
       printf("You have chosen not to have a dynasty name\n");
@@ -174,7 +170,7 @@ int heroGenderCheck()
     }
     else if (IS_NO(heroGenderDecisionConfirmation))
     {
-      getHeroGender();
+      heroGenderCheck();
     }
     else
     {

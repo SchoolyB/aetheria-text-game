@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../../Hero/Global_Variables/Hero.h"
+#include "../../Utils/Global_Project_Variables.h"
 #include "../../Enemies/Enemies.h"
 
 int hero_health;

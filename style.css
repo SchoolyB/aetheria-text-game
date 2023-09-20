@@ -3,11 +3,27 @@ body{
   margin: 0;
 }
 
+header{
+  text-align: center;
+  border-bottom: solid 1px black;
+  font-size: 3rem;
+}
 
 
+#content-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
 
+}
 
+.heading{
+  text-align: center;
+}
 
+.media{
+  width: 40vw
+}
 /*=====================FOOTER=====================*/
 footer{
   display: flex;

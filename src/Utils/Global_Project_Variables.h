@@ -1,5 +1,9 @@
-#ifndef HERO_H 
-#define HERO_H 
+#ifndef GLOBAL_PROJECT_VARIABLES_H 
+#define GLOBAL_PROJECT_VARIABLES_H 
+
+
+float GAME_VERSION = 0.1;
+
 
 
 // This file contains all the global variables that are used to store the hero's information
