@@ -122,11 +122,38 @@ if(skill_point_pool > 0){ //the expression might need to be diff idk
     ALLOCATION(amount, hero_strength, 2);
     ALLOCATION(amount, hero_strength, 3);
     ALLOCATION(amount, hero_strength, 4);
-// TODO need to compile and run to see if any of this works lol
-    if(hero_strength > 4){
-      printf("You can only allocate 4 points to a skill area at this time. Please try again\n");
-      initialSKillPointAllocation();
-    } 
+    ALLOCATION_LIMIT_CHECK(amount, hero_strength, initialSKillPointAllocation());
+  }
+  else if(CHOOSE_INTELLIGENCE(skillAreaChoice)){
+    printf("How many points would you like to allocate into intelligence? (1 through 4)\n");
+    scanf("%d", &amount);
+    ALLOCATION(amount, hero_intelligence, 1);
+    ALLOCATION(amount, hero_intelligence, 2);
+    ALLOCATION(amount, hero_intelligence, 3);
+    ALLOCATION(amount, hero_intelligence, 4);
+    ALLOCATION_LIMIT_CHECK(amount, hero_intelligence,initialSKillPointAllocation());
+  }
+  else if(CHOOSE_DEXTERITY(skillAreaChoice)){
+    printf("How many points would you like to allocate into dexterity? (1 through 4)\n");
+    scanf("%d", &amount);
+    ALLOCATION(amount, hero_dexterity, 1);
+    ALLOCATION(amount, hero_dexterity, 2);
+    ALLOCATION(amount, hero_dexterity, 3);
+    ALLOCATION(amount, hero_dexterity, 4);
+    ALLOCATION_LIMIT_CHECK(amount, hero_dexterity,initialSKillPointAllocation());
+  }
+  else if(CHOOSE_LUCK(skillAreaChoice)){
+    printf("How many points would you like to allocate into luck? (1 through 4)\n");
+    scanf("%d", &amount);
+    ALLOCATION(amount, hero_luck, 1);
+    ALLOCATION(amount, hero_luck, 2);
+    ALLOCATION(amount, hero_luck, 3);
+    ALLOCATION(amount, hero_luck, 4);
+    ALLOCATION_LIMIT_CHECK(amount, hero_luck,initialSKillPointAllocation());
+  }
+  else{
+    MAKE_VALID_DECISION;
+    initialSKillPointAllocation();
   }
 }
   return 0;

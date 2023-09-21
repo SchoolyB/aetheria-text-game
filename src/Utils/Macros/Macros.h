@@ -1,6 +1,7 @@
 #ifndef MACROS_H
 #define MACROS_H
 
+
 //?++++++++++++++++++++++++START OF MACROS++++++++++++++++++++++++?//
 // This macro is used to make sure the user enters a valid decision
 #define MAKE_VALID_DECISION printf("Please make a valid decision\n")
@@ -25,13 +26,12 @@
   } while (0)
 
 
+
 // TODO add comments explaining these macros
-  #define CHOOSE_STRENGTH(param)(strcmp(param, "strength") == 0 )
-  #define CHOOSE_INTELLIGENCE(param)(strcmp(param, "Intelligence") == 0 )
-  #define CHOOSE_DEXTERITY(param)(strcmp(param, "strength") == 0 )
-  #define CHOOSE_LUCK(param)(strcmp(param, "Luck") == 0 )
-
-
+#define CHOOSE_STRENGTH(param)(strcmp(param, "strength") == 0 )
+#define CHOOSE_INTELLIGENCE(param)(strcmp(param, "intelligence") == 0 )
+#define CHOOSE_DEXTERITY(param)(strcmp(param, "dexterity") == 0 )
+#define CHOOSE_LUCK(param)(strcmp(param, "luck") == 0 )
 
 //this macro will add whatever number the suer enters for a skill,,,amount is user input, param is the skill, num is either 1,2,3,4. All skills cap @ 4
 #define ALLOCATION(amount, param, num) \
@@ -40,6 +40,12 @@
         param = param + num; \
         printf("The hero strength is %d \n", param); \
     }
-//?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 
+//this macro supports the one above
+#define ALLOCATION_LIMIT_CHECK(amount, param, function) \
+    if (amount > 4) { \
+        printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
+        function; \
+    }
+//?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 #endif
