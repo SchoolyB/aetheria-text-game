@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../Utils/Global_Project_Variables.h"
+#include "../../Utils/Macros/Macros.h"
+
+#define MAX_SKILL_POINTS 4
 
 int hero_health;
 int hero_mana;
@@ -11,6 +14,14 @@ int hero_intelligence;
 int hero_luck;
 int hero_level;
 char hero_class[10];
+
+int skill_point_pool = 10; //this is the initial skill point pool
+char skillAreas[4][15] = {
+  "Strength",
+  "Dexterity",
+  "Intelligence",
+  "Luck"
+};
 
 int setHeroHealth()
 {
@@ -89,160 +100,35 @@ int setHeroMana()
   }
   return 0;
 }
+//=======================================================
+int initialSKillPointAllocation(){
+  char skillAreaChoice[10]; // i.e strength, dex, etc
+  int amount; //the amount to allocate to skill
+  char allocationConfirmation[10]; //confirmation 
+  printf("Now its time to allocate some points to a particular skill area.\n You can allocate points to the following areas\n");
+  for(int i = 0; i < 4; i++ ){
+    printf("%s\n", skillAreas[i]);
+  };
+  printf("You have a total of %d points to spend\n", skill_point_pool);
 
-int setHeroStrength()
-{
-  if (strcmp(hero_class, "Warrior") == 0 ||
-      strcmp(hero_class, "warrior") == 0 ||
-      strcmp(hero_class, "WARRIOR") == 0)
-  {
-    hero_strength = 10;
+if(skill_point_pool > 0){ //the expression might need to be diff idk
+  printf("Which area would you like to apply points\n");
+  fgets(skillAreaChoice, sizeof(skillAreaChoice), stdin);
+  REMOVE_NEWLINE_CHARACTER(skillAreaChoice);
+  if(CHOOSE_STRENGTH(skillAreaChoice)){
+    printf("How many points would you like to allocate into strength? (1 through 4)\n");
+    scanf("%d", &amount);
+    ALLOCATION(amount, hero_strength, 1);
+    ALLOCATION(amount, hero_strength, 2);
+    ALLOCATION(amount, hero_strength, 3);
+    ALLOCATION(amount, hero_strength, 4);
+// TODO need to compile and run to see if any of this works lol
+    if(hero_strength > 4){
+      printf("You can only allocate 4 points to a skill area at this time. Please try again\n");
+      initialSKillPointAllocation();
+    } 
   }
-  else if (strcmp(hero_class, "Mage") == 0 ||
-           strcmp(hero_class, "mage") == 0 ||
-           strcmp(hero_class, "MAGE") == 0)
-  {
-    hero_strength = 5;
-  }
-  else if (strcmp(hero_class, "Rogue") == 0 ||
-           strcmp(hero_class, "rogue") == 0 ||
-           strcmp(hero_class, "ROGUE") == 0)
-  {
-    hero_strength = 7;
-  }
-  else if (strcmp(hero_class, "Cleric") == 0 ||
-           strcmp(hero_class, "cleric") == 0 ||
-           strcmp(hero_class, "CLERIC") == 0)
-  {
-    hero_strength = 8;
-  }
-  else if (strcmp(hero_class, "Bard") == 0 ||
-           strcmp(hero_class, "bard") == 0 ||
-           strcmp(hero_class, "BARD") == 0)
-  {
-    hero_strength = 5;
-  }
-  else
-  {
-    return 1;
-  }
-  return 0;
 }
-
-int setHeroDexterity()
-{
-  if (strcmp(hero_class, "Warrior") == 0 ||
-      strcmp(hero_class, "warrior") == 0 ||
-      strcmp(hero_class, "WARRIOR") == 0)
-  {
-    hero_dexterity = 5;
-  }
-  else if (strcmp(hero_class, "Mage") == 0 ||
-           strcmp(hero_class, "mage") == 0 ||
-           strcmp(hero_class, "MAGE") == 0)
-  {
-    hero_dexterity = 7;
-  }
-  else if (strcmp(hero_class, "Rogue") == 0 ||
-           strcmp(hero_class, "rogue") == 0 ||
-           strcmp(hero_class, "ROGUE") == 0)
-  {
-    hero_dexterity = 10;
-  }
-  else if (strcmp(hero_class, "Cleric") == 0 ||
-           strcmp(hero_class, "cleric") == 0 ||
-           strcmp(hero_class, "CLERIC") == 0)
-  {
-    hero_dexterity = 8;
-  }
-  else if (strcmp(hero_class, "Bard") == 0 ||
-           strcmp(hero_class, "bard") == 0 ||
-           strcmp(hero_class, "BARD") == 0)
-  {
-    hero_dexterity = 7;
-  }
-  else
-  {
-    return 1;
-  }
-  return 0;
-}
-
-int setHeroIntelligence()
-{
-  if (strcmp(hero_class, "Warrior") == 0 ||
-      strcmp(hero_class, "warrior") == 0 ||
-      strcmp(hero_class, "WARRIOR") == 0)
-  {
-    hero_intelligence = 5;
-  }
-  else if (strcmp(hero_class, "Mage") == 0 ||
-           strcmp(hero_class, "mage") == 0 ||
-           strcmp(hero_class, "MAGE") == 0)
-  {
-    hero_intelligence = 10;
-  }
-  else if (strcmp(hero_class, "Rogue") == 0 ||
-           strcmp(hero_class, "rogue") == 0 ||
-           strcmp(hero_class, "ROGUE") == 0)
-  {
-    hero_intelligence = 7;
-  }
-  else if (strcmp(hero_class, "Cleric") == 0 ||
-           strcmp(hero_class, "cleric") == 0 ||
-           strcmp(hero_class, "CLERIC") == 0)
-  {
-    hero_intelligence = 8;
-  }
-  else if (strcmp(hero_class, "Bard") == 0 ||
-           strcmp(hero_class, "bard") == 0 ||
-           strcmp(hero_class, "BARD") == 0)
-  {
-    hero_intelligence = 10;
-  }
-  else
-  {
-    return 1;
-  }
-  return 0;
-}
-
-int setHeroLuck()
-{
-  if (strcmp(hero_class, "Warrior") == 0 ||
-      strcmp(hero_class, "warrior") == 0 ||
-      strcmp(hero_class, "WARRIOR") == 0)
-  {
-    hero_luck = 5;
-  }
-  else if (strcmp(hero_class, "Mage") == 0 ||
-           strcmp(hero_class, "mage") == 0 ||
-           strcmp(hero_class, "MAGE") == 0)
-  {
-    hero_luck = 7;
-  }
-  else if (strcmp(hero_class, "Rogue") == 0 ||
-           strcmp(hero_class, "rogue") == 0 ||
-           strcmp(hero_class, "ROGUE") == 0)
-  {
-    hero_luck = 8;
-  }
-  else if (strcmp(hero_class, "Cleric") == 0 ||
-           strcmp(hero_class, "cleric") == 0 ||
-           strcmp(hero_class, "CLERIC") == 0)
-  {
-    hero_luck = 10;
-  }
-  else if (strcmp(hero_class, "Bard") == 0 ||
-           strcmp(hero_class, "bard") == 0 ||
-           strcmp(hero_class, "BARD") == 0)
-  {
-    hero_luck = 7;
-  }
-  else
-  {
-    return 1;
-  }
   return 0;
 }
 
@@ -256,10 +142,7 @@ int setAllHeroStats()
 {
   setHeroHealth();
   setHeroMana();
-  setHeroStrength();
-  setHeroDexterity();
-  setHeroIntelligence();
-  setHeroLuck();
+  initialSKillPointAllocation();
   setHeroLvl();
   return 0;
 }

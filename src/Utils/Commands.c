@@ -10,6 +10,7 @@
 
 #define MAX_INPUT_LENGTH 100 // this is a non-global macro
 
+
 char commands[10][100] = {
     "Start ---> This Command will start the program\n",
     "/restart ---> This Command will restart the program\n",
@@ -17,10 +18,7 @@ char commands[10][100] = {
     "/quit ---> This Command will exit the program\n",
     "/commands ---> This Command will list all available commands\n",
     "/heroinfo ---> This Command logs all the heros current info to CLI\n",
-    "/gameinfo ---> This Command logs info about the game\n",
-    //"inventory ---> This Command will list all items currently in inventory\n",
-    //"save ---> This Command will save the game\n",
-    //"load ---> This Command will load the game\n",
+    "/gameinfo ---> This Command logs info about the game\n"
     };
 
 
@@ -74,7 +72,8 @@ int command_line_entry(FILE *logFile)
     else if (strcmp(input, "start") == 0)
     {
       logMessage(logFile, "Program started.");
-      startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
+      // startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
+      setAllHeroStats();
       return 0;
     }
     else if (strcmp(input, "/exit") == 0 ||
@@ -94,11 +93,6 @@ int command_line_entry(FILE *logFile)
         exit(0);
       }
     }
-    // else if (strcmp(input, "Save") == 0 ||
-    //          strcmp(input, "save") == 0)
-    // {
-    // DO SOMETHING
-    // }
     else if (strcmp(input, "/commands") == 0)
     {
       printf("\x1b[32mAVAILABLE COMMANDS: \x1b[0m\n");
@@ -119,6 +113,15 @@ int command_line_entry(FILE *logFile)
       printf("Country of Origin: %s \n", hero_homeland);
       printf("Profession: %s \n", hero_profession);
       printf("Class: %s \n", hero_class);
+      printf("Level: %d\n", hero_level);
+      printf("Hero Health: %d\n", hero_health);
+      printf("Hero Mana: %d\n", hero_mana);
+      printf("Strength: %d\n", hero_strength);
+      printf("Dexterity: %d\n", hero_dexterity);
+      printf("Intelligence: %d\n", hero_intelligence);
+      printf("Luck: %d\n", hero_luck);
+      
+      
     }
 
     else if(strcmp(input, "/gameinfo") == 0){
