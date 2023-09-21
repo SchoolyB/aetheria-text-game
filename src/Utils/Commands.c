@@ -44,15 +44,31 @@ int command_line_entry(FILE *logFile)
     // Check if the input is "restart"
     if (strcmp(input, "/restart") == 0)
     {
+      char restartConfirmation[10];
       // Log a restart message
       logMessage(logFile, "Restarting Program.");
+      printf("\x1b[31mRequesting to restart program... \x1b[0m\n");
+      printf("\x1b[31mAre you sure you want to restart? (y/n): \x1b[0m\n");
+      fgets(restartConfirmation, sizeof(restartConfirmation), stdin);
+      REMOVE_NEWLINE_CHARACTER(restartConfirmation);
+      if(IS_YES(restartConfirmation)){
+        printf("Restarting...\n");
+        if (execv("./a.out", NULL) == -1)
+        {
+          perror("execv");
+          exit(1);
+        }
+      }
+      else if(IS_NO(restartConfirmation)){
+        printf("Restart cancelled.\n");
+        command_line_entry(logFile);
+      }
+      else{
+        printf("Invalid input.\n");
+        command_line_entry(logFile);
+      }
 
       // Execute the program again using execv() with the current command
-      if (execv("./a.out", NULL) == -1)
-      {
-        perror("execv");
-        exit(1);
-      }
     }
 
     else if (strcmp(input, "start") == 0)
@@ -65,8 +81,10 @@ int command_line_entry(FILE *logFile)
              strcmp(input, "/quit") == 0)
     {
       char exitConfirmation[10];
-      printf("Requesting to exit program...\n");
-      printf("Are you sure you want to exit? (y/n): \n");
+      printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
+      printf("\x1b[31mAre you sure you want to exit? (y/n): \x1b[0m\n");
+
+      // printf("Are you sure you want to exit? (y/n): \n");
       fgets(exitConfirmation, sizeof(exitConfirmation), stdin);
       REMOVE_NEWLINE_CHARACTER(exitConfirmation);
       if (IS_YES(exitConfirmation))
@@ -106,9 +124,9 @@ int command_line_entry(FILE *logFile)
     else if(strcmp(input, "/gameinfo") == 0){
       logMessage(logFile, "Requested game information.\n");
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
-      printf("Game Version: %f\n", GAME_VERSION);
+      printf("Build Version: %f\n", GAME_VERSION);
       printf("Game Name: Untitled Text Game\n");
-      printf("Game Author: Marshall Burns\n");
+      printf("Game Developer: Marshall Burns\n");
       printf("Game Description: COMING SOON\n");
     }
     else
