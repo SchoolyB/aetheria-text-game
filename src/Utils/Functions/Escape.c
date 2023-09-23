@@ -4,7 +4,7 @@
 #include <time.h>   // for time
 #include <stdbool.h>
 #include "Escape.h"
-#include "../Macros/Macros.h"
+#include "../Macros.h"
 
 bool escaped;
 

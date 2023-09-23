@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "../Prototypes/Creation.h"
-#include "../../Countries/Description.c"
-#include "../../Utils/Global_Project_Variables.h"
-#include "../../Utils/Macros/Macros.h"
+#include "Countries.c"
+#include "../Utils/Macros.h"
+#include "../Utils/Globals.h"
+#include "../Utils/Prototypes.h"
 
 // Global variables to be used in other files. See "Hero.h"
 char hero_first_name[10];
@@ -76,7 +76,7 @@ int dynastyNameCheck()
     sleep(1);
     printf("You have chosen not to have a dynasty name\n");
     sleep(1);
-    printf("Are you sure you do not come from a great dynasty? (y/n): ");
+    printf("\x1b[33mAre you sure you do not come from a great dynasty? (y/n): \x1b[0m\n");
     fgets(confirmDynastyDecision, sizeof(confirmDynastyDecision), stdin);
 
     // Remove the trailing newline character from the input
@@ -158,7 +158,7 @@ int heroGenderCheck()
   }
   else if (IS_NO(heroGenderDecision))
   {
-    printf("Are you sure you do not have a gender? (y/n): ");
+    printf("\x1b[33mAre you sure you do not have a gender? (y/n): \x1b[0m\n");
     fgets(heroGenderDecisionConfirmation, sizeof(heroGenderDecisionConfirmation), stdin);
 
     // Remove the trailing newline character from the input
@@ -987,7 +987,7 @@ int getHeroProfession()
     printf("You have chosen not to have a profession.\n");
     sleep(1);
     printf("This may have effects on gameplay aspects\n");
-    printf("Are you sure you do not want a profession? (y/n)\n");
+    printf("\x1b[33mAre you sure you do not have a profession? (y/n): \x1b[0m\n");
 
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
 

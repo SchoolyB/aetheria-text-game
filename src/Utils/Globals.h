@@ -1,5 +1,5 @@
-#ifndef GLOBAL_PROJECT_VARIABLES_H 
-#define GLOBAL_PROJECT_VARIABLES_H 
+#ifndef GLOBALS_H 
+#define GLOBALS_H 
 
 
 float GAME_VERSION = 0.1;

@@ -47,5 +47,8 @@
         printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
         function; \
     }
+
+
+  #define MAX_INPUT_LENGTH 100
 //?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 #endif

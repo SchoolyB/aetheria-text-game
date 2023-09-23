@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../Utils/Global_Project_Variables.h"
-#include "../../Utils/Macros/Macros.h"
+#include "../Utils/Globals.h"
+#include "../Utils/Macros.h"
 
 #define MAX_SKILL_POINTS 4
 
@@ -110,7 +110,7 @@ int initialSKillPointAllocation(){
     printf("%s\n", skillAreas[i]);
   };
   printf("You have a total of %d points to spend\n", skill_point_pool);
-
+// TODO build logic to subtract whatever number user enters for points from total point pool. then when total pool == 0 move to next phase of program.
 if(skill_point_pool > 0){ //the expression might need to be diff idk
   printf("Which area would you like to apply points\n");
   fgets(skillAreaChoice, sizeof(skillAreaChoice), stdin);

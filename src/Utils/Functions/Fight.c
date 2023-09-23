@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "../../Utils/Global_Project_Variables.h"
-#include "../../Enemies/Enemies.h"
+#include "../../Utils/Globals.h"
+#include "../../Enemies.h"
 
 int hero_health;
 

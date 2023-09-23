@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "../../../Utils/Functions/Escape.h"
-#include "../Prototypes/Chapter1.h"
+#include "../Utils/Functions/Escape.h"
+#include "../Utils/Prototypes.h"
 
 bool escaped;
 

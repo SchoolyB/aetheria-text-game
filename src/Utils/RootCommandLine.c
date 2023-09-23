@@ -2,14 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "./Macros.h"
 #include "./Functions/Logger.h"
-#include "./../Hero/Source/Creation.c"
-#include "./Macros/Macros.h"
-#include "../Utils/Global_Project_Variables.h"
-//?+++++For other Macros See: Macros/Macros.h+++++?
-
-#define MAX_INPUT_LENGTH 100 // this is a non-global macro
-
+#include "../Source/HeroCreation.c"
+#include "./Globals.h"
 
 char commands[10][100] = {
     "Start ---> This Command will start the program\n",
@@ -22,13 +18,13 @@ char commands[10][100] = {
     };
 
 
-int command_line_entry(FILE *logFile)
+int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
 { // Accept logFile as an argument
   char input[MAX_INPUT_LENGTH];
   while (1)
   {
     // Prompt the user for input
-    printf("Enter a command: ");
+    printf("Enter a root commands: ");
     if (fgets(input, sizeof(input), stdin) == NULL)
     {
       // Handle input error
@@ -58,12 +54,12 @@ int command_line_entry(FILE *logFile)
         }
       }
       else if(IS_NO(restartConfirmation)){
-        printf("Restart cancelled.\n");
-        command_line_entry(logFile);
+        printf("Restart cancelelseed.\n");
+        ROOT_LEVEL_COMMAND_LINE(logFile);
       }
       else{
         printf("Invalid input.\n");
-        command_line_entry(logFile);
+        ROOT_LEVEL_COMMAND_LINE(logFile);
       }
 
       // Execute the program again using execv() with the current command
@@ -72,7 +68,18 @@ int command_line_entry(FILE *logFile)
     else if (strcmp(input, "start") == 0)
     {
       logMessage(logFile, "Program started.");
-      // startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
+      char titleArt[] =
+"  ______               __      __                            __ \n"                
+" /      \             /  |    /  |                          /  |\n"                
+"/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"        
+"$$ |__$$ | /      \ / $$   |  $$      \  /      \  /      \ /  | /      \ \n"     
+"$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"  
+"$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
+"$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
+"$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
+"$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
+      printf("%s\n", titleArt);
+      startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
       setAllHeroStats();
       return 0;
     }
@@ -123,7 +130,6 @@ int command_line_entry(FILE *logFile)
       
       
     }
-
     else if(strcmp(input, "/gameinfo") == 0){
       logMessage(logFile, "Requested game information.\n");
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");

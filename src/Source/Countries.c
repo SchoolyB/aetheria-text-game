@@ -1,4 +1,4 @@
-#include "Description.h"
+#include "../Utils/Prototypes.h"
 
 int showEmpyreaDescription(){
   printf("Ah yes Empyrea, the land known for its strong governments and scholars.\n");
