@@ -139,6 +139,7 @@ int confirmDynastyName()
   else
   {
     printf("You may have entered to many characters. Please Try Again\n");
+    confirmDynastyName();
   }
 }
 //===========================================================================================================//
