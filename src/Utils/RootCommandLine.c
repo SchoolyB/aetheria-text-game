@@ -35,7 +35,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
     input[strcspn(input, "\n")] = '\0';
 
     // Check if the input is "restart"
-    if (strcmp(input, "/restart") == 0)
+    if (IS_RESTART_COMMAND(input))
     {
       char restartConfirmation[10];
       // Log a restart message
@@ -84,8 +84,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
     
       return 0;
     }
-    else if (strcmp(input, "/exit") == 0 ||
-             strcmp(input, "/quit") == 0)
+    else if (IS_EXIT_COMMAND(input))
     {
       char exitConfirmation[10];
       printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
@@ -101,7 +100,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
         exit(0);
       }
     }
-    else if (strcmp(input, "/commands") == 0)
+    else if (IS_ROOT_COMMANDS_COMMAND(input))
     {
       printf("\x1b[32mAVAILABLE COMMANDS: \x1b[0m\n");
       for (int i = 0; i < 7; i++)

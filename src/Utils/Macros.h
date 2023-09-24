@@ -47,13 +47,27 @@ strcmp(param, "lck") == 0 )
     }
 
 //this macro supports the one above
-#define ALLOCATION_LIMIT_CHECK(amount, param) \
+#define ALLOCATION_LIMIT_CHECK(amount, param, skill_pool, str, int, dex, lck) \
     if (amount > 4) { \
         printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
+        skill_pool = 10; \
+        str = 0; \
+        int = 0; \
+        dex = 0; \
+        lck = 0; \
+        initialSKillPointAllocation(); \
     }
 
 #define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate\n", param)
 
-  #define MAX_INPUT_LENGTH 100
+#define MAX_INPUT_LENGTH 100
+
+#define IS_RESTART_COMMAND(param)(strcmp(param, "/restart")== 0)
+#define IS_EXIT_COMMAND(param)(strcmp(param, "/exit") == 0 || strcmp(param, "/quit") == 0)
+#define IS_ROOT_COMMANDS_COMMAND(param)(strcmp(param, "/commands") == 0)
+#define IS_IN_GAME_COMMANDS_COMMAND(param)(strcmp(param, "/commands") == 0)
+#define IS_GAME_COMMAND(param)(strcmp(param, "/game") == 0)
+#define IS_INFO_COMMAND(param)(strcmp(param, "/info") == 0)
+
 //?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 #endif

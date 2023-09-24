@@ -8,12 +8,13 @@
 
 char in_game_commands[10][100] = {
   "inventory ---> This Command will list all items in your inventory\n",
-  "info ---> This Command will show all hero info and\n",
+  "info ---> This Command will show all hero info\n",
   "help ---> This command will open a help menu\n",
   "/exit ---> This Command will exit the program\n",
   "/quit ---> This Command will exit the program\n",
   "/restart ---> This Command will restart the program\n",
-  "/commands ---> This Command will list all available commands\n"
+  "/commands ---> This Command will list all available commands\n",
+  "/game ---> This Command logs info about the game\n"
   };
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
@@ -33,7 +34,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
     in_game_input[strcspn(in_game_input, "\n")] = '\0';
 
     // Check if the in_game_input is "restart"
-    if (strcmp(in_game_input, "/restart") == 0)
+    if (IS_RESTART_COMMAND(in_game_input))
     {
       char restartConfirmation[10];
       // Log a restart message
@@ -59,7 +60,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         IN_GAME_COMMAND_LINE(logFile);
       }
     }
-    else if(strcmp(in_game_input, "/info") == 0){
+    else if(IS_INFO_COMMAND(in_game_input)){
         logMessage(logFile, "Requested hero information.\n");
       printf("\x1b[32mHERO INFORMATION: \x1b[0m\n");
       // TODO add if var is null then print "Not set"
@@ -77,6 +78,44 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       printf("Intelligence: %d\n", hero_intelligence);
       printf("Luck: %d\n", hero_luck);
     }
+
+    else if(IS_IN_GAME_COMMANDS_COMMAND(in_game_input)){
+      printf("\x1b[32mIN GAME COMMANDS: \x1b[0m\n");
+      for (int i = 0; i < 10; i++)
+      {
+        printf("%s\n", in_game_commands[i]);
+      }
+    }
+
+    else if(IS_GAME_COMMAND(in_game_input)){
+      printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
+      printf("Game Version: %f\n", GAME_VERSION);
+      // printf("Game Name: %s\n", game_name);
+      // printf("Game Description: %s\n", game_description);
+      printf("Game Author: Marshall Burns\n" );
+    }
+
+    else if(IS_EXIT_COMMAND(in_game_input)){
+      char exitConfirmation[10];
+      printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
+      printf("\x1b[31mAre you sure you want to exit? (y/n): \x1b[0m\n");
+      fgets(exitConfirmation, sizeof(exitConfirmation), stdin);
+      REMOVE_NEWLINE_CHARACTER(exitConfirmation);
+      if (IS_YES(exitConfirmation))
+      {
+        printf("Exiting...\n");
+        logMessage(logFile, "Exited Program.");
+        exit(0);
+      }
+      else if(IS_NO(exitConfirmation)){
+        printf("Exit canceled.\n");
+        IN_GAME_COMMAND_LINE(logFile);
+      }
+      else{
+        printf("Invalid input.\n");
+        IN_GAME_COMMAND_LINE(logFile);
+      }
+    }
   }
-  return 0; 
+  return 0;
 }
