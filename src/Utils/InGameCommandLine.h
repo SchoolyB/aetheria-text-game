@@ -1,0 +1,6 @@
+#ifndef IN_GAME_COMMAND_LINE_H
+#define IN_GAME_COMMAND_LINE_H
+
+int IN_GAME_COMMAND_LINE();
+
+#endif

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../Utils/Globals.h"
 #include "../Utils/Macros.h"
+#include "../Utils/Prototypes.h"
 
 #define MAX_SKILL_POINTS 4
 

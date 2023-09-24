@@ -18,8 +18,7 @@ int main()
         perror("Error opening the log file");
         exit(1);
     }
-    // ROOT_LEVEL_COMMAND_LINE(logFile); //starting point
-    IN_GAME_COMMAND_LINE(logFile);
+    ROOT_LEVEL_COMMAND_LINE(logFile); //starting point
     logMessage(logFile, "Program ended.");
     fclose(logFile);
     return 0;

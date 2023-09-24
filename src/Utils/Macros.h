@@ -42,9 +42,8 @@ strcmp(param, "lck") == 0 )
 //this macro will add whatever number the suer enters for a skill,,,amount is user input, param is the skill, num is either 1,2,3,4. All skills cap @ 4
 #define ALLOCATION(amount, skill, param, num) \
     if (amount == num) { \
-        printf("you entered %d\n", num); \
         param = param + num; \
-        printf("The hero %s is %d \n", skill, param); \
+        printf("%d Points put into %s \n", param, skill); \
     }
 
 //this macro supports the one above

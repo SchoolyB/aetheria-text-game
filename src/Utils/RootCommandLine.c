@@ -3,18 +3,17 @@
 #include <string.h>
 #include <unistd.h>
 #include "./Macros.h"
+#include "./Globals.h"
 #include "./Functions/Logger.h"
 #include "../Source/HeroCreation.c"
-#include "./Globals.h"
-
-char commands[10][100] = {
+#include "../Utils/InGameCommandLine.h"
+char root_level_commands[10][100] = {
     "Start ---> This Command will start the program\n",
     "/restart ---> This Command will restart the program\n",
     "/exit ---> This Command will exit the program\n",
     "/quit ---> This Command will exit the program\n",
     "/commands ---> This Command will list all available commands\n",
-    "/heroinfo ---> This Command logs all the heros current info to CLI\n",
-    "/gameinfo ---> This Command logs info about the game\n"
+    "/game ---> This Command logs info about the game\n"
     };
 
 
@@ -54,7 +53,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
         }
       }
       else if(IS_NO(restartConfirmation)){
-        printf("Restart cancelelseed.\n");
+        printf("Restart canceled.\n");
         ROOT_LEVEL_COMMAND_LINE(logFile);
       }
       else{
@@ -81,6 +80,8 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
       printf("%s\n", titleArt);
       startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
       setAllHeroStats();
+      IN_GAME_COMMAND_LINE(logFile);
+    
       return 0;
     }
     else if (strcmp(input, "/exit") == 0 ||
@@ -105,32 +106,11 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
       printf("\x1b[32mAVAILABLE COMMANDS: \x1b[0m\n");
       for (int i = 0; i < 7; i++)
       {
-        printf("%s\n", commands[i]);
+        printf("%s\n", root_level_commands[i]);
       }
       logMessage(logFile, "Requested to see list of available commands.\n");
     }
-
-    else if(strcmp(input, "/heroinfo") == 0){
-      logMessage(logFile, "Requested hero information.\n");
-      printf("\x1b[32mHERO INFORMATION: \x1b[0m\n");
-      // TODO add if var is null then print "Not set"
-      printf("First Name: %s\n", hero_first_name);
-      printf("Dynasty Name: %s \n", hero_dynasty_name);
-      printf("Gender: %s \n", hero_gender);
-      printf("Country of Origin: %s \n", hero_homeland);
-      printf("Profession: %s \n", hero_profession);
-      printf("Class: %s \n", hero_class);
-      printf("Level: %d\n", hero_level);
-      printf("Hero Health: %d\n", hero_health);
-      printf("Hero Mana: %d\n", hero_mana);
-      printf("Strength: %d\n", hero_strength);
-      printf("Dexterity: %d\n", hero_dexterity);
-      printf("Intelligence: %d\n", hero_intelligence);
-      printf("Luck: %d\n", hero_luck);
-      
-      
-    }
-    else if(strcmp(input, "/gameinfo") == 0){
+    else if(strcmp(input, "/game") == 0){
       logMessage(logFile, "Requested game information.\n");
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
       printf("Build Version: %f\n", GAME_VERSION);
