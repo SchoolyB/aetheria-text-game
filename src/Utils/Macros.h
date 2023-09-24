@@ -28,26 +28,32 @@
 
 
 // TODO add comments explaining these macros
-#define CHOOSE_STRENGTH(param)(strcmp(param, "strength") == 0 )
-#define CHOOSE_INTELLIGENCE(param)(strcmp(param, "intelligence") == 0 )
-#define CHOOSE_DEXTERITY(param)(strcmp(param, "dexterity") == 0 )
-#define CHOOSE_LUCK(param)(strcmp(param, "luck") == 0 )
+#define CHOOSE_STRENGTH(param)(strcmp(param, "1") == 0 || strcmp(param, "strength") == 0 ||\
+strcmp(param, "str") == 0 )
 
+#define CHOOSE_INTELLIGENCE(param)(strcmp(param, "2") == 0 || strcmp(param, "intelligence") == 0 || \
+strcmp(param, "int") == 0 )
+
+#define CHOOSE_DEXTERITY(param)(strcmp(param, "3") == 0 || strcmp(param, "dexterity") == 0 || \
+strcmp(param, "dex") == 0 )
+
+#define CHOOSE_LUCK(param)(strcmp(param, "4") == 0 || strcmp(param, "luck") == 0 || \
+strcmp(param, "lck") == 0 )
 //this macro will add whatever number the suer enters for a skill,,,amount is user input, param is the skill, num is either 1,2,3,4. All skills cap @ 4
-#define ALLOCATION(amount, param, num) \
+#define ALLOCATION(amount, skill, param, num) \
     if (amount == num) { \
         printf("you entered %d\n", num); \
         param = param + num; \
-        printf("The hero strength is %d \n", param); \
+        printf("The hero %s is %d \n", skill, param); \
     }
 
 //this macro supports the one above
-#define ALLOCATION_LIMIT_CHECK(amount, param, function) \
+#define ALLOCATION_LIMIT_CHECK(amount, param) \
     if (amount > 4) { \
         printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
-        function; \
     }
 
+#define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate\n", param)
 
   #define MAX_INPUT_LENGTH 100
 //?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//

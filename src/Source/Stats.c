@@ -16,7 +16,7 @@ int hero_level;
 char hero_class[10];
 
 int skill_point_pool = 10; //this is the initial skill point pool
-char skillAreas[4][15] = {
+char skill[4][15] = {
   "Strength",
   "Dexterity",
   "Intelligence",
@@ -102,62 +102,76 @@ int setHeroMana()
 }
 //=======================================================
 int initialSKillPointAllocation(){
+  printf("You have %d points to allocate to your skills\n", skill_point_pool);
   char skillAreaChoice[10]; // i.e strength, dex, etc
   int amount; //the amount to allocate to skill
   char allocationConfirmation[10]; //confirmation 
   printf("Now its time to allocate some points to a particular skill area.\n You can allocate points to the following areas\n");
   for(int i = 0; i < 4; i++ ){
-    printf("%s\n", skillAreas[i]);
+    printf("%s\n", skill[i]);
   };
   printf("You have a total of %d points to spend\n", skill_point_pool);
 // TODO build logic to subtract whatever number user enters for points from total point pool. then when total pool == 0 move to next phase of program.
-if(skill_point_pool > 0){ //the expression might need to be diff idk
+while(skill_point_pool > 0){ //the expression might need to be diff idk
   printf("Which area would you like to apply points\n");
   fgets(skillAreaChoice, sizeof(skillAreaChoice), stdin);
   REMOVE_NEWLINE_CHARACTER(skillAreaChoice);
   if(CHOOSE_STRENGTH(skillAreaChoice)){
     printf("How many points would you like to allocate into strength? (1 through 4)\n");
     scanf("%d", &amount);
-    ALLOCATION(amount, hero_strength, 1);
-    ALLOCATION(amount, hero_strength, 2);
-    ALLOCATION(amount, hero_strength, 3);
-    ALLOCATION(amount, hero_strength, 4);
-    ALLOCATION_LIMIT_CHECK(amount, hero_strength, initialSKillPointAllocation());
+    ALLOCATION(amount, skill, hero_strength, 1);
+    ALLOCATION(amount, skill, hero_strength, 2);
+    ALLOCATION(amount, skill, hero_strength, 3);
+    ALLOCATION(amount, skill, hero_strength, 4);
+    skill_point_pool  = skill_point_pool - amount;
+    ALLOCATION_LIMIT_CHECK(amount, hero_strength);
+    PRINT_REMAINING_POINTS(skill_point_pool);
   }
   else if(CHOOSE_INTELLIGENCE(skillAreaChoice)){
     printf("How many points would you like to allocate into intelligence? (1 through 4)\n");
     scanf("%d", &amount);
-    ALLOCATION(amount, hero_intelligence, 1);
-    ALLOCATION(amount, hero_intelligence, 2);
-    ALLOCATION(amount, hero_intelligence, 3);
-    ALLOCATION(amount, hero_intelligence, 4);
-    ALLOCATION_LIMIT_CHECK(amount, hero_intelligence,initialSKillPointAllocation());
+    ALLOCATION(amount, skill, hero_intelligence, 1);
+    ALLOCATION(amount, skill, hero_intelligence, 2);
+    ALLOCATION(amount, skill, hero_intelligence, 3);
+    ALLOCATION(amount, skill, hero_intelligence, 4);
+    skill_point_pool  = skill_point_pool - amount;
+    ALLOCATION_LIMIT_CHECK(amount, hero_intelligence);
+    PRINT_REMAINING_POINTS(skill_point_pool);
   }
   else if(CHOOSE_DEXTERITY(skillAreaChoice)){
     printf("How many points would you like to allocate into dexterity? (1 through 4)\n");
     scanf("%d", &amount);
-    ALLOCATION(amount, hero_dexterity, 1);
-    ALLOCATION(amount, hero_dexterity, 2);
-    ALLOCATION(amount, hero_dexterity, 3);
-    ALLOCATION(amount, hero_dexterity, 4);
-    ALLOCATION_LIMIT_CHECK(amount, hero_dexterity,initialSKillPointAllocation());
+    ALLOCATION(amount, skill, hero_dexterity, 1);
+    ALLOCATION(amount, skill, hero_dexterity, 2);
+    ALLOCATION(amount, skill, hero_dexterity, 3);
+    ALLOCATION(amount, skill, hero_dexterity, 4);
+    skill_point_pool  = skill_point_pool - amount;
+    ALLOCATION_LIMIT_CHECK(amount, hero_dexterity);
+    PRINT_REMAINING_POINTS(skill_point_pool);
   }
   else if(CHOOSE_LUCK(skillAreaChoice)){
     printf("How many points would you like to allocate into luck? (1 through 4)\n");
     scanf("%d", &amount);
-    ALLOCATION(amount, hero_luck, 1);
-    ALLOCATION(amount, hero_luck, 2);
-    ALLOCATION(amount, hero_luck, 3);
-    ALLOCATION(amount, hero_luck, 4);
-    ALLOCATION_LIMIT_CHECK(amount, hero_luck,initialSKillPointAllocation());
+    ALLOCATION(amount, skill, hero_luck, 1);
+    ALLOCATION(amount, skill, hero_luck, 2);
+    ALLOCATION(amount, skill, hero_luck, 3);
+    ALLOCATION(amount, skill, hero_luck, 4);
+    skill_point_pool  = skill_point_pool - amount;
+    ALLOCATION_LIMIT_CHECK(amount, hero_luck);
+    PRINT_REMAINING_POINTS(skill_point_pool);
   }
   else{
     MAKE_VALID_DECISION;
     initialSKillPointAllocation();
   }
 }
+if(skill_point_pool <= 0){
+  // TODO REMOVE THIS STRING AND REPLACE WITH A FUNCTION CALL TO THE NEXT PART OF THE PROGRAM
+printf("YOU HIT THE MARK, MOVING ON TO NEXT PART OF PROGRAM\n");
+}
   return 0;
 }
+ 
 
 int setHeroLvl()
 {
