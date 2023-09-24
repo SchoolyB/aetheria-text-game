@@ -6,10 +6,9 @@
 #include "./Functions/Logger.h"
 #include "./Globals.h"
 
+  // "inventory ---> This Command will list all items in your inventory\n",
 char in_game_commands[10][100] = {
-  "inventory ---> This Command will list all items in your inventory\n",
   "info ---> This Command will show all hero info\n",
-  "help ---> This command will open a help menu\n",
   "/exit ---> This Command will exit the program\n",
   "/quit ---> This Command will exit the program\n",
   "/restart ---> This Command will restart the program\n",
