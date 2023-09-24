@@ -104,13 +104,13 @@ int setHeroMana()
 int initialSKillPointAllocation(){
   printf("You have %d points to allocate to your skills\n", skill_point_pool);
   char skillAreaChoice[10]; // i.e strength, dex, etc
-  int amount; //the amount to allocate to skill
-  char allocationConfirmation[10]; //confirmation 
-  printf("Now its time to allocate some points to a particular skill area.\n You can allocate points to the following areas\n");
-  for(int i = 0; i < 4; i++ ){
-    printf("%s\n", skill[i]);
-  };
-  printf("You have a total of %d points to spend\n", skill_point_pool);
+  int amount; //the amount to allocate to skill 
+  printf("You can allocate points to the following areas\n");
+  printf("\x1b[31m1:Strength\n\x1b[0m");
+  printf("\x1b[34m2:Intelligence\n\x1b[0m");
+  printf("\x1b[35m3:Dexterity\n\x1b[0m");
+  printf("\x1b[32m4:Luck\n\x1b[0m");
+  PRINT_REMAINING_POINTS(skill_point_pool);
 // TODO build logic to subtract whatever number user enters for points from total point pool. then when total pool == 0 move to next phase of program.
 while(skill_point_pool > 0){ //the expression might need to be diff idk
   printf("Which area would you like to apply points\n");
@@ -165,25 +165,50 @@ while(skill_point_pool > 0){ //the expression might need to be diff idk
     initialSKillPointAllocation();
   }
 }
-if(skill_point_pool <= 0){
-  // TODO REMOVE THIS STRING AND REPLACE WITH A FUNCTION CALL TO THE NEXT PART OF THE PROGRAM
-printf("YOU HIT THE MARK, MOVING ON TO NEXT PART OF PROGRAM\n");
-}
   return 0;
 }
  
+int allocationConfirmation(){
+  char allocationConfirmationInput[10];
+  if(skill_point_pool == 0){
+  // TODO REMOVE THIS STRING AND REPLACE WITH A FUNCTION CALL TO THE NEXT PART OF THE PROGRAM
+// printf("YOU HIT THE MARK, MOVING ON TO NEXT PART OF PROGRAM\n");
 
+  printf("Are you sure that you want to continue with these points in these areas?\n");
+  printf("\x1b[31mStrength: %d\n\x1b[0m", hero_strength);
+  printf("\x1b[34mIntelligence: %d\n\x1b[0m", hero_intelligence);
+  printf("\x1b[35mDexterity: %d\n\x1b[0m", hero_dexterity);
+  printf("\x1b[32mLuck: %d\n\x1b[0m", hero_luck);\
+
+  fgets(allocationConfirmationInput, sizeof(allocationConfirmationInput), stdin);
+  REMOVE_NEWLINE_CHARACTER(allocationConfirmationInput);
+  if(IS_YES(allocationConfirmationInput)){
+    printf("You have chosen to continue with these points\n");
+    printf("Moving on to next part of program\n");
+  }
+  else if(IS_NO(allocationConfirmationInput)){
+    printf("You have chosen to reallocate your points\n");
+    skill_point_pool = 10;
+    initialSKillPointAllocation();
+    allocationConfirmation();
+  }
+  else{
+    MAKE_VALID_DECISION;
+    allocationConfirmation();
+  }
+ }
+}
 int setHeroLvl()
 {
   hero_level = 1;
   return 0;
 }
-
 int setAllHeroStats()
 {
   setHeroHealth();
   setHeroMana();
   initialSKillPointAllocation();
+  allocationConfirmation();
   setHeroLvl();
   return 0;
 }
