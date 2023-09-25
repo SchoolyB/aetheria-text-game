@@ -63,6 +63,8 @@ strcmp(param, "lck") == 0 )
 #define IS_IN_GAME_COMMANDS_COMMAND(param)(strcmp(param, "/commands") == 0)
 #define IS_GAME_COMMAND(param)(strcmp(param, "/game") == 0)
 #define IS_INFO_COMMAND(param)(strcmp(param, "/info") == 0)
+#define IS_CLEAR_COMMAND(param)(strcmp(param, "/clear") == 0)
+#define IS_NOTE_COMMAND(param)(strcmp(param, "/note") == 0)
 
 //?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 #endif

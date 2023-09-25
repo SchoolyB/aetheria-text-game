@@ -5,7 +5,7 @@
 #include "./Macros.h"
 #include "./Functions/Logger.h"
 #include "./Globals.h"
-
+#include "./Notepad.c"
   // "inventory ---> This Command will list all items in your inventory\n",
 char in_game_commands[10][100] = {
   "info ---> This Command will show all hero info\n",
@@ -15,6 +15,7 @@ char in_game_commands[10][100] = {
   "/commands ---> This Command will list all available commands\n",
   "/game ---> This Command logs info about the game\n",
   "/clear ---> This Command clears the terminal\n",
+  "/write ---> This Command opens the notepad and allows the user to make an entry\n" 
   };
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
@@ -134,6 +135,9 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         printf("Invalid input.\n");
         ROOT_LEVEL_COMMAND_LINE(logFile);
       }
+    }
+    else if(IS_NOTE_COMMAND(in_game_input)){
+      createNote();    
     }
     else
     {
