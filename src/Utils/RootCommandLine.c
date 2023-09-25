@@ -4,9 +4,8 @@
 #include <unistd.h>
 #include "./Macros.h"
 #include "./Globals.h"
-#include "./Functions/Logger.h"
+#include "./Prototypes.h"
 #include "../Source/HeroCreation.c"
-#include "../Utils/InGameCommandLine.h"
 char root_level_commands[10][100] = {
     "Start ---> This Command will start the program\n",
     "/restart ---> This Command will restart the program\n",

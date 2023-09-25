@@ -1,6 +1,0 @@
-#ifndef ROOT_COMMAND_LINE_H
-#define ROOT_COMMAND_LINE_H
-
-int ROOT_COMMAND_LINE();
-
-#endif

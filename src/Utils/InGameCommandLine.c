@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "./Macros.h"
-#include "./Functions/Logger.h"
+#include "./Prototypes.h"
 #include "./Globals.h"
 #include "./Notepad.c"
   // "inventory ---> This Command will list all items in your inventory\n",
@@ -15,7 +15,8 @@ char in_game_commands[10][100] = {
   "/commands ---> This Command will list all available commands\n",
   "/game ---> This Command logs info about the game\n",
   "/clear ---> This Command clears the terminal\n",
-  "/write ---> This Command opens the notepad and allows the user to make an entry\n" 
+  "/w ---> This Command opens the notepad and allows the user to make an entry\n",
+  "/r ---> This Command opens the notepad and allows the user to read all entries\n" 
   };
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
@@ -136,8 +137,11 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         ROOT_LEVEL_COMMAND_LINE(logFile);
       }
     }
-    else if(IS_NOTE_COMMAND(in_game_input)){
+    else if(IS_WRITE_NOTE_COMMAND(in_game_input)){
       createNote();    
+    }
+    else if(IS_READ_NOTES_COMMAND(in_game_input)){
+      readNotes();
     }
     else
     {

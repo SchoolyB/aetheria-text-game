@@ -1,6 +1,6 @@
 #ifndef MACROS_H
 #define MACROS_H
-
+#include <string.h>
 
 //?++++++++++++++++++++++++START OF MACROS++++++++++++++++++++++++?//
 // This macro is used to make sure the user enters a valid decision
@@ -64,7 +64,18 @@ strcmp(param, "lck") == 0 )
 #define IS_GAME_COMMAND(param)(strcmp(param, "/game") == 0)
 #define IS_INFO_COMMAND(param)(strcmp(param, "/info") == 0)
 #define IS_CLEAR_COMMAND(param)(strcmp(param, "/clear") == 0)
-#define IS_NOTE_COMMAND(param)(strcmp(param, "/note") == 0)
+  // the /w commands are used to write notes to the notepad
+#define IS_WRITE_NOTE_COMMAND(param)(strcmp(param, "/w") == 0 || strcmp(param, "/write") == 0)
+  // the /r commands are used to read notes from the notepad
+#define IS_READ_NOTES_COMMAND(param)(strcmp(param, "/r") == 0 || strcmp(param, "/read") == 0)
+
+#define CREATE_LOG_FILE(variable, filename) \
+  FILE *variable = fopen(filename, "a"); \
+  if (variable == NULL) \
+  { \
+    perror("Error opening the log file"); \
+    exit(1); \
+  }
 
 //?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
 #endif
