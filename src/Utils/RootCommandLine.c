@@ -13,7 +13,8 @@ char root_level_commands[10][100] = {
     "/exit ---> This Command will exit the program\n",
     "/quit ---> This Command will exit the program\n",
     "/commands ---> This Command will list all available commands\n",
-    "/game ---> This Command logs info about the game\n"
+    "/game ---> This Command logs info about the game\n",
+    "/clear ---> This Command clears the terminal\n",
     };
 
 
@@ -116,6 +117,25 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
       printf("Game Name: Untitled Text Game\n");
       printf("Game Developer: Marshall Burns\n");
       printf("Game Description: COMING SOON\n");
+    }
+    else if(strcmp(input, "/clear") == 0 ){\
+      char clearConfirmation[10];
+      printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
+      sleep(1);
+      printf("\x1b[31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      fgets(clearConfirmation, sizeof(clearConfirmation), stdin);
+      REMOVE_NEWLINE_CHARACTER(clearConfirmation);
+      if(IS_YES(clearConfirmation)){
+        printf("Clearing terminal...\n");
+        system("clear");
+      }
+      else if(IS_NO(clearConfirmation)){
+        printf("Clear canceled.\n");
+      }
+      else{
+        printf("Invalid input.\n");
+        ROOT_LEVEL_COMMAND_LINE(logFile);
+      }
     }
     else
     {

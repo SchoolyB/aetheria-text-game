@@ -13,7 +13,8 @@ char in_game_commands[10][100] = {
   "/quit ---> This Command will exit the program\n",
   "/restart ---> This Command will restart the program\n",
   "/commands ---> This Command will list all available commands\n",
-  "/game ---> This Command logs info about the game\n"
+  "/game ---> This Command logs info about the game\n",
+  "/clear ---> This Command clears the terminal\n",
   };
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
@@ -114,6 +115,29 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         printf("Invalid input.\n");
         IN_GAME_COMMAND_LINE(logFile);
       }
+    }
+    else if(strcmp(in_game_input, "/clear") == 0 ){\
+      char clearConfirmation[10];
+      printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
+      sleep(1);
+      printf("\x1b[31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      fgets(clearConfirmation, sizeof(clearConfirmation), stdin);
+      REMOVE_NEWLINE_CHARACTER(clearConfirmation);
+      if(IS_YES(clearConfirmation)){
+        printf("Clearing terminal...\n");
+        system("clear");
+      }
+      else if(IS_NO(clearConfirmation)){
+        printf("Clear canceled.\n");
+      }
+      else{
+        printf("Invalid input.\n");
+        ROOT_LEVEL_COMMAND_LINE(logFile);
+      }
+    }
+    else
+    {
+      printf("Invalid command.\n");
     }
   }
   return 0;
