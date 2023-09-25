@@ -2,8 +2,8 @@
 #define GLOBALS_H 
 
 
+// TODO change this to a string
 float GAME_VERSION = 0.1;
-
 
 
 // This file contains all the global variables that are used to store the hero's information
@@ -23,5 +23,8 @@ extern int hero_dexterity;
 extern int hero_luck;
 extern int hero_level;
 
+// Hero Attack and Defense
+extern int hero_atk;
+extern int hero_def;
 #endif
 

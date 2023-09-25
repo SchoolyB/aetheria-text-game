@@ -5,4 +5,4 @@ Please explore the files in the "Utils" folder to discover the available utility
 Feel free to leverage these utility functions as needed in different parts of the program to simplify development and maintenance.
 
 - Marshall Burns
- a.k.a Schooly B
+ a.k.a @SchoolyB 

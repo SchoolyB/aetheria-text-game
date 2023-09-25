@@ -18,7 +18,7 @@ char hero_class[10];
 //===========================================================================================================//
 int getFirstName()
 {
-  char firstNameInput[10];
+  char firstNameInput[15];
   char firstNameConfirmation[10];
   printf("Enter your first name: ");
   fgets(firstNameInput, sizeof(firstNameInput), stdin);
@@ -74,7 +74,7 @@ int dynastyNameCheck()
   else if (IS_NO(dynastyNameDecision))
   {
     sleep(1);
-    printf("You have chosen not to have a dynasty name\n");
+    printf("\x1b[33mYou have chosen not to have a dynasty name.\x1b[0m\n");
     sleep(1);
     printf("\x1b[33mAre you sure you do not come from a great dynasty? (y/n): \x1b[0m\n");
     fgets(confirmDynastyDecision, sizeof(confirmDynastyDecision), stdin);
@@ -83,7 +83,7 @@ int dynastyNameCheck()
     REMOVE_NEWLINE_CHARACTER(confirmDynastyDecision);
     if (IS_YES(confirmDynastyDecision))
     {
-      printf("You have chosen not to have a dynasty name\n");
+      printf("Ah, It seems that you don't come from a great dynasty. Very well.\n");
       heroGenderCheck();
     }
     else if (IS_NO(confirmDynastyDecision))
@@ -159,6 +159,8 @@ int heroGenderCheck()
   }
   else if (IS_NO(heroGenderDecision))
   {
+
+    printf("\x1b[33mYou have chosen not to have a gender.\x1b[0m\n");
     printf("\x1b[33mAre you sure you do not have a gender? (y/n): \x1b[0m\n");
     fgets(heroGenderDecisionConfirmation, sizeof(heroGenderDecisionConfirmation), stdin);
 
@@ -221,7 +223,8 @@ int getHeroGender()
   }
   else
   {
-    MAKE_VALID_DECISION;
+    printf("You've entered %s, are you certain that that is your gender?", heroGenderInput);
+    confirmHeroGender();
   }
 }
 //===========================================================================================================//
@@ -985,9 +988,9 @@ int getHeroProfession()
            strcmp(heroProfessionInput, "NONE") == 0)
   {
     strcpy(heroProfessionChoice, "None");
-    printf("You have chosen not to have a profession.\n");
+    printf("\x1b[33mYou have chosen not to have a profession.\x1b[0m\n");
     sleep(1);
-    printf("This may have effects on gameplay aspects\n");
+    printf("\x1b[33mThis may affect some aspects of gameplay.\x1b[0m\n");
     printf("\x1b[33mAre you sure you do not have a profession? (y/n): \x1b[0m\n");
 
     fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
