@@ -2,7 +2,6 @@
 #define MACROS_H
 #include <string.h>
 
-//?++++++++++++++++++++++++START OF MACROS++++++++++++++++++++++++?//
 // This macro is used to make sure the user enters a valid decision
 #define MAKE_VALID_DECISION printf("Please make a valid decision\n")
 
@@ -56,7 +55,8 @@ strcmp(param, "lck") == 0 )
 #define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate\n", param)
 // this macro is used in the RootCommandLine.c & InGameCommandLine.c files to check if the user input is a valid command
 #define MAX_INPUT_LENGTH 100
-// These macros are used to check if the user input is a valid command on both root and in game command lines
+
+//=========================COMMAND LINE MACROS=========================//
 #define IS_RESTART_COMMAND(param)(strcmp(param, "/restart")== 0)
 #define IS_EXIT_COMMAND(param)(strcmp(param, "/exit") == 0 || strcmp(param, "/quit") == 0)
 #define IS_ROOT_COMMANDS_COMMAND(param)(strcmp(param, "/commands") == 0)
@@ -64,11 +64,13 @@ strcmp(param, "lck") == 0 )
 #define IS_GAME_COMMAND(param)(strcmp(param, "/game") == 0)
 #define IS_INFO_COMMAND(param)(strcmp(param, "/info") == 0)
 #define IS_CLEAR_COMMAND(param)(strcmp(param, "/clear") == 0)
-  // the /w commands are used to write notes to the notepad
-#define IS_WRITE_NOTE_COMMAND(param)(strcmp(param, "/w") == 0 || strcmp(param, "/write") == 0)
-  // the /r commands are used to read notes from the notepad
-#define IS_READ_NOTES_COMMAND(param)(strcmp(param, "/r") == 0 || strcmp(param, "/read") == 0)
+#define IS_WRITE_NOTE_COMMAND(param)(strcmp(param, "/nw") == 0 || strcmp(param, "/write") == 0)
+#define IS_READ_NOTES_COMMAND(param)(strcmp(param, "/nr") == 0 || strcmp(param, "/read") == 0)
+#define IS_CLEAR_NOTES_COMMAND(param)(strcmp(param, "/nc") == 0)
+//=========================COMMAND LINE MACROS=========================//
 
+
+// this macro is used to open and write to the log file 
 #define CREATE_LOG_FILE(variable, filename) \
   FILE *variable = fopen(filename, "a"); \
   if (variable == NULL) \
@@ -77,5 +79,5 @@ strcmp(param, "lck") == 0 )
     exit(1); \
   }
 
-//?++++++++++++++++++++++++END OF MACROS++++++++++++++++++++++++?//
+
 #endif

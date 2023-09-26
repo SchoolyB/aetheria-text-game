@@ -51,3 +51,17 @@ int readNotes(){
     return 0;
 }
 
+//===================================================================================================//
+// Clear all notes from the notepad
+int clearNotes(){
+  FILE *notePad = fopen("notepad.txt", "w"); // "a" mode appends to the file if it exists
+    if (notePad == NULL)
+    {
+        perror("Error opening the log file");
+        exit(1);
+    }
+    fclose(notePad);
+    printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
+    return 0;
+}
+

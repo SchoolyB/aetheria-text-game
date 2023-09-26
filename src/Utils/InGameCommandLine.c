@@ -7,7 +7,7 @@
 #include "./Globals.h"
 #include "./Notepad.c"
   // "inventory ---> This Command will list all items in your inventory\n",
-char in_game_commands[10][100] = {
+char in_game_commands[15][100] = {
   "info ---> This Command will show all hero info\n",
   "/exit ---> This Command will exit the program\n",
   "/quit ---> This Command will exit the program\n",
@@ -15,8 +15,9 @@ char in_game_commands[10][100] = {
   "/commands ---> This Command will list all available commands\n",
   "/game ---> This Command logs info about the game\n",
   "/clear ---> This Command clears the terminal\n",
-  "/w ---> This Command opens the notepad and allows the user to make an entry\n",
-  "/r ---> This Command opens the notepad and allows the user to read all entries\n" 
+  "/nw ---> This Command opens the notepad and allows the user to make an entry\n",
+  "/nr ---> This Command opens the notepad and allows the user to read all entries\n",
+  "/nc ---> This Command clears all entries from the notepad\n",
   };
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
@@ -83,7 +84,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
 
     else if(IS_IN_GAME_COMMANDS_COMMAND(in_game_input)){
       printf("\x1b[32mIN GAME COMMANDS: \x1b[0m\n");
-      for (int i = 0; i < 10; i++)
+      for (int i = 0; i < 15; i++)
       {
         printf("%s\n", in_game_commands[i]);
       }
@@ -92,8 +93,6 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
     else if(IS_GAME_COMMAND(in_game_input)){
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
       printf("Game Version: %f\n", GAME_VERSION);
-      // printf("Game Name: %s\n", game_name);
-      // printf("Game Description: %s\n", game_description);
       printf("Game Author: Marshall Burns\n" );
     }
 
@@ -118,7 +117,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         IN_GAME_COMMAND_LINE(logFile);
       }
     }
-    else if(strcmp(in_game_input, "/clear") == 0 ){\
+    else if(IS_CLEAR_COMMAND(in_game_input)){
       char clearConfirmation[10];
       printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
       sleep(1);
@@ -142,6 +141,24 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
     }
     else if(IS_READ_NOTES_COMMAND(in_game_input)){
       readNotes();
+    }
+    else if(IS_CLEAR_NOTES_COMMAND(in_game_input)){
+      char clearNotesConfirmation[10];
+      printf("\x1b[31mRequesting to clear notepad...\x1b[0m\n");
+      sleep(1);
+      printf("\x1b[31mOnce you clear your notepad you will be unable see past notes. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      fgets(clearNotesConfirmation, sizeof(clearNotesConfirmation), stdin);
+      REMOVE_NEWLINE_CHARACTER(clearNotesConfirmation);
+      if(IS_YES(clearNotesConfirmation)){
+        printf("Clearing notes...\n");
+        clearNotes();
+      }
+      else if(IS_NO(clearNotesConfirmation)){
+        printf("Clear canceled.\n");
+      }
+      else{
+        printf("Invalid input.\n");
+      }
     }
     else
     {

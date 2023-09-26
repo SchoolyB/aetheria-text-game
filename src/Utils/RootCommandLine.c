@@ -117,7 +117,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
       printf("Game Developer: Marshall Burns\n");
       printf("Game Description: COMING SOON\n");
     }
-    else if(strcmp(input, "/clear") == 0 ){\
+    else if(IS_CLEAR_COMMAND(input)){
       char clearConfirmation[10];
       printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
       sleep(1);
