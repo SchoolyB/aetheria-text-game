@@ -6,33 +6,43 @@
 #include "./Prototypes.h"
 #include "./Globals.h"
 #include "./Notepad.c"
-  // "inventory ---> This Command will list all items in your inventory\n",
+
 char in_game_commands[15][100] = {
-  "info ---> This Command will show all hero info\n",
-  "/exit ---> This Command will exit the program\n",
-  "/quit ---> This Command will exit the program\n",
-  "/restart ---> This Command will restart the program\n",
-  "/commands ---> This Command will list all available commands\n",
-  "/game ---> This Command logs info about the game\n",
-  "/clear ---> This Command clears the terminal\n",
-  "/nw ---> This Command opens the notepad and allows the user to make an entry\n",
-  "/nr ---> This Command opens the notepad and allows the user to read all entries\n",
-  "/nc ---> This Command clears all entries from the notepad\n",
-  };
+"info"
+"/exit"
+"/quit"
+"/restart"
+"/commands"
+"/game"
+"/clear"
+"/nw"
+"/nr"
+"/nc"};
+
+char in_game_commands_descriptions[15][100] = {
+"Shows all hero info\n",
+"Exit the program\n",
+"Exit the program\n",
+"Restart the program\n",
+"Lists all available commands\n",
+"Logs info about the game\n",
+"Clears the terminal\n",
+"Opens the notepad and allows the user to make an entry\n",
+"Opens the notepad and allows the user to read all entries\n",
+"Clears all entries from the notepad\n"};
 
 int IN_GAME_COMMAND_LINE(FILE *logFile){
   char in_game_input[MAX_INPUT_LENGTH];
   while (1)
   {
     // Prompt the user for input
-    printf("Enter a an in game command: ");
+    printf("Enter an in game command:= ");
     if (fgets(in_game_input, sizeof(in_game_input), stdin) == NULL)
     {
       // Handle in_game_input error
       perror("fgets");
       exit(1);
     }
-
     // Remove the newline character from the in_game_input
     in_game_input[strcspn(in_game_input, "\n")] = '\0';
 
@@ -64,42 +74,61 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       }
     }
     else if(IS_INFO_COMMAND(in_game_input)){
-        logMessage(logFile, "Requested hero information.\n");
-      printf("\x1b[32mHERO INFORMATION: \x1b[0m\n");
-      // TODO add if var is null then print "Not set"
-      printf("First Name: %s\n", hero_first_name);
-      printf("Dynasty Name: %s \n", hero_dynasty_name);
-      printf("Gender: %s \n", hero_gender);
-      printf("Country of Origin: %s \n", hero_homeland);
-      printf("Profession: %s \n", hero_profession);
-      printf("Class: %s \n", hero_class);
-      printf("Level: %d\n", hero_level);
-      printf("Hero Health: %d\n", hero_health);
-      printf("Hero Mana: %d\n", hero_mana);
-      printf("Strength: %d\n", hero_strength);
-      printf("Dexterity: %d\n", hero_dexterity);
-      printf("Intelligence: %d\n", hero_intelligence);
-      printf("Luck: %d\n", hero_luck);
-      printf("Ability 1: %s\n", hero_ability1);
-      printf("Ability 2: %s\n", hero_ability2);
-      printf("Ability 3: %s\n", hero_ability3);
-
+      logMessage(logFile, "Requested hero information.\n");
+      char heroInfoArt[1000] =
+      ".##.....##.########.########...#######.....####.##....##.########..#######. \n"
+      ".##.....##.##.......##.....##.##.....##.....##..###...##.##.......##.....## \n"
+      ".##.....##.##.......##.....##.##.....##.....##..####..##.##.......##.....## \n"
+      ".#########.######...########..##.....##.....##..##.##.##.######...##.....## \n"
+      ".##.....##.##.......##...##...##.....##.....##..##..####.##.......##.....## \n"
+      ".##.....##.##.......##....##..##.....##.....##..##...###.##.......##.....## \n"
+      ".##.....##.########.##.....##..#######.....####.##....##.##........#######. \n";
+      printf("\x1b[32m%s\x1b[0m\n", heroInfoArt);
+      printf("============================================================================\n");
+      printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Country of Origin");
+      printf("%-15s | %-15s | %-15s | %-15s \n", hero_first_name, hero_dynasty_name, hero_gender, hero_homeland);
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-15s | %-15s | %-15s | %-15s | %-15s \n", "Profession", "Class", "Level", "Health", "Mana");
+      printf("%-15s | %-15s | %-15d | %-15d | %-15d \n", hero_profession, hero_class, hero_level, hero_health, hero_mana);
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-15s | %-15s | %-15s | %-15s \n", "Strength", "Dexterity", "Intelligence", "Luck");
+      printf("%-15d | %-15d | %-15d | %-15d \n", hero_strength, hero_dexterity, hero_intelligence, hero_luck);
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-15s | %-15s | %-15s \n", "Ability 1", "Ability 2", "Ability 3"); 
+      printf("============================================================================\n");                                 
     }
 
     else if(IS_IN_GAME_COMMANDS_COMMAND(in_game_input)){
-      printf("\x1b[32mIN GAME COMMANDS: \x1b[0m\n");
-      for (int i = 0; i < 15; i++)
-      {
-        printf("%s\n", in_game_commands[i]);
-      }
+      logMessage(logFile, "Requested in game commands.\n");
+      char in_game_commands_art[1000] =
+      "..######...#######..##.....##.##.....##....###....##....##.########...######.\n"
+      ".##....##.##.....##.###...###.###...###...##.##...###...##.##.....##.##....##\n"
+      ".##.......##.....##.####.####.####.####..##...##..####..##.##.....##.##......\n"
+      ".##.......##.....##.##.###.##.##.###.##.##.....##.##.##.##.##.....##..######.\n"
+      ".##.......##.....##.##.....##.##.....##.#########.##..####.##.....##.......##\n"
+      ".##....##.##.....##.##.....##.##.....##.##.....##.##...###.##.....##.##....##\n"
+      "..######...#######..##.....##.##.....##.##.....##.##....##.########...######.\n";
+      printf("\x1b[32m%s\x1b[0m\n", in_game_commands_art);
+      printf("=============================================================================\n");
+      printf("%-10s | %-30s \n", "Command", "Description");
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-10s | %-30s \n", "/info", "Shows all hero info");
+      printf("%-10s | %-30s \n", "/exit", "Exit the program");
+      printf("%-10s | %-30s \n", "/quit", "Exit the program");
+      printf("%-10s | %-30s \n", "/restart", "Restart the program");
+      printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
+      printf("%-10s | %-30s \n", "/game", "Logs info about the game");
+      printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
+      printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
+      printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
+      printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
+      printf("=============================================================================\n");
     }
-
     else if(IS_GAME_COMMAND(in_game_input)){
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
       printf("Game Version: %f\n", GAME_VERSION);
       printf("Game Author: Marshall Burns\n" );
     }
-
     else if(IS_EXIT_COMMAND(in_game_input)){
       char exitConfirmation[10];
       printf("\x1b[31mRequesting to exit program... \x1b[0m\n");

@@ -102,12 +102,27 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
     }
     else if (IS_ROOT_COMMANDS_COMMAND(input))
     {
-      printf("\x1b[32mAVAILABLE COMMANDS: \x1b[0m\n");
-      for (int i = 0; i < 7; i++)
-      {
-        printf("%s\n", root_level_commands[i]);
-      }
-      logMessage(logFile, "Requested to see list of available commands.\n");
+      logMessage(logFile, "Requested in game commands.\n");
+      char root_level_commands_art[1000] =
+      "..######...#######..##.....##.##.....##....###....##....##.########...######.\n"
+      ".##....##.##.....##.###...###.###...###...##.##...###...##.##.....##.##....##\n"
+      ".##.......##.....##.####.####.####.####..##...##..####..##.##.....##.##......\n"
+      ".##.......##.....##.##.###.##.##.###.##.##.....##.##.##.##.##.....##..######.\n"
+      ".##.......##.....##.##.....##.##.....##.#########.##..####.##.....##.......##\n"
+      ".##....##.##.....##.##.....##.##.....##.##.....##.##...###.##.....##.##....##\n"
+      "..######...#######..##.....##.##.....##.##.....##.##....##.########...######.\n";
+      printf("\x1b[32m%s\x1b[0m\n", root_level_commands_art);
+      printf("=============================================================================\n");
+      printf("%-10s | %-30s \n", "Command", "Description");
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-10s | %-30s \n", "/info", "Shows all hero info");
+      printf("%-10s | %-30s \n", "/exit", "Exit the program");
+      printf("%-10s | %-30s \n", "/quit", "Exit the program");
+      printf("%-10s | %-30s \n", "/restart", "Restart the program");
+      printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
+      printf("%-10s | %-30s \n", "/game", "Logs info about the game");
+      printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
+      printf("=============================================================================\n");
     }
     else if(strcmp(input, "/game") == 0){
       logMessage(logFile, "Requested game information.\n");
