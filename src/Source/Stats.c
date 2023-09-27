@@ -4,6 +4,7 @@
 #include "../Utils/Globals.h"
 #include "../Utils/Macros.h"
 #include "../Utils/Prototypes.h"
+#include "../Utils/Abilities.h"
 
 #define MAX_SKILL_POINTS 4
 
@@ -14,9 +15,13 @@ int hero_dexterity;
 int hero_intelligence;
 int hero_luck;
 int hero_level;
-char hero_class[10];
-int hero_atk;
-int hero_def;
+struct Hero_Ability
+{
+char name[15];
+int max_possible_damage;
+int min_possible_damage;
+int mana_cost;
+};
 
 int skill_point_pool = 10; //this is the initial skill point pool
 char skill[4][15] = {
@@ -26,75 +31,65 @@ char skill[4][15] = {
   "Luck"
 };
 //===========================================================================================================//
-int setHeroHealth()
+int setHeroStatsAndAbilities()
 {
   if (strcmp(hero_class, "Warrior") == 0 ||
       strcmp(hero_class, "warrior") == 0 ||
       strcmp(hero_class, "WARRIOR") == 0)
   {
-    hero_health = 120;
+// Ability 1
+  struct Hero_Ability Ability1;
+  strcpy(Ability1.name, "Slash");
+  Ability1.max_possible_damage = 15;
+  Ability1.min_possible_damage = 7;
+  Ability1.mana_cost = 0;
+  
+  // Ability 2
+  struct Hero_Ability Ability2;
+  strcpy(Ability2.name, "Cleave");
+  Ability2.max_possible_damage = 16;
+  Ability2.min_possible_damage = 8;
+  Ability2.mana_cost = 0;
+  
+  // Ability 3
+  struct Hero_Ability Ability3;
+  strcpy(Ability3.name, "Thrash");
+  Ability3.max_possible_damage = 19;
+  Ability3.min_possible_damage = 10;
+  Ability3.mana_cost = 0;
+
+  // Health & Mana
+  hero_health = 120;
+  hero_mana = 10;
+  printf("As a %s you start with the following abilities:\n", hero_class);
+  printf("%s\n%s\n%s\n", Ability1.name, Ability2.name, Ability3.name);
   }
   else if (strcmp(hero_class, "Mage") == 0 ||
            strcmp(hero_class, "mage") == 0 ||
            strcmp(hero_class, "MAGE") == 0)
   {
     hero_health = 70;
-  }
-  else if (strcmp(hero_class, "Rogue") == 0 ||
-           strcmp(hero_class, "rogue") == 0 ||
-           strcmp(hero_class, "ROGUE") == 0)
-  {
-    hero_health = 80;
-  }
-  else if (strcmp(hero_class, "Cleric") == 0 ||
-           strcmp(hero_class, "cleric") == 0 ||
-           strcmp(hero_class, "CLERIC") == 0)
-  {
-    hero_health = 100;
-  }
-  else if (strcmp(hero_class, "Bard") == 0 ||
-           strcmp(hero_class, "bard") == 0 ||
-           strcmp(hero_class, "BARD") == 0)
-  {
-    hero_health = 70;
-  }
-  else
-  {
-    return 1;
-  }
-  return 0;
-}
-//===========================================================================================================//
-int setHeroMana()
-{
-  if (strcmp(hero_class, "Warrior") == 0 ||
-      strcmp(hero_class, "warrior") == 0 ||
-      strcmp(hero_class, "WARRIOR") == 0)
-  {
-    hero_mana = 20;
-  }
-  else if (strcmp(hero_class, "Mage") == 0 ||
-           strcmp(hero_class, "mage") == 0 ||
-           strcmp(hero_class, "MAGE") == 0)
-  {
     hero_mana = 120;
   }
   else if (strcmp(hero_class, "Rogue") == 0 ||
            strcmp(hero_class, "rogue") == 0 ||
            strcmp(hero_class, "ROGUE") == 0)
   {
+    hero_health = 80;
     hero_mana = 80;
   }
   else if (strcmp(hero_class, "Cleric") == 0 ||
            strcmp(hero_class, "cleric") == 0 ||
            strcmp(hero_class, "CLERIC") == 0)
   {
+    hero_health = 100;
     hero_mana = 100;
   }
   else if (strcmp(hero_class, "Bard") == 0 ||
            strcmp(hero_class, "bard") == 0 ||
            strcmp(hero_class, "BARD") == 0)
   {
+    hero_health = 70;
     hero_mana = 70;
   }
   else
@@ -103,6 +98,7 @@ int setHeroMana()
   }
   return 0;
 }
+
 //===========================================================================================================//
 int initialSKillPointAllocation(){
   printf("You have been given %d points to allocate to your skills\n", skill_point_pool);
@@ -210,9 +206,8 @@ int setHeroLvl()
 //===========================================================================================================//
 // KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
 int setAllHeroStats()
-{
-  setHeroHealth();
-  setHeroMana();
+{ 
+  setHeroStatsAndAbilities();
   initialSKillPointAllocation();
   allocationConfirmation();
   setHeroLvl();
