@@ -4,7 +4,6 @@
 #include "../Utils/Globals.h"
 #include "../Utils/Macros.h"
 #include "../Utils/Prototypes.h"
-#include "../Utils/Abilities.h"
 
 #define MAX_SKILL_POINTS 4
 
@@ -15,6 +14,9 @@ int hero_dexterity;
 int hero_intelligence;
 int hero_luck;
 int hero_level;
+char hero_ability1[20];
+char hero_ability2[20];
+char hero_ability3[20];
 struct Hero_Ability
 {
 char name[15];
@@ -37,37 +39,68 @@ int setHeroStatsAndAbilities()
       strcmp(hero_class, "warrior") == 0 ||
       strcmp(hero_class, "WARRIOR") == 0)
   {
-// Ability 1
-  struct Hero_Ability Ability1;
-  strcpy(Ability1.name, "Slash");
-  Ability1.max_possible_damage = 15;
-  Ability1.min_possible_damage = 7;
-  Ability1.mana_cost = 0;
+  // Hero Ability 1
+  struct Hero_Ability FirstAbility;
+  strcpy(FirstAbility.name, "Slash");
+  FirstAbility.max_possible_damage = 15;
+  FirstAbility.min_possible_damage = 7;
+  FirstAbility.mana_cost = 0;
+  // Give the global variable the value of the struct member
+  strcpy(hero_ability1, FirstAbility.name);
   
-  // Ability 2
-  struct Hero_Ability Ability2;
-  strcpy(Ability2.name, "Cleave");
-  Ability2.max_possible_damage = 16;
-  Ability2.min_possible_damage = 8;
-  Ability2.mana_cost = 0;
+  // Hero Ability 2
+  struct Hero_Ability SecondAbility;
+  strcpy(SecondAbility.name, "Cleave");
+  SecondAbility.max_possible_damage = 16;
+  SecondAbility.min_possible_damage = 8;
+  SecondAbility.mana_cost = 0;
+  // Give the global variable the value of the struct member
+  strcpy(hero_ability2, SecondAbility.name);
   
-  // Ability 3
-  struct Hero_Ability Ability3;
-  strcpy(Ability3.name, "Thrash");
-  Ability3.max_possible_damage = 19;
-  Ability3.min_possible_damage = 10;
-  Ability3.mana_cost = 0;
+  // Hero Ability 3
+  struct Hero_Ability ThirdAbility;
+  strcpy(ThirdAbility.name, "Thrash");
+  ThirdAbility.max_possible_damage = 19;
+  ThirdAbility.min_possible_damage = 10;
+  ThirdAbility.mana_cost = 0;
+  // Give the global variable the value of the struct member
+  strcpy(hero_ability3, ThirdAbility.name);
 
   // Health & Mana
   hero_health = 120;
   hero_mana = 10;
   printf("As a %s you start with the following abilities:\n", hero_class);
-  printf("%s\n%s\n%s\n", Ability1.name, Ability2.name, Ability3.name);
+  printf("%s\n%s\n%s\n", FirstAbility.name, SecondAbility.name, ThirdAbility.name);
+  // TODO start working on combat math
   }
   else if (strcmp(hero_class, "Mage") == 0 ||
            strcmp(hero_class, "mage") == 0 ||
            strcmp(hero_class, "MAGE") == 0)
   {
+    // Hero Ability 1
+  struct Hero_Ability FirstAbility;
+  strcpy(FirstAbility.name, "Fireball");
+  FirstAbility.max_possible_damage = 10;
+  FirstAbility.min_possible_damage = 5;
+  FirstAbility.mana_cost = 5;
+  strcpy(hero_ability1, FirstAbility.name);
+  
+  // Hero Ability 2
+  struct Hero_Ability SecondAbility;
+  strcpy(SecondAbility.name, "Frostbolt");
+  SecondAbility.max_possible_damage = 15;
+  SecondAbility.min_possible_damage = 10;
+  SecondAbility.mana_cost = 9;
+  strcpy(hero_ability2, SecondAbility.name);
+  
+  // Hero Ability 3
+  struct Hero_Ability ThirdAbility;
+  strcpy(ThirdAbility.name, "Arcane Blast");
+  ThirdAbility.max_possible_damage = 21;
+  ThirdAbility.min_possible_damage = 12;
+  ThirdAbility.mana_cost = 12;
+  strcpy(hero_ability3, ThirdAbility.name);
+  // Health & Mana
     hero_health = 70;
     hero_mana = 120;
   }
@@ -75,6 +108,29 @@ int setHeroStatsAndAbilities()
            strcmp(hero_class, "rogue") == 0 ||
            strcmp(hero_class, "ROGUE") == 0)
   {
+    // Hero Ability 1
+  struct Hero_Ability FirstAbility;
+  strcpy(FirstAbility.name, "Back Stab");
+  FirstAbility.max_possible_damage = 5;
+  FirstAbility.min_possible_damage = 3;
+  FirstAbility.mana_cost = 0;
+  strcpy(hero_ability1, FirstAbility.name);
+  // Hero Ability 2
+  struct Hero_Ability SecondAbility;
+  strcpy(SecondAbility.name, "Poison");
+  SecondAbility.max_possible_damage = 9;
+  SecondAbility.min_possible_damage = 5;
+  SecondAbility.mana_cost = 0;
+  strcpy(hero_ability2, SecondAbility.name);
+  // Hero Ability 3
+  struct Hero_Ability ThirdAbility;
+  strcpy(ThirdAbility.name, "Assassinate");
+  ThirdAbility.max_possible_damage = 16;
+  ThirdAbility.min_possible_damage = 9;
+  ThirdAbility.mana_cost = 0;
+  strcpy(hero_ability3, ThirdAbility.name);
+
+  // Health & Mana
     hero_health = 80;
     hero_mana = 80;
   }
@@ -82,6 +138,31 @@ int setHeroStatsAndAbilities()
            strcmp(hero_class, "cleric") == 0 ||
            strcmp(hero_class, "CLERIC") == 0)
   {
+    // Hero Ability 1
+  struct Hero_Ability FirstAbility;
+  strcpy(FirstAbility.name, "Holy Light");
+  FirstAbility.max_possible_damage = 6;
+  FirstAbility.min_possible_damage = 3;
+  FirstAbility.mana_cost = 2;
+  strcpy(hero_ability1, FirstAbility.name);
+  
+  // Hero Ability 2
+  struct Hero_Ability SecondAbility;
+  strcpy(SecondAbility.name, "Smite");
+  SecondAbility.max_possible_damage = 15;
+  SecondAbility.min_possible_damage = 10;
+  SecondAbility.mana_cost = 0;
+  strcpy(hero_ability2, SecondAbility.name);
+  
+  // Hero Ability 3
+  struct Hero_Ability ThirdAbility;
+  strcpy(ThirdAbility.name, "Divine Pillar");
+  ThirdAbility.max_possible_damage = 19;
+  ThirdAbility.min_possible_damage = 8;
+  ThirdAbility.mana_cost = 15;
+  strcpy(hero_ability3, ThirdAbility.name);
+
+  // Health & Mana
     hero_health = 100;
     hero_mana = 100;
   }
@@ -89,6 +170,31 @@ int setHeroStatsAndAbilities()
            strcmp(hero_class, "bard") == 0 ||
            strcmp(hero_class, "BARD") == 0)
   {
+    // Hero Ability 1
+  struct Hero_Ability FirstAbility;
+  strcpy(FirstAbility.name, "Ghastly Tune");
+  FirstAbility.max_possible_damage = 9;
+  FirstAbility.min_possible_damage = 4;
+  FirstAbility.mana_cost = 2;
+  strcpy(hero_ability1, FirstAbility.name);
+  
+  // Hero Ability 2
+  struct Hero_Ability SecondAbility;
+  strcpy(SecondAbility.name, "Murderous Lullaby");
+  SecondAbility.max_possible_damage = 15;
+  SecondAbility.min_possible_damage = 8;
+  SecondAbility.mana_cost = 6;
+  strcpy(hero_ability2, SecondAbility.name);
+  
+  // Hero Ability 3
+  struct Hero_Ability ThirdAbility;
+  strcpy(ThirdAbility.name, "Devilish Serenade");
+  ThirdAbility.max_possible_damage = 21;
+  ThirdAbility.min_possible_damage = 14;
+  ThirdAbility.mana_cost = 9;
+  strcpy(hero_ability3, ThirdAbility.name);
+
+  // Health & Mana
     hero_health = 70;
     hero_mana = 70;
   }

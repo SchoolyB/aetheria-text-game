@@ -22,9 +22,14 @@ extern int hero_intelligence;
 extern int hero_dexterity;
 extern int hero_luck;
 extern int hero_level;
-
 // Hero Attack and Defense
 extern int hero_atk;
 extern int hero_def;
+
+//Hero abilities
+extern char hero_ability1[20];
+extern char hero_ability2[20];
+extern char hero_ability3[20];
+
 #endif
 

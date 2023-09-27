@@ -80,6 +80,10 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       printf("Dexterity: %d\n", hero_dexterity);
       printf("Intelligence: %d\n", hero_intelligence);
       printf("Luck: %d\n", hero_luck);
+      printf("Ability 1: %s\n", hero_ability1);
+      printf("Ability 2: %s\n", hero_ability2);
+      printf("Ability 3: %s\n", hero_ability3);
+
     }
 
     else if(IS_IN_GAME_COMMANDS_COMMAND(in_game_input)){
