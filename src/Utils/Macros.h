@@ -36,6 +36,19 @@ strcmp(param, "lck") == 0 )
 
 #define ALLOCATE_TO_SKILL(skill, amount, skill_point_pool, param) \
     do { \
+        printf("How many points would you like to allocate to "); \
+        if (strcmp(skill, "Strength") == 0) { \
+            printf("\x1b[31m%s\x1b[0m", skill); /* Make "Strength" red */ \
+        } else if (strcmp(skill, "Intelligence") == 0) { \
+            printf("\x1b[34m%s\x1b[0m", skill); /* Make "Intelligence" blue */ \
+        } else if (strcmp(skill, "Dexterity") == 0) { \
+            printf("\x1b[35m%s\x1b[0m", skill); /* Make "Dexterity" green */ \
+        } else if (strcmp(skill, "Luck") == 0) { \
+            printf("\x1b[32m%s\x1b[0m", skill); /* Make "Luck" purple */ \
+        } else { \
+            printf("%s", skill); /* Print other skills in default color */ \
+        } \
+        printf("?\n"); \
         scanf("%d", &amount); \
         if (amount > skill_point_pool) { \
             printf("You do not have enough points to allocate that many to %s. Please try again\n", skill); \
@@ -51,6 +64,7 @@ strcmp(param, "lck") == 0 )
             printf("Invalid input. Please enter a valid number of points.\n"); \
         } \
     } while (1); /* Continue the loop until a valid allocation is made */
+
 
 
 // simple the code for the skill point allocation
