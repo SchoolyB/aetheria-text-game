@@ -33,26 +33,28 @@ strcmp(param, "dex") == 0 )
 #define CHOOSE_LUCK(param)(strcmp(param, "4") == 0 || strcmp(param, "luck") == 0 || \
 strcmp(param, "lck") == 0 )
 
-//this macro will add whatever number the suer enters for a skill,,,amount is user input, param is the skill, num is either 1,2,3,4. All skills cap @ 4
-#define ALLOCATION(amount, skill, param, num) \
-    if (amount == num) { \
-        param = param + num; \
-        printf("%d Points put into %s \n", param, skill); \
-    }
 
-//this macro supports the one above
-#define ALLOCATION_LIMIT_CHECK(amount, param, skill_pool, str, int, dex, lck) \
-    if (amount > 4) { \
-        printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
-        skill_pool = 10; \
-        str = 0; \
-        int = 0; \
-        dex = 0; \
-        lck = 0; \
-        initialSKillPointAllocation(); \
-    }
+#define ALLOCATE_TO_SKILL(skill, amount, skill_point_pool, param) \
+    do { \
+        scanf("%d", &amount); \
+        if (amount > skill_point_pool) { \
+            printf("You do not have enough points to allocate that many to %s. Please try again\n", skill); \
+        } else if (amount < 0) { \
+            printf("Invalid input. Please enter a valid number of points.\n"); \
+        } else if (amount > 4) { \
+            printf("You can only allocate 4 points to a skill area at this time. Please try again\n"); \
+        } else if (amount >= 1 && amount <= 4) { \
+            param = param + amount; \
+            skill_point_pool = skill_point_pool - amount; \
+            break; /* Exit the loop on successful allocation */ \
+        } else { \
+            printf("Invalid input. Please enter a valid number of points.\n"); \
+        } \
+    } while (1); /* Continue the loop until a valid allocation is made */
+
+
 // simple the code for the skill point allocation
-#define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate\n", param)
+#define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate.\n", param)
 // this macro is used in the RootCommandLine.c & InGameCommandLine.c files to check if the user input is a valid command
 #define MAX_INPUT_LENGTH 100
 
@@ -69,6 +71,14 @@ strcmp(param, "lck") == 0 )
 #define IS_CLEAR_NOTES_COMMAND(param)(strcmp(param, "/nc") == 0)
 //=========================COMMAND LINE MACROS=========================//
 
+
+
+//=========================COMBAT MACROS=========================//
+
+#define PLAYER_IS_DEAD(param)(param <= 0)
+#define ENEMY_IS_DEAD(param)(param <= 0)
+
+//=========================COMBAT MACROS=========================//
 
 // this macro is used to open and write to the log file 
 #define CREATE_LOG_FILE(variable, filename) \

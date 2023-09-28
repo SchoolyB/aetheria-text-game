@@ -36,7 +36,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
   while (1)
   {
     // Prompt the user for input
-    printf("Enter an in game command:= ");
+    printf("Enter an in game command: ");
     if (fgets(in_game_input, sizeof(in_game_input), stdin) == NULL)
     {
       // Handle in_game_input error

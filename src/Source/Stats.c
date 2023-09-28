@@ -32,6 +32,8 @@ char skill[4][15] = {
   "Intelligence",
   "Luck"
 };
+
+int amount; //used for skill allocation
 //===========================================================================================================//
 int setHeroStatsAndAbilities()
 {
@@ -69,21 +71,12 @@ int setHeroStatsAndAbilities()
   // Health & Mana
   hero_health = 120;
   hero_mana = 10;
-  printf("As a %s you start with the following abilities:\n", hero_class);
-  printf("%s\n%s\n%s\n", FirstAbility.name, SecondAbility.name, ThirdAbility.name);
-  // TODO start working on combat math
   }
   else if (strcmp(hero_class, "Mage") == 0 ||
            strcmp(hero_class, "mage") == 0 ||
            strcmp(hero_class, "MAGE") == 0)
   {
-    // Hero Ability 1
-  struct Hero_Ability FirstAbility;
-  strcpy(FirstAbility.name, "Fireball");
-  FirstAbility.max_possible_damage = 10;
-  FirstAbility.min_possible_damage = 5;
-  FirstAbility.mana_cost = 5;
-  strcpy(hero_ability1, FirstAbility.name);
+    // Hero Ability 1int amount;FirstAbility.name);
   
   // Hero Ability 2
   struct Hero_Ability SecondAbility;
@@ -204,118 +197,110 @@ int setHeroStatsAndAbilities()
   }
   return 0;
 }
-
 //===========================================================================================================//
-int initialSKillPointAllocation(){
+
+int points_allocation(){
   printf("You have been given %d points to allocate to your skills\n", skill_point_pool);
-  char skillAreaChoice[10]; // i.e strength, dex, etc
-  int amount; //the amount to allocate to skill 
-  printf("You can allocate points to the following areas\n");
-  printf("\x1b[31m1:(str)Strength\n\x1b[0m");
-  printf("\x1b[34m2:(int)Intelligence\n\x1b[0m");
-  printf("\x1b[35m3:(dex)Dexterity\n\x1b[0m");
-  printf("\x1b[32m4:(lck)Luck\n\x1b[0m");
-  PRINT_REMAINING_POINTS(skill_point_pool);
-// TODO build logic to subtract whatever number user enters for points from total point pool. then when total pool == 0 move to next phase of program.
-while(skill_point_pool > 0){ //the expression might need to be diff idk
-  printf("Which area would you like to apply points\n");
+  printf("You can type numbers 1,2,3 or 4, the abbreviations for each skill or the full word\n");
+  printf("Which skill would you like to allocate points to?\n");
+  printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
+  printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
+  printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
+  printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
+  do{
+    char skillAreaChoice[10]; // i.e strength, dex, etc
+   //the amount to allocate to skill 
   fgets(skillAreaChoice, sizeof(skillAreaChoice), stdin);
   REMOVE_NEWLINE_CHARACTER(skillAreaChoice);
   if(CHOOSE_STRENGTH(skillAreaChoice)){
-    printf("How many points would you like to allocate into \x1b[31mStrength\x1b[0m? (1 through 4)\n");
-    scanf("%d", &amount);
-    ALLOCATION(amount, skill, hero_strength, 1);
-    ALLOCATION(amount, skill, hero_strength, 2);
-    ALLOCATION(amount, skill, hero_strength, 3);
-    ALLOCATION(amount, skill, hero_strength, 4);
-    skill_point_pool  = skill_point_pool - amount;
-    ALLOCATION_LIMIT_CHECK(amount, hero_strength, skill_point_pool, hero_strength, hero_intelligence, hero_dexterity, hero_luck);
+    printf("How many points would you like to allocate to \x1b[31mStrength\x1b[0m?\n");
+     ALLOCATE_TO_SKILL("Strength", amount, skill_point_pool, hero_strength);
     PRINT_REMAINING_POINTS(skill_point_pool);
+    printf("Which skill would you like to allocate points to?\n");
+    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
+    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
+    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
+    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
   }
   else if(CHOOSE_INTELLIGENCE(skillAreaChoice)){
-    printf("How many points would you like to allocate into \x1b[34mIntelligence\x1b[0m? (1 through 4)\n");
-    scanf("%d", &amount);
-    ALLOCATION(amount, skill, hero_intelligence, 1);
-    ALLOCATION(amount, skill, hero_intelligence, 2);
-    ALLOCATION(amount, skill, hero_intelligence, 3);
-    ALLOCATION(amount, skill, hero_intelligence, 4);
-    skill_point_pool  = skill_point_pool - amount;
-    ALLOCATION_LIMIT_CHECK(amount, hero_intelligence, skill_point_pool, hero_strength, hero_intelligence, hero_dexterity, hero_luck);
+    printf("How many points would you like to allocate to \x1b[34mIntelligence\x1b[0m?\n");
+    ALLOCATE_TO_SKILL("Intelligence", amount, skill_point_pool, hero_intelligence);
     PRINT_REMAINING_POINTS(skill_point_pool);
+    printf("Which skill would you like to allocate points to?\n");
+    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
+    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
+    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
+    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
   }
   else if(CHOOSE_DEXTERITY(skillAreaChoice)){
-    printf("How many points would you like to allocate into \x1b[35mDexterity\x1b[0m? (1 through 4)\n");
-    scanf("%d", &amount);
-    ALLOCATION(amount, skill, hero_dexterity, 1);
-    ALLOCATION(amount, skill, hero_dexterity, 2);
-    ALLOCATION(amount, skill, hero_dexterity, 3);
-    ALLOCATION(amount, skill, hero_dexterity, 4);
-    skill_point_pool  = skill_point_pool - amount;
-    ALLOCATION_LIMIT_CHECK(amount, hero_dexterity, skill_point_pool, hero_strength, hero_intelligence, hero_dexterity, hero_luck);
+    printf("How many points would you like to allocate to \x1b[35mDexterity\x1b[0m?\n");
+    ALLOCATE_TO_SKILL("Dexterity", amount, skill_point_pool, hero_dexterity);
     PRINT_REMAINING_POINTS(skill_point_pool);
+    printf("Which skill would you like to allocate points to?\n");
+    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
+    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
+    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
+    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
   }
+
   else if(CHOOSE_LUCK(skillAreaChoice)){
-    printf("How many points would you like to allocate into \x1b[32mLuck\x1b[0m? (1 through 4)\n");
-    scanf("%d", &amount);
-    ALLOCATION(amount, skill, hero_luck, 1);
-    ALLOCATION(amount, skill, hero_luck, 2);
-    ALLOCATION(amount, skill, hero_luck, 3);
-    ALLOCATION(amount, skill, hero_luck, 4);
-    skill_point_pool  = skill_point_pool - amount;
-    ALLOCATION_LIMIT_CHECK(amount, hero_luck, skill_point_pool, hero_strength, hero_intelligence, hero_dexterity, hero_luck);
+    printf("How many points would you like to allocate to \x1b[32mLuck\x1b[0m?\n");
+    ALLOCATE_TO_SKILL("Luck", amount, skill_point_pool, hero_luck);
     PRINT_REMAINING_POINTS(skill_point_pool);
+    printf("Which skill would you like to allocate points to?\n");
+    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
+    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
+    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
+    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
+  }
+  capAllocation();
+  }while (skill_point_pool > 0);
+}
+
+//===========================================================================================================//
+int capAllocation(){
+   if(hero_strength > 4 || hero_dexterity > 4 || hero_intelligence > 4 || hero_luck > 4){
+    printf("You can only allocate 4 points to a skill area at this time...\n");
+    printf("Resetting skill points...Please try again\n");
+    refreshPoints();
+    points_allocation();
+  }
+    else{
+    return 0;
+  }
+}
+//===========================================================================================================//
+int refreshPoints(){
+  skill_point_pool = 10;
+  hero_strength = 0;
+  hero_dexterity = 0;
+  hero_intelligence = 0;
+  hero_luck = 0;
+}
+
+int confirmAllocation(){
+  char allocationConfirmation[10];
+  printf("Are you sure you want to allocate these points? (y/n)\n");
+  fgets(allocationConfirmation, sizeof(allocationConfirmation), stdin);
+  REMOVE_NEWLINE_CHARACTER(allocationConfirmation);
+  if(IS_YES(allocationConfirmation)){
+    printf("Points allocated successfully!\n");
+    return 0;
+  }
+  else if(IS_NO(allocationConfirmation)){
+    printf("Resetting skill points...Please try again\n");
+    refreshPoints();
+    points_allocation();
   }
   else{
     MAKE_VALID_DECISION;
-    initialSKillPointAllocation();
+    confirmAllocation();
   }
 }
-  return 0;
-}
-//===========================================================================================================//
-int allocationConfirmation(){
-  char allocationConfirmationInput[10];
-  if(skill_point_pool == 0){
-  // TODO REMOVE THIS STRING AND REPLACE WITH A FUNCTION CALL TO THE NEXT PART OF THE PROGRAM
-// printf("YOU HIT THE MARK, MOVING ON TO NEXT PART OF PROGRAM\n");
 
-  printf("Are you sure that you want to continue with these points in these areas?\n");
-  printf("\x1b[31mStrength: %d\n\x1b[0m", hero_strength);
-  printf("\x1b[34mIntelligence: %d\n\x1b[0m", hero_intelligence);
-  printf("\x1b[35mDexterity: %d\n\x1b[0m", hero_dexterity);
-  printf("\x1b[32mLuck: %d\n\x1b[0m", hero_luck);\
-
-  fgets(allocationConfirmationInput, sizeof(allocationConfirmationInput), stdin);
-  REMOVE_NEWLINE_CHARACTER(allocationConfirmationInput);
-  if(IS_YES(allocationConfirmationInput)){
-    printf("You have chosen to continue with these points\n");
-    printf("Moving on to next part of program\n");
-  }
-  else if(IS_NO(allocationConfirmationInput)){
-    printf("You have chosen to reallocate your points\n");
-    skill_point_pool = 10;
-    initialSKillPointAllocation();
-    allocationConfirmation();
-  }
-  else{
-    MAKE_VALID_DECISION;
-    allocationConfirmation();
-  }
- }
-}
-//===========================================================================================================//
-int setHeroLvl()
-{
-  hero_level = 1;
-  return 0;
-}
-//===========================================================================================================//
-// KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
-int setAllHeroStats()
-{ 
+int setStatsPointsAbilities(){
   setHeroStatsAndAbilities();
-  initialSKillPointAllocation();
-  allocationConfirmation();
-  setHeroLvl();
+  points_allocation();
+  confirmAllocation();
   return 0;
 }

@@ -79,7 +79,7 @@ int ROOT_LEVEL_COMMAND_LINE(FILE *logFile)
 "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
       printf("%s\n", titleArt);
       startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
-      setAllHeroStats();
+      setStatsPointsAbilities();
       IN_GAME_COMMAND_LINE(logFile);
     
       return 0;
