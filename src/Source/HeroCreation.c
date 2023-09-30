@@ -22,14 +22,6 @@ int getFirstName()
   char firstNameConfirmation[10];
   printf("Enter your first name: ");
   fgets(firstNameInput, sizeof(firstNameInput), stdin);
-
-  // Remove the trailing newline character from the input
-  // !This step is important and must be had for every function that uses fgets to store data
-  // size_t len = strlen(firstNameInput);
-  // if (len > 0 && firstNameInput[len - 1] == '\n')
-  // {
-  //   firstNameInput[len - 1] = '\0';
-  // }
   REMOVE_NEWLINE_CHARACTER(firstNameInput);
   // this copies the input from the user into the hero_first_name variable
   strcpy(hero_first_name, firstNameInput);
@@ -84,6 +76,7 @@ int dynastyNameCheck()
     if (IS_YES(confirmDynastyDecision))
     {
       printf("Ah, It seems that you don't come from a great dynasty. Very well.\n");
+      strcpy(hero_dynasty_name, "None");
       heroGenderCheck();
     }
     else if (IS_NO(confirmDynastyDecision))
@@ -169,6 +162,7 @@ int heroGenderCheck()
 
     if (IS_YES(heroGenderDecisionConfirmation))
     {
+      strcpy(hero_gender, "None");
       getHeroHomeland();
     }
     else if (IS_NO(heroGenderDecisionConfirmation))

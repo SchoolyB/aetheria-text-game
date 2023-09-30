@@ -95,6 +95,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       printf("%-15d | %-15d | %-15d | %-15d \n", hero_strength, hero_dexterity, hero_intelligence, hero_luck);
       printf("----------------------------------------------------------------------------\n");
       printf("%-15s | %-15s | %-15s \n", "Ability 1", "Ability 2", "Ability 3"); 
+      printf("%-15s | %-15s | %-15s \n", hero_ability1, hero_ability2, hero_ability3);
       printf("============================================================================\n");                                 
     }
 

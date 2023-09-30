@@ -278,6 +278,7 @@ int refreshPoints(){
 int confirmAllocation(){
   char allocationConfirmation[10];
   printf("Are you sure you want to allocate these points? (y/n)\n");
+  while (getchar() != '\n'); // Clear input buffer. look up "Buffer Flushing"
   fgets(allocationConfirmation, sizeof(allocationConfirmation), stdin);
   REMOVE_NEWLINE_CHARACTER(allocationConfirmation);
   if(IS_YES(allocationConfirmation)){
@@ -301,8 +302,8 @@ int setHeroLevel(){
 }
 //===========================================================================================================//
 int setStatsPointsAbilities(){
-  setHeroStatsAndAbilities();
   points_allocation();
+  setHeroStatsAndAbilities();
   confirmAllocation();
   setHeroLevel();
   return 0;
