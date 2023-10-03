@@ -66,7 +66,6 @@ strcmp(param, "lck") == 0 )
     } while (1); /* Continue the loop until a valid allocation is made */
 
 
-
 // simple the code for the skill point allocation
 #define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate.\n", param)
 // this macro is used in the RootCommandLine.c & InGameCommandLine.c files to check if the user input is a valid command
@@ -103,5 +102,41 @@ strcmp(param, "lck") == 0 )
     exit(1); \
   }
 
+
+
+
+//=========================STORY MACROS=========================//
+
+#define STR_CMP(input, string)(strcmp(input, string) == 0)
+
+
+
+#define READ_FULL_TXT_FILE(fileName) \
+    do { \
+        FILE *file = fopen(fileName, "r"); \
+        if (file == NULL) { \
+            perror("Error opening the file"); \
+            return 1; \
+        } \
+        char buffer[100]; \
+        while (fgets(buffer, sizeof(buffer), file) != NULL) { \
+            for (int i = 0; buffer[i] != '\0'; i++) { \
+                putchar(buffer[i]); \
+                fflush(stdout); \
+                usleep(40000); \
+            } \
+        } \
+        printf("\n"); \
+        fclose(file); \
+    } while(0)
+    
+#define PRINT_SLOWLY(str, delayMicroseconds) \
+    do { \
+        for (int i = 0; i < strlen(str); i++) { \
+            putchar(str[i]); \
+            fflush(stdout); \
+            usleep(delayMicroseconds); \
+        } \
+    } while(0)
 
 #endif
