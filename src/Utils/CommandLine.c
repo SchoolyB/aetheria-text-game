@@ -6,9 +6,11 @@
 #include "./Prototypes.h"
 #include "./Globals.h"
 #include "./Notepad.c"
+#include "../Source/HeroCreation.c"
 
-char in_game_commands[15][100] = {
-"info"
+char commands[15][100] = {
+"start"
+"/info"
 "/exit"
 "/quit"
 "/restart"
@@ -19,7 +21,7 @@ char in_game_commands[15][100] = {
 "/nr"
 "/nc"};
 
-char in_game_commands_descriptions[15][100] = {
+char command_descriptions[15][100] = {
 "Shows all hero info\n",
 "Exit the program\n",
 "Exit the program\n",
@@ -31,24 +33,39 @@ char in_game_commands_descriptions[15][100] = {
 "Opens the notepad and allows the user to read all entries\n",
 "Clears all entries from the notepad\n"};
 
-int IN_GAME_COMMAND_LINE(FILE *logFile){
-  char in_game_input[MAX_INPUT_LENGTH];
+int COMMAND_LINE(FILE *logFile){
+  char input[MAX_INPUT_LENGTH];
   while (1)
   {
     // Prompt the user for input
     printf("Enter an in game command: ");
-    if (fgets(in_game_input, sizeof(in_game_input), stdin) == NULL)
+    if (fgets(input, sizeof(input), stdin) == NULL)
     {
-      // Handle in_game_input error
+      // Handle input error
       perror("fgets");
       exit(1);
     }
-    // Remove the newline character from the in_game_input
-    in_game_input[strcspn(in_game_input, "\n")] = '\0';
+    // Remove the newline character from the input
+    input[strcspn(input, "\n")] = '\0';
 
-    // Check if the in_game_input is "restart"
-    if (IS_RESTART_COMMAND(in_game_input))
-    {
+    if(strcmp(input, "start") == 0){
+      logMessage(logFile, "Program started.");
+      char titleArt[] =
+      "  ______               __      __                            __ \n"                
+      " /      \             /  |    /  |                          /  |\n"                
+      "/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"        
+      "$$ |__$$ | /      \ / $$   |  $$      \  /      \  /      \ /  | /      \ \n"     
+      "$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"  
+      "$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
+      "$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
+      "$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
+      "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
+      printf("%s\n", titleArt);
+      startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
+      setStatsPointsAbilities();
+    }
+    else if(IS_RESTART_COMMAND(input)){
+    // Check if the input is "restart
       char restartConfirmation[10];
       // Log a restart message
       logMessage(logFile, "Restarting Program.");
@@ -63,26 +80,26 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
           perror("execv");
           exit(1);
         }
-      }
+      } 
       else if(IS_NO(restartConfirmation)){
         printf("Restart canceled.\n");
-        IN_GAME_COMMAND_LINE(logFile);
+        COMMAND_LINE(logFile);
       }
       else{
         printf("Invalid input.\n");
-        IN_GAME_COMMAND_LINE(logFile);
+        COMMAND_LINE(logFile);
       }
     }
-    else if(IS_INFO_COMMAND(in_game_input)){
+    else if(IS_INFO_COMMAND(input)){
       logMessage(logFile, "Requested hero information.\n");
       char heroInfoArt[1000] =
-      ".##.....##.########.########...#######.....####.##....##.########..#######. \n"
-      ".##.....##.##.......##.....##.##.....##.....##..###...##.##.......##.....## \n"
-      ".##.....##.##.......##.....##.##.....##.....##..####..##.##.......##.....## \n"
-      ".#########.######...########..##.....##.....##..##.##.##.######...##.....## \n"
-      ".##.....##.##.......##...##...##.....##.....##..##..####.##.......##.....## \n"
-      ".##.....##.##.......##....##..##.....##.....##..##...###.##.......##.....## \n"
-      ".##.....##.########.##.....##..#######.....####.##....##.##........#######. \n";
+      ".##.....##.########.########...#######.....####.##....##.########.#######. \n"
+      ".##.....##.##.......##.....##.##.....##.....##..###...##.##......##.....## \n"
+      ".##.....##.##.......##.....##.##.....##.....##..####..##.##......##.....## \n"
+      ".#########.######...########..##.....##.....##..##.##.##.######..##.....## \n"
+      ".##.....##.##.......##...##...##.....##.....##..##..####.##......##.....## \n"
+      ".##.....##.##.......##....##..##.....##.....##..##...###.##......##.....## \n"
+      ".##.....##.########.##.....##..#######.....####.##....##.##.......#######. \n";
       printf("\x1b[32m%s\x1b[0m\n", heroInfoArt);
       printf("============================================================================\n");
       printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Country of Origin");
@@ -99,9 +116,9 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       printf("============================================================================\n");                                 
     }
 
-    else if(IS_IN_GAME_COMMANDS_COMMAND(in_game_input)){
+    else if(IS_COMMANDS_COMMAND(input)){
       logMessage(logFile, "Requested in game commands.\n");
-      char in_game_commands_art[1000] =
+      char commands_art[1000] =
       "..######...#######..##.....##.##.....##....###....##....##.########...######.\n"
       ".##....##.##.....##.###...###.###...###...##.##...###...##.##.....##.##....##\n"
       ".##.......##.....##.####.####.####.####..##...##..####..##.##.....##.##......\n"
@@ -109,10 +126,11 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       ".##.......##.....##.##.....##.##.....##.#########.##..####.##.....##.......##\n"
       ".##....##.##.....##.##.....##.##.....##.##.....##.##...###.##.....##.##....##\n"
       "..######...#######..##.....##.##.....##.##.....##.##....##.########...######.\n";
-      printf("\x1b[32m%s\x1b[0m\n", in_game_commands_art);
+      printf("\x1b[32m%s\x1b[0m\n", commands_art);
       printf("=============================================================================\n");
       printf("%-10s | %-30s \n", "Command", "Description");
       printf("----------------------------------------------------------------------------\n");
+      printf("%-10s | %-30s \n", "start", "Start the program");
       printf("%-10s | %-30s \n", "/info", "Shows all hero info");
       printf("%-10s | %-30s \n", "/exit", "Exit the program");
       printf("%-10s | %-30s \n", "/quit", "Exit the program");
@@ -125,12 +143,13 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
       printf("=============================================================================\n");
     }
-    else if(IS_GAME_COMMAND(in_game_input)){
+
+    else if(IS_GAME_COMMAND(input)){
       printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
       printf("Game Version: %f\n", GAME_VERSION);
       printf("Game Author: Marshall Burns\n" );
     }
-    else if(IS_EXIT_COMMAND(in_game_input)){
+    else if(IS_EXIT_COMMAND(input)){
       char exitConfirmation[10];
       printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
       printf("\x1b[31mAre you sure you want to exit? (y/n): \x1b[0m\n");
@@ -144,14 +163,14 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       }
       else if(IS_NO(exitConfirmation)){
         printf("Exit canceled.\n");
-        IN_GAME_COMMAND_LINE(logFile);
+        COMMAND_LINE(logFile);
       }
       else{
         printf("Invalid input.\n");
-        IN_GAME_COMMAND_LINE(logFile);
+        COMMAND_LINE(logFile);
       }
     }
-    else if(IS_CLEAR_COMMAND(in_game_input)){
+    else if(IS_CLEAR_COMMAND(input)){
       char clearConfirmation[10];
       printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
       sleep(1);
@@ -167,16 +186,19 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
       }
       else{
         printf("Invalid input.\n");
-        ROOT_LEVEL_COMMAND_LINE(logFile);
+        COMMAND_LINE(logFile);
       }
     }
-    else if(IS_WRITE_NOTE_COMMAND(in_game_input)){
+
+    else if(IS_WRITE_NOTE_COMMAND(input)){
       createNote();    
     }
-    else if(IS_READ_NOTES_COMMAND(in_game_input)){
+
+    else if(IS_READ_NOTES_COMMAND(input)){
       readNotes();
     }
-    else if(IS_CLEAR_NOTES_COMMAND(in_game_input)){
+
+    else if(IS_CLEAR_NOTES_COMMAND(input)){
       char clearNotesConfirmation[10];
       printf("\x1b[31mRequesting to clear notepad...\x1b[0m\n");
       sleep(1);
@@ -194,6 +216,7 @@ int IN_GAME_COMMAND_LINE(FILE *logFile){
         printf("Invalid input.\n");
       }
     }
+
     else
     {
       printf("Invalid command.\n");
