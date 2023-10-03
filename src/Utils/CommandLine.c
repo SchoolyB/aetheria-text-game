@@ -61,8 +61,10 @@ int COMMAND_LINE(FILE *logFile){
       "$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
       "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
       printf("%s\n", titleArt);
+      // TODO Read introduction then do hero creation
       startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
       setStatsPointsAbilities();
+
     }
     else if(IS_RESTART_COMMAND(input)){
     // Check if the input is "restart
