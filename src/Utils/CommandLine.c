@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ncurses.h>
 #include "./Macros.h"
 #include "./Prototypes.h"
 #include "./Globals.h"
@@ -19,7 +20,9 @@ char commands[15][100] = {
 "/clear"
 "/nw"
 "/nr"
-"/nc"};
+"/nc"
+"/lore"
+};
 
 char command_descriptions[15][100] = {
 "Shows all hero info\n",
@@ -32,6 +35,8 @@ char command_descriptions[15][100] = {
 "Opens the notepad and allows the user to make an entry\n",
 "Opens the notepad and allows the user to read all entries\n",
 "Clears all entries from the notepad\n"};
+
+char possibleOrigins[5][10];
 
 int COMMAND_LINE(FILE *logFile){
   char input[MAX_INPUT_LENGTH];
@@ -62,11 +67,56 @@ int COMMAND_LINE(FILE *logFile){
       "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
       printf("%s\n", titleArt);
       // TODO Read introduction then do hero creation
-      startHeroCreation(); // this is a function from Hero/Source/Creation.c STARTS THE PROGRAM
-      setStatsPointsAbilities();
+      startHeroCreation(); // this is a function froinitscr();            // Initialize the ncurses library
+    cbreak();             // Line buffering disabled, pass on all characters
+    noecho();             // Don't echo while we do getch()
+    keypad(stdscr, TRUE); // Enable special keys like arrow keys
 
+    int selected_option = 0;
+    char* options[] = {"Option 1", "Option 2", "Option 3"};
+    int num_options = sizeof(options) / sizeof(options[0]);
+
+    while (1) {
+        clear(); // Clear the screen
+
+        // Print the menu options
+        for (int i = 0; i < num_options; i++) {
+            if (i == selected_option) {
+                attron(A_REVERSE); // Highlight the selected option
+            }
+            mvprintw(i, 0, options[i]);
+            attroff(A_REVERSE);
+        }
+
+        // Get user input
+        int ch = getch();
+        switch (ch) {
+            case KEY_UP:
+                selected_option--;
+                if (selected_option < 0) {
+                    selected_option = num_options - 1;
+                }
+                break;
+            case KEY_DOWN:
+                selected_option++;
+                if (selected_option >= num_options) {
+                    selected_option = 0;
+                }
+                break;
+            case 10: // Enter key
+                // Handle the selected option here
+                clear();
+                mvprintw(num_options + 1, 0, "You selected: %s", options[selected_option]);
+                refresh();
+                getch(); // Wait for a key press before exiting
+                endwin(); // End ncurses mode
+                return 0;
+        }
     }
-    else if(IS_RESTART_COMMAND(input)){
+
+    endwin(); // End ncurses mode
+    return 0;
+
     // Check if the input is "restart
       char restartConfirmation[10];
       // Log a restart message
@@ -140,6 +190,7 @@ int COMMAND_LINE(FILE *logFile){
       printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
       printf("%-10s | %-30s \n", "/game", "Logs info about the game");
       printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
+      printf("%-10s | %-30s \n", "/lore", "Opens the lore menu");
       printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
       printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
       printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
@@ -217,6 +268,73 @@ int COMMAND_LINE(FILE *logFile){
       else{
         printf("Invalid input.\n");
       }
+    }
+    else if(IS_LORE_COMMAND(input)){
+   initscr();            // Initialize the ncurses library
+    cbreak();             // Line buffering disabled, pass on all characters
+    noecho();             // Don't echo while we do getch()
+    keypad(stdscr, TRUE); // Enable special keys like arrow keys
+
+    char possibleOrigins[6][15] = {
+        "1: Empyrea",
+        "2: Wesward",
+        "3: Magdalar",
+        "4: Ashvadan",
+        "5: Nadafia",
+        "Back\n"};
+
+    int selected_option = 0;
+    int num_options = sizeof(possibleOrigins) / sizeof(possibleOrigins[0]);
+
+    while (1) {
+        clear(); // Clear the screen
+
+        // Print the menu options
+        for (int i = 0; i < num_options; i++) {
+            if (i == selected_option) {
+                attron(A_REVERSE); // Highlight the selected option
+            }
+            mvprintw(i, 0, possibleOrigins[i]);
+            attroff(A_REVERSE);
+        }
+
+        // Get user input
+        int ch = getch();
+        switch (ch) {
+            case KEY_UP:
+                selected_option--;
+                if (selected_option < 0) {
+                    selected_option = num_options - 1;
+                }
+                break;
+            case KEY_DOWN:
+                selected_option++;
+                if (selected_option >= num_options) {
+                    selected_option = 0;
+                }
+                break;
+            case 10: // Enter key
+                // Handle the selected option here
+                if (selected_option == 0) {
+                    READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
+                } else if (selected_option == 1) {
+                    READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
+                } else if (selected_option == 2) {
+                    READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
+                } else if (selected_option == 3) {
+                    READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
+                } else if (selected_option == 4) {
+                    READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
+                }
+                else if (selected_option == 5) {
+                    endwin(); // End ncurses mode
+                    COMMAND_LINE(logFile);
+                }
+                break;
+        }
+    }
+
+    return 0;
     }
 
     else

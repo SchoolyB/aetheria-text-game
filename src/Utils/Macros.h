@@ -81,6 +81,7 @@ strcmp(param, "lck") == 0 )
 #define IS_WRITE_NOTE_COMMAND(param)(strcmp(param, "/nw") == 0 || strcmp(param, "/write") == 0)
 #define IS_READ_NOTES_COMMAND(param)(strcmp(param, "/nr") == 0 || strcmp(param, "/read") == 0)
 #define IS_CLEAR_NOTES_COMMAND(param)(strcmp(param, "/nc") == 0)
+#define IS_LORE_COMMAND(param)(strcmp(param, "/lore") == 0)
 //=========================COMMAND LINE MACROS=========================//
 
 
@@ -100,9 +101,6 @@ strcmp(param, "lck") == 0 )
     perror("Error opening the log file"); \
     exit(1); \
   }
-
-
-
 
 //=========================STORY MACROS=========================//
 

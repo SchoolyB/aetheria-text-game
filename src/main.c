@@ -5,15 +5,13 @@
 #include "./Source/Chapter0.c"
 #include "./Utils/Functions/Escape.c"
 #include "./Utils/Functions/Logger.c"
-#include "./Utils/RootCommandLine.c"
-#include "./Utils/InGameCommandLine.c"
+#include "./Utils/CommandLine.c"
 #include "./Source/Enemies.c"
 
 int main()
 {
     CREATE_LOG_FILE(logFile, "logs/runtime.log");    
-    // ROOT_LEVEL_COMMAND_LINE(logFile); //starting point
-    start_ch0();
+    COMMAND_LINE(logFile);
     logMessage(logFile, "Program ended.");
     fclose(logFile);
     return 0;
