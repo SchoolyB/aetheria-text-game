@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Countries.c"
 #include "../Utils/Macros.h"
 #include "../Utils/Globals.h"
 #include "../Utils/Prototypes.h"
+
 
 // Global variables to be used in other files. See "Hero.h"
 char hero_first_name[10];
@@ -188,15 +188,13 @@ int heroGenderCheck()
 int getHeroGender()
 {
   char heroGenderInput[10];
-  printf("Please tell me your gender \n");
-
+  printf("Please tell me your gender. \n");
   fgets(heroGenderInput, sizeof(heroGenderInput), stdin);
 
   // Remove the trailing newline character from the input
   REMOVE_NEWLINE_CHARACTER(heroGenderInput);
   strcpy(hero_gender, heroGenderInput);
-  printf("You are a %s \n", hero_gender);
-
+  printf("So your gender is %s? \n", hero_gender);
   if (strcmp(heroGenderInput, "male") == 0 ||
       strcmp(heroGenderInput, "Male") == 0 ||
       strcmp(heroGenderInput, "man") == 0 ||
@@ -270,7 +268,7 @@ int getHeroHomeland()
       strcmp(heroOriginInput, "empyrea") == 0 ||
       strcmp(heroOriginInput, "EMPYERA") == 0)
   {
-    showEmpyreaDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
     printf("Is Empyrea the country you hail from? (y/n):\n");
 
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
@@ -298,7 +296,7 @@ int getHeroHomeland()
            strcmp(heroOriginInput, "wesward") == 0 ||
            strcmp(heroOriginInput, "WESTWARD") == 0)
   {
-    showWeswardDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
     printf("Is Wesward the country you hail from? (y/n):\n");
 
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
@@ -326,7 +324,7 @@ int getHeroHomeland()
            strcmp(heroOriginInput, "magdalar") == 0 ||
            strcmp(heroOriginInput, "Magdalar") == 0)
   {
-    showMagdalarDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
     printf("Is Magdalar the country you hail from? (y/n): \n");
 
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
@@ -354,7 +352,7 @@ int getHeroHomeland()
            strcmp(heroOriginInput, "ashvadan") == 0 ||
            strcmp(heroOriginInput, "ASHVADAN") == 0)
   {
-    showAshvadanDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
     printf("Is Ashvadan the country you hail from? (y/n): \n");
 
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
@@ -383,7 +381,7 @@ int getHeroHomeland()
            strcmp(heroOriginInput, "nadafia") == 0 ||
            strcmp(heroOriginInput, "NADAFIA") == 0)
   {
-    showNadafiaDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
     printf("Is Nadafia the country you hail from? (y/n):\n");
 
     fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
@@ -590,7 +588,7 @@ int seeHomelandDescriptions()
       strcmp(seeDescriptionInput, "empyrea") == 0 ||
       strcmp(seeDescriptionInput, "EMPYERA") == 0)
   {
-    showEmpyreaDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
     printf("Is Empyrea the country you hail from? (y/n):\n");
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
@@ -618,7 +616,7 @@ int seeHomelandDescriptions()
            strcmp(seeDescriptionInput, "wesward") == 0 ||
            strcmp(seeDescriptionInput, "WESTWARD") == 0)
   {
-    showWeswardDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
     printf("Is Wesward the country you hail from? (y/n):\n ");
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
@@ -647,7 +645,7 @@ int seeHomelandDescriptions()
            strcmp(seeDescriptionInput, "magdalar") == 0 ||
            strcmp(seeDescriptionInput, "Magdalar") == 0)
   {
-    showMagdalarDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
     printf("Is Magdalar the country you hail from? (y/n):\n ");
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
@@ -676,7 +674,7 @@ int seeHomelandDescriptions()
            strcmp(seeDescriptionInput, "ashvadan") == 0 ||
            strcmp(seeDescriptionInput, "ASHVADAN") == 0)
   {
-    showAshvadanDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
     printf("Is Ashvadan the country you hail from? (y/n):\n ");
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 
@@ -705,7 +703,7 @@ int seeHomelandDescriptions()
            strcmp(seeDescriptionInput, "nadafia") == 0 ||
            strcmp(seeDescriptionInput, "NADAFIA") == 0)
   {
-    showNadafiaDescription();
+    READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
     printf("Is Nadafia the country you hail from? (y/n):\n ");
     fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
 

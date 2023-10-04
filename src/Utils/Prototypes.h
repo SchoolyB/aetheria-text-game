@@ -48,33 +48,27 @@ int getHeroHomelandWithoutDescriptions();
 int seeHomelandDescriptions();
 int getHeroProfession();
 int getHeroClass();
+int setWarriorAbilities();
+//END OF HERO CREATION PROTOTYPES//
+
 void logCreationData();
 int appendToLog();
-//END OF HERO CREATION PROTOTYPES//
 
 
 //-----====================-----//
 //     SECTION 3: Hero Stats Prototypes
-int setHeroHealth();
-int setHeroMana();
+int setHeroStatsAndAbilities();
 int setAllHeroStats();
 int setHeroLvl();
 int initialSKillPointAllocation();
+int capAllocation();
+int refreshPoints();
 //END OF HERO STATS PROTOTYPES//
 
 
 //-----====================-----//
-//     SECTION 4: Countries Prototypes
-int showEmpyreaDescription();
-int showWeswardDescription();
-int showMagdalarDescription();
-int showAshvadanDescription();
-int showNadafiaDescription();
-//END OF COUNTRIES PROTOTYPES//
-
-
-//-----====================-----//
-//     SECTION 4: All Chapter Prototypes
-//  Subsection 1: Chapter 1 Prototypes
-int startChapterOne();
-//END OF ALL CHAPTER PROTOTYPES//
+//   SECTION 4: STORIES PROTOTYPES
+// Chapter 0
+void start_ch0();
+void ch0_wake_up();
+void ch0_go_to_main_deck();

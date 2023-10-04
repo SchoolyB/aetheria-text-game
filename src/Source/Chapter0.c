@@ -10,7 +10,7 @@
 char options[3][100];
 char input[100];
 
-int ch0_wake_up() {
+void ch0_wake_up() {
     char options[3][100] = {
         "1: Go to main deck",
         "2: Try to go back to sleep",
@@ -70,7 +70,7 @@ int ch0_wake_up() {
         else if(STR_CMP(input, "2")){
             printf("Try to go to sleep");
             printf("You try to fgo to sleep...The moment that you begin to doze off you shoot awake to the sounds of the crew yelling 'land ho!'.'\n");
-            GO_SEE_COMMOTION();
+            GO_SEE_COMMOTION;
             READ_FULL_TXT_FILE("Stories/ch0_1.txt");
             ch0_go_to_main_deck();
             }
@@ -83,7 +83,6 @@ int ch0_wake_up() {
         printf("Invalid input\n");
         ch0_wake_up();
     }
-    return 0;
 }
 
 //=====================================================================================================//
