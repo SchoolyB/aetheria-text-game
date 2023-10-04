@@ -2,18 +2,16 @@
 #define MACROS_H
 #include <string.h>
 
+//=========================COMMON  MACROS=========================//
 // This macro is used to make sure the user enters a valid decision
 #define MAKE_VALID_DECISION printf("Please make a valid decision\n")
-
 // This macro is used to check if the user input is yes
 #define IS_YES(param) (strcmp(param, "y") == 0 || strcmp(param, "Y") == 0 || \
                        strcmp(param, "yes") == 0 || strcmp(param, "Yes") == 0)
-
 // This macro is used to check if the user input is no
 #define IS_NO(param) (strcmp(param, "n") == 0 || strcmp(param, "N") == 0 || \
                       strcmp(param, "no") == 0 || strcmp(param, "No") == 0)
-
-//! IMPORTANT ! This macro is used to remove the newline character from the input
+//This macro is used to remove the newline character from the input
 #define REMOVE_NEWLINE_CHARACTER(param)    \
   do                                       \
   {                                        \
@@ -23,6 +21,45 @@
       param[len - 1] = '\0';               \
     }                                      \
   } while (0)
+      
+//TODO add this macro to the other files
+//this macro is used to get the user input when its a string
+#define FGETS(param) (fgets(param, sizeof(param), stdin))
+
+//this macro is used to compare the user input to a string
+#define STR_CMP(input, string)(strcmp(input, string) == 0)
+//this macro is used to read a full text file character by character
+#define READ_FULL_TXT_FILE(fileName) \
+    do { \
+        FILE *file = fopen(fileName, "r"); \
+        if (file == NULL) { \
+            perror("Error opening the file"); \
+            return 1; \
+        } \
+        char buffer[100]; \
+        while (fgets(buffer, sizeof(buffer), file) != NULL) { \
+            for (int i = 0; buffer[i] != '\0'; i++) { \
+                putchar(buffer[i]); \
+                fflush(stdout); \
+                usleep(40000); \
+            } \
+        } \
+        printf("\n"); \
+        fclose(file); \
+    } while(0)
+    
+#define PRINT_SLOWLY(str, delayMicroseconds) \
+    do { \
+        for (int i = 0; i < strlen(str); i++) { \
+            putchar(str[i]); \
+            fflush(stdout); \
+            usleep(delayMicroseconds); \
+        } \
+    } while(0)
+//=========================COMMON MACROS=========================//
+
+
+//=========================SKILL POINT MACROS=========================//
 // the next 4 macros are used to check if the user input is a valid choice for the skill point allocation
 #define CHOOSE_STRENGTH(param)(strcmp(param, "1") == 0 || strcmp(param, "strength") == 0 ||\
 strcmp(param, "str") == 0 )
@@ -32,7 +69,6 @@ strcmp(param, "int") == 0 )
 strcmp(param, "dex") == 0 )
 #define CHOOSE_LUCK(param)(strcmp(param, "4") == 0 || strcmp(param, "luck") == 0 || \
 strcmp(param, "lck") == 0 )
-
 
 #define ALLOCATE_TO_SKILL(skill, amount, skill_point_pool, param) \
     do { \
@@ -64,10 +100,11 @@ strcmp(param, "lck") == 0 )
             printf("Invalid input. Please enter a valid number of points.\n"); \
         } \
     } while (1); /* Continue the loop until a valid allocation is made */
-
-
 // simple the code for the skill point allocation
 #define PRINT_REMAINING_POINTS(param) printf("You have %d points left to allocate.\n", param)
+//=========================SKILL POINT MACROS=========================//
+
+
 // this macro is used in the RootCommandLine.c & InGameCommandLine.c files to check if the user input is a valid command
 #define MAX_INPUT_LENGTH 100
 
@@ -87,12 +124,11 @@ strcmp(param, "lck") == 0 )
 
 
 //=========================COMBAT MACROS=========================//
-
 #define PLAYER_IS_DEAD(param)(param <= 0)
 #define ENEMY_IS_DEAD(param)(param <= 0)
-
 //=========================COMBAT MACROS=========================//
 
+//=========================LOGGER MACROS=========================//
 // this macro is used to open and write to the log file 
 #define CREATE_LOG_FILE(variable, filename) \
   FILE *variable = fopen(filename, "a"); \
@@ -101,39 +137,5 @@ strcmp(param, "lck") == 0 )
     perror("Error opening the log file"); \
     exit(1); \
   }
-
-//=========================STORY MACROS=========================//
-
-#define STR_CMP(input, string)(strcmp(input, string) == 0)
-
-
-
-#define READ_FULL_TXT_FILE(fileName) \
-    do { \
-        FILE *file = fopen(fileName, "r"); \
-        if (file == NULL) { \
-            perror("Error opening the file"); \
-            return 1; \
-        } \
-        char buffer[100]; \
-        while (fgets(buffer, sizeof(buffer), file) != NULL) { \
-            for (int i = 0; buffer[i] != '\0'; i++) { \
-                putchar(buffer[i]); \
-                fflush(stdout); \
-                usleep(40000); \
-            } \
-        } \
-        printf("\n"); \
-        fclose(file); \
-    } while(0)
-    
-#define PRINT_SLOWLY(str, delayMicroseconds) \
-    do { \
-        for (int i = 0; i < strlen(str); i++) { \
-            putchar(str[i]); \
-            fflush(stdout); \
-            usleep(delayMicroseconds); \
-        } \
-    } while(0)
-
+//=========================LOGGER MACROS=========================//
 #endif
