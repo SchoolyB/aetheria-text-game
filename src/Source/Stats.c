@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Utils/Globals.h"
-#include "../Utils/Macros.h"
-#include "../Utils/Prototypes.h"
+#include "../Utils/Utils.h"
 
 int hero_health;
 int hero_mana;
@@ -201,14 +199,23 @@ int setHeroStatsAndAbilities()
   return 0;
 }
 //===========================================================================================================//
+#define LABEL_RED(string, stat) printf("\x1b[31m%s: %d\x1b[0m", string, stat);
+
+#define LABEL_BLUE(string, stat) printf("\x1b[34m%s: %d\x1b[0m", string, stat);
+
+#define LABEL_PURPLE(string, stat) printf("\x1b[35m%s: %d\x1b[0m", string, stat);
+
+#define LABEL_GREEN(string, stat) printf("\x1b[32m%s: %d\x1b[0m", string, stat);
+
 int points_allocation(){
   printf("You have been given %d points to allocate to your skills\n", skill_point_pool);
   printf("You can type numbers 1,2,3 or 4, the abbreviations for each skill or the full word\n");
   printf("Which skill would you like to allocate points to?\n");
-  printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
-  printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
-  printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
-  printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
+  LABEL_RED("Strength(str)" ,hero_strength);
+  LABEL_BLUE("Intelligence(int)", hero_intelligence);
+  LABEL_PURPLE("Dexterity(dex)", hero_dexterity);
+  LABEL_GREEN("Luck(lck)", hero_luck);
+
   do{
     char skillAreaChoice[10]; // i.e strength, dex, etc
    //the amount to allocate to skill 
@@ -218,39 +225,41 @@ int points_allocation(){
      ALLOCATE_TO_SKILL("Strength", amount, skill_point_pool, hero_strength);
     PRINT_REMAINING_POINTS(skill_point_pool);
     printf("Which skill would you like to allocate points to?\n");
-    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
-    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
-    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
-    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
+    LABEL_RED("Strength(str)" ,hero_strength);
+    LABEL_BLUE("Intelligence(int)", hero_intelligence);
+    LABEL_PURPLE("Dexterity(dex)", hero_dexterity);
+    LABEL_GREEN("Luck(lck)", hero_luck);
+
   }
   else if(CHOOSE_INTELLIGENCE(skillAreaChoice)){
     ALLOCATE_TO_SKILL("Intelligence", amount, skill_point_pool, hero_intelligence);
     PRINT_REMAINING_POINTS(skill_point_pool);
-    printf("Which skill would you like to allocate points to?\n");
-    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
-    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
-    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
-    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
+    LABEL_RED("Strength(str)" ,hero_strength);
+    LABEL_BLUE("Intelligence(int)", hero_intelligence);
+    LABEL_PURPLE("Dexterity(dex)", hero_dexterity);
+    LABEL_GREEN("Luck(lck)", hero_luck);
+
   }
   else if(CHOOSE_DEXTERITY(skillAreaChoice)){
     ALLOCATE_TO_SKILL("Dexterity", amount, skill_point_pool, hero_dexterity);
     PRINT_REMAINING_POINTS(skill_point_pool);
     printf("Which skill would you like to allocate points to?\n");
-    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
-    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
-    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
-    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
-  }
+    LABEL_RED("Strength(str)" ,hero_strength);
+    LABEL_BLUE("Intelligence(int)", hero_intelligence);
+    LABEL_PURPLE("Dexterity(dex)", hero_dexterity);
+    LABEL_GREEN("Luck(lck)", hero_luck);
+
+    }
 
   else if(CHOOSE_LUCK(skillAreaChoice)){
     ALLOCATE_TO_SKILL("Luck", amount, skill_point_pool, hero_luck);
     PRINT_REMAINING_POINTS(skill_point_pool);
     printf("Which skill would you like to allocate points to?\n");
-    printf("\x1b[31m(str)Strength: %d\n\x1b[0m", hero_strength);
-    printf("\x1b[34m(int)Intelligence: %d\n\x1b[0m", hero_intelligence);
-    printf("\x1b[35m(dex)Dexterity: %d\n\x1b[0m", hero_dexterity);
-    printf("\x1b[32m(lck)Luck: %d\n\x1b[0m", hero_luck);
-  }
+    LABEL_RED("Strength(str)" ,hero_strength);
+    LABEL_BLUE("Intelligence(int)", hero_intelligence);
+    LABEL_PURPLE("Dexterity(dex)", hero_dexterity);
+    LABEL_GREEN("Luck(lck)", hero_luck);
+    }
   capAllocation();
   }while (skill_point_pool > 0);
 }

@@ -8,6 +8,7 @@
 #include "./Globals.h"
 #include "./Notepad.c"
 #include "../Source/HeroCreation.c"
+#include "../Source/Stats.c"
 
 char commands[15][100] = {
 "start"
@@ -39,6 +40,7 @@ char command_descriptions[15][100] = {
 char possibleOrigins[5][10];
 
 int COMMAND_LINE(FILE *logFile){
+  Hero NewHero;
   char input[MAX_INPUT_LENGTH];
   while (1)
   {
@@ -67,56 +69,10 @@ int COMMAND_LINE(FILE *logFile){
       "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
       printf("%s\n", titleArt);
       // TODO Read introduction then do hero creation
-      startHeroCreation(); // this is a function froinitscr();            // Initialize the ncurses library
-    cbreak();             // Line buffering disabled, pass on all characters
-    noecho();             // Don't echo while we do getch()
-    keypad(stdscr, TRUE); // Enable special keys like arrow keys
-
-    int selected_option = 0;
-    char* options[] = {"Option 1", "Option 2", "Option 3"};
-    int num_options = sizeof(options) / sizeof(options[0]);
-
-    while (1) {
-        clear(); // Clear the screen
-
-        // Print the menu options
-        for (int i = 0; i < num_options; i++) {
-            if (i == selected_option) {
-                attron(A_REVERSE); // Highlight the selected option
-            }
-            mvprintw(i, 0, options[i]);
-            attroff(A_REVERSE);
-        }
-
-        // Get user input
-        int ch = getch();
-        switch (ch) {
-            case KEY_UP:
-                selected_option--;
-                if (selected_option < 0) {
-                    selected_option = num_options - 1;
-                }
-                break;
-            case KEY_DOWN:
-                selected_option++;
-                if (selected_option >= num_options) {
-                    selected_option = 0;
-                }
-                break;
-            case 10: // Enter key
-                // Handle the selected option here
-                clear();
-                mvprintw(num_options + 1, 0, "You selected: %s", options[selected_option]);
-                refresh();
-                getch(); // Wait for a key press before exiting
-                endwin(); // End ncurses mode
-                return 0;
-        }
+      // start_ch0(); //TODO uncomment this when working on story
+      startHeroCreation();
     }
-
-    endwin(); // End ncurses mode
-    return 0;
-
+      else if(IS_RESTART_COMMAND(input)){
     // Check if the input is "restart
       char restartConfirmation[10];
       // Log a restart message
@@ -155,7 +111,7 @@ int COMMAND_LINE(FILE *logFile){
       printf("\x1b[32m%s\x1b[0m\n", heroInfoArt);
       printf("============================================================================\n");
       printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Country of Origin");
-      printf("%-15s | %-15s | %-15s | %-15s \n", hero_first_name, hero_dynasty_name, hero_gender, hero_homeland);
+      printf("%-15s | %-15s | %-15s | %-15s \n", NewHero.FirstName, hero_dynasty_name, hero_gender, hero_homeland);
       printf("----------------------------------------------------------------------------\n");
       printf("%-15s | %-15s | %-15s | %-15s | %-15s \n", "Profession", "Class", "Level", "Health", "Mana");
       printf("%-15s | %-15s | %-15d | %-15d | %-15d \n", hero_profession, hero_class, hero_level, hero_health, hero_mana);
