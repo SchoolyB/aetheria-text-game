@@ -2,1288 +2,450 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "../Utils/Macros.h"
-#include "../Utils/Globals.h"
-#include "../Utils/Prototypes.h"
+#include <time.h>
+#include "../Utils/Utils.h"
 
+char input[100];
+char confirmation[100];
+Hero hero;
 
-// Global variables to be used in other files. See "Hero.h"
-char hero_first_name[10];
-char hero_dynasty_name[10];
-char hero_gender[10];
-char hero_homeland[10];
-char hero_profession[15];
-char hero_class[10];
-
-//===========================================================================================================//
-int getFirstName()
+// ===========================================================================================================//
+void get_first_name()
 {
-  char firstNameInput[15];
-  char firstNameConfirmation[10];
-  printf("Enter your first name: ");
-  fgets(firstNameInput, sizeof(firstNameInput), stdin);
-  REMOVE_NEWLINE_CHARACTER(firstNameInput);
-  // this copies the input from the user into the hero_first_name variable
-  strcpy(hero_first_name, firstNameInput);
-  printf("Your first name is: %s\n", hero_first_name);
-
-  printf("Is this correct? (y/n): ");
-
-  fgets(firstNameConfirmation, sizeof(firstNameConfirmation), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(firstNameConfirmation);
-  if (IS_YES(firstNameConfirmation))
+  printf("Enter your first name:");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  strcpy(hero.FirstName, input);
+  printf("Your first name is %s is that correct? (y/n)\n", hero.FirstName);
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
   {
-    printf("You have chosen %s as your first name\n", hero_first_name);
-    dynastyNameCheck();
+    printf("You have chosen %s as your first name. This can be changed later.\n", hero.FirstName);
+    ask_for_dynasty_name();
   }
-  else if (IS_NO(firstNameConfirmation))
+  else if (INPUT_IS_NO(confirmation))
   {
-    getFirstName();
+    get_first_name();
   }
   else
   {
     MAKE_VALID_DECISION;
-    getFirstName();
+    get_first_name();
   }
 }
-//===========================================================================================================//
-int dynastyNameCheck()
+// ===========================================================================================================//
+void ask_for_dynasty_name()
 {
-  char dynastyNameDecision[10];
-  char confirmDynastyDecision[10];
-  printf("Do you have a dynasty name? (y/n): ");
-  fgets(dynastyNameDecision, sizeof(dynastyNameDecision), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(dynastyNameDecision);
-  // Compare dynastyNameDecision with strings using strcmp
-  if (IS_YES(dynastyNameDecision))
+  printf("Do you have a dynasty name? (y/n)");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (INPUT_IS_YES(input))
   {
-    getDynastyName();
+    get_dynasty_name();
   }
-  else if (IS_NO(dynastyNameDecision))
+  else if (INPUT_IS_NO(input))
   {
-    sleep(1);
-    printf("\x1b[33mYou have chosen not to have a dynasty name.\x1b[0m\n");
-    sleep(1);
-    printf("\x1b[33mAre you sure you do not come from a great dynasty? (y/n): \x1b[0m\n");
-    fgets(confirmDynastyDecision, sizeof(confirmDynastyDecision), stdin);
+    usleep(40000);
+    MAKE_YELLOW("You have chosen not to have a dynasty name.\n");
+    usleep(40000);
+    MAKE_YELLOW("Are you sure you want to continue with this decision? (y/n)\n");
+    FGETS(confirmation);
+    REMOVE_NEWLINE_CHAR(confirmation);
+    if (INPUT_IS_YES(confirmation))
+    {
+      printf("Ah, It seems you don't come from a great dynasty. Very well. \n");
+      ask_for_gender();
+    }
+    else if (INPUT_IS_NO(confirmation))
+    {
+      ask_for_dynasty_name();
+    }
+  }
+  else
 
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDynastyDecision);
-    if (IS_YES(confirmDynastyDecision))
-    {
-      printf("Ah, It seems that you don't come from a great dynasty. Very well.\n");
-      strcpy(hero_dynasty_name, "None");
-      heroGenderCheck();
-    }
-    else if (IS_NO(confirmDynastyDecision))
-    {
-      getDynastyName();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      dynastyNameCheck();
-    }
+  {
+    MAKE_VALID_DECISION;
+    ask_for_dynasty_name();
+  }
+}
+// ===========================================================================================================//
+void get_dynasty_name()
+{
+  printf("What is the name of the dynasty you come from?\n");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  strcpy(hero.LastName, input);
+  printf("Ah so you are a member of the %s dynasty.\n", hero.LastName);
+  usleep(40000);
+  printf("Is that correct? (y/n)\n");
+  confirm_dynasty_name();
+}
+// ===========================================================================================================//
+void confirm_dynasty_name()
+{
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (INPUT_IS_YES(input))
+  {
+    ask_for_gender();
+  }
+  else if (INPUT_IS_NO(input))
+  {
+    printf("Interesting....");
+    usleep(60000);
+    get_dynasty_name();
   }
   else
   {
     MAKE_VALID_DECISION;
-    dynastyNameCheck();
-  }
-  return 1;
-}
-//===========================================================================================================//
-// This function is what gets the dynasty name if the player has chooses to have one
-int getDynastyName()
-{
-  char dynastyNameInput[20];
-  printf("Enter your dynasty name: ");
-  fgets(dynastyNameInput, sizeof(dynastyNameInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(dynastyNameInput);
-  // this copies the input from the user into the hero_dynasty_name variable
-  strcpy(hero_dynasty_name, dynastyNameInput);
-  printf("Your dynasty name is: %s\n", hero_dynasty_name);
-  confirmDynastyName();
-  return 0;
-}
-//===========================================================================================================//
-int confirmDynastyName()
-{
-  char confirmDynastyNameInput[10];
-  printf("Is this correct? (y/n): ");
-  fgets(confirmDynastyNameInput, sizeof(confirmDynastyNameInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(confirmDynastyNameInput);
-  if (IS_YES(confirmDynastyNameInput))
-  {
-    heroGenderCheck();
-  }
-  else if (IS_NO(confirmDynastyNameInput))
-  {
-    getDynastyName();
-  }
-  else
-  {
-    printf("You may have entered to many characters. Please Try Again\n");
-    confirmDynastyName();
+    get_dynasty_name();
   }
 }
-//===========================================================================================================//
-// The results of this function running will have no effect on the game itself
-int heroGenderCheck()
+// ===========================================================================================================//
+void ask_for_gender()
 {
-  char heroGenderDecision[10];
-  char heroGenderDecisionConfirmation[10];
-  printf("Would you like to choose a gender for your hero? (y/n): ");
-  fgets(heroGenderDecision, sizeof(heroGenderDecision), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroGenderDecision);
-  if (IS_YES(heroGenderDecision))
+  printf("Do you have a gender? (y/n)\n");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (INPUT_IS_YES(input))
   {
-    getHeroGender();
+    get_gender();
   }
-  else if (IS_NO(heroGenderDecision))
+  else if (INPUT_IS_NO(input))
   {
-
-    printf("\x1b[33mYou have chosen not to have a gender.\x1b[0m\n");
-    printf("\x1b[33mAre you sure you do not have a gender? (y/n): \x1b[0m\n");
-    fgets(heroGenderDecisionConfirmation, sizeof(heroGenderDecisionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroGenderDecisionConfirmation);
-
-    if (IS_YES(heroGenderDecisionConfirmation))
-    {
-      strcpy(hero_gender, "None");
-      getHeroHomeland();
-    }
-    else if (IS_NO(heroGenderDecisionConfirmation))
-    {
-      heroGenderCheck();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      heroGenderCheck();
-    }
+    confirm_no_gender();
   }
   else
   {
     MAKE_VALID_DECISION;
-    heroGenderCheck();
+    ask_for_gender();
   }
-  return 0;
 }
-//===========================================================================================================//
-// Rather than specifying male or female I figure it would be easier to just let the player choose whatever they want
-// But still preform a check for male or female.
-int getHeroGender()
+// ===========================================================================================================//
+void confirm_no_gender()
 {
-  char heroGenderInput[10];
-  printf("Please tell me your gender. \n");
-  fgets(heroGenderInput, sizeof(heroGenderInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroGenderInput);
-  strcpy(hero_gender, heroGenderInput);
-  printf("So your gender is %s? \n", hero_gender);
-  if (strcmp(heroGenderInput, "male") == 0 ||
-      strcmp(heroGenderInput, "Male") == 0 ||
-      strcmp(heroGenderInput, "man") == 0 ||
-      strcmp(heroGenderInput, "Man") == 0 ||
-      strcmp(heroGenderInput, "m") == 0 ||
-      strcmp(heroGenderInput, "M") == 0)
+  MAKE_YELLOW("Are you sure that you do not have a gender? (y/n)\n");
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
   {
-    confirmHeroGender();
+    get_homeland();
   }
-  else if (strcmp(heroGenderInput, "female") == 0 ||
-           strcmp(heroGenderInput, "Female") == 0 ||
-           strcmp(heroGenderInput, "woman") == 0 ||
-           strcmp(heroGenderInput, "Woman") == 0 ||
-           strcmp(heroGenderInput, "f") == 0 ||
-           strcmp(heroGenderInput, "F") == 0)
+  else if (INPUT_IS_NO(confirmation))
   {
-    confirmHeroGender();
+    ask_for_gender();
   }
   else
   {
-    printf("You've entered %s, are you certain that that is your gender?", heroGenderInput);
-    confirmHeroGender();
+    MAKE_VALID_DECISION;
+    confirm_no_gender();
   }
 }
-//===========================================================================================================//
-int confirmHeroGender()
-{
-  char confirmHeroGenderInput[10];
-  printf("Is this correct? (y/n): ");
-  fgets(confirmHeroGenderInput, sizeof(confirmHeroGenderInput), stdin);
+// ===========================================================================================================//
+#define IS_GENDER(input, lower_c, cap_c, lower_informal, cap_informal, lower_formal, cap_formal) ( \
+    strcmp(input, cap_formal) == 0 ||                                                              \
+    strcmp(input, lower_formal) == 0 ||                                                            \
+    strcmp(input, cap_informal) == 0 ||                                                            \
+    strcmp(input, lower_informal) == 0 ||                                                          \
+    strcmp(input, cap_c) == 0 ||                                                                   \
+    strcmp(input, lower_c) == 0)
 
-  REMOVE_NEWLINE_CHARACTER(confirmHeroGenderInput);
-  if (IS_YES(confirmHeroGenderInput))
+void get_gender()
+{
+  printf("Please tell me your gender. (m/f or enter your own)\n");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (IS_GENDER(input, "m", "M", "man", "Man", "male", "male"))
   {
-    getHeroHomeland();
+    strcpy(hero.Gender, "Male");
+    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    confirm_gender();
   }
-  else if (IS_NO(confirmHeroGenderInput))
+  else if (IS_GENDER(input, "w", "W", "woman", "Woman", "female", "Female"))
   {
-    getHeroGender();
+    strcpy(hero.Gender, "Female");
+    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    confirm_gender();
   }
   else
   {
-    printf("Error\n");
+    strcpy(hero.Gender, input);
+    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    confirm_gender();
   }
-  return 0;
 }
-//===========================================================================================================//
-// This is function is huge. TODO figure out how to make it smaller
-int getHeroHomeland()
+// ===========================================================================================================//
+void confirm_gender()
 {
-  char heroOriginDecision[10];
-  char heroOriginInput[10];
-  char possibleOrigins[5][15] = {
-      "1: Empyrea",
-      "2: Wesward",
-      "3: Magdalar",
-      "4: Ashvadan",
-      "5: Nadafia"};
-
-  printf("Which of these Countries do you hail from? \n");
-  for (int i = 0; i < 5; i++)
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
   {
-    printf("%s \n", possibleOrigins[i]);
+    get_homeland();
   }
-  fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroOriginInput);
-  if (strcmp(heroOriginInput, "1") == 0 ||
-      strcmp(heroOriginInput, "Empyrea") == 0 ||
-      strcmp(heroOriginInput, "empyrea") == 0 ||
-      strcmp(heroOriginInput, "EMPYERA") == 0)
+  else if (INPUT_IS_NO(confirmation))
   {
+    get_gender();
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    confirm_gender();
+  }
+}
+// ===========================================================================================================//
+#define IS_NATION(input, number, lower, pascal, caps) ( \
+    strcmp(input, number) == 0 ||                       \
+    strcmp(input, lower) == 0 ||                        \
+    strcmp(input, pascal) == 0 ||                       \
+    strcmp(input, caps) == 0)
+
+void get_homeland()
+{
+  char possibleHomelands[5][15] =
+      {
+          "1: Empyrea",
+          "2: Wesward",
+          "3: Magdalar",
+          "4: Ashvadan",
+          "5: Nadafia"};
+
+  printf("Which of these lands do you hail from?\n");
+  PRINT_LIST_ITEMS(5, possibleHomelands);
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+
+  if (IS_NATION(input, "1", "empyrea", "Empyrea", "EMPYREA"))
+  {
+    strcpy(hero.Homeland, "Empyrea");
     READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
-    printf("Is Empyrea the country you hail from? (y/n):\n");
-
-    fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
-    if (IS_YES(heroOriginDecision))
-    {
-      strcpy(hero_homeland, "Empyrea");
-      printf("So you are from %s \n", hero_homeland);
-      getHeroProfession();
-    }
-    else if (IS_NO(heroOriginDecision))
-    {
-      getHeroHomeland();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomeland();
-    }
+    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    confirm_homeland();
   }
-  else if (strcmp(heroOriginInput, "2") == 0 ||
-           strcmp(heroOriginInput, "Wesward") == 0 ||
-           strcmp(heroOriginInput, "wesward") == 0 ||
-           strcmp(heroOriginInput, "WESTWARD") == 0)
+  else if (IS_NATION(input, "2", "wesward", "Wesward", "WESWARD"))
   {
+    strcpy(hero.Homeland, "Wesward");
     READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
-    printf("Is Wesward the country you hail from? (y/n):\n");
-
-    fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
-    if (IS_YES(heroOriginDecision))
-    {
-      strcpy(hero_homeland, "Wesward");
-      printf("So you are from %s \n", hero_homeland);
-      getHeroProfession();
-    }
-    else if (IS_NO(heroOriginDecision))
-    {
-      getHeroHomeland();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomeland();
-    }
+    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    confirm_homeland();
   }
-  else if (strcmp(heroOriginInput, "3") == 0 ||
-           strcmp(heroOriginInput, "Magdalar") == 0 ||
-           strcmp(heroOriginInput, "magdalar") == 0 ||
-           strcmp(heroOriginInput, "Magdalar") == 0)
+  else if (IS_NATION(input, "3", "ashvadan", "Ashvadan", "ASHVADAN"))
   {
-    READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
-    printf("Is Magdalar the country you hail from? (y/n): \n");
-
-    fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
-    if (IS_YES(heroOriginDecision))
-    {
-      strcpy(hero_homeland, "Magdalar");
-      printf("So you are from %s \n", hero_homeland);
-      getHeroProfession();
-    }
-    else if (IS_NO(heroOriginDecision))
-    {
-      getHeroHomeland();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomeland();
-    }
-  }
-  else if (strcmp(heroOriginInput, "4") == 0 ||
-           strcmp(heroOriginInput, "Ashvadan") == 0 ||
-           strcmp(heroOriginInput, "ashvadan") == 0 ||
-           strcmp(heroOriginInput, "ASHVADAN") == 0)
-  {
+    strcpy(hero.Homeland, "Ashvadan");
     READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
-    printf("Is Ashvadan the country you hail from? (y/n): \n");
-
-    fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
-    if (IS_YES(heroOriginDecision))
-    {
-      strcpy(hero_homeland, "Ashvadan");
-      printf("So you are from %s \n", hero_homeland);
-      getHeroProfession();
-    }
-    else if (IS_NO(heroOriginDecision))
-    {
-      getHeroHomeland();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomeland();
-    }
+    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    confirm_homeland();
   }
-
-  else if (strcmp(heroOriginInput, "5") == 0 ||
-           strcmp(heroOriginInput, "Nadafia") == 0 ||
-           strcmp(heroOriginInput, "nadafia") == 0 ||
-           strcmp(heroOriginInput, "NADAFIA") == 0)
+  else if (IS_NATION(input, "4", "magdalar", "Magdlar", "MAGDALAR"))
   {
-    READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
-    printf("Is Nadafia the country you hail from? (y/n):\n");
-
-    fgets(heroOriginDecision, sizeof(heroOriginDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroOriginDecision);
-    if (IS_YES(heroOriginDecision))
-    {
-      strcpy(hero_homeland, "Nadafia");
-      printf("So you are from %s \n", hero_homeland);
-      getHeroProfession();
-    }
-    else if (IS_NO(heroOriginDecision))
-    {
-      getHeroHomeland();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomeland();
-    }
-  }
-  else
-  {
-    MAKE_VALID_DECISION;
-    getHeroHomeland();
-  }
-}
-//===========================================================================================================//
-// This function is only here in the even that someone wants to pick a country without reading the descriptions again
-int getHeroHomelandWithoutDescriptions()
-{
-  char confirmHomelandDecision[10];
-  char heroOriginInput[10];
-  char possibleOrigins[5][15] = {"1: Empyrea", "2: Wesward", "3: Magdalar", "4: Ashvadan", "5: Nadafia"};
-  printf("Which of these Countries do you hail from? \n");
-  for (int i = 0; i < 5; i++)
-  {
-    printf("%s \n", possibleOrigins[i]);
-  }
-  fgets(heroOriginInput, sizeof(heroOriginInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroOriginInput);
-
-  if (strcmp(heroOriginInput, "1") == 0 ||
-      strcmp(heroOriginInput, "Empyrea") == 0 ||
-      strcmp(heroOriginInput, "empyrea") == 0 ||
-      strcmp(heroOriginInput, "EMPYERA") == 0)
-  {
-    printf("Is Empyrea the country you hail from? (y/n): ");
-
-    fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
-    if (IS_YES(confirmHomelandDecision))
-    {
-      strcpy(hero_homeland, "Empyrea");
-      getHeroProfession();
-    }
-    else if (IS_NO(confirmHomelandDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomelandWithoutDescriptions();
-    }
-  }
-  else if (strcmp(heroOriginInput, "2") == 0 ||
-           strcmp(heroOriginInput, "Wesward") == 0 ||
-           strcmp(heroOriginInput, "wesward") == 0 ||
-           strcmp(heroOriginInput, "WESTWARD") == 0)
-  {
-    printf("Is Wesward the country you hail from? (y/n): ");
-
-    fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
-    if (IS_YES(confirmHomelandDecision))
-    {
-      strcpy(hero_homeland, "Wesward");
-      getHeroProfession();
-    }
-    else if (IS_NO(confirmHomelandDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomelandWithoutDescriptions();
-    }
-  }
-  else if (strcmp(heroOriginInput, "3") == 0 ||
-           strcmp(heroOriginInput, "Magdalar") == 0 ||
-           strcmp(heroOriginInput, "magdalar") == 0 ||
-           strcmp(heroOriginInput, "Magdalar") == 0)
-  {
-    printf("Is Magdalar the country you hail from? (y/n): ");
-
-    fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
-    if (IS_YES(confirmHomelandDecision))
-    {
-      strcpy(hero_homeland, "Magdalar");
-      getHeroProfession();
-    }
-    else if (IS_NO(confirmHomelandDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomelandWithoutDescriptions();
-    }
-  }
-  else if (strcmp(heroOriginInput, "4") == 0 ||
-           strcmp(heroOriginInput, "Ashvadan") == 0 ||
-           strcmp(heroOriginInput, "ashvadan") == 0 ||
-           strcmp(heroOriginInput, "ASHVADAN") == 0)
-  {
-    printf("Is Ashvadan the country you hail from? (y/n): ");
-
-    fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
-    if (IS_YES(confirmHomelandDecision))
-    {
-      strcpy(hero_homeland, "Ashvadan");
-      getHeroProfession();
-    }
-    else if (IS_NO(confirmHomelandDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomelandWithoutDescriptions();
-    }
-  }
-
-  else if (strcmp(heroOriginInput, "5") == 0 ||
-           strcmp(heroOriginInput, "Nadafia") == 0 ||
-           strcmp(heroOriginInput, "nadafia") == 0 ||
-           strcmp(heroOriginInput, "NADAFIA") == 0)
-  {
-    printf("Is Nadafia the country you hail from? (y/n): ");
-
-    fgets(confirmHomelandDecision, sizeof(confirmHomelandDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmHomelandDecision);
-    if (IS_YES(confirmHomelandDecision))
-    {
-      strcpy(hero_homeland, "Nadafia");
-      getHeroProfession();
-    }
-    else if (IS_NO(confirmHomelandDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroHomelandWithoutDescriptions();
-    }
-  }
-  else
-  {
-    MAKE_VALID_DECISION;
-    getHeroHomelandWithoutDescriptions();
-  }
-}
-//===========================================================================================================//
-int seeHomelandDescriptions()
-{
-  char seeDescriptionInput[10];
-  char confirmDescriptionDecision[10];
-  printf("Which country would you like to learn about? \n");
-  printf("1: Empyrea \n");
-  printf("2: Wesward \n");
-  printf("3: Magdalar \n");
-  printf("4: Ashvadan \n");
-  printf("5: Nadafia \n");
-  // TODO maybe provide an option to see all of them???
-
-  fgets(seeDescriptionInput, sizeof(seeDescriptionInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(seeDescriptionInput);
-
-  // START OF EMPYREA DESCRIPTION CHECK
-  if (strcmp(seeDescriptionInput, "1") == 0 ||
-      strcmp(seeDescriptionInput, "Empyrea") == 0 ||
-      strcmp(seeDescriptionInput, "empyrea") == 0 ||
-      strcmp(seeDescriptionInput, "EMPYERA") == 0)
-  {
-    READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
-    printf("Is Empyrea the country you hail from? (y/n):\n");
-    fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
-    if (IS_YES(confirmDescriptionDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-    }
-    else if (IS_NO(confirmDescriptionDecision))
-    {
-      seeHomelandDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      seeHomelandDescriptions();
-    }
-  }
-  // END OF EMPYREA DESCRIPTION CHECK
-
-  // START OF WESWARD DESCRIPTION CHECK
-  else if (strcmp(seeDescriptionInput, "2") == 0 ||
-           strcmp(seeDescriptionInput, "Wesward") == 0 ||
-           strcmp(seeDescriptionInput, "wesward") == 0 ||
-           strcmp(seeDescriptionInput, "WESTWARD") == 0)
-  {
-    READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
-    printf("Is Wesward the country you hail from? (y/n):\n ");
-    fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
-    if (IS_YES(confirmDescriptionDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-      printf("This is a test to check that the user entered Wesward\n");
-    }
-    else if (IS_NO(confirmDescriptionDecision))
-    {
-      seeHomelandDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      seeHomelandDescriptions();
-    }
-  }
-  // END OF WESWARD DESCRIPTION CHECK
-
-  // START OF MAGDALAR DESCRIPTION CHECK
-  else if (strcmp(seeDescriptionInput, "3") == 0 ||
-           strcmp(seeDescriptionInput, "Magdalar") == 0 ||
-           strcmp(seeDescriptionInput, "magdalar") == 0 ||
-           strcmp(seeDescriptionInput, "Magdalar") == 0)
-  {
+    strcpy(hero.Homeland, "Magdalar");
     READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
-    printf("Is Magdalar the country you hail from? (y/n):\n ");
-    fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
-    if (IS_YES(confirmDescriptionDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-      printf("This is a test to check that the user entered Magdalar\n");
-    }
-    else if (IS_NO(confirmDescriptionDecision))
-    {
-      seeHomelandDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      seeHomelandDescriptions();
-    }
+    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    confirm_homeland();
   }
-  // END OF MAGDALAR DESCRIPTION CHECK
-
-  // START OF ASHVADAN DESCRIPTION CHECK
-  else if (strcmp(seeDescriptionInput, "4") == 0 ||
-           strcmp(seeDescriptionInput, "Ashvadan") == 0 ||
-           strcmp(seeDescriptionInput, "ashvadan") == 0 ||
-           strcmp(seeDescriptionInput, "ASHVADAN") == 0)
+  else if (IS_NATION(input, "5", "nadafia", "Nadafia", "NADAFIA"))
   {
-    READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
-    printf("Is Ashvadan the country you hail from? (y/n):\n ");
-    fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
-    if (IS_YES(confirmDescriptionDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-      printf("This is a test to check that the user entered Ashvadan\n");
-    }
-    else if (IS_NO(confirmDescriptionDecision))
-    {
-      seeHomelandDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      seeHomelandDescriptions();
-    }
-  }
-  // END OF ASHVADAN DESCRIPTION CHECK
-
-  // START OF NADAFIA DESCRIPTION CHECK
-  else if (strcmp(seeDescriptionInput, "5") == 0 ||
-           strcmp(seeDescriptionInput, "Nadafia") == 0 ||
-           strcmp(seeDescriptionInput, "nadafia") == 0 ||
-           strcmp(seeDescriptionInput, "NADAFIA") == 0)
-  {
+    strcpy(hero.Homeland, "Nadafia");
     READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
-    printf("Is Nadafia the country you hail from? (y/n):\n ");
-    fgets(confirmDescriptionDecision, sizeof(confirmDescriptionDecision), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(confirmDescriptionDecision);
-    if (IS_YES(confirmDescriptionDecision))
-    {
-      getHeroHomelandWithoutDescriptions();
-      printf("This is a test to check that the user entered Nadafia\n");
-    }
-    else if (IS_NO(confirmDescriptionDecision))
-    {
-      seeHomelandDescriptions();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      seeHomelandDescriptions();
-    }
-  }
-  // END OF NADAFIA DESCRIPTION CHECK
-
-  else
-  {
-    printf("ERROR: Please make a valid decision \n");
-  }
-}
-//===========================================================================================================//
-int getHeroProfession()
-{
-  char heroProfessionConfirmation[10];
-  char heroProfessionInput[15];
-  char heroProfessionChoice[15];
-  char possibleProfessions[9][15] = {
-      "1: Blacksmith",
-      "2: Merchant",
-      "3: Farmer",
-      "4: Hunter",
-      "5: Soldier",
-      "6: Sailor",
-      "7: Scholar",
-      "8: Thief",
-      "9: None"};
-
-  printf("What is your profession? \n");
-  for (int i = 0; i < 9; i++)
-  {
-    printf("%s \n", possibleProfessions[i]);
-  }
-  fgets(heroProfessionInput, sizeof(heroProfessionInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroProfessionInput);
-
-  if (strcmp(heroProfessionInput, "1") == 0 ||
-      strcmp(heroProfessionInput, "Blacksmith") == 0 ||
-      strcmp(heroProfessionInput, "blacksmith") == 0 ||
-      strcmp(heroProfessionInput, "BLACKSMITH") == 0)
-  {
-    strcpy(heroProfessionChoice, "Blacksmith");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Blacksmith");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "2") == 0 ||
-           strcmp(heroProfessionInput, "Merchant") == 0 ||
-           strcmp(heroProfessionInput, "merchant") == 0 ||
-           strcmp(heroProfessionInput, "MERCHANT") == 0)
-  {
-    strcpy(heroProfessionChoice, "Merchant");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Merchant");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "3") == 0 ||
-           strcmp(heroProfessionInput, "Farmer") == 0 ||
-           strcmp(heroProfessionInput, "farmer") == 0 ||
-           strcmp(heroProfessionInput, "FARMER") == 0)
-  {
-    strcpy(heroProfessionChoice, "Farmer");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Farmer");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "4") == 0 ||
-           strcmp(heroProfessionInput, "Hunter") == 0 ||
-           strcmp(heroProfessionInput, "hunter") == 0 ||
-           strcmp(heroProfessionInput, "HUNTER") == 0)
-  {
-    strcpy(heroProfessionChoice, "Hunter");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Hunter");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "5") == 0 ||
-           strcmp(heroProfessionInput, "Soldier") == 0 ||
-           strcmp(heroProfessionInput, "soldier") == 0 ||
-           strcmp(heroProfessionInput, "SOLDIER") == 0)
-  {
-    strcpy(heroProfessionChoice, "Soldier");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Soldier");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "6") == 0 ||
-           strcmp(heroProfessionInput, "Sailor") == 0 ||
-           strcmp(heroProfessionInput, "sailor") == 0 ||
-           strcmp(heroProfessionInput, "SAILOR") == 0)
-  {
-    strcpy(heroProfessionChoice, "Sailor");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Sailor");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "7") == 0 ||
-           strcmp(heroProfessionInput, "Scholar") == 0 ||
-           strcmp(heroProfessionInput, "scholar") == 0 ||
-           strcmp(heroProfessionInput, "SCHOLAR") == 0)
-  {
-    strcpy(heroProfessionChoice, "Scholar");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Scholar");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "8") == 0 ||
-           strcmp(heroProfessionInput, "Thief") == 0 ||
-           strcmp(heroProfessionInput, "thief") == 0 ||
-           strcmp(heroProfessionInput, "THIEF") == 0)
-  {
-    strcpy(heroProfessionChoice, "Thief");
-    printf("So you are a %s is that correct? (y/n)\n", heroProfessionChoice);
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "Thief");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
-  }
-  else if (strcmp(heroProfessionInput, "9") == 0 ||
-           strcmp(heroProfessionInput, "None") == 0 ||
-           strcmp(heroProfessionInput, "none") == 0 ||
-           strcmp(heroProfessionInput, "NONE") == 0)
-  {
-    strcpy(heroProfessionChoice, "None");
-    printf("\x1b[33mYou have chosen not to have a profession.\x1b[0m\n");
-    sleep(1);
-    printf("\x1b[33mThis may affect some aspects of gameplay.\x1b[0m\n");
-    printf("\x1b[33mAre you sure you do not have a profession? (y/n): \x1b[0m\n");
-
-    fgets(heroProfessionConfirmation, sizeof(heroProfessionConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroProfessionConfirmation);
-    if (IS_YES(heroProfessionConfirmation))
-    {
-      strcpy(hero_profession, "None");
-      getHeroClass();
-    }
-    else if (IS_NO(heroProfessionConfirmation))
-    {
-      getHeroProfession();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroProfession();
-    }
+    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    confirm_homeland();
   }
   else
   {
     MAKE_VALID_DECISION;
-    getHeroProfession();
+    get_homeland();
   }
 }
-//===========================================================================================================//
-int getHeroClass()
+// ===========================================================================================================//
+void confirm_homeland()
 {
-  char heroClassConfirmation[10];
-  char heroClassInput[15];
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
+  {
+    get_profession();
+  }
+  else if (INPUT_IS_NO(confirmation))
+  {
+    get_homeland();
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    printf("You hail from the lands of %s, is that correct? (y/n)\n", hero.Homeland);
+    confirm_homeland();
+  }
+}
+// ===========================================================================================================//
+#define IS_PROFESSION(input, number, lower, pascal, caps) ( \
+    strcmp(input, number) == 0 ||                           \
+    strcmp(input, lower) == 0 ||                            \
+    strcmp(input, pascal) == 0 ||                           \
+    strcmp(input, caps) == 0)
+
+void get_profession()
+{
+  char possibleProfessions[6][15] = {
+      "1: Merchant",
+      "2: Hunter",
+      "3: Soldier",
+      "4: thief",
+      "5: Scholar",
+      "6: None"};
+
+  printf("What is your profession?\n");
+  PRINT_LIST_ITEMS(5, possibleProfessions);
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (IS_PROFESSION(input, "1", "merchant", "Merchant", "MERCHANT"))
+  {
+    strcpy(hero.Profession, "Merchant");
+    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    confirm_profession();
+  }
+  else if (IS_PROFESSION(input, "2", "hunter", "Hunter", "HUNTER"))
+  {
+    strcpy(hero.Profession, "Hunter");
+    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    confirm_profession();
+  }
+  else if (IS_PROFESSION(input, "3", "soldier", "Soldier", "SOLDIER"))
+  {
+    strcpy(hero.Profession, "Soldier");
+    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    confirm_profession();
+  }
+  else if (IS_PROFESSION(input, "4", "thief", "Thief", "THIEF"))
+  {
+    strcpy(hero.Profession, "Thief");
+    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    confirm_profession();
+  }
+  else if (IS_PROFESSION(input, "5", "scholar", "Scholar", "SCHOLAR"))
+  {
+    strcpy(hero.Profession, "Scholar");
+    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    confirm_profession();
+  }
+  else if (IS_PROFESSION(input, "6", "none", "None", "NONE"))
+  {
+    strcpy(hero.Profession, "None");
+    printf("Ah so you do not have a profession is that correct? (y/n)\n");
+    confirm_profession();
+  }
+}
+// ===========================================================================================================//
+void confirm_profession()
+{
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
+  {
+    get_class();
+  }
+  else if (INPUT_IS_NO(confirmation))
+  {
+    get_profession();
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    confirm_profession();
+  }
+}
+// ===========================================================================================================//
+#define IS_CLASS(input, number, lower, pascal, caps) ( \
+    strcmp(input, number) == 0 ||                      \
+    strcmp(input, lower) == 0 ||                       \
+    strcmp(input, pascal) == 0 ||                      \
+    strcmp(input, caps) == 0)
+
+#define PRINT_CLASS(adjective, class) printf("Ah so you are a %s %s is that correct?(y/n) \n", adjective, class);
+
+void get_class()
+{
+
   char possibleClasses[5][15] = {
       "1: Warrior",
       "2: Mage",
       "3: Rogue",
       "4: Cleric",
       "5: Bard"};
+  printf("What is your class?\n");
+  PRINT_LIST_ITEMS(5, possibleClasses);
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
 
-  printf("Which of the following classes do you specialize in? \n");
-  for (int i = 0; i < 5; i++)
+  if (IS_CLASS(input, "1", "warrior", "Warrior", "WARRIOR"))
   {
-    printf("%s \n", possibleClasses[i]);
+    strcpy(hero.Class, "Warrior");
+    printf(WarriorArt);
+    PRINT_CLASS("mighty", hero.Class);
+    confirm_class();
   }
-
-  fgets(heroClassInput, sizeof(heroClassInput), stdin);
-
-  // Remove the trailing newline character from the input
-  REMOVE_NEWLINE_CHARACTER(heroClassInput);
-
-  if (strcmp(heroClassInput, "1") == 0 ||
-      strcmp(heroClassInput, "Warrior") == 0 ||
-      strcmp(heroClassInput, "warrior") == 0)
+  else if (IS_CLASS(input, "2", "mage", "Mage", "MAGE"))
   {
-    printf("So you are a mighty warrior is that correct? (y/n)\n");
-
-    char warrior_art[] =
-    "..............................,:::::,::.\n"
-    "............................,::,,,,,:;;.\n"
-    "..........................,::,,,,,:;;;;.\n"
-    ".........................,:,,,,,:;;;;;;.\n"
-    ".......................,::,,,,:;;;;;+;;.\n"
-    ".....................,::,,,,:;;;;;+;:,..\n"
-    "...................,::,,,,:;;+;;;;:,....\n"
-    "..................,:,,,,:;;+;;;;:.......\n"
-    "................,::,,,:;;+;+;:,.........\n"
-    ".......,,,....,::,,,:;;+;;;:,...........\n"
-    "......,:,::,,::,,,:;;++;;:,.............\n"
-    "......,::,,:;:,,:;;++;:,................\n"
-    "........,;:,,::;;;;;:,..................\n"
-    ".......:;;:::,,:;;:.....................\n"
-    ".,,,,:;;:::::;:,,::,....................\n"
-    ".;,,:;;:::::;;:::,,:,...................\n"
-    ".,::,,::::;;:...,:::,...................\n"
-    "...,::,,:;:.............................\n"
-    ".....,::,,:.............................\n"
-    ".......,,,,.............................\n";
-
-    printf("%s", warrior_art);
-    fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
-    if (IS_YES(heroClassConfirmation))
-    {
-      strcpy(hero_class, "Warrior");
-    }
-    else if (IS_NO(heroClassConfirmation))
-    {
-      getHeroClass();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroClass();
-    }
+    strcpy(hero.Class, "Mage");
+    printf(MageArt);
+    PRINT_CLASS("powerful", hero.Class);
+    confirm_class();
   }
-
-  else if (strcmp(heroClassInput, "2") == 0 ||
-           strcmp(heroClassInput, "Mage") == 0 ||
-           strcmp(heroClassInput, "mage") == 0)
+  else if (IS_CLASS(input, "3", "rogue", "Rogue", "ROGUE"))
   {
-    printf("So you are a powerful mage is that correct? (y/n)\n");
-    char mage_art[] = 
-    ".......,:::::,..........................\n"
-    ".....,:;;;;;;;:,........................\n"
-    "...,:;;;;;;;;;;;:,......................\n"
-    ".,:;;;;;:,.,,;;;;;;,....................\n"
-    ",;;;;;:,:;:,,,,;;;;;;,..................\n"
-    ",;;;;;,.:**+++,.,;;;;;:.................\n"
-    ".:;;;;;,,;****;..,;;;;;,................\n"
-    "..,:;;;;:,::;;;,:;;;;;:.................\n"
-    "....,:::,......:;;;;:...................\n"
-    "...............,;;;;;:;;,...............\n"
-    "................,:;;*%%%%;..............\n"
-    "..................:%%%%%?;:;,...........\n"
-    "..................,+%%?++?%%%+..........\n"
-    "....................,,,?%%%%%+,.........\n"
-    "......................,+%%?*;;;:,.......\n"
-    "........................,:,:;;;;;:,.....\n"
-    "............................,:;;;;;:,...\n"
-    "..............................,:;;;;;:,.\n"
-    "................................,:;;;;;,\n"
-    "..................................,::::,\n";
-    printf("%s", mage_art);
-    fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
-    if (IS_YES(heroClassConfirmation))
-    {
-      strcpy(hero_class, "Mage");
-    }
-    else if (IS_NO(heroClassConfirmation))
-    {
-      getHeroClass();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroClass();
-    }
+    strcpy(hero.Class, "Rogue");
+    printf(RogueArt);
+    PRINT_CLASS("sly", hero.Class);
+    confirm_class();
   }
-
-  else if (strcmp(heroClassInput, "3") == 0 ||
-           strcmp(heroClassInput, "Rogue") == 0 ||
-           strcmp(heroClassInput, "rogue") == 0)
+  else if (IS_CLASS(input, "4", "cleric", "Cleric", "CLERIC"))
   {
-    printf("So you are a sneaky rogue is that correct? (y/n)\n");
-
-    char rogue_art[] =
-    ",;:.....................................\n"
-    ",**,....................................\n"
-    ".:?*,...................................\n"
-    "..+?*,..................................\n"
-    "..,??*:.................................\n"
-    "...;???;................................\n"
-    "...,+???+,..............................\n"
-    "....,+???*+;;::,........................\n"
-    ".....,+*???????+,,,.....................\n"
-    "......,+**????????*,,,:,................\n"
-    ".......,;***????????????*;..............\n"
-    ".........,;+***???????????+;:,..........\n"
-    "...........,:;+++****;;??%%%%*;,........\n"
-    "................,,,,,..:*???++??,.......\n"
-    "..........................,:?%%?;.......\n"
-    "............................+?+**;,.....\n"
-    "............................,;?*+*+:,...\n"
-    ".............................,:**+*??*:.\n"
-    "...............................,:*%%%S?,\n"
-    ".................................,:;++:.\n";
-
-  printf("%s", rogue_art);
-  fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
-
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
-    if (IS_YES(heroClassConfirmation))
-    {
-      strcpy(hero_class, "Rogue");
-    }
-    else if (IS_NO(heroClassConfirmation))
-    {
-      getHeroClass();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroClass();
-    }
+    strcpy(hero.Class, "Cleric");
+    printf(ClericArt);
+    PRINT_CLASS("holy", hero.Class);
+    confirm_class();
   }
-
-  else if (strcmp(heroClassInput, "4") == 0 ||
-           strcmp(heroClassInput, "Cleric") == 0 ||
-           strcmp(heroClassInput, "cleric") == 0)
+  else if (IS_CLASS(input, "5", "bard", "Bard", "BARD"))
   {
-    printf("So you are a holy cleric is that correct? (y/n)\n");
-
-    char cleric_art[] =
-".........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.......\n"
-"......,::;;;;;:;;;;;;;;;;;;;;;;;;;;;;;;;;;;,......\n"
-"......:+;;+++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:......\n"
-"......:+;;+++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;......\n"
-"......:+;++++;;;;;;;;;;;;;::;;;;;;;;;;;;;;+;......\n"
-"......:++++++;;;;;;;;;;;;:,,+;;;;;;;;;;;;;+;......\n"
-"......:++++++;;;;;;;;;;;;:,:+;;;;;;;;;;;;;+;......\n"
-"......;*+++++;;;;;;:,,,,,,,,::::::;;;;;++++;......\n"
-"......;*+++*+;;;;;;;+++++;,,++++++*++++++++;......\n"
-"......;*++**+;;;;;;;+++++;,:*++++++++++++++;......\n"
-"......;*+****;;;;;;;;;;;+;,:+++++++++++++++;......\n"
-"......;******++++++++++++;,:*++++++++++++++;......\n"
-"......;?*****++++++++++++;,:*++++++++++++++;......\n"
-"......+?*****++++++++++++;,:*++++++++++++++;......\n"
-"......+?*****++++++++++++;:;*++++++++++++++;......\n"
-"......+?*****+++++++++++++*?*++++++++++++++;......\n"
-"......+?***?*+++++++++++++++++++++++++++++++......\n"
-"......+??**?*+++++++++++++++++++++++++++++++......\n"
-"......+%????*+++++++++++++++++++++++++++++*+......\n"
-"......*%????*+++++++++++++++++++++++++++++*+......\n"
-"......*%????*+++++++++++++++++++++++++++++*+......\n"
-"......*%?????******************************+......\n"
-"......*#S????******************************+......\n"
-"......+#S%?????????????????????????????????;......\n"
-".......,;+++++++++++++++++++++++++++++++++:,......\n";
-    printf("%s", cleric_art);
-    fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
-    if (IS_YES(heroClassConfirmation))
-    {
-      strcpy(hero_class, "Cleric");
-    }
-    else if (IS_NO(heroClassConfirmation))
-    {
-      getHeroClass();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroClass();
-    }
-  }
-
-  else if (strcmp(heroClassInput, "5") == 0 ||
-           strcmp(heroClassInput, "Bard") == 0 ||
-           strcmp(heroClassInput, "bard") == 0)
-  {
-    printf("So you are a talented bard is that correct? (y/n)\n");
-
-    char bard_art[] =
-    "................................,,......\n"
-    "..............................,,,;++:...\n"
-    "..............................,;;**??;..\n"
-    "............................,:++++++::,.\n"
-    "..........................,:+++++;::,,..\n"
-    "........................,:++++++:.......\n"
-    "......................,:++++++:,........\n"
-    "...........,,,::;;;;;+++++++:,..........\n"
-    ".......,:;;++*****+**??**+:,............\n"
-    "....,;++;;;;;++++++++****,..............\n"
-    "...;+++;;++*?????**++++++,..............\n"
-    "..+*+;++++*?????****++++;...............\n"
-    ".;**++++++??*????***++++:...............\n"
-    ".+*+++**++*?**??****++++,...............\n"
-    ".+*++*??*+++******+++++:................\n"
-    ".:*+++?****+++++++++++;.................\n"
-    "..;*+++******++++++++;,.................\n"
-    "...:+++++++++++++++;:...................\n"
-    "....,,;;++++++++;;:,....................\n"
-    "........,,::::,,........................\n";
-    printf("%s", bard_art);
-    fgets(heroClassConfirmation, sizeof(heroClassConfirmation), stdin);
-    // Remove the trailing newline character from the input
-    REMOVE_NEWLINE_CHARACTER(heroClassConfirmation);
-    if (IS_YES(heroClassConfirmation))
-    {
-      strcpy(hero_class, "Bard");
-    }
-    else if (IS_NO(heroClassConfirmation))
-    {
-      getHeroClass();
-    }
-    else
-    {
-      MAKE_VALID_DECISION;
-      getHeroClass();
-    }
+    strcpy(hero.Class, "Bard");
+    printf(BardArt);
+    PRINT_CLASS("gifted", hero.Class);
+    confirm_class();
   }
   else
   {
     MAKE_VALID_DECISION;
-    getHeroClass();
+    get_class();
   }
 }
-//===========================================================================================================//
-void logCreationData(FILE *logFile, const char *category, const char *value)
+// ===========================================================================================================//
+void confirm_class()
+{
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+  if (INPUT_IS_YES(confirmation))
+  {
+    printf("Very well.\n");
+    log_creation_data_to_file();
+  }
+  else if (INPUT_IS_NO(confirmation))
+  {
+    get_class();
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    confirm_class();
+  }
+}
+// ===========================================================================================================//
+void show_creation_data(FILE *logFile, const char *category, const char *value)
 {
   fprintf(logFile, "%s: %s\n", category, value);
   fflush(logFile);
 }
-//===========================================================================================================//
-int appendToLog()
+// ===========================================================================================================//
+void log_creation_data_to_file()
 {
   FILE *logFile = fopen("logs/creation.log", "a");
   if (logFile == NULL)
@@ -1291,29 +453,14 @@ int appendToLog()
     perror("Error opening file");
     exit(1);
   }
-
   fprintf(logFile, "Hero Information: \n");
   fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
-  logCreationData(logFile, "First Name", hero_first_name);
-  logCreationData(logFile, "Dynasty Name", hero_dynasty_name);
-  logCreationData(logFile, "Gender", hero_gender);
-  logCreationData(logFile, "Home of Origin", hero_homeland);
-  logCreationData(logFile, "Profession", hero_profession);
-  logCreationData(logFile, "Class", hero_class);
-  logCreationData(logFile, "+===========================+", NULL);
+  show_creation_data(logFile, "First Name", hero.FirstName);
+  show_creation_data(logFile, "Dynasty Name", hero.LastName);
+  show_creation_data(logFile, "Gender", hero.Gender);
+  show_creation_data(logFile, "Home of Origin", hero.Homeland);
+  show_creation_data(logFile, "Profession", hero.Profession);
+  show_creation_data(logFile, "Class", hero.Class);
+  show_creation_data(logFile, "+===========================+", NULL);
   fclose(logFile);
-  return 0;
-}
-//===========================================================================================================//
-// ??? possibly add race option during hero creation
-// KEEP THIS FUNCTION AT THE BOTTOM OF THE FILE
-int startHeroCreation()
-{
-  sleep(1);
-  printf("Let's begin by creating your character! \n");
-  sleep(1);
-  usleep(500000);
-  getFirstName();
-  appendToLog(); // this logs all the info from the hero creation see logs/creation.log
-  printf("Welcome to the world of Aethoria! %s %s %s! \n", hero_class, hero_first_name, hero_dynasty_name);
 }

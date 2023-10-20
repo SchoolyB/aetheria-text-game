@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <time.h>
 
-
 #ifndef UTILS_H
 #define UTILS_H
 
@@ -16,8 +15,6 @@ This file is separated into several sections. The sections are labeled and order
 4. Structs
 5. Global Variables
 */
-
-
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 /*
@@ -126,6 +123,17 @@ The Macros section holds all macros used in the program. Macros are sorted in th
     fclose(file);                                       \
   } while (0)
 //--------------------------------------------------------------------------------//
+// List items from an array
+#define PRINT_LIST_ITEMS(num, arr) \
+  do                               \
+  {                                \
+    for (int i = 0; i < num; i++)  \
+    {                              \
+      printf("%s\n", arr[i]);      \
+    }                              \
+  } while (0)
+//--------------------------------------------------------------------------------//
+
 /*
 END OF COMMON MACROS
 |
@@ -248,22 +256,20 @@ START OF FILE/LOGGING MACROS
     exit(1);                                \
   }
 
-
-
-#define LOG_MESSAGE(logFile, message) \
-  do                                  \
-  {                                   \
-    time_t currentTime;               \
-    time(&currentTime);               \
+#define LOG_MESSAGE(logFile, message)                            \
+  do                                                             \
+  {                                                              \
+    time_t currentTime;                                          \
+    time(&currentTime);                                          \
     fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message); \
-    fflush(logFile);                  \
+    fflush(logFile);                                             \
   } while (0)
 //--------------------------------------------------------------------------------//
 /*END OF FILE/LOGGING COMMANDS*/
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-//TODO may not need this function if the 'LOG_MESSAGE' macro works
+// TODO may not need this function if the 'LOG_MESSAGE' macro works
 void logMessage(FILE *logFile, const char *message)
 {
   time_t currentTime;
@@ -272,22 +278,21 @@ void logMessage(FILE *logFile, const char *message)
   fflush(logFile);
 }
 
-
-
 #define MAX_NOTE_LENGTH 300
 // Create a note in the notepad also creates notepad if it doesn't exist
-int createNote(){
-  
+int createNote()
+{
+
   CREATE_LOG_FILE(notePad, "notepad.txt");
   CREATE_LOG_FILE(logFile, "logs/runtime.log");
-    char note[MAX_NOTE_LENGTH];
-    printf("Enter a note: ");
-    if (fgets(note, sizeof(note), stdin) == NULL)
-    {
-        // Handle note error
-        perror("fgets");
-        exit(1);
-    }
+  char note[MAX_NOTE_LENGTH];
+  printf("Enter a note: ");
+  if (fgets(note, sizeof(note), stdin) == NULL)
+  {
+    // Handle note error
+    perror("fgets");
+    exit(1);
+  }
   REMOVE_NEWLINE_CHAR(note);
   time_t entryTimeAndDate;
   time(&entryTimeAndDate);
@@ -300,36 +305,37 @@ int createNote(){
   logMessage(logFile, "Note Added Successfully!");
   fclose(logFile);
   return 0;
-  
 }
 // Read all notes from the notepad
-int readNotes(){
+int readNotes()
+{
   FILE *notePad = fopen("notepad.txt", "r");
-    if (notePad == NULL)
-    {
-        perror("Error opening the log file");
-        exit(1);
-    }
-    char note[MAX_NOTE_LENGTH];
-    while (fgets(note, sizeof(note), notePad) != NULL)
-    {
-        printf("%s", note);
-    }
-    fclose(notePad);
-    return 0;
+  if (notePad == NULL)
+  {
+    perror("Error opening the log file");
+    exit(1);
+  }
+  char note[MAX_NOTE_LENGTH];
+  while (fgets(note, sizeof(note), notePad) != NULL)
+  {
+    printf("%s", note);
+  }
+  fclose(notePad);
+  return 0;
 }
 
 // Clears all notes from the notepad
-int clearNotes(){
-  FILE *notePad = fopen("notepad.txt", "w"); 
-    if (notePad == NULL)
-    {
-        perror("Error opening the log file");
-        exit(1);
-    }
-    fclose(notePad);
-    printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
-    return 0;
+int clearNotes()
+{
+  FILE *notePad = fopen("notepad.txt", "w");
+  if (notePad == NULL)
+  {
+    perror("Error opening the log file");
+    exit(1);
+  }
+  fclose(notePad);
+  printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
+  return 0;
 }
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -353,26 +359,24 @@ int readNotes();
 int clearNotes();
 #endif
 
-
-
 // HERO CREATION PROTOTYPES//
 #ifndef HERO_CREATION_H
 #define HERO_CREATION_H
-void startHeroCreation();
-void getFirstName();
-void dynastyNameCheck();
-void getDynastyName();
-void confirmDynastyName();
-void heroGenderCheck();
-void getHeroGender();
-void confirmHeroGender();
-void getHeroHomeland();
-void getHeroHomelandWithoutDescriptions();
-void seeHomelandDescriptions();
-void getHeroProfession();
-void getHeroClass();
-void setWarriorAbilities();
-void logCreationData();
+void get_first_name();
+void ask_for_dynasty_name();
+void get_dynasty_name();
+void confirm_dynasty_name();
+void ask_for_gender();
+void get_gender();
+void confirm_no_gender();
+void confirm_gender();
+void get_homeland();
+void confirm_homeland();
+void get_profession();
+void confirm_profession();
+void get_class();
+void confirm_class();
+void log_hero_creation();
 #endif
 
 // SKILL POINT PROTOTYPES//
@@ -397,14 +401,6 @@ void ch0_go_to_main_deck();
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 /*This section holds all structs used in the program.*/
-
-// INPUT AND INPUT CONFIRMATION STRUCT
-typedef struct
-{
-  char initial[20];
-  char confirmation[20];
-} Input;
-extern Input input;
 
 // HERO STRUCT
 typedef struct
@@ -469,8 +465,125 @@ extern char current_enemy_ability1[20];
 extern char current_enemy_ability2[20];
 
 // Origins, classes, and  TODO professions
-extern char possibleOrigins[5][10];
+extern char possibleHomelands[5][10];
 extern char possibleClasses[5][10];
+extern char possibleProfessions[6][15];
+
+extern char WarriorArt[] =
+    "..............................,:::::,::.\n"
+    "............................,::,,,,,:;;.\n"
+    "..........................,::,,,,,:;;;;.\n"
+    ".........................,:,,,,,:;;;;;;.\n"
+    ".......................,::,,,,:;;;;;+;;.\n"
+    ".....................,::,,,,:;;;;;+;:,..\n"
+    "...................,::,,,,:;;+;;;;:,....\n"
+    "..................,:,,,,:;;+;;;;:.......\n"
+    "................,::,,,:;;+;+;:,.........\n"
+    ".......,,,....,::,,,:;;+;;;:,...........\n"
+    "......,:,::,,::,,,:;;++;;:,.............\n"
+    "......,::,,:;:,,:;;++;:,................\n"
+    "........,;:,,::;;;;;:,..................\n"
+    ".......:;;:::,,:;;:.....................\n"
+    ".,,,,:;;:::::;:,,::,....................\n"
+    ".;,,:;;:::::;;:::,,:,...................\n"
+    ".,::,,::::;;:...,:::,...................\n"
+    "...,::,,:;:.............................\n"
+    ".....,::,,:.............................\n"
+    ".......,,,,.............................\n";
+
+extern char MageArt[] =
+    ".......,:::::,..........................\n"
+    ".....,:;;;;;;;:,........................\n"
+    "...,:;;;;;;;;;;;:,......................\n"
+    ".,:;;;;;:,.,,;;;;;;,....................\n"
+    ",;;;;;:,:;:,,,,;;;;;;,..................\n"
+    ",;;;;;,.:**+++,.,;;;;;:.................\n"
+    ".:;;;;;,,;****;..,;;;;;,................\n"
+    "..,:;;;;:,::;;;,:;;;;;:.................\n"
+    "....,:::,......:;;;;:...................\n"
+    "...............,;;;;;:;;,...............\n"
+    "................,:;;*%%%%;..............\n"
+    "..................:%%%%%?;:;,...........\n"
+    "..................,+%%?++?%%%+..........\n"
+    "....................,,,?%%%%%+,.........\n"
+    "......................,+%%?*;;;:,.......\n"
+    "........................,:,:;;;;;:,.....\n"
+    "............................,:;;;;;:,...\n"
+    "..............................,:;;;;;:,.\n"
+    "................................,:;;;;;,\n"
+    "..................................,::::,\n";
+
+extern char RogueArt[] =
+    ",;:.....................................\n"
+    ",**,....................................\n"
+    ".:?*,...................................\n"
+    "..+?*,..................................\n"
+    "..,??*:.................................\n"
+    "...;???;................................\n"
+    "...,+???+,..............................\n"
+    "....,+???*+;;::,........................\n"
+    ".....,+*???????+,,,.....................\n"
+    "......,+**????????*,,,:,................\n"
+    ".......,;***????????????*;..............\n"
+    ".........,;+***???????????+;:,..........\n"
+    "...........,:;+++****;;??%%%%*;,........\n"
+    "................,,,,,..:*???++??,.......\n"
+    "..........................,:?%%?;.......\n"
+    "............................+?+**;,.....\n"
+    "............................,;?*+*+:,...\n"
+    ".............................,:**+*??*:.\n"
+    "...............................,:*%%%S?,\n"
+    ".................................,:;++:.\n";
+
+extern char ClericArt[] =
+    "......,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,....\n"
+    "...,::;;;;;:;;;;;;;;;;;;;;;;;;;;;;;;;;;;,...\n"
+    "...:+;;+++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:...\n"
+    "...:+;;+++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;...\n"
+    "...:+;++++;;;;;;;;;;;;;::;;;;;;;;;;;;;;+;...\n"
+    "...:++++++;;;;;;;;;;;;:,,+;;;;;;;;;;;;;+;...\n"
+    "...:++++++;;;;;;;;;;;;:,:+;;;;;;;;;;;;;+;...\n"
+    "...;*+++++;;;;;;:,,,,,,,,::::::;;;;;++++;...\n"
+    "...;*+++*+;;;;;;;+++++;,,++++++*++++++++;...\n"
+    "...;*++**+;;;;;;;+++++;,:*++++++++++++++;...\n"
+    "...;*+****;;;;;;;;;;;+;,:+++++++++++++++;...\n"
+    "...;******++++++++++++;,:*++++++++++++++;...\n"
+    "...;?*****++++++++++++;,:*++++++++++++++;...\n"
+    "...+?*****++++++++++++;,:*++++++++++++++;...\n"
+    "...+?*****++++++++++++;:;*++++++++++++++;...\n"
+    "...+?*****+++++++++++++*?*++++++++++++++;...\n"
+    "...+?***?*+++++++++++++++++++++++++++++++...\n"
+    "...+??**?*+++++++++++++++++++++++++++++++...\n"
+    "...+%????*+++++++++++++++++++++++++++++*+...\n"
+    "...*%????*+++++++++++++++++++++++++++++*+...\n"
+    "...*%????*+++++++++++++++++++++++++++++*+...\n"
+    "...*%?????******************************+...\n"
+    "...*#S????******************************+...\n"
+    "...+#S%?????????????????????????????????;...\n"
+    "....,;+++++++++++++++++++++++++++++++++:,...\n";
+
+extern char BardArt[] =
+    "................................,,......\n"
+    "..............................,,,;++:...\n"
+    "..............................,;;**??;..\n"
+    "............................,:++++++::,.\n"
+    "..........................,:+++++;::,,..\n"
+    "........................,:++++++:.......\n"
+    "......................,:++++++:,........\n"
+    "...........,,,::;;;;;+++++++:,..........\n"
+    ".......,:;;++*****+**??**+:,............\n"
+    "....,;++;;;;;++++++++****,..............\n"
+    "...;+++;;++*?????**++++++,..............\n"
+    "..+*+;++++*?????****++++;...............\n"
+    ".;**++++++??*????***++++:...............\n"
+    ".+*+++**++*?**??****++++,...............\n"
+    ".+*++*??*+++******+++++:................\n"
+    ".:*+++?****+++++++++++;.................\n"
+    "..;*+++******++++++++;,.................\n"
+    "...:+++++++++++++++;:...................\n"
+    "....,,;;++++++++;;:,....................\n"
+    "........,,::::,,........................\n";
+
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 #endif
