@@ -162,7 +162,7 @@ void get_gender()
     printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
     confirm_gender();
   }
-  else if (IS_GENDER(input, "w", "W", "woman", "Woman", "female", "Female"))
+  else if (IS_GENDER(input, "f", "F", "woman", "Woman", "female", "Female"))
   {
     strcpy(hero.Gender, "Female");
     printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
