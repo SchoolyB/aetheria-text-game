@@ -350,55 +350,85 @@ void tester()
   MAKE_STAT_COLOR(32, "Luck(lck)", hero.LuckAttribute.CurrentPoints);
   // TODO MAKE A TABLE SHOWING HOW EACH ATTRIBUTE AFFECTS EACH STAT
 
-#define ALLOCATED_TO(number, string) printf("You have allocated %d to %s.\n", number, string);
-#define CHANGE_TO_STATS(base, new, attribute) printf("The previous value of %s was %d The current value is: %d\n", attribute, base, new);
-#define CALCULATE_NEW_DMG(new, base, points, number) new = base += points *number;
+#define CALCULATE_NEW_DMG(new_var, base_dmg, attribute_points) new_var = base_dmg += attribute_points * 2;
+#define CALCULATE_NEW_HEALTH(new_var, base_health, attribute_points) new_var = base_health += attribute_points * 5;
+#define PRINT_NEW_STATS_AND_DMG                                                                                \
+  do                                                                                                           \
+  {                                                                                                            \
+    printf("%-15s | %-15s |\n", "Health", "Mana");                                                             \
+    printf("%-15d | %-15d |\n", hero.Health, hero.Mana);                                                       \
+    printf("----------------------------------------------------------------------------\n");                  \
+    printf("%-15s | %-15s | %-15s\n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);             \
+    printf("%-15d | %-15d | %-15d\n", hero.Ability1.Damage, hero.Ability2.Damage, hero.Ability3.Damage);       \
+    printf("----------------------------------------------------------------------------\n");                  \
+    printf("%-15s | %-15s | %-15s\n", "Ability 1 Mana Cost", "Ability 2 Mana Cost", "Ability 3 Mana Cost");    \
+    printf("%-15d | %-15d | %-15d\n", hero.Ability1.ManaCost, hero.Ability2.ManaCost, hero.Ability3.ManaCost); \
+  } while (0)
 
-#define PRINT_NEW_STATS_AND_DMG() (                                                                             \
-    printf("%-15s | %-15s | \n", "Health", "Mana");                                                             \
-    printf("%-15s | %-15s | \n", hero.Health, hero.Mana);                                                       \
-    printf("----------------------------------------------------------------------------\n");                   \
-    printf("----------------------------------------------------------------------------\n");                   \
-    printf("%-15s | %-15s | %-15s \n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);             \
-    printf("%-15d | %-15d | %-15d \n", hero.Ability1.Damage, hero.Ability2.Damage, hero.Ability3.Damage);       \
-    printf("----------------------------------------------------------------------------\n");                   \
-    printf("%-15s | %-15s | %-15s \n", "Ability 1 Mana Cost", "Ability 2 Mana Cost", "Ability 3 Mana Cost");    \
-    printf("%-15d | %-15d | %-15d \n", hero.Ability1.ManaCost, hero.Ability2.ManaCost, hero.Ability3.ManaCost); \
-    printf("----------------------------------------------------------------------------\n"));
+#define DAMAGE_SWITCH_CASE(param, new_var, base_dmg) \
+  char new_var;                                      \
+  switch (param)                                     \
+  {                                                  \
+  case 1:                                            \
+    CALCULATE_NEW_DMG(new_var, base_dmg, 1);         \
+    break;                                           \
+  case 2:                                            \
+    CALCULATE_NEW_DMG(new_var, base_dmg, 2)          \
+    break;                                           \
+  case 3:                                            \
+    CALCULATE_NEW_DMG(new_var, base_dmg, 3)          \
+    break;                                           \
+  case 4:                                            \
+    CALCULATE_NEW_DMG(new_var, base_dmg, 4)          \
+    break;                                           \
+  default:                                           \
+    break;                                           \
+  };
 
-  // TODO need to find a way to clean these switch cases up. as it stands this is only for 1 ability in one class. would need to do 14 more like it...
-  switch (hero.StrengthAttribute.CurrentPoints)
-  {
-  case 1:
-    char with_1_attribute_point;
-    ALLOCATED_TO(1, "Strength");
-    CALCULATE_NEW_DMG(with_1_attribute_point, hero.Ability1.Damage, hero.StrengthAttribute.CurrentPoints, 2);
-    printf("With your current attribute point allocation these are your new stats:\n");
+#define HEALTH_SWITCH_CASE(param, new_var, base_health) \
+  char new_var;                                         \
+  switch (param)                                        \
+  {                                                     \
+  case 1:                                               \
+    CALCULATE_NEW_HEALTH(new_var, base_health, 1);      \
+    break;                                              \
+  case 2:                                               \
+    CALCULATE_NEW_HEALTH(new_var, base_health, 2)       \
+    break;                                              \
+  case 3:                                               \
+    CALCULATE_NEW_HEALTH(new_var, base_health, 3)       \
+    break;                                              \
+  case 4:                                               \
+    CALCULATE_NEW_HEALTH(new_var, base_health, 4)       \
+    break;                                              \
+  default:                                              \
+    break;                                              \
+  };
+  // strength should increase health and physical damage
+  // intelligence should increase mana and magic damage
+  // dexterity should slightly increase health and physical damage
+  // luck should slightly increase mana and magic damage
 
-    break;
-  case 2:
-    char with_2_attribute_points;
-    ALLOCATED_TO(2, "Strength");
-    CALCULATE_NEW_DMG(with_2_attribute_points, hero.Ability1.Damage, hero.StrengthAttribute.CurrentPoints, 2);
-    printf("With your current attribute point allocation these are your new stats:\n");
+  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, slash_new_dmg, hero.Ability1.Damage);
+  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, charge_new_dmg, hero.Ability2.Damage);
+  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, whirlwind_new_dmg, hero.Ability3.Damage);
 
-    break;
-  case 3:
-    char with_3_attribute_points;
-    ALLOCATED_TO(3, "Strength");
-    CALCULATE_NEW_DMG(with_3_attribute_points, hero.Ability1.Damage, hero.StrengthAttribute.CurrentPoints, 2);
-    printf("With your current attribute point allocation these are your new stats:\n");
+  HEALTH_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, warrior_new_health, hero.Health);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, fireball_new_dmg, hero.Ability1.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, frostbolt_new_dmg, hero.Ability2.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, arcaneblast_new_dmg, hero.Ability3.Damage);
 
-    break;
-  case 4:
-    char with_4_attribute_points;
-    ALLOCATED_TO(4, "Strength");
-    CALCULATE_NEW_DMG(with_4_attribute_points, hero.Ability1.Damage, hero.StrengthAttribute.CurrentPoints, 2);
-    printf("With your current attribute point allocation these are your new stats:\n");
+  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, backstab_new_dmg, hero.Ability1.Damage);
+  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, shadowstep_new_dmg, hero.Ability2.Damage);
+  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, shadowstrike_new_dmg, hero.Ability3.Damage);
 
-  default:
-    break;
-  }
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, smite_new_dmg, hero.Ability1.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, heal_new_dmg, hero.Ability2.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, holybolt_new_dmg, hero.Ability3.Damage);
+
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, cacophonousblast_new_dmg, hero.Ability1.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, melodicfury_new_dmg, hero.Ability2.Damage);
+  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, resonantsurge_new_dmg, hero.Ability3.Damage);
 
   // printf("Are you satisfied with your attribute point allocation?\n");
   // FGETS(confirmation);
