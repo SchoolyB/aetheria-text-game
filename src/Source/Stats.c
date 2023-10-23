@@ -12,19 +12,9 @@ int set_stats_and_abilities_and_inventory()
 {
   if (IS_OF_CLASS(hero.Class, "Warrior"))
   {
-
     // Setting Starting health and mana
     hero.Health = 75;
     hero.Mana = 20;
-
-    struct Inventory HeroInventory =
-        {
-            "Rusty Sword",
-            "Fisherman's Hat",
-            "Puffy shirt",
-            "Leather Pants",
-            "Small Rucksack",
-            5};
 
     // Declaring Abilities
     struct Ability1 Slash = {
@@ -50,22 +40,23 @@ int set_stats_and_abilities_and_inventory()
         45,         // Damage
         10          // ManaCost
     };
+
     // Setting Abilities
     hero.Ability1 = Slash;
     hero.Ability2 = Charge;
     hero.Ability3 = Whirlwind;
+
+    // Setting starting weapon,head/chest/and leg armor, bag, and gold
+    initialize_inventory(&Inventory, "Small Rucksack", "Rusty Sword", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    set_attributes();
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
+    printf("You currently have a %s equipped. The %s adds %d, because of this the damage for %s in now:%d, the damage for %s is now %d, and the damage for %s is now %d \n", Inventory.Weapon.Name, Inventory.Weapon.Name, Inventory.Weapon.AddedDamage, hero.Ability1.Name, hero.Ability1.Damage, hero.Ability2.Name, hero.Ability2.Damage, hero.Ability3.Name, hero.Ability3.Damage);
   }
   else if (IS_OF_CLASS(hero.Class, "Mage"))
   {
 
-    struct Inventory HeroInventory =
-        {
-            "Driftwood Staff",
-            "Amateur Mage Hat",
-            "Puffy shirt",
-            "Leather Pants",
-            "Small Rucksack",
-            5};
     // Setting Starting health and mana
     hero.Health = 40;
     hero.Mana = 70;
@@ -102,15 +93,6 @@ int set_stats_and_abilities_and_inventory()
   else if (IS_OF_CLASS(hero.Class, "Rogue"))
   {
 
-    struct Inventory HeroInventory =
-        {
-            "Rusty Dagger",
-            "Face Mask",
-            "Puffy shirt",
-            "Leather Pants",
-            "Small Rucksack",
-            5};
-
     // Setting Starting health and mana
     hero.Health = 30;
     hero.Mana = 40;
@@ -145,15 +127,6 @@ int set_stats_and_abilities_and_inventory()
   }
   else if (IS_OF_CLASS(hero.Class, "Cleric"))
   {
-
-    struct Inventory HeroInventory =
-        {
-            "Rusty Mace",
-            "",
-            "Puffy shirt",
-            "Leather Pants",
-            "Small Rucksack",
-            5};
 
     // Setting Starting health and mana
     hero.Health = 60;
@@ -191,14 +164,6 @@ int set_stats_and_abilities_and_inventory()
   else if (IS_OF_CLASS(hero.Class, "Bard"))
   {
 
-    struct Inventory HeroInventory =
-        {
-            "Battered Lute",
-            "Farmers Hat",
-            "Puffy shirt",
-            "Leather Pants",
-            "Small Rucksack",
-            5};
     // Setting Starting health and mana
     hero.Health = 40;
     hero.Mana = 60;
@@ -239,7 +204,7 @@ int set_stats_and_abilities_and_inventory()
     return 1;
   }
 }
-
+//=================================================================================================//
 void set_attributes()
 {
 
@@ -449,125 +414,4 @@ void set_attributes()
   calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability2.ManaCost, hero.Ability2.Name);
   calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability3.ManaCost, hero.Ability3.Name);
   // END OF ATTRIBUTE POINT ALLOCATION CONFIRMATION LOGIC
-}
-
-// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the strength attribute
-void calculate_new_hero_dmg_str(int *base_dmg, char *AbilityName)
-{
-  int new_dmg;
-  switch (hero.StrengthAttribute.CurrentPoints)
-  {
-  case 1:
-    new_dmg = *base_dmg += 1 * 2;
-    break;
-  case 2:
-    new_dmg = *base_dmg += 2 * 2;
-    break;
-  case 3:
-    new_dmg = *base_dmg += 3 * 2;
-    break;
-  case 4:
-    new_dmg = *base_dmg += 4 * 2;
-    break;
-  default:
-    break;
-  }
-  *base_dmg = new_dmg;
-}
-// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the intelligence attribute
-void calculate_new_hero_dmg_int(int *base_dmg, char *AbilityName)
-{
-  int new_dmg;
-  switch (hero.IntelligenceAttribute.CurrentPoints)
-  {
-  case 1:
-    new_dmg = *base_dmg += 1 * 3;
-    break;
-  case 2:
-    new_dmg = *base_dmg += 2 * 3;
-    break;
-  case 3:
-    new_dmg = *base_dmg += 3 * 3;
-    break;
-  case 4:
-    new_dmg = *base_dmg += 4 * 3;
-    break;
-  default:
-    break;
-  }
-  *base_dmg = new_dmg;
-}
-
-// This function calculates the amount how much health the hero has based on how many points are allocated to the strength attribute
-void calculate_new_hero_health(int *base_health)
-{
-  int new_health;
-  switch (hero.StrengthAttribute.CurrentPoints)
-  {
-  case 1:
-    new_health = *base_health += 1 * 5;
-    break;
-  case 2:
-    new_health = *base_health += 2 * 5;
-    break;
-  case 3:
-    new_health = *base_health += 3 * 5;
-    break;
-  case 4:
-    new_health = *base_health += 4 * 5;
-    break;
-  default:
-    break;
-  }
-}
-// This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
-void calculate_new_hero_mana(int *base_mana)
-{
-  int new_mana;
-
-  switch (hero.Mana)
-  {
-  case 1:
-    new_mana = *base_mana += 1 * 2;
-    break;
-  case 2:
-    new_mana = *base_mana += 2 * 2;
-    break;
-  case 3:
-    new_mana = *base_mana += 3 * 2;
-    break;
-  case 4:
-    new_mana = *base_mana += 4 * 2;
-  }
-}
-// This function calculates the amount of mana the heros abilities cost based on how many points are allocated to the intelligence attribute
-void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)
-{
-  int new_mana_cost;
-
-  switch (param)
-  {
-  case 1:
-    new_mana_cost = *base_mana_cost - 1.0 / 2.0;
-    break;
-  case 2:
-    new_mana_cost = *base_mana_cost - 2.0 / 2.0;
-    break;
-  case 3:
-    new_mana_cost = *base_mana_cost - 3.0 / 2.0;
-    break;
-  case 4:
-    new_mana_cost = *base_mana_cost - 4.0 / 2.0;
-    break;
-  default:
-    printf("Invalid param value: %d\n", param);
-    return;
-  }
-
-  if (new_mana_cost < 0)
-  {
-    new_mana_cost = 0;
-  }
-
-  *base_mana_cost = new_mana_cost;
 }

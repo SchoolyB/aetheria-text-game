@@ -381,17 +381,22 @@ void log_hero_creation();
 void log_creation_data_to_file();
 #endif
 
-// SKILL POINT PROTOTYPES//
+// INITIAL ATTRIBUTE ALLOCATION, STATS/ABILITIES ALLOCATION, AND INVENTORY INITIALIZATION PROTOTYPES//
 #ifndef SKILL_POINT_H
 #define SKILL_POINT_H
-int set_stats_and_abilities();
-void allocate_skill_points();
+int set_stats_and_abilities_and_inventory();
 void calculate_new_hero_dmg_str();
 void calculate_new_hero_dmg_int();
 void calculate_new_hero_health();
 void calculate_new_hero_mana();
 void calculate_new_mana_cost();
-
+void initialize_starting_weapon();
+void initialize_starting_head_armor();
+void initialize_starting_chest_armor();
+void initialize_starting_leg_armor();
+void initialize_starting_bag();
+void initialize_inventory();
+void calculate_dmg_with_equipped_weapon();
 #endif
 
 // CHAPTER 0 PROTOTYPES//
@@ -416,6 +421,7 @@ typedef struct
   char Homeland[10];
   char Profession[10];
   char Class[10];
+
   // Health and Mana
   int Health;
   int Mana;
@@ -465,7 +471,255 @@ typedef struct
 } Hero;
 extern Hero hero;
 
+typedef struct
+{
+  char Name[20];
+  char Description[50];
+  char Type[15];
+  /*How much weight the bag can hold not items.
+  This is a weight limit, not a slot limit.
+  The bag can have many open slots but can
+  only hold a certain amount of weight.*/
+  int CarryingCapacity;
+  char Slots[5][20];
+} Bag;
+
+typedef struct
+{
+  char Name[20];
+  char Description[50];
+  char Type[20];
+  int Weight;
+  int Value;
+} Item;
+
+typedef struct
+{
+  char Name[20];
+  char Description[100];
+  char Type[15];
+  int AddedDamage; // Rather than having their own damage, weapons will add/subtract damage to the heros abilities
+  int Weight;
+  int Value;
+} Weapon;
+
+typedef struct
+{
+  char Name[20];
+  char Description[100];
+  char Type[15];
+  /*this will add to max health....TODO possibly add an 'Armor'/Defense stat that will reduce damage taken
+  as opposed to adding to max health.*/
+  int AddedHealth;
+  int Weight;
+  int Value;
+} HeadArmor, ChestArmor, LegArmor;
+
+struct Inventory
+{
+  Weapon Weapon;
+  HeadArmor Head;
+  ChestArmor Chest;
+  LegArmor Legs;
+  // Add more slots if needed
+  Bag Backpack; // Bag is an array of struct Item, where each item has a name
+  int CurrentGold;
+} Inventory;
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+void initialize_starting_weapon(Weapon *Weapon, char *Name, char *Description, char *Type, int AddedDamage, int Weight, int Value)
+{
+  strcpy(Weapon->Name, Name);
+  strcpy(Weapon->Description, Description);
+  strcpy(Weapon->Type, Type);
+  Weapon->AddedDamage = AddedDamage;
+  Weapon->Weight = Weight;
+  Weapon->Value = Value;
+}
+
+void initialize_starting_head_armor(HeadArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
+{
+  strcpy(Armor->Name, Name);
+  strcpy(Armor->Description, Description);
+  strcpy(Armor->Type, Type);
+  Armor->AddedHealth = AddedHealth;
+  Armor->Weight = Weight;
+  Armor->Value = Value;
+}
+
+void initialize_starting_chest_armor(ChestArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
+{
+  strcpy(Armor->Name, Name);
+  strcpy(Armor->Description, Description);
+  strcpy(Armor->Type, Type);
+  Armor->AddedHealth = AddedHealth;
+  Armor->Weight = Weight;
+  Armor->Value = Value;
+}
+
+void initialize_starting_leg_armor(LegArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
+{
+  strcpy(Armor->Name, Name);
+  strcpy(Armor->Description, Description);
+  strcpy(Armor->Type, Type);
+  Armor->AddedHealth = AddedHealth;
+  Armor->Weight = Weight;
+  Armor->Value = Value;
+}
+
+void initialize_starting_bag(Bag *bag, char *name, char *description, int carryingCapacity, char *Type, char slots[][20])
+{
+  strcpy(bag->Name, name);
+  strcpy(bag->Description, description);
+  bag->CarryingCapacity = carryingCapacity;
+
+  // Copy slot names (assuming there are 5 slots)
+  for (int i = 0; i < 5; i++)
+  {
+    strcpy(bag->Slots[i], slots[i]);
+  }
+}
+void initialize_inventory(struct Inventory *HeroInventory, const char *backpackName, const char *weaponName, const char *headArmorName, const char *chestArmorName, const char *legsArmorName, int Gold)
+{
+  char slots[5][20] = {"Slot 1", "Slot 2", "Slot 3", "Slot 4", "Slot 5"};
+  initialize_starting_bag(&HeroInventory->Backpack, backpackName, "A small rucksack for your items", "Rucksack", 20, slots);
+  initialize_starting_weapon(&HeroInventory->Weapon, weaponName, "Starting weapon description", "Weapon Type", 10, 5, 30);
+  initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "Starting head armor description", "Head Armor Type", 10, 5, 30);
+  initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "Starting chest armor description", "Chest Armor Type", 10, 5, 30);
+  initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "Starting leg armor description", "Leg Armor Type", 10, 5, 30);
+  HeroInventory->CurrentGold = Gold;
+}
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+
+// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the strength attribute
+void calculate_new_hero_dmg_str(int *base_dmg, char *AbilityName)
+{
+  int new_dmg;
+  switch (hero.StrengthAttribute.CurrentPoints)
+  {
+  case 1:
+    new_dmg = *base_dmg += 1 * 2;
+    break;
+  case 2:
+    new_dmg = *base_dmg += 2 * 2;
+    break;
+  case 3:
+    new_dmg = *base_dmg += 3 * 2;
+    break;
+  case 4:
+    new_dmg = *base_dmg += 4 * 2;
+    break;
+  default:
+    break;
+  }
+  *base_dmg = new_dmg;
+}
+// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the intelligence attribute
+void calculate_new_hero_dmg_int(int *base_dmg, char *AbilityName)
+{
+  int new_dmg;
+  switch (hero.IntelligenceAttribute.CurrentPoints)
+  {
+  case 1:
+    new_dmg = *base_dmg += 1 * 3;
+    break;
+  case 2:
+    new_dmg = *base_dmg += 2 * 3;
+    break;
+  case 3:
+    new_dmg = *base_dmg += 3 * 3;
+    break;
+  case 4:
+    new_dmg = *base_dmg += 4 * 3;
+    break;
+  default:
+    break;
+  }
+  *base_dmg = new_dmg;
+}
+// This function calculates the amount how much health the hero has based on how many points are allocated to the strength attribute
+void calculate_new_hero_health(int *base_health)
+{
+  int new_health;
+  switch (hero.StrengthAttribute.CurrentPoints)
+  {
+  case 1:
+    new_health = *base_health += 1 * 5;
+    break;
+  case 2:
+    new_health = *base_health += 2 * 5;
+    break;
+  case 3:
+    new_health = *base_health += 3 * 5;
+    break;
+  case 4:
+    new_health = *base_health += 4 * 5;
+    break;
+  default:
+    break;
+  }
+}
+// This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
+void calculate_new_hero_mana(int *base_mana)
+{
+  int new_mana;
+
+  switch (hero.Mana)
+  {
+  case 1:
+    new_mana = *base_mana += 1 * 2;
+    break;
+  case 2:
+    new_mana = *base_mana += 2 * 2;
+    break;
+  case 3:
+    new_mana = *base_mana += 3 * 2;
+    break;
+  case 4:
+    new_mana = *base_mana += 4 * 2;
+  }
+}
+// This function calculates the amount of mana the heros abilities cost based on how many points are allocated to the intelligence attribute
+void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)
+{
+  int new_mana_cost;
+
+  switch (param)
+  {
+  case 1:
+    new_mana_cost = *base_mana_cost - 1.0 / 2.0;
+    break;
+  case 2:
+    new_mana_cost = *base_mana_cost - 2.0 / 2.0;
+    break;
+  case 3:
+    new_mana_cost = *base_mana_cost - 3.0 / 2.0;
+    break;
+  case 4:
+    new_mana_cost = *base_mana_cost - 4.0 / 2.0;
+    break;
+  default:
+    printf("Invalid param value: %d\n", param);
+    return;
+  }
+
+  if (new_mana_cost < 0)
+  {
+    new_mana_cost = 0;
+  }
+
+  *base_mana_cost = new_mana_cost;
+}
+
+void calculate_dmg_with_equipped_weapon(int *base_dmg, Weapon *weapon)
+{
+  int new_dmg;
+  new_dmg = *base_dmg += weapon->AddedDamage;
+  *base_dmg = new_dmg;
+}
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
@@ -480,6 +734,9 @@ extern char possibleHomelands[5][10];
 extern char possibleClasses[5][10];
 extern char possibleProfessions[6][15];
 
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 char WarriorArt[] =
     "..............................,:::::,::.\n"
     "............................,::,,,,,:;;.\n"
@@ -595,6 +852,5 @@ char BardArt[] =
     "....,,;;++++++++;;:,....................\n"
     "........,,::::,,........................\n";
 
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 #endif
