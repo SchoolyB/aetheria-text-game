@@ -8,7 +8,7 @@ Hero hero;
 //=================================================================================================//
 #define IS_OF_CLASS(classname, string) (strcmp(classname, string) == 0)
 
-int set_stats_and_abilities()
+int set_stats_and_abilities_and_inventory()
 {
   if (IS_OF_CLASS(hero.Class, "Warrior"))
   {
@@ -16,6 +16,15 @@ int set_stats_and_abilities()
     // Setting Starting health and mana
     hero.Health = 75;
     hero.Mana = 20;
+
+    struct Inventory HeroInventory =
+        {
+            "Rusty Sword",
+            "Fisherman's Hat",
+            "Puffy shirt",
+            "Leather Pants",
+            "Small Rucksack",
+            5};
 
     // Declaring Abilities
     struct Ability1 Slash = {
@@ -48,6 +57,15 @@ int set_stats_and_abilities()
   }
   else if (IS_OF_CLASS(hero.Class, "Mage"))
   {
+
+    struct Inventory HeroInventory =
+        {
+            "Driftwood Staff",
+            "Amateur Mage Hat",
+            "Puffy shirt",
+            "Leather Pants",
+            "Small Rucksack",
+            5};
     // Setting Starting health and mana
     hero.Health = 40;
     hero.Mana = 70;
@@ -83,6 +101,16 @@ int set_stats_and_abilities()
   }
   else if (IS_OF_CLASS(hero.Class, "Rogue"))
   {
+
+    struct Inventory HeroInventory =
+        {
+            "Rusty Dagger",
+            "Face Mask",
+            "Puffy shirt",
+            "Leather Pants",
+            "Small Rucksack",
+            5};
+
     // Setting Starting health and mana
     hero.Health = 30;
     hero.Mana = 40;
@@ -117,6 +145,15 @@ int set_stats_and_abilities()
   }
   else if (IS_OF_CLASS(hero.Class, "Cleric"))
   {
+
+    struct Inventory HeroInventory =
+        {
+            "Rusty Mace",
+            "",
+            "Puffy shirt",
+            "Leather Pants",
+            "Small Rucksack",
+            5};
 
     // Setting Starting health and mana
     hero.Health = 60;
@@ -153,6 +190,15 @@ int set_stats_and_abilities()
   }
   else if (IS_OF_CLASS(hero.Class, "Bard"))
   {
+
+    struct Inventory HeroInventory =
+        {
+            "Battered Lute",
+            "Farmers Hat",
+            "Puffy shirt",
+            "Leather Pants",
+            "Small Rucksack",
+            5};
     // Setting Starting health and mana
     hero.Health = 40;
     hero.Mana = 60;
