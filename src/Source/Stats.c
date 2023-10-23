@@ -6,11 +6,11 @@
 Hero hero;
 
 //=================================================================================================//
-#define IS_CLASS(classname, string) (strcmp(classname, string) == 0)
+#define IS_OF_CLASS(classname, string) (strcmp(classname, string) == 0)
 
-void set_stats_and_abilities()
+int set_stats_and_abilities()
 {
-  if (IS_CLASS(hero.Class, "Warrior"))
+  if (IS_OF_CLASS(hero.Class, "Warrior"))
   {
 
     // Setting Starting health and mana
@@ -46,7 +46,7 @@ void set_stats_and_abilities()
     hero.Ability2 = Charge;
     hero.Ability3 = Whirlwind;
   }
-  else if (IS_CLASS(hero.Class, "Mage"))
+  else if (IS_OF_CLASS(hero.Class, "Mage"))
   {
     // Setting Starting health and mana
     hero.Health = 40;
@@ -70,18 +70,18 @@ void set_stats_and_abilities()
     };
 
     struct Ability3 ArcaneBlast = {
-        "Arcane Blast",
-        "Shoot a blast of arcane energy at an enemy.",
-        "Arcane", // Type
-        30,       // Damage
-        15        // ManaCost
+        "Punch",
+        "Punch your enemy.",
+        "Physical", // Type
+        10,         // Damage
+        0           // ManaCost
     };
     // Setting Abilities
     hero.Ability1 = Fireball;
     hero.Ability2 = Frostbolt;
     hero.Ability3 = ArcaneBlast;
   }
-  else if (IS_CLASS(hero.Class, "Rogue"))
+  else if (IS_OF_CLASS(hero.Class, "Rogue"))
   {
     // Setting Starting health and mana
     hero.Health = 30;
@@ -115,7 +115,7 @@ void set_stats_and_abilities()
     hero.Ability2 = Shadowstep;
     hero.Ability3 = Shadowstrike;
   }
-  else if (IS_CLASS(hero.Class, "Cleric"))
+  else if (IS_OF_CLASS(hero.Class, "Cleric"))
   {
 
     // Setting Starting health and mana
@@ -134,9 +134,9 @@ void set_stats_and_abilities()
     struct Ability2 Heal = {
         "Heal",
         "Heal yourself.",
-        "Light", // Type
-        30,      // Damage
-        15       // ManaCost
+        "Physical", // Type
+        30,         // Damage
+        15          // ManaCost
     };
 
     struct Ability3 HolyBolt = {
@@ -151,7 +151,7 @@ void set_stats_and_abilities()
     hero.Ability2 = Heal;
     hero.Ability3 = HolyBolt;
   }
-  else if (IS_CLASS(hero.Class, "Bard"))
+  else if (IS_OF_CLASS(hero.Class, "Bard"))
   {
     // Setting Starting health and mana
     hero.Health = 40;
@@ -161,25 +161,25 @@ void set_stats_and_abilities()
     struct Ability1 CacophonousBlast = {
         "Cacophonous Blast",
         "Unleash a cacophonous blast of sound that shatters your enemies.",
-        "Single Target Burst Damage", // Type
-        100,                          // Damage
-        60                            // ManaCost
+        "Arcane", // Type
+        100,      // Damage
+        60        // ManaCost
     };
 
     struct Ability2 MelodicFury = {
         "Melodic Fury",
         "Go into a frenzy, striking your foes with a series of rapid, damaging notes.",
-        "Combo Attack", // Type
-        20,             // Damage per hit
-        50              // ManaCost
+        "Arcane", // Type
+        20,       // Damage per hit
+        50        // ManaCost
     };
 
     struct Ability3 ResonantSurge = {
         "Resonant Surge",
         "Channel the power of resonance to unleash a devastating surge of energy.",
-        "Burst Damage", // Type
-        120,            // Single target damage
-        70              // ManaCost
+        "Arcane", // Type
+        120,      // Single target damage
+        70        // ManaCost
     };
     // Setting Abilities
     hero.Ability1 = CacophonousBlast;
@@ -194,7 +194,7 @@ void set_stats_and_abilities()
   }
 }
 
-void tester()
+void set_attributes()
 {
 
   // START OF ATTRIBUTE POINT ALLOCATION LOGIC
@@ -230,7 +230,7 @@ void tester()
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
 
   printf("You have been given %d points to allocate to you attributes.\n", hero.AttributePointsPool);
-  printf("You can type either '1,2,3,4', 'str','int','dex','lck', or the full word of each attribute name that you would like to allocate points to.\n");
+  printf("You can type either '\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m'\'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m', or the full word of each attribute that you would like to allocate points to.\n");
   sleep(2);
   printf("Which attribute would you like to allocate points to?\n");
 
@@ -241,18 +241,18 @@ void tester()
 
     if (IS_ATTRIBUTE("1", "str", "strength", "Strength", input))
     {
-      printf("How many points would you like to allocate to Strength?\n");
+      printf("How many points would you like to allocate to \x1b[31mStrength\x1b[0m?");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to Strength.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to \x1b[31mStrength\x1b[0m.\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to Strength.\n");
+        printf("You cannot allocate more than 4 points to \x1b[31mStrength\x1b[0m.\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -265,18 +265,18 @@ void tester()
     }
     else if (IS_ATTRIBUTE("2", "int", "intelligence", "Intelligence", input))
     {
-      printf("How many points would you like to allocate to Intelligence?\n");
+      printf("How many points would you like to allocate to \x1b[34mIntelligence\x1b[0m?\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to Intelligence.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to \x1b[34mIntelligence\x1b[0m.\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to Intelligence.\n");
+        printf("You cannot allocate more than 4 points to \x1b[34mIntelligence\x1b[0m.\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -288,18 +288,18 @@ void tester()
     }
     else if (IS_ATTRIBUTE("3", "dex", "dexterity", "Dexterity", input))
     {
-      printf("How many points would you like to allocate to Dexterity?\n");
+      printf("How many points would you like to allocate to \x1b[35mDexterity\x1b[0m?\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to Dexterity.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to \x1b[35mDexterity\x1b[0m.\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to Dexterity.\n");
+        printf("You cannot allocate more than 4 points to \x1b[35mDexterity\x1b[0m.\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -311,18 +311,18 @@ void tester()
     }
     else if (IS_ATTRIBUTE("4", "lck", "luck", "Luck", input))
     {
-      printf("How many points would you like to allocate to Luck?\n");
+      printf("How many points would you like to allocate to \x1b[32mLuck\x1b[0m?\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to Luck.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to \x1b[32mLuck\x1b[0m.\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to Luck.\n");
+        printf("You cannot allocate more than 4 points to \x1b[32mLuck\x1b[0m.\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -348,110 +348,180 @@ void tester()
   MAKE_STAT_COLOR(34, "Intelligence(int)", hero.IntelligenceAttribute.CurrentPoints);
   MAKE_STAT_COLOR(35, "Dexterity(dex)", hero.DexterityAttribute.CurrentPoints);
   MAKE_STAT_COLOR(32, "Luck(lck)", hero.LuckAttribute.CurrentPoints);
-  // TODO MAKE A TABLE SHOWING HOW EACH ATTRIBUTE AFFECTS EACH STAT
 
-#define CALCULATE_NEW_DMG(new_var, base_dmg, attribute_points) new_var = base_dmg += attribute_points * 2;
-#define CALCULATE_NEW_HEALTH(new_var, base_health, attribute_points) new_var = base_health += attribute_points * 5;
-#define PRINT_NEW_STATS_AND_DMG                                                                                \
-  do                                                                                                           \
-  {                                                                                                            \
-    printf("%-15s | %-15s |\n", "Health", "Mana");                                                             \
-    printf("%-15d | %-15d |\n", hero.Health, hero.Mana);                                                       \
-    printf("----------------------------------------------------------------------------\n");                  \
-    printf("%-15s | %-15s | %-15s\n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);             \
-    printf("%-15d | %-15d | %-15d\n", hero.Ability1.Damage, hero.Ability2.Damage, hero.Ability3.Damage);       \
-    printf("----------------------------------------------------------------------------\n");                  \
-    printf("%-15s | %-15s | %-15s\n", "Ability 1 Mana Cost", "Ability 2 Mana Cost", "Ability 3 Mana Cost");    \
-    printf("%-15d | %-15d | %-15d\n", hero.Ability1.ManaCost, hero.Ability2.ManaCost, hero.Ability3.ManaCost); \
-  } while (0)
+// This is in the event that the user wants to allocate points to strength
+// This is in the event that the user wants to allocate points to intelligence
+#define CALCULATE_NEW_HERO_MANA(new_mana, base_mana, int_points) new_mana = base_mana += int_points * 5;
 
-#define DAMAGE_SWITCH_CASE(param, new_var, base_dmg) \
-  char new_var;                                      \
-  switch (param)                                     \
-  {                                                  \
-  case 1:                                            \
-    CALCULATE_NEW_DMG(new_var, base_dmg, 1);         \
-    break;                                           \
-  case 2:                                            \
-    CALCULATE_NEW_DMG(new_var, base_dmg, 2)          \
-    break;                                           \
-  case 3:                                            \
-    CALCULATE_NEW_DMG(new_var, base_dmg, 3)          \
-    break;                                           \
-  case 4:                                            \
-    CALCULATE_NEW_DMG(new_var, base_dmg, 4)          \
-    break;                                           \
-  default:                                           \
-    break;                                           \
-  };
+#define CALCULATE_GLOBAL_MANA_COST(new_mana_cost, base_mana_cost, int_points) new_mana_cost = base_mana_cost += int_points * 2;
 
-#define HEALTH_SWITCH_CASE(param, new_var, base_health) \
-  char new_var;                                         \
-  switch (param)                                        \
-  {                                                     \
-  case 1:                                               \
-    CALCULATE_NEW_HEALTH(new_var, base_health, 1);      \
-    break;                                              \
-  case 2:                                               \
-    CALCULATE_NEW_HEALTH(new_var, base_health, 2)       \
-    break;                                              \
-  case 3:                                               \
-    CALCULATE_NEW_HEALTH(new_var, base_health, 3)       \
-    break;                                              \
-  case 4:                                               \
-    CALCULATE_NEW_HEALTH(new_var, base_health, 4)       \
-    break;                                              \
-  default:                                              \
-    break;                                              \
-  };
-  // strength should increase health and physical damage
-  // intelligence should increase mana and magic damage
-  // dexterity should slightly increase health and physical damage
-  // luck should slightly increase mana and magic damage
+  // Handles physical damage
+  if (strcmp(hero.Ability1.Type, "Physical") == 0 ||
+      strcmp(hero.Ability2.Type, "Physical") == 0 ||
+      strcmp(hero.Ability3.Type, "Physical") == 0)
+  {
+    calculate_new_hero_dmg_str(&hero.Ability1.Damage, hero.Ability1.Name);
+    calculate_new_hero_dmg_str(&hero.Ability2.Damage, hero.Ability2.Name);
+    calculate_new_hero_dmg_str(&hero.Ability3.Damage, hero.Ability3.Name);
+  }
+  // Handles different types of magic damage
+  else if (strcmp(hero.Ability1.Type, "Fire") == 0 ||
+           strcmp(hero.Ability2.Type, "Fire") == 0 ||
+           strcmp(hero.Ability3.Type, "Fire") == 0 ||
+           strcmp(hero.Ability1.Type, "Frost") == 0 ||
+           strcmp(hero.Ability2.Type, "Frost") == 0 ||
+           strcmp(hero.Ability3.Type, "Frost") == 0 ||
+           strcmp(hero.Ability1.Type, "Arcane") == 0 ||
+           strcmp(hero.Ability2.Type, "Arcane") == 0 ||
+           strcmp(hero.Ability3.Type, "Arcane") == 0 ||
+           strcmp(hero.Ability1.Type, "Dark") == 0 ||
+           strcmp(hero.Ability2.Type, "Dark") == 0 ||
+           strcmp(hero.Ability3.Type, "Dark") == 0 ||
+           strcmp(hero.Ability1.Type, "Light") == 0 ||
+           strcmp(hero.Ability2.Type, "Light") == 0 ||
+           strcmp(hero.Ability3.Type, "Light") == 0)
+  {
+    calculate_new_hero_dmg_int(&hero.Ability1.Damage, hero.Ability1.Name);
+    calculate_new_hero_dmg_int(&hero.Ability2.Damage, hero.Ability2.Name);
+    calculate_new_hero_dmg_int(&hero.Ability3.Damage, hero.Ability3.Name);
+  }
+  else
+  {
+    perror("Invalid ability type\n");
+    return;
+  }
 
-  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, slash_new_dmg, hero.Ability1.Damage);
-  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, charge_new_dmg, hero.Ability2.Damage);
-  DAMAGE_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, whirlwind_new_dmg, hero.Ability3.Damage);
+  calculate_new_hero_health(&hero.Health);
+  calculate_new_hero_mana(&hero.Mana);
 
-  HEALTH_SWITCH_CASE(hero.StrengthAttribute.CurrentPoints, warrior_new_health, hero.Health);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, fireball_new_dmg, hero.Ability1.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, frostbolt_new_dmg, hero.Ability2.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, arcaneblast_new_dmg, hero.Ability3.Damage);
+  /*
+  TODO MAKE A TABLE SHOWING HOW EACH ATTRIBUTE AFFECTS EACH STAT
+  TODO possibly find a better way to do this instead of calling the function 3 times
+  */
 
-  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, backstab_new_dmg, hero.Ability1.Damage);
-  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, shadowstep_new_dmg, hero.Ability2.Damage);
-  DAMAGE_SWITCH_CASE(hero.DexterityAttribute.CurrentPoints, shadowstrike_new_dmg, hero.Ability3.Damage);
-
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, smite_new_dmg, hero.Ability1.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, heal_new_dmg, hero.Ability2.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, holybolt_new_dmg, hero.Ability3.Damage);
-
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, cacophonousblast_new_dmg, hero.Ability1.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, melodicfury_new_dmg, hero.Ability2.Damage);
-  DAMAGE_SWITCH_CASE(hero.IntelligenceAttribute.CurrentPoints, resonantsurge_new_dmg, hero.Ability3.Damage);
-
-  // printf("Are you satisfied with your attribute point allocation?\n");
-  // FGETS(confirmation);
-  // REMOVE_NEWLINE_CHAR(confirmation);
-
-  // if (strcmp(confirmation, "yes") == 0 || strcmp(confirmation, "Yes") == 0)
-  // {
-  //   printf("Great! Let's move on to the next step.\n");
-  // }
-  // else if (strcmp(confirmation, "no") == 0 || strcmp(confirmation, "No") == 0)
-  // {
-  //   printf("Okay, let's start over.\n");
-  //   hero.AttributePointsPool = 10;
-  //   hero.StrengthAttribute.CurrentPoints = 0;
-  //   hero.IntelligenceAttribute.CurrentPoints = 0;
-  //   hero.DexterityAttribute.CurrentPoints = 0;
-  //   hero.LuckAttribute.CurrentPoints = 0;
-  //   tester();
-  // }
-  // else
-  // {
-  //   printf("Invalid input, please try again.\n");
-  // }
-
+  calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability1.ManaCost, hero.Ability1.Name);
+  calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability2.ManaCost, hero.Ability2.Name);
+  calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability3.ManaCost, hero.Ability3.Name);
   // END OF ATTRIBUTE POINT ALLOCATION CONFIRMATION LOGIC
+}
+
+// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the strength attribute
+void calculate_new_hero_dmg_str(int *base_dmg, char *AbilityName)
+{
+  int new_dmg;
+  switch (hero.StrengthAttribute.CurrentPoints)
+  {
+  case 1:
+    new_dmg = *base_dmg += 1 * 2;
+    break;
+  case 2:
+    new_dmg = *base_dmg += 2 * 2;
+    break;
+  case 3:
+    new_dmg = *base_dmg += 3 * 2;
+    break;
+  case 4:
+    new_dmg = *base_dmg += 4 * 2;
+    break;
+  default:
+    break;
+  }
+  *base_dmg = new_dmg;
+}
+// This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the intelligence attribute
+void calculate_new_hero_dmg_int(int *base_dmg, char *AbilityName)
+{
+  int new_dmg;
+  switch (hero.IntelligenceAttribute.CurrentPoints)
+  {
+  case 1:
+    new_dmg = *base_dmg += 1 * 3;
+    break;
+  case 2:
+    new_dmg = *base_dmg += 2 * 3;
+    break;
+  case 3:
+    new_dmg = *base_dmg += 3 * 3;
+    break;
+  case 4:
+    new_dmg = *base_dmg += 4 * 3;
+    break;
+  default:
+    break;
+  }
+  *base_dmg = new_dmg;
+}
+
+// This function calculates the amount how much health the hero has based on how many points are allocated to the strength attribute
+void calculate_new_hero_health(int *base_health)
+{
+  int new_health;
+  switch (hero.StrengthAttribute.CurrentPoints)
+  {
+  case 1:
+    new_health = *base_health += 1 * 5;
+    break;
+  case 2:
+    new_health = *base_health += 2 * 5;
+    break;
+  case 3:
+    new_health = *base_health += 3 * 5;
+    break;
+  case 4:
+    new_health = *base_health += 4 * 5;
+    break;
+  default:
+    break;
+  }
+}
+// This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
+void calculate_new_hero_mana(int *base_mana)
+{
+  int new_mana;
+
+  switch (hero.Mana)
+  {
+  case 1:
+    new_mana = *base_mana += 1 * 2;
+    break;
+  case 2:
+    new_mana = *base_mana += 2 * 2;
+    break;
+  case 3:
+    new_mana = *base_mana += 3 * 2;
+    break;
+  case 4:
+    new_mana = *base_mana += 4 * 2;
+  }
+}
+// This function calculates the amount of mana the heros abilities cost based on how many points are allocated to the intelligence attribute
+void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)
+{
+  int new_mana_cost;
+
+  switch (param)
+  {
+  case 1:
+    new_mana_cost = *base_mana_cost - 1.0 / 2.0;
+    break;
+  case 2:
+    new_mana_cost = *base_mana_cost - 2.0 / 2.0;
+    break;
+  case 3:
+    new_mana_cost = *base_mana_cost - 3.0 / 2.0;
+    break;
+  case 4:
+    new_mana_cost = *base_mana_cost - 4.0 / 2.0;
+    break;
+  default:
+    printf("Invalid param value: %d\n", param);
+    return;
+  }
+
+  if (new_mana_cost < 0)
+  {
+    new_mana_cost = 0;
+  }
+
+  *base_mana_cost = new_mana_cost;
 }

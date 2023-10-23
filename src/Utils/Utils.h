@@ -157,7 +157,7 @@ START OF SKILL POINT MACROS
 #define CHOOSE_LUCK(param) (strcmp(param, "4") == 0 || strcmp(param, "luck") == 0 || \
                             strcmp(param, "lck") == 0)
 
-#define ALLOCATE_TO_SKILL(skill, amount, skill_point_pool, param)                                     \
+#define ALLOCATE_TO_SKILL(skill, amount, pool, param)                                                 \
   do                                                                                                  \
   {                                                                                                   \
     printf("How many points would you like to allocate to ");                                         \
@@ -183,7 +183,7 @@ START OF SKILL POINT MACROS
     }                                                                                                 \
     printf("?\n");                                                                                    \
     scanf("%d", &amount);                                                                             \
-    if (amount > skill_point_pool)                                                                    \
+    if (amount > pool)                                                                                \
     {                                                                                                 \
       printf("You do not have enough points to allocate that many to %s. Please try again\n", skill); \
     }                                                                                                 \
@@ -198,7 +198,7 @@ START OF SKILL POINT MACROS
     else if (amount >= 1 && amount <= 4)                                                              \
     {                                                                                                 \
       param = param + amount;                                                                         \
-      skill_point_pool = skill_point_pool - amount;                                                   \
+      pool = pool - amount;                                                                           \
       break; /* Exit the loop on successful allocation */                                             \
     }                                                                                                 \
     else                                                                                              \
@@ -337,6 +337,7 @@ int clearNotes()
   printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
   return 0;
 }
+/*END OF NOTEPAD/LOGGING FUNCTIONS
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
@@ -377,17 +378,20 @@ void confirm_profession();
 void get_class();
 void confirm_class();
 void log_hero_creation();
+void log_creation_data_to_file();
 #endif
 
 // SKILL POINT PROTOTYPES//
 #ifndef SKILL_POINT_H
 #define SKILL_POINT_H
-int setHeroStatsAndAbilities();
-int setAllHeroStats();
-int setHeroLvl();
-int initialSKillPointAllocation();
-int capAllocation();
-int refreshPoints();
+int set_stats_and_abilities();
+void allocate_skill_points();
+void calculate_new_hero_dmg_str();
+void calculate_new_hero_dmg_int();
+void calculate_new_hero_health();
+void calculate_new_hero_mana();
+void calculate_new_mana_cost();
+
 #endif
 
 // CHAPTER 0 PROTOTYPES//
@@ -415,48 +419,55 @@ typedef struct
   // Health and Mana
   int Health;
   int Mana;
-  // Skills
-  int Strength;
-  int Intelligence;
-  int Dexterity;
-  int Luck;
+  // Attributes
+  char AttributeNames[4][20];
+  int AttributePointsPool;
+  struct Attribute
+  {
+    char Name[20];
+    int CurrentPoints;
+    int MaxPoints;
+  } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
+  // Hero Level
   int Level;
   // Attack and Defense
   int Atk;
   int Def;
   // Abilities
-  char Ability1[20];
-  char Ability2[20];
-  char Ability3[20];
+
+  struct Ability1
+  {
+    char Name[20];
+    char Description[100];
+    char Type[15];
+    int Damage;
+    int ManaCost;
+  } Ability1;
+
+  struct Ability2
+  {
+    char Name[20];
+    char Description[100];
+    char Type[15];
+    int Damage;
+    int ManaCost;
+  } Ability2;
+
+  struct Ability3
+  {
+    char Name[20];
+    char Description[100];
+    char Type[15];
+    int Damage;
+    int ManaCost;
+  } Ability3;
+
 } Hero;
 extern Hero hero;
+
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-extern char hero_first_name[10];
-extern char hero_dynasty_name[10];
-extern char hero_race[10];
-extern char hero_gender[10];
-extern char hero_homeland[10];
-extern char hero_profession[15];
-extern char hero_class[10];
-// Hero Primary Stats Have a max value of 200....this might change
-extern int hero_health;
-extern int hero_mana;
-// Hero Secondary Stats Have a max value of 50
-extern int hero_strength;
-extern int hero_intelligence;
-extern int hero_dexterity;
-extern int hero_luck;
-extern int hero_level;
-// Hero Attack and Defense
-extern int hero_atk;
-extern int hero_def;
-
-// Hero abilities
-extern char hero_ability1[20];
-extern char hero_ability2[20];
-extern char hero_ability3[20];
 
 // Enemy Variables
 extern char current_enemy_name[20];
@@ -469,7 +480,7 @@ extern char possibleHomelands[5][10];
 extern char possibleClasses[5][10];
 extern char possibleProfessions[6][15];
 
-extern char WarriorArt[] =
+char WarriorArt[] =
     "..............................,:::::,::.\n"
     "............................,::,,,,,:;;.\n"
     "..........................,::,,,,,:;;;;.\n"
@@ -491,7 +502,7 @@ extern char WarriorArt[] =
     ".....,::,,:.............................\n"
     ".......,,,,.............................\n";
 
-extern char MageArt[] =
+char MageArt[] =
     ".......,:::::,..........................\n"
     ".....,:;;;;;;;:,........................\n"
     "...,:;;;;;;;;;;;:,......................\n"
@@ -513,7 +524,7 @@ extern char MageArt[] =
     "................................,:;;;;;,\n"
     "..................................,::::,\n";
 
-extern char RogueArt[] =
+char RogueArt[] =
     ",;:.....................................\n"
     ",**,....................................\n"
     ".:?*,...................................\n"
@@ -535,7 +546,7 @@ extern char RogueArt[] =
     "...............................,:*%%%S?,\n"
     ".................................,:;++:.\n";
 
-extern char ClericArt[] =
+char ClericArt[] =
     "......,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,....\n"
     "...,::;;;;;:;;;;;;;;;;;;;;;;;;;;;;;;;;;;,...\n"
     "...:+;;+++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:...\n"
@@ -562,7 +573,7 @@ extern char ClericArt[] =
     "...+#S%?????????????????????????????????;...\n"
     "....,;+++++++++++++++++++++++++++++++++:,...\n";
 
-extern char BardArt[] =
+char BardArt[] =
     "................................,,......\n"
     "..............................,,,;++:...\n"
     "..............................,;;**??;..\n"

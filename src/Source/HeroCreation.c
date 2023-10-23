@@ -16,12 +16,12 @@ void get_first_name()
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
   strcpy(hero.FirstName, input);
-  printf("Your first name is %s is that correct? (y/n)\n", hero.FirstName);
+  printf("Your first name is \x1b[1;4m%s\x1b[0m is that correct? (y/n)\n", hero.FirstName);
   FGETS(confirmation);
   REMOVE_NEWLINE_CHAR(confirmation);
   if (INPUT_IS_YES(confirmation))
   {
-    printf("You have chosen %s as your first name. This can be changed later.\n", hero.FirstName);
+    printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
     ask_for_dynasty_name();
   }
   else if (INPUT_IS_NO(confirmation))
@@ -37,7 +37,7 @@ void get_first_name()
 // ===========================================================================================================//
 void ask_for_dynasty_name()
 {
-  printf("Do you have a dynasty name? (y/n)");
+  printf("Do you have a dynasty name? (y/n)\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
   if (INPUT_IS_YES(input))
@@ -76,7 +76,7 @@ void get_dynasty_name()
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
   strcpy(hero.LastName, input);
-  printf("Ah so you are a member of the %s dynasty.\n", hero.LastName);
+  printf("Ah so you are a member of the \x1b[1;4m%s\x1b[0m dynasty.\n", hero.LastName);
   usleep(40000);
   printf("Is that correct? (y/n)\n");
   confirm_dynasty_name();
@@ -92,7 +92,7 @@ void confirm_dynasty_name()
   }
   else if (INPUT_IS_NO(input))
   {
-    printf("Interesting....");
+    printf("Interesting....)\n");
     usleep(60000);
     get_dynasty_name();
   }
@@ -159,19 +159,19 @@ void get_gender()
   if (IS_GENDER(input, "m", "M", "man", "Man", "male", "male"))
   {
     strcpy(hero.Gender, "Male");
-    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    printf("So your gender is \x1b[1;4m%s\x1b[0m is that correct? (y/n) \n", hero.Gender);
     confirm_gender();
   }
   else if (IS_GENDER(input, "f", "F", "woman", "Woman", "female", "Female"))
   {
     strcpy(hero.Gender, "Female");
-    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    printf("So your gender is \x1b[1;4m%s\x1b[0m is that correct? (y/n) \n", hero.Gender);
     confirm_gender();
   }
   else
   {
     strcpy(hero.Gender, input);
-    printf("So your gender is %s is that correct? (y/n) \n", hero.Gender);
+    printf("So your gender is \x1b[1;4m%s\x1b[0m is that correct? (y/n) \n", hero.Gender);
     confirm_gender();
   }
 }
@@ -219,36 +219,36 @@ void get_homeland()
   if (IS_NATION(input, "1", "empyrea", "Empyrea", "EMPYREA"))
   {
     strcpy(hero.Homeland, "Empyrea");
-    READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
-    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    // READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
+    printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from?(y/n)\n", hero.Homeland);
     confirm_homeland();
   }
   else if (IS_NATION(input, "2", "wesward", "Wesward", "WESWARD"))
   {
     strcpy(hero.Homeland, "Wesward");
-    READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
-    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    // READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
+    printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from? (y/n)\n", hero.Homeland);
     confirm_homeland();
   }
   else if (IS_NATION(input, "3", "ashvadan", "Ashvadan", "ASHVADAN"))
   {
     strcpy(hero.Homeland, "Ashvadan");
-    READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
-    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    // READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
+    printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from?(y/n)\n", hero.Homeland);
     confirm_homeland();
   }
   else if (IS_NATION(input, "4", "magdalar", "Magdlar", "MAGDALAR"))
   {
     strcpy(hero.Homeland, "Magdalar");
-    READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
-    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    // READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
+    printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from? (y/n)\n", hero.Homeland);
     confirm_homeland();
   }
   else if (IS_NATION(input, "5", "nadafia", "Nadafia", "NADAFIA"))
   {
     strcpy(hero.Homeland, "Nadafia");
-    READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
-    printf("Are the lands of %s where you hail from?\n", hero.Homeland);
+    // READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
+    printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from? (y/n)\n", hero.Homeland);
     confirm_homeland();
   }
   else
@@ -273,7 +273,7 @@ void confirm_homeland()
   else
   {
     MAKE_VALID_DECISION;
-    printf("You hail from the lands of %s, is that correct? (y/n)\n", hero.Homeland);
+    printf("You hail from the lands of \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Homeland);
     confirm_homeland();
   }
 }
@@ -301,37 +301,37 @@ void get_profession()
   if (IS_PROFESSION(input, "1", "merchant", "Merchant", "MERCHANT"))
   {
     strcpy(hero.Profession, "Merchant");
-    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    printf("Ah so you have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
     confirm_profession();
   }
   else if (IS_PROFESSION(input, "2", "hunter", "Hunter", "HUNTER"))
   {
     strcpy(hero.Profession, "Hunter");
-    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    printf("Ah so you have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
     confirm_profession();
   }
   else if (IS_PROFESSION(input, "3", "soldier", "Soldier", "SOLDIER"))
   {
     strcpy(hero.Profession, "Soldier");
-    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    printf("Ah so you have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
     confirm_profession();
   }
   else if (IS_PROFESSION(input, "4", "thief", "Thief", "THIEF"))
   {
     strcpy(hero.Profession, "Thief");
-    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    printf("Ah so you have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
     confirm_profession();
   }
   else if (IS_PROFESSION(input, "5", "scholar", "Scholar", "SCHOLAR"))
   {
     strcpy(hero.Profession, "Scholar");
-    printf("Ah so you have a background as a %s, is that correct? (y/n)\n", hero.Profession);
+    printf("Ah so you have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
     confirm_profession();
   }
   else if (IS_PROFESSION(input, "6", "none", "None", "NONE"))
   {
     strcpy(hero.Profession, "None");
-    printf("Ah so you do not have a profession is that correct? (y/n)\n");
+    printf("Ah so you \x1b[1;4mdo not\x1b[0m have a profession is that correct? (y/n)\n");
     confirm_profession();
   }
 }
@@ -361,7 +361,7 @@ void confirm_profession()
     strcmp(input, pascal) == 0 ||                      \
     strcmp(input, caps) == 0)
 
-#define PRINT_CLASS(adjective, class) printf("Ah so you are a %s %s is that correct?(y/n) \n", adjective, class);
+#define PRINT_CLASS(adjective, class) printf("Ah so you are a \x1b[1;4m%s %s\x1b[0m is that correct?(y/n) \n", adjective, class);
 
 void get_class()
 {
