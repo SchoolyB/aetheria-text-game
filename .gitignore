@@ -1,4 +1,10 @@
-a.out
+*.out
+*.o
 *.log
 .vscode
 logs
+.clang-format
+json
+.json
+notepad.txt 
+
