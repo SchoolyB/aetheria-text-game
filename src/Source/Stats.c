@@ -91,6 +91,13 @@ int set_stats_and_abilities_and_inventory()
     hero.Ability1 = Fireball;
     hero.Ability2 = Frostbolt;
     hero.Ability3 = ArcaneBlast;
+
+    // Setting starting weapon,head/chest/and leg armor, bag, and gold
+    initialize_inventory(&Inventory, "Small Rucksack", "Driftwood staff", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    // set_attributes();
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
   }
   else if (IS_OF_CLASS(hero.Class, "Rogue"))
   {
@@ -126,6 +133,13 @@ int set_stats_and_abilities_and_inventory()
     hero.Ability1 = Backstab;
     hero.Ability2 = Shadowstep;
     hero.Ability3 = Shadowstrike;
+
+    // Setting starting weapon,head/chest/and leg armor, bag, and gold
+    initialize_inventory(&Inventory, "Small Rucksack", "Rusty Dagger", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    // set_attributes();
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
   }
   else if (IS_OF_CLASS(hero.Class, "Cleric"))
   {
@@ -162,6 +176,13 @@ int set_stats_and_abilities_and_inventory()
     hero.Ability1 = Smite;
     hero.Ability2 = Heal;
     hero.Ability3 = HolyBolt;
+
+    // Setting starting weapon,head/chest/and leg armor, bag, and gold
+    initialize_inventory(&Inventory, "Small Rucksack", "Rusty Mace", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    // set_attributes();
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
   }
   else if (IS_OF_CLASS(hero.Class, "Bard"))
   {
@@ -198,6 +219,12 @@ int set_stats_and_abilities_and_inventory()
     hero.Ability1 = CacophonousBlast;
     hero.Ability2 = MelodicFury;
     hero.Ability3 = ResonantSurge;
+    // Setting starting weapon,head/chest/and leg armor, bag, and gold
+    initialize_inventory(&Inventory, "Small Rucksack", "Driftwood Lute", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    // set_attributes();
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
   }
 
   else
@@ -485,11 +512,29 @@ void confirm_hero_creation_and_stats()
     confirm_hero_creation_and_stats();
   }
 
-  if (hero.FirstName[0] || hero.Homeland[0] || hero.Class[0] == '\0')
+  if (hero.FirstName[0] == '\0')
   {
-    printf("It seems you have not given a value to one or more of the following required categories\n");
-    printf("First Name, Home of Origin, and Class\n");
-    printf("Please enter something in each category before you continue.\n");
+
+    printf("It seems you have not given a value to the following required category\n");
+    printf("First Name\n");
+    printf("Please enter something this each category before you continue.\n");
+    change_specific_creation_item();
+  }
+
+  if (hero.Homeland[0] == '\0')
+  {
+    printf("It seems you have not given a value to the following required category\n");
+    printf("Home of Origin\n");
+    printf("Please enter something in this category before you continue.\n");
+    change_specific_creation_item();
+  }
+
+  if (hero.Class[0] == '\0')
+  {
+
+    printf("It seems you have not given a value to the following required category\n");
+    printf("Class\n");
+    printf("Please enter something this each category before you continue.\n");
     change_specific_creation_item();
   }
 
@@ -847,14 +892,29 @@ void change_specific_creation_item()
     change_specific_creation_item();
   }
 
-  if (hero.FirstName[0] || hero.Homeland[0] || hero.Class[0] == '\0')
+  if (hero.Homeland[0] == '\0')
   {
-    printf("It seems you have not given a value to one or more of the following required categories\n");
-    printf("First Name, Home of Origin, and Class\n");
-    printf("Please enter something in each category before you continue.\n");
+    printf("It seems you have not given a value to the following required category\n");
+    printf("Home of Origin\n");
+    printf("Please enter something in this category before you continue.\n");
     change_specific_creation_item();
   }
 
+  if (hero.Class[0] == '\0')
+  {
+
+    printf("It seems you have not given a value to the following required category\n");
+    printf("Class\n");
+    printf("Please enter something this each category before you continue.\n");
+    change_specific_creation_item();
+  }
+
+  if (hero.AttributePointsPool > 0)
+  {
+    PRINT_REMAINING_ATTRIBUTE_POINTS(hero.AttributePointsPool);
+    printf("Please allocate all remaining attribute points before you continue.");
+    change_specific_creation_item();
+  }
   if (hero.AttributePointsPool > 0)
   {
     PRINT_REMAINING_ATTRIBUTE_POINTS(hero.AttributePointsPool);
