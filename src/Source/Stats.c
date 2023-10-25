@@ -12,6 +12,7 @@ int set_stats_and_abilities_and_inventory()
 {
   if (IS_OF_CLASS(hero.Class, "Warrior"))
   {
+
     // Setting Starting health and mana
     hero.Health = 75;
     hero.Mana = 20;
@@ -48,10 +49,11 @@ int set_stats_and_abilities_and_inventory()
 
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Rusty Sword", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    set_attributes();
+    // set_attributes();
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
+
     printf("You currently have a %s equipped. The %s adds %d, because of this the damage for %s in now:%d, the damage for %s is now %d, and the damage for %s is now %d \n", Inventory.Weapon.Name, Inventory.Weapon.Name, Inventory.Weapon.AddedDamage, hero.Ability1.Name, hero.Ability1.Damage, hero.Ability2.Name, hero.Ability2.Damage, hero.Ability3.Name, hero.Ability3.Damage);
   }
   else if (IS_OF_CLASS(hero.Class, "Mage"))
@@ -201,6 +203,7 @@ int set_stats_and_abilities_and_inventory()
   else
   {
     perror("Invalid class name you should'nt have made it this far, that means you broke something..\n");
+
     return 1;
   }
 }
@@ -399,7 +402,7 @@ void set_attributes()
   else
   {
     perror("Invalid ability type\n");
-    return;
+    return 1;
   }
 
   calculate_new_hero_health(&hero.Health);
@@ -414,4 +417,448 @@ void set_attributes()
   calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability2.ManaCost, hero.Ability2.Name);
   calculate_new_mana_cost(hero.IntelligenceAttribute.CurrentPoints, &hero.Ability3.ManaCost, hero.Ability3.Name);
   // END OF ATTRIBUTE POINT ALLOCATION CONFIRMATION LOGIC
+}
+//=================================================================================================//
+
+void confirm_hero_creation_and_stats()
+{
+  char confirmation[10];
+  printf("Well then it seems like you are ready to begin your adventure!\n");
+  printf("But before you go lets go over everything one more time.\n");
+
+  printf("Take a look at this table...\n");
+
+  printf("============================================================================\n");
+  printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Nation of Origin");
+  printf("%-15s | %-15s | %-15s | %-15s \n", hero.FirstName, hero.LastName, hero.Gender, hero.Homeland);
+  printf("----------------------------------------------------------------------------\n");
+  printf("%-15s | %-15s \n", "Profession", "Class");
+  // TODO create hero level
+  printf("%-15s | %-15s \n", hero.Profession, hero.Class);
+  printf("----------------------------------------------------------------------------\n");
+  printf("%-15s | %-15s | %-15s | %-15s \n", "Strength Points", "Intelligence Points", "Dexterity Points", "Luck Points");
+  printf("%-15d | %-15d | %-15d | %-15d \n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
+  printf("----------------------------------------------------------------------------\n");
+  printf("%-15s | %-15s \n", "Health", "Mana");
+  printf("%-15d | %-15d \n", hero.Health, hero.Mana);
+  printf("----------------------------------------------------------------------------\n");
+  printf("%-15s | %-15s | %-15s \n", "Ability 1", "Ability 2", "Ability 3");
+  printf("%-15s | %-15s | %-15s \n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);
+  printf("============================================================================\n");
+
+  printf("Is everything correct? (y/n)\n");
+  FGETS(confirmation);
+  REMOVE_NEWLINE_CHAR(confirmation);
+
+  if (INPUT_IS_YES(confirmation))
+  {
+    printf("Great! It seems you are ready to begin your adventure!\n I wish you the best of luck in your endeavors\n");
+  }
+  else if (INPUT_IS_NO(confirmation))
+  {
+    char input[10];
+    printf("Hmmm interesting...\n Would you like to start at the beginning or would you like to change something in particular?\n");
+    printf("You can type 'redo' or '1' to start at the creation process again. You can also type 'change' or '2' to change something in particular.\n");
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+
+#define STR_CMP_TWO(input, string1, string2) (strcmp(input, string1) == 0 || strcmp(input, string2) == 0)
+
+    if (STR_CMP_TWO(input, "1", "redo"))
+    {
+      printf("Very well then, lets start from the beginning.\n");
+      get_first_name();
+    }
+    else if (STR_CMP_TWO(input, "2", "change"))
+    {
+      change_specific_creation_item();
+    }
+    else
+    {
+      printf("Invalid input, please try again.\n");
+      confirm_hero_creation_and_stats();
+    }
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    confirm_hero_creation_and_stats();
+  }
+
+  if (hero.FirstName[0] || hero.Homeland[0] || hero.Class[0] == '\0')
+  {
+    printf("It seems you have not given a value to one or more of the following required categories\n");
+    printf("First Name, Home of Origin, and Class\n");
+    printf("Please enter something in each category before you continue.\n");
+    change_specific_creation_item();
+  }
+
+  if (hero.AttributePointsPool > 0)
+  {
+    PRINT_REMAINING_ATTRIBUTE_POINTS(hero.AttributePointsPool);
+    printf("Please allocate all remaining attribute points before you continue.");
+    change_specific_creation_item();
+  }
+}
+//=================================================================================================//
+void change_specific_creation_item()
+{
+  printf("What would you like to change?\n Enter the number of the item you would like to change.\n");
+  printf("Enter the number 8 to confirm your hero\n");
+  printf("(1)First Name:");
+  MAKE_BOLD_N_UNDERLINED(hero.FirstName);
+  printf("\n");
+  printf("(2)Last Name:");
+  MAKE_BOLD_N_UNDERLINED(hero.LastName);
+  printf("\n");
+  printf("(3)Gender:");
+  MAKE_BOLD_N_UNDERLINED(hero.Gender);
+  printf("\n");
+  printf("(4)Homeland:");
+  MAKE_BOLD_N_UNDERLINED(hero.Homeland);
+  printf("\n");
+  printf("(5)Profession:");
+  MAKE_BOLD_N_UNDERLINED(hero.Profession);
+  printf("\n");
+  printf("(6)Class:");
+  MAKE_BOLD_N_UNDERLINED(hero.Class);
+  printf("\n");
+  printf("(7)Stat Allocation: \x1b[31mstr:%d\x1b[0m  \x1b[34mint:%d\x1b[0m \x1b[35mdex%d\x1b[0m \x1b[32mlck:%d\x1b[0m\n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
+  printf("(8)Confirm Hero\n");
+
+  char input[10];
+
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (STR_CMP(input, "1"))
+  {
+    printf("Currently you first name is %s\n", hero.FirstName);
+    printf("What would you like to change your first name to?\n");
+    char new[10];
+    FGETS(new);
+    REMOVE_NEWLINE_CHAR(new);
+    printf("Very well you will no longer have the first name of %s\n", hero.FirstName);
+    strcpy(hero.FirstName, new);
+    printf("Your first name is now %s\n", hero.FirstName);
+    change_specific_creation_item();
+  }
+  else if (STR_CMP(input, "2"))
+  {
+    if (hero.LastName[0] == '\0')
+    {
+      printf("You currently do not have a dynasty name.\n");
+      printf("Would you like to set a dynasty name?\n");
+      char want_dynasty_name[10];
+      FGETS(want_dynasty_name);
+      REMOVE_NEWLINE_CHAR(want_dynasty_name);
+      if (INPUT_IS_YES(want_dynasty_name))
+      {
+        printf("Very well you will now have a dynasty name.\n");
+        printf("What would you like your dynasty name to be?\n");
+        char new[10];
+        FGETS(new);
+        REMOVE_NEWLINE_CHAR(new);
+        strcpy(hero.LastName, new);
+        printf("Your dynasty name is now %s\n", new);
+        change_specific_creation_item();
+      }
+      else if (INPUT_IS_NO(want_dynasty_name))
+      {
+        printf("Very well you will not have a dynasty name.\n");
+        change_specific_creation_item();
+      }
+      else
+      {
+        MAKE_VALID_DECISION;
+        change_specific_creation_item();
+      }
+    }
+    else
+    {
+      printf("Currently you dynasty name is %s\n", hero.LastName);
+      printf("What would you like to change your dynasty name to?\n");
+      char new[10];
+      FGETS(new);
+      REMOVE_NEWLINE_CHAR(new);
+      strcpy(hero.LastName, new);
+      printf("Your dynasty name is now %s\n", new);
+      change_specific_creation_item();
+    }
+  }
+  else if (STR_CMP(input, "3"))
+  {
+    if (hero.Gender[0] == '\0')
+    {
+      printf("You do not have a gender would you like to set one?\n");
+      printf("Would you like to set a gender");
+      char want_gender[10];
+      FGETS(want_gender);
+      REMOVE_NEWLINE_CHAR(want_gender);
+      if (INPUT_IS_YES(want_gender))
+      {
+        printf("Very well, tell what your gender is.\n");
+        char new[10];
+        FGETS(new);
+        REMOVE_NEWLINE_CHAR(new);
+        if (IS_GENDER(new, "m", "M", "man", "Man", "male", "Male"))
+        {
+          strcpy(hero.Gender, "Male");
+          printf("Your gender is now %s\n", hero.Gender);
+          change_specific_creation_item();
+        }
+        else if (IS_GENDER(new, "f", "F", "woman", "Woman", "female", "Female"))
+        {
+          strcpy(hero.Gender, "Female");
+          printf("Your gender is now %s\n", hero.Gender);
+          change_specific_creation_item();
+        }
+        else
+        {
+          strcpy(hero.Gender, new);
+          printf("Very well your gender is now %s\n", hero.Gender);
+          change_specific_creation_item();
+        }
+      }
+      else if (INPUT_IS_NO(want_gender))
+      {
+        printf("Very well you will not have a gender\n");
+        change_specific_creation_item();
+      }
+      else
+      {
+        MAKE_VALID_DECISION;
+        change_specific_creation_item();
+      }
+    }
+    else
+    {
+      printf("Currently your gender is %s\n", hero.Gender);
+      printf("What would you like set your gender to?\n");
+      char new[10];
+      FGETS(new);
+      REMOVE_NEWLINE_CHAR(new);
+      if (IS_GENDER(new, "m", "M", "man", "Man", "male", "male"))
+      {
+        strcpy(hero.Gender, "Male");
+        printf("Your gender is now %s\n", hero.Gender);
+        change_specific_creation_item();
+      }
+      else if (IS_GENDER(new, "f", "F", "woman", "Woman", "female", "Female"))
+      {
+        strcpy(hero.Gender, "Female");
+        printf("Your gender is now %s\n", hero.Gender);
+        change_specific_creation_item();
+      }
+      else
+      {
+        strcpy(hero.Gender, new);
+        printf("Very well your gender is now %s\n", hero.Gender);
+        change_specific_creation_item();
+      }
+    }
+  }
+  else if (STR_CMP(input, "4"))
+  {
+    printf("I thought you were from the lands %s but it seems I was mistaken.\n", hero.Homeland);
+    printf("Where are you from?\n");
+    printf("Enter the number of the nation that you hail from.\n");
+    char possibleHomelands[5][15] =
+        {
+            "1: Empyrea",
+            "2: Wesward",
+            "3: Magdalar",
+            "4: Ashvadan",
+            "5: Nadafia"};
+
+    PRINT_LIST_ITEMS(5, possibleHomelands);
+    char new[10];
+    FGETS(new);
+    REMOVE_NEWLINE_CHAR(new);
+    if (STR_CMP(new, "1"))
+    {
+      strcpy(hero.Homeland, "Empyrea");
+      printf("Very well, you now hail from the lands of %s.\n", hero.Homeland);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "2"))
+    {
+      strcpy(hero.Homeland, "Wesward");
+      printf("Very well, you now hail from the lands of %s.\n", hero.Homeland);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "3"))
+    {
+      strcpy(hero.Homeland, "Magdalar");
+      printf("Very well, you now hail from the lands of %s.\n", hero.Homeland);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "4"))
+    {
+      strcpy(hero.Homeland, "Ashvadan");
+      printf("Very well, you now hail from the lands of %s.\n", hero.Homeland);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "5"))
+    {
+      strcpy(hero.Homeland, "Nadafia");
+      printf("Very well, you now hail from the lands of %s.\n", hero.Homeland);
+      change_specific_creation_item();
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      change_specific_creation_item;
+    }
+  }
+  else if (STR_CMP(input, "5"))
+  {
+    printf("Your current profession is %s.\n", hero.Profession);
+    printf("What is your new profession?\n");
+    printf("Enter the number of the profession\n");
+    char possibleProfessions[6][15] = {
+        "1: Merchant",
+        "2: Hunter",
+        "3: Soldier",
+        "4: thief",
+        "5: Scholar",
+        "6: None"};
+
+    PRINT_LIST_ITEMS(6, possibleProfessions);
+    char new[10];
+    FGETS(new);
+    REMOVE_NEWLINE_CHAR(new);
+
+    if (STR_CMP(new, "1"))
+    {
+      strcpy(hero.Profession, "Merchant");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "2"))
+    {
+      strcpy(hero.Profession, "Hunter");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "3"))
+    {
+      strcpy(hero.Profession, "Soldier");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "4"))
+    {
+      strcpy(hero.Profession, "Thief");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "5"))
+    {
+      strcpy(hero.Profession, "Scholar");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "6"))
+    {
+      strcpy(hero.Profession, "None");
+      printf("Very well, your new profession is %s.\n", hero.Profession);
+      change_specific_creation_item();
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      change_specific_creation_item();
+    }
+  }
+  else if (STR_CMP(input, "6"))
+  {
+    char possibleClasses[5][15] = {
+        "1: Warrior",
+        "2: Mage",
+        "3: Rogue",
+        "4: Cleric",
+        "5: Bard"};
+    char new[10];
+
+    printf("Your current class is %s.\n", hero.Class);
+    printf("What is your new class?\n");
+
+    PRINT_LIST_ITEMS(5, possibleClasses);
+    FGETS(new);
+    REMOVE_NEWLINE_CHAR(new);
+
+    if (STR_CMP(new, "1"))
+    {
+      strcpy(hero.Class, "Warrior");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_stats_and_abilities_and_inventory();
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "2"))
+    {
+      strcpy(hero.Class, "Mage");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_stats_and_abilities_and_inventory();
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "3"))
+    {
+      strcpy(hero.Class, "Rogue");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_stats_and_abilities_and_inventory();
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "4"))
+    {
+      strcpy(hero.Class, "Cleric");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_stats_and_abilities_and_inventory();
+      change_specific_creation_item();
+    }
+    else if (STR_CMP(new, "5"))
+    {
+      strcpy(hero.Class, "Bard");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_stats_and_abilities_and_inventory();
+      change_specific_creation_item();
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      change_specific_creation_item();
+    }
+  }
+  else if (STR_CMP(input, "7"))
+  {
+    printf("Lets go over your attributes.\n");
+    do
+    {
+      set_attributes();
+    } while (hero.AttributePointsPool > 0);
+    change_specific_creation_item();
+  }
+  else if (STR_CMP(input, "8"))
+  {
+    confirm_hero_creation_and_stats();
+  }
+  else
+  {
+    MAKE_VALID_DECISION;
+    change_specific_creation_item();
+  }
+
+  if (hero.FirstName[0] || hero.Homeland[0] || hero.Class[0] == '\0')
+  {
+    printf("It seems you have not given a value to one or more of the following required categories\n");
+    printf("First Name, Home of Origin, and Class\n");
+    printf("Please enter something in each category before you continue.\n");
+    change_specific_creation_item();
+  }
+
+  if (hero.AttributePointsPool > 0)
+  {
+    PRINT_REMAINING_ATTRIBUTE_POINTS(hero.AttributePointsPool);
+    printf("Please allocate all remaining attribute points before you continue.");
+    change_specific_creation_item();
+  }
 }
