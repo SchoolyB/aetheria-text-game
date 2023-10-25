@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <time.h>
 
 #ifndef UTILS_H
@@ -124,6 +125,7 @@ The Macros section holds all macros used in the program. Macros are sorted in th
   } while (0)
 //--------------------------------------------------------------------------------//
 // List items from an array
+
 #define PRINT_LIST_ITEMS(num, arr) \
   do                               \
   {                                \
@@ -234,6 +236,7 @@ START OF COMMAND LINE MACROS
 #define IS_READ_NOTES_COMMAND(param) (strcmp(param, "/nr") == 0 || strcmp(param, "/read") == 0)
 #define IS_CLEAR_NOTES_COMMAND(param) (strcmp(param, "/nc") == 0)
 #define IS_LORE_COMMAND(param) (strcmp(param, "/lore") == 0)
+#define IS_INVENTORY_COMMAND(param) (strcmp(param, "/inventory") == 0 || strcmp(param, "/inv") == 0)
 //--------------------------------------------------------------------------------//
 /*END OF COMMAND LINE MACROS
 |
@@ -264,9 +267,7 @@ START OF FILE/LOGGING MACROS
     fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message); \
     fflush(logFile);                                             \
   } while (0)
-//--------------------------------------------------------------------------------//
-/*END OF FILE/LOGGING COMMANDS*/
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+//---------------------------------------------------------------lck:%d-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 // TODO may not need this function if the 'LOG_MESSAGE' macro works
@@ -397,6 +398,9 @@ void initialize_starting_leg_armor();
 void initialize_starting_bag();
 void initialize_inventory();
 void calculate_dmg_with_equipped_weapon();
+void confirm_hero_creation_and_stats();
+void change_specific_creation_item();
+void set_starting_level();
 #endif
 
 // CHAPTER 0 PROTOTYPES//
@@ -475,23 +479,33 @@ typedef struct
 {
   char Name[20];
   char Description[50];
+  char Type[20];
+  int Weight;
+  int Value;
+} Item;
+
+typedef struct
+{
+  Item Item[20];
+  bool IsSlotOpen;
+} BagSlot;
+typedef struct
+{
+  char Name[20];
+  char Description[50];
   char Type[15];
   /*How much weight the bag can hold not items.
   This is a weight limit, not a slot limit.
   The bag can have many open slots but can
   only hold a certain amount of weight.*/
   int CarryingCapacity;
-  char Slots[5][20];
+  BagSlot Slot1;
+  BagSlot Slot2;
+  BagSlot Slot3;
+  BagSlot Slot4;
+  BagSlot Slot5;
+  // Reach out to Sassafras for help/lesson on linkedlists
 } Bag;
-
-typedef struct
-{
-  char Name[20];
-  char Description[50];
-  char Type[20];
-  int Weight;
-  int Value;
-} Item;
 
 typedef struct
 {
@@ -567,22 +581,69 @@ void initialize_starting_leg_armor(LegArmor *Armor, char *Name, char *Descriptio
   Armor->Value = Value;
 }
 
-void initialize_starting_bag(Bag *bag, char *name, char *description, int carryingCapacity, char *Type, char slots[][20])
+void initialize_starting_bag_slot1(BagSlot *Slot1, Item *Item, bool IsSlotOpen)
+{
+  strcpy(Slot1->Item->Name, "A test potion");
+  strcpy(Slot1->Item->Description, "Empty");
+  strcpy(Slot1->Item->Type, "Empty");
+  Slot1->Item->Weight = 0;
+  Slot1->Item->Value = 0;
+  Slot1->IsSlotOpen = true;
+}
+void initialize_starting_bag_slot2(BagSlot *Slot2, Item *Item, bool IsSlotOpen)
+{
+  strcpy(Slot2->Item->Name, "Empty");
+  strcpy(Slot2->Item->Description, "Empty");
+  strcpy(Slot2->Item->Type, "Empty");
+  Slot2->Item->Weight = 0;
+  Slot2->Item->Value = 0;
+  Slot2->IsSlotOpen = true;
+}
+
+void initialize_starting_bag_slot3(BagSlot *Slot3, Item *Item, bool IsSlotOpen)
+{
+  strcpy(Slot3->Item->Name, "Empty");
+  strcpy(Slot3->Item->Description, "Empty");
+  strcpy(Slot3->Item->Type, "Empty");
+  Slot3->Item->Weight = 0;
+  Slot3->Item->Value = 0;
+  Slot3->IsSlotOpen = true;
+}
+
+void initialize_starting_bag_slot4(BagSlot *Slot4, Item *Item, bool IsSlotOpen)
+{
+  strcpy(Slot4->Item->Name, "Empty");
+  strcpy(Slot4->Item->Description, "Empty");
+  strcpy(Slot4->Item->Type, "Empty");
+  Slot4->Item->Weight = 0;
+  Slot4->Item->Value = 0;
+  Slot4->IsSlotOpen = true;
+}
+
+void initialize_starting_bag_slot5(BagSlot *Slot5, Item *Item, bool IsSlotOpen)
+{
+  strcpy(Slot5->Item->Name, "Empty");
+  strcpy(Slot5->Item->Description, "Empty");
+  strcpy(Slot5->Item->Type, "Empty");
+  Slot5->Item->Weight = 0;
+  Slot5->Item->Value = 0;
+  Slot5->IsSlotOpen = true;
+}
+
+void initialize_starting_bag(Bag *bag, char *name, char *description, int carryingCapacity, char *Type)
 {
   strcpy(bag->Name, name);
   strcpy(bag->Description, description);
   bag->CarryingCapacity = carryingCapacity;
-
-  // Copy slot names (assuming there are 5 slots)
-  for (int i = 0; i < 5; i++)
-  {
-    strcpy(bag->Slots[i], slots[i]);
-  }
 }
 void initialize_inventory(struct Inventory *HeroInventory, const char *backpackName, const char *weaponName, const char *headArmorName, const char *chestArmorName, const char *legsArmorName, int Gold)
 {
-  char slots[5][20] = {"Slot 1", "Slot 2", "Slot 3", "Slot 4", "Slot 5"};
-  initialize_starting_bag(&HeroInventory->Backpack, backpackName, "A small rucksack for your items", "Rucksack", 20, slots);
+  initialize_starting_bag(&HeroInventory->Backpack, backpackName, "A small rucksack for your items", 20, "Rucksack");
+  initialize_starting_bag_slot1(&HeroInventory->Backpack.Slot1, &HeroInventory->Backpack.Slot1.Item, true);
+  initialize_starting_bag_slot2(&HeroInventory->Backpack.Slot2, &HeroInventory->Backpack.Slot2.Item, true);
+  initialize_starting_bag_slot3(&HeroInventory->Backpack.Slot3, &HeroInventory->Backpack.Slot3.Item, true);
+  initialize_starting_bag_slot4(&HeroInventory->Backpack.Slot4, &HeroInventory->Backpack.Slot4.Item, true);
+  initialize_starting_bag_slot5(&HeroInventory->Backpack.Slot5, &HeroInventory->Backpack.Slot5.Item, true);
   initialize_starting_weapon(&HeroInventory->Weapon, weaponName, "Starting weapon description", "Weapon Type", 10, 5, 30);
   initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "Starting head armor description", "Head Armor Type", 10, 5, 30);
   initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "Starting chest armor description", "Chest Armor Type", 10, 5, 30);
@@ -594,6 +655,7 @@ void initialize_inventory(struct Inventory *HeroInventory, const char *backpackN
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 // This function calculates the amount of dmg the heros abilities do based on how many points are allocated to the strength attribute
+
 void calculate_new_hero_dmg_str(int *base_dmg, char *AbilityName)
 {
   int new_dmg;
