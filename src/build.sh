@@ -1,4 +1,6 @@
-gcc -o Aetheria.o main.c
+gcc -o Aetheria.o main.c -lncurses
+# When not using ncurses use the following command:
+# gcc -o Aetheria.o main.c
 
 if [ $? -eq 0 ]; then
     echo "Build successful"
