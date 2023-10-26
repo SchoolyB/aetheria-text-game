@@ -12,6 +12,7 @@ Hero hero;
 // ===========================================================================================================//
 void get_first_name()
 {
+  clear_and_print_step("Hero Creation", 1, 8);
   printf("Enter your first name:");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
@@ -22,6 +23,7 @@ void get_first_name()
   if (INPUT_IS_YES(confirmation))
   {
     printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
+    system("clear");
     ask_for_dynasty_name();
   }
   else if (INPUT_IS_NO(confirmation))
@@ -72,6 +74,7 @@ void ask_for_dynasty_name()
 // ===========================================================================================================//
 void get_dynasty_name()
 {
+  clear_and_print_step("Dynasty Name", 2, 8);
   printf("What is the name of the dynasty you come from?\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
@@ -105,6 +108,7 @@ void confirm_dynasty_name()
 // ===========================================================================================================//
 void ask_for_gender()
 {
+  clear_and_print_step("Gender", 3, 8);
   printf("Do you have a gender? (y/n)\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
@@ -203,6 +207,7 @@ void confirm_gender()
 
 void get_homeland()
 {
+  clear_and_print_step("Home of Origin", 4, 8);
   char possibleHomelands[5][15] =
       {
           "1: Empyrea",
@@ -286,6 +291,7 @@ void confirm_homeland()
 
 void get_profession()
 {
+  clear_and_print_step("Profession", 5, 8);
   char possibleProfessions[6][15] = {
       "1: Merchant",
       "2: Hunter",
@@ -365,7 +371,7 @@ void confirm_profession()
 
 void get_class()
 {
-
+  clear_and_print_step("Class", 6, 8);
   char possibleClasses[5][15] = {
       "1: Warrior",
       "2: Mage",

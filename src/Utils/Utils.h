@@ -338,8 +338,15 @@ int clearNotes()
   printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
   return 0;
 }
-/*END OF NOTEPAD/LOGGING FUNCTIONS
 
+// /*END OF NOTEPAD/LOGGING FUNCTIONS
+
+// ===========================================================================================================//
+void clear_and_print_step(const char *string, int step, int maxsteps)
+{
+  system("clear");
+  printf("----- %s ----- %d/%d\n", string, step, maxsteps);
+}
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF PROTOTYPES+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
