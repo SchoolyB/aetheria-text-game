@@ -21,4 +21,4 @@ NEW_VERSION="Build: Pre_Rel_v$MAJOR.$MINOR.$PATCH"
 # Update the version in the version.txt file
 sed -i "s/Build: Pre_Rel_v$CURRENT_VERSION/$NEW_VERSION/" "$VERSION_FILE"
 
-echo "Updated version to $NEW_VERSION"
+echo "Updating to build: $NEW_VERSION"
