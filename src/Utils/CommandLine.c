@@ -39,6 +39,25 @@ char command_descriptions[20][100] = {
 
 char possibleOrigins[5][10];
 
+int isRunning = 0;
+void start_game()
+{
+  if (isRunning == 0)
+  {
+    isRunning = 1;
+    printf("Starting Game...\n");
+    get_first_name();
+    set_stats_and_abilities_and_inventory();
+    set_attributes();
+    confirm_hero_creation_and_stats();
+  }
+  else
+  {
+    printf("Game is already running\n");
+  }
+}
+
+//================================================================================================//
 int COMMAND_LINE(FILE *logFile)
 {
   Hero NewHero;
@@ -59,6 +78,7 @@ int COMMAND_LINE(FILE *logFile)
     if (strcmp(input, "start") == 0)
     {
       logMessage(logFile, "Program started.");
+      start_game();
       char titleArt[] =
           "  ______               __      __                            __ \n"
           " /      \             /  |    /  |                          /  |\n"
@@ -72,10 +92,6 @@ int COMMAND_LINE(FILE *logFile)
       printf("%s\n", titleArt);
       // TODO Read introduction then do hero creation
       // start_ch0(); //TODO uncomment this when working on story
-      get_first_name();
-      set_stats_and_abilities_and_inventory();
-      set_attributes();
-      confirm_hero_creation_and_stats();
     }
     else if (IS_RESTART_COMMAND(input))
     {
@@ -135,7 +151,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
       printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.Weapon.Name, Inventory.Head.Name, Inventory.Chest.Name, Inventory.Legs.Name);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s\n", "Equipped Bag", "Carrying Capacity", "Slots", "Gold");
+      printf("%-15s | %-15s | %-15s\n", "Equipped Bag", "Carrying Capacity", "Gold");
       printf("%-15s | %-15d | %-15d\n", Inventory.Backpack.Name, Inventory.Backpack.CarryingCapacity, Inventory.CurrentGold);
       printf("============================================================================\n");
     }

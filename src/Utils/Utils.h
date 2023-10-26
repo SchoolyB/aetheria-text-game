@@ -355,6 +355,7 @@ void clear_and_print_step(const char *string, int step, int maxsteps)
 // COMMAND LINE PROTOTYPES//
 #ifndef COMMAND_LINE_H
 #define COMMAND_LINE_H
+void start_game();
 int COMMAND_LINE();
 #endif
 
