@@ -26,24 +26,35 @@ To embark on your quest in the world of "Heros of Aetheria," follow these steps:
 
 1. **Clone the Repository:**
 
-   ```bash
-   git clone https://github.com/SchoolyB/untitled-text-game.git
+```bash
+git clone https://github.com/SchoolyB/untitled-text-game.git
+```
+2. **Navigate to the Directory:**
 
-   ```
+```bash
+cd your/path/untitled-text-game
+```
 
-2. **Compile and run the Program:**
+3. **Compile and run the Program:**
 
-I have included a `build.sh` script to make compiling the program easier. To compile and run the program, run the following command:
+I have included a shell script to make compiling and running the program easier. To <i><b><u>COMPILE AND RUN</u></b></i> the program at once, run the following command:
+
+```bash
+./build_n_run.sh
+```
+
+This will create an executable file called `Aetheria.o`. You can run the executable if you <i><b><u>DO NOT</u></b></i> need/want to compile again by running the following command:
+
+```bash
+./Aethoria.o
+```
+
+To compile the program <i><b><u>WITHOUT</u></b></i>  running it, run the following command:
 
 ```bash
 ./build.sh
 ```
-
-This will create an executable file called `Aetheria.o`. You can run the executable if you do not need to compile again by running the following command:
-
-```bash
-./Aethoria.sh
-```
+<hr>
 
 Generated with the help of ChatGPT
 "I love you ChatGPT" - @SchoolyB
