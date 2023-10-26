@@ -2,7 +2,6 @@
 *.o
 *.log
 .vscode
-logs
 .clang-format
 json
 .json

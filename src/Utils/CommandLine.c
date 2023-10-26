@@ -166,6 +166,8 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
       printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
       printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
+      printf("%-10s | %-30s \n", "/inventory", "Shows the players inventory");
+      printf("%-10s | %-30s \n", "/inv", "Shows the players inventory");
       printf("=============================================================================\n");
     }
 

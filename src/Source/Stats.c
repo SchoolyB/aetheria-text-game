@@ -237,7 +237,7 @@ int set_stats_and_abilities_and_inventory()
 //=================================================================================================//
 void set_attributes()
 {
-
+  clear_and_print_step("Attribute Points", 7, 8);
   // START OF ATTRIBUTE POINT ALLOCATION LOGIC
   hero.AttributePointsPool = 10;
   char input[10];
@@ -246,6 +246,41 @@ void set_attributes()
 #define MAKE_STAT_COLOR(num, string, stat) printf("\x1b[%dm%s: %d\x1b[0m\n", num, string, stat);
 
 #define PRINT_REMAINING_ATTRIBUTE_POINTS(num) printf("You have %d attribute points left to allocate. Which attribute would you like to allocate points to next?\n", num)
+  if (STR_CMP(hero.Class, "Warrior"))
+  {
+    printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("it is recommended that you apply some points to \x1b[31mStrength\x1b[0m\n");
+    printf("Doing so means you can deliver more powerful physical blows to enemies and endure more damage in battle.\n");
+  }
+  else if (STR_CMP(hero.Class, "Mage"))
+  {
+    printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
+  }
+  else if (STR_CMP(hero.Class, "Rogue"))
+  {
+    printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("it is recommended that you apply some points to \x1b[35mDexterity\x1b[0m\n");
+    printf("Doing so means you can deliver more powerful physical blows to enemies and endure more damage in battle.\n");
+  }
+  else if (STR_CMP(hero.Class, "Cleric"))
+  {
+    printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
+  }
+  else if (STR_CMP(hero.Class, "Bard"))
+  {
+    printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
+  }
+  else
+  {
+    perror("Invalid class name you should'nt have made it this far, that means you broke something..\n");
+    return 1;
+  }
 
 #define MAKE_STAT_COLOR_AND_PRINT_REMAINING                                           \
   PRINT_REMAINING_ATTRIBUTE_POINTS(hero.AttributePointsPool);                         \
@@ -260,10 +295,10 @@ void set_attributes()
                                                              strcmp(input, full_cap) == 0)
 #define MAX_POINTS 4
 
-  MAKE_STAT_COLOR(31, "Strength(str)", hero.StrengthAttribute.CurrentPoints);
-  MAKE_STAT_COLOR(34, "Intelligence(int)", hero.IntelligenceAttribute.CurrentPoints);
-  MAKE_STAT_COLOR(35, "Dexterity(dex)", hero.DexterityAttribute.CurrentPoints);
-  MAKE_STAT_COLOR(32, "Luck(lck)", hero.DexterityAttribute.CurrentPoints);
+  MAKE_STAT_COLOR(31, "1:Strength(str)", hero.StrengthAttribute.CurrentPoints);
+  MAKE_STAT_COLOR(34, "2:Intelligence(int)", hero.IntelligenceAttribute.CurrentPoints);
+  MAKE_STAT_COLOR(35, "3:Dexterity(dex)", hero.DexterityAttribute.CurrentPoints);
+  MAKE_STAT_COLOR(32, "4:Luck(lck)", hero.DexterityAttribute.CurrentPoints);
 
   struct Attribute
   {
@@ -271,7 +306,7 @@ void set_attributes()
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
 
   printf("You have been given %d points to allocate to you attributes.\n", hero.AttributePointsPool);
-  printf("You can type either '\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m'\'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m', or the full word of each attribute that you would like to allocate points to.\n");
+  printf("You can type the associated numbers such as'\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m',\n abbreviations such as\'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m', or the full word of each attribute of your choice.\n");
   sleep(2);
   printf("Which attribute would you like to allocate points to?\n");
 
@@ -449,6 +484,7 @@ void set_attributes()
 
 void confirm_hero_creation_and_stats()
 {
+  clear_and_print_step("Confirmation", 8, 8);
   char confirmation[10];
   printf("Well then it seems like you are ready to begin your adventure!\n");
   printf("But before you go lets go over everything one more time.\n");
@@ -548,6 +584,7 @@ void confirm_hero_creation_and_stats()
 //=================================================================================================//
 void change_specific_creation_item()
 {
+  system("clear");
   printf("What would you like to change?\n Enter the number of the item you would like to change.\n");
   printf("Enter the number 8 to confirm your hero\n");
   printf("(1)First Name:");
