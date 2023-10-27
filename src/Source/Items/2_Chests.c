@@ -1,0 +1,2 @@
+// the player can find chest throughout the world. the chest need to have a chance to spawn randomly, then the items in it need to spawn randomly as well. see /Items/1_ItemGeneration.c
+// chest can contain all kinds of items such as weapons, armor, gold, bags, eventually when added potions and spell books/tomes
