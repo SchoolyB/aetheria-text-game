@@ -4,8 +4,12 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include "./Utils.h"
-#include "../Source/HeroCreation.c"
-#include "../Source/Stats.c"
+#include "../Source/HeroCreation/1_Creation.c"
+#include "../Source/HeroCreation/2_Abilities.c"
+#include "../Source/HeroCreation/3_Attributes.c"
+#include "../Source/HeroCreation/4_Inventory.c"
+#include "../Source/HeroCreation/5_Confirmation.c"
+#include "../Source/HeroCreation/6_Changes.c"
 
 char commands[20][100] = {
     "start"
@@ -47,7 +51,8 @@ void start_game()
     isRunning = 1;
     printf("Starting Game...\n");
     get_first_name();
-    set_stats_and_abilities_and_inventory();
+    set_abilities();
+    determine_class_for_inventory();
     set_attributes();
     confirm_hero_creation_and_stats();
   }
