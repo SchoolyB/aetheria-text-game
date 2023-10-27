@@ -197,12 +197,6 @@ void set_attributes()
   MAKE_STAT_COLOR(35, "Dexterity(dex)", hero.DexterityAttribute.CurrentPoints);
   MAKE_STAT_COLOR(32, "Luck(lck)", hero.LuckAttribute.CurrentPoints);
 
-// This is in the event that the user wants to allocate points to strength
-// This is in the event that the user wants to allocate points to intelligence
-#define CALCULATE_NEW_HERO_MANA(new_mana, base_mana, int_points) new_mana = base_mana += int_points * 5;
-
-#define CALCULATE_GLOBAL_MANA_COST(new_mana_cost, base_mana_cost, int_points) new_mana_cost = base_mana_cost += int_points * 2;
-
   // Handles physical damage
   if (strcmp(hero.Ability1.Type, "Physical") == 0 ||
       strcmp(hero.Ability2.Type, "Physical") == 0 ||
@@ -238,7 +232,7 @@ void set_attributes()
     perror("Invalid ability type\n");
     return 1;
   }
-
+  // TODO need to find a bette rplace for these...this is stupid and ugly
   calculate_new_hero_health(&hero.Health);
   calculate_new_hero_mana(&hero.Mana);
 

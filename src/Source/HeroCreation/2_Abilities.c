@@ -12,8 +12,8 @@ int set_abilities()
 {
     if (IS_OF_CLASS(hero.Class, "Warrior"))
     {
-
-        // Setting Starting health and mana
+        // TODO move the health and mana declarations to their own file
+        //  Setting Starting health and mana
         hero.Health = 75;
         hero.Mana = 20;
 

@@ -50,11 +50,11 @@ void start_game()
   {
     isRunning = 1;
     printf("Starting Game...\n");
-    get_first_name();
-    set_abilities();
-    determine_class_for_inventory();
-    set_attributes();
-    confirm_hero_creation_and_stats();
+    get_first_name();                  // from 1_Creation.c
+    set_abilities();                   // from 2_Abilities.c
+    set_attributes();                  // from 3_Attributes.c
+    determine_class_for_inventory();   // from 4_Inventory.c
+    confirm_hero_creation_and_stats(); // from 5_Confirmation.c
   }
   else
   {
