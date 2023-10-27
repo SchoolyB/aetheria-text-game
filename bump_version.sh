@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the path to your version.txt file
-VERSION_FILE="./src/VERSION.txt"
+VERSION_FILE="./VERSION.txt"
 
 # Read the current version from the version.txt file
 CURRENT_VERSION=$(grep -oP "(?<=Build: Pre_Rel_v)[0-9]+\.[0-9]+\.[0-9]+" "$VERSION_FILE")
