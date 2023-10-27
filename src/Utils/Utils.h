@@ -628,12 +628,19 @@ void calculate_new_hero_health(int *base_health)
     break;
   }
 }
+// this function calculates the amount of health the hero has based on the armor they have equipped
+void calculate_new_health_from_armor(int *base_health, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+{
+  int new_health;
+  new_health = *base_health += head->AddedHealth + chest->AddedHealth + legs->AddedHealth;
+  *base_health = new_health;
+}
 // This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
 void calculate_new_hero_mana(int *base_mana)
 {
   int new_mana;
 
-  switch (hero.Mana)
+  switch (hero.IntelligenceAttribute.CurrentPoints)
   {
   case 1:
     new_mana = *base_mana += 1 * 2;
@@ -647,6 +654,7 @@ void calculate_new_hero_mana(int *base_mana)
   case 4:
     new_mana = *base_mana += 4 * 2;
   }
+  *base_mana = new_mana;
 }
 // This function calculates the amount of mana the heros abilities cost based on how many points are allocated to the intelligence attribute
 void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)

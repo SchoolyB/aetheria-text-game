@@ -11,7 +11,7 @@ void determine_class_for_inventory()
   {
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Rusty Sword", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    // set_attributes();
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
@@ -22,7 +22,7 @@ void determine_class_for_inventory()
   {
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Driftwood staff", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    // set_attributes();
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
@@ -31,7 +31,7 @@ void determine_class_for_inventory()
   {
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Rusty Dagger", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    // set_attributes();
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
@@ -41,7 +41,7 @@ void determine_class_for_inventory()
 
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Rusty Mace", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    // set_attributes();
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
@@ -50,7 +50,7 @@ void determine_class_for_inventory()
   {
     // Setting starting weapon,head/chest/and leg armor, bag, and gold
     initialize_inventory(&Inventory, "Small Rucksack", "Driftwood Lute", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
-    // set_attributes();
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
