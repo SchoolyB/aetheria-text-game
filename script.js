@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const footerParagraph = document.getElementById('build_version');
 
-    const filePath = '../src/VERSION';
+    const filePath = './VERSION';
 
     fetch(filePath)
         .then(response => response.text())
