@@ -370,8 +370,9 @@ int clearNotes();
 #endif
 
 // HERO CREATION PROTOTYPES//
-#ifndef HERO_CREATION_H
-#define HERO_CREATION_H
+#ifndef CREATION_H
+#define CREATION_H
+//---------1_Creation.c Prototypes---------//
 void get_first_name();
 void ask_for_dynasty_name();
 void get_dynasty_name();
@@ -388,28 +389,32 @@ void get_class();
 void confirm_class();
 void log_hero_creation();
 void log_creation_data_to_file();
-#endif
-
-// INITIAL ATTRIBUTE ALLOCATION, STATS/ABILITIES ALLOCATION, AND INVENTORY INITIALIZATION PROTOTYPES//
-#ifndef SKILL_POINT_H
-#define SKILL_POINT_H
-int set_stats_and_abilities_and_inventory();
-void calculate_new_hero_dmg_str();
-void calculate_new_hero_dmg_int();
-void calculate_new_hero_health();
-void calculate_new_hero_mana();
-void calculate_new_mana_cost();
+//---------2_Abilities.c Prototypes---------//
+int set_abilities();
+//---------3_Attributes.c Prototypes---------//
+void set_attributes();
+//---------4_Inventory.c Prototypes---------//
+void determine_class_for_inventory();
 void initialize_starting_weapon();
 void initialize_starting_head_armor();
 void initialize_starting_chest_armor();
 void initialize_starting_leg_armor();
 void initialize_starting_bag();
 void initialize_inventory();
-void calculate_dmg_with_equipped_weapon();
+//---------5_Confirmation.c Prototypes---------//
 void confirm_hero_creation_and_stats();
+//---------6_Changes.c Prototypes---------//
 void change_specific_creation_item();
-void set_starting_level();
 #endif
+// CREATION_H
+
+void calculate_new_hero_dmg_str();
+void calculate_new_hero_dmg_int();
+void calculate_new_hero_health();
+void calculate_new_hero_mana();
+void calculate_new_mana_cost();
+void calculate_dmg_with_equipped_weapon();
+void set_starting_level(); // TODO need to set hero level
 
 // CHAPTER 0 PROTOTYPES//
 #ifndef CHAPTER_0_H
@@ -549,115 +554,7 @@ struct Inventory
 } Inventory;
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-void initialize_starting_weapon(Weapon *Weapon, char *Name, char *Description, char *Type, int AddedDamage, int Weight, int Value)
-{
-  strcpy(Weapon->Name, Name);
-  strcpy(Weapon->Description, Description);
-  strcpy(Weapon->Type, Type);
-  Weapon->AddedDamage = AddedDamage;
-  Weapon->Weight = Weight;
-  Weapon->Value = Value;
-}
 
-void initialize_starting_head_armor(HeadArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
-{
-  strcpy(Armor->Name, Name);
-  strcpy(Armor->Description, Description);
-  strcpy(Armor->Type, Type);
-  Armor->AddedHealth = AddedHealth;
-  Armor->Weight = Weight;
-  Armor->Value = Value;
-}
-
-void initialize_starting_chest_armor(ChestArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
-{
-  strcpy(Armor->Name, Name);
-  strcpy(Armor->Description, Description);
-  strcpy(Armor->Type, Type);
-  Armor->AddedHealth = AddedHealth;
-  Armor->Weight = Weight;
-  Armor->Value = Value;
-}
-
-void initialize_starting_leg_armor(LegArmor *Armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
-{
-  strcpy(Armor->Name, Name);
-  strcpy(Armor->Description, Description);
-  strcpy(Armor->Type, Type);
-  Armor->AddedHealth = AddedHealth;
-  Armor->Weight = Weight;
-  Armor->Value = Value;
-}
-
-void initialize_starting_bag_slot1(BagSlot *Slot1, Item *Item, bool IsSlotOpen)
-{
-  strcpy(Slot1->Item->Name, "A test potion");
-  strcpy(Slot1->Item->Description, "Empty");
-  strcpy(Slot1->Item->Type, "Empty");
-  Slot1->Item->Weight = 0;
-  Slot1->Item->Value = 0;
-  Slot1->IsSlotOpen = true;
-}
-void initialize_starting_bag_slot2(BagSlot *Slot2, Item *Item, bool IsSlotOpen)
-{
-  strcpy(Slot2->Item->Name, "Empty");
-  strcpy(Slot2->Item->Description, "Empty");
-  strcpy(Slot2->Item->Type, "Empty");
-  Slot2->Item->Weight = 0;
-  Slot2->Item->Value = 0;
-  Slot2->IsSlotOpen = true;
-}
-
-void initialize_starting_bag_slot3(BagSlot *Slot3, Item *Item, bool IsSlotOpen)
-{
-  strcpy(Slot3->Item->Name, "Empty");
-  strcpy(Slot3->Item->Description, "Empty");
-  strcpy(Slot3->Item->Type, "Empty");
-  Slot3->Item->Weight = 0;
-  Slot3->Item->Value = 0;
-  Slot3->IsSlotOpen = true;
-}
-
-void initialize_starting_bag_slot4(BagSlot *Slot4, Item *Item, bool IsSlotOpen)
-{
-  strcpy(Slot4->Item->Name, "Empty");
-  strcpy(Slot4->Item->Description, "Empty");
-  strcpy(Slot4->Item->Type, "Empty");
-  Slot4->Item->Weight = 0;
-  Slot4->Item->Value = 0;
-  Slot4->IsSlotOpen = true;
-}
-
-void initialize_starting_bag_slot5(BagSlot *Slot5, Item *Item, bool IsSlotOpen)
-{
-  strcpy(Slot5->Item->Name, "Empty");
-  strcpy(Slot5->Item->Description, "Empty");
-  strcpy(Slot5->Item->Type, "Empty");
-  Slot5->Item->Weight = 0;
-  Slot5->Item->Value = 0;
-  Slot5->IsSlotOpen = true;
-}
-
-void initialize_starting_bag(Bag *bag, char *name, char *description, int carryingCapacity, char *Type)
-{
-  strcpy(bag->Name, name);
-  strcpy(bag->Description, description);
-  bag->CarryingCapacity = carryingCapacity;
-}
-void initialize_inventory(struct Inventory *HeroInventory, const char *backpackName, const char *weaponName, const char *headArmorName, const char *chestArmorName, const char *legsArmorName, int Gold)
-{
-  initialize_starting_bag(&HeroInventory->Backpack, backpackName, "A small rucksack for your items", 20, "Rucksack");
-  initialize_starting_bag_slot1(&HeroInventory->Backpack.Slot1, &HeroInventory->Backpack.Slot1.Item, true);
-  initialize_starting_bag_slot2(&HeroInventory->Backpack.Slot2, &HeroInventory->Backpack.Slot2.Item, true);
-  initialize_starting_bag_slot3(&HeroInventory->Backpack.Slot3, &HeroInventory->Backpack.Slot3.Item, true);
-  initialize_starting_bag_slot4(&HeroInventory->Backpack.Slot4, &HeroInventory->Backpack.Slot4.Item, true);
-  initialize_starting_bag_slot5(&HeroInventory->Backpack.Slot5, &HeroInventory->Backpack.Slot5.Item, true);
-  initialize_starting_weapon(&HeroInventory->Weapon, weaponName, "Starting weapon description", "Weapon Type", 10, 5, 30);
-  initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "Starting head armor description", "Head Armor Type", 10, 5, 30);
-  initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "Starting chest armor description", "Chest Armor Type", 10, 5, 30);
-  initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "Starting leg armor description", "Leg Armor Type", 10, 5, 30);
-  HeroInventory->CurrentGold = Gold;
-}
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -731,12 +628,19 @@ void calculate_new_hero_health(int *base_health)
     break;
   }
 }
+// this function calculates the amount of health the hero has based on the armor they have equipped
+void calculate_new_health_from_armor(int *base_health, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+{
+  int new_health;
+  new_health = *base_health += head->AddedHealth + chest->AddedHealth + legs->AddedHealth;
+  *base_health = new_health;
+}
 // This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
 void calculate_new_hero_mana(int *base_mana)
 {
   int new_mana;
 
-  switch (hero.Mana)
+  switch (hero.IntelligenceAttribute.CurrentPoints)
   {
   case 1:
     new_mana = *base_mana += 1 * 2;
@@ -750,6 +654,7 @@ void calculate_new_hero_mana(int *base_mana)
   case 4:
     new_mana = *base_mana += 4 * 2;
   }
+  *base_mana = new_mana;
 }
 // This function calculates the amount of mana the heros abilities cost based on how many points are allocated to the intelligence attribute
 void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)

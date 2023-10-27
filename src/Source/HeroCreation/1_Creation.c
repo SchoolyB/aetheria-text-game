@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-#include "../Utils/Utils.h"
+#include "../../Utils/Utils.h"
 
 char input[100];
 char confirmation[100];
