@@ -4,8 +4,8 @@
 // build a function that says the hero has found an item. inside this function call all the others
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // Include string.h for strcpy
 #include <time.h>
+#include "Items-Inventory.h"
 #include "../../Utils/Utils.h"
 // Define structures for Armor types
 // Arrays for possible armor names and added health values
@@ -26,7 +26,7 @@ int possibleArmorWeight[100];
 int possibleArmorValue[1000];
 
 // Function to generate random armor pickup
-void generateArmor(HeadArmor *HeadArmor, ChestArmor *ChestArmor, LegArmor *LegArmor)
+void generate_possible_armor(HeadArmor *HeadArmor, ChestArmor *ChestArmor, LegArmor *LegArmor)
 {
   // Seed the random number generator
   srand(time(NULL));
@@ -45,20 +45,4 @@ void generateArmor(HeadArmor *HeadArmor, ChestArmor *ChestArmor, LegArmor *LegAr
 
   strcpy(LegArmor->Name, possibleLegArmorNames[randomLeg]);
   LegArmor->AddedHealth = possibleLegArmorAddedHealth[randomLeg];
-}
-
-// Function to announce the hero has found an item
-void heroFoundItem()
-{
-  HeadArmor headArmor;
-  ChestArmor chestArmor;
-  LegArmor legArmor;
-
-  generateArmor(&headArmor, &chestArmor, &legArmor);
-
-  // Print the results
-  printf("Hero has found the following items:\n");
-  printf("Head Armor: %s (Added Health: %d)\n", headArmor.Name, headArmor.AddedHealth);
-  printf("Chest Armor: %s (Added Health: %d)\n", chestArmor.Name, chestArmor.AddedHealth);
-  printf("Leg Armor: %s (Added Health: %d)\n", legArmor.Name, legArmor.AddedHealth);
 }

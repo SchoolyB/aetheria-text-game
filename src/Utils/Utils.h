@@ -7,6 +7,7 @@
 
 #ifndef UTILS_H
 #define UTILS_H
+// TODO clean this file
 
 /*
 This file is separated into several sections. The sections are labeled and ordered as follows:
@@ -500,7 +501,7 @@ typedef struct
 typedef struct
 {
   Item Item[20];
-  bool IsSlotOpen;
+  bool IsSlotOpen; // todo change this to an 'int' and use the boolValues enum
 } BagSlot;
 typedef struct
 {
@@ -552,6 +553,12 @@ struct Inventory
   Bag Backpack; // Bag is an array of struct Item, where each item has a name
   int CurrentGold;
 } Inventory;
+
+enum boolValues
+{
+  TRUE = 1,
+  FALSE = 0
+};
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
