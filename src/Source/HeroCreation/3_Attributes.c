@@ -45,6 +45,12 @@ int set_attributes()
     printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
     printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
   }
+  else if (STR_CMP(hero.Class, "Archer"))
+  {
+    printf("If you are playing as an \x1b[1;4m%s\x1b[0m ", hero.Class);
+    printf("It is recommended that you apply some points to \x1b[35mDexterity\x1b[0m\n");
+    printf("Doing so means you can to land precise and fatal shots on your targets in battle\n");
+  }
   else
   {
     perror("Invalid class name you should'nt have made it this far, that means you broke something..\n");
@@ -225,6 +231,14 @@ int set_attributes()
     calculate_new_hero_dmg_int(&hero.Ability1.Damage, hero.Ability1.Name);
     calculate_new_hero_dmg_int(&hero.Ability2.Damage, hero.Ability2.Name);
     calculate_new_hero_dmg_int(&hero.Ability3.Damage, hero.Ability3.Name);
+  }
+  else if (strcmp(hero.Ability1.Type, "Ranged") == 0 ||
+           strcmp(hero.Ability1.Type, "Ranged") == 0 ||
+           strcmp(hero.Ability1.Type, "Ranged") == 0)
+  {
+    calculate_new_hero_dmg_dex(&hero.Ability1.Damage, hero.Ability1.Name);
+    calculate_new_hero_dmg_dex(&hero.Ability2.Damage, hero.Ability2.Name);
+    calculate_new_hero_dmg_dex(&hero.Ability3.Damage, hero.Ability3.Name);
   }
   else
   {

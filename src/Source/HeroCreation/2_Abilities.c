@@ -191,6 +191,40 @@ int set_abilities()
         hero.Ability2 = MelodicFury;
         hero.Ability3 = ResonantSurge;
     }
+    else if (IS_OF_CLASS(hero.Class, "Archer"))
+    {
+        hero.Health = 55;
+        hero.Mana = 20;
+
+        struct Ability1 Shoot = {
+            "Shoot",
+            "Shoot an arrow at an enemy.",
+            "Ranged", // Type
+            20,       // Damage
+            0         // ManaCost
+        };
+
+        struct Ability2 ArrowBarrage = {
+            "Arrow Barrage",
+            "Shoot a barrage of arrows at an enemy.",
+            "Ranged", // Type
+            30,       // Damage
+            0         // ManaCost
+        };
+
+        struct Ability3 ExplosiveArrow = {
+            "Explosive Arrow",
+            "Shoot an explosive arrow at an enemy.",
+            "Ranged", // Type
+            50,       // Damage
+            15        // ManaCost
+            // the idea for this ability is that the archer uses magic to set the arrow on fire then when shot it explodes on impact
+        };
+        // Setting Abilities
+        hero.Ability1 = Shoot;
+        hero.Ability2 = ArrowBarrage;
+        hero.Ability3 = ExplosiveArrow;
+    }
 
     else
     {

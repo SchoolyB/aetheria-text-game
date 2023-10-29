@@ -324,6 +324,13 @@ void change_specific_creation_item()
       set_abilities();
       change_specific_creation_item();
     }
+    else if (STR_CMP(new, "6"))
+    {
+      strcpy(hero.Class, "Archer");
+      printf("Very well, your new class is %s.\n", hero.Class);
+      set_abilities();
+      change_specific_creation_item();
+    }
     else
     {
       MAKE_VALID_DECISION;

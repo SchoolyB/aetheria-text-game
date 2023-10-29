@@ -56,6 +56,16 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
   }
+
+  else if (IS_OF_CLASS(hero.Class, "Archer"))
+  {
+    // Setting starting weapon,head/chest/and leg armor, and gold
+    initialize_inventory(&Inventory, "Driftwood Bow", "Fisherman's Hat", "Puffy Shirt", "Leather Leggings", 5);
+    calculate_new_health_from_armor(&hero.Health, &Inventory.Head, &Inventory.Chest, &Inventory.Legs);
+    calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.Weapon);
+    calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.Weapon);
+  }
 }
 //+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=//
 void initialize_starting_weapon(Weapon *Weapon, char *Name, char *Description, char *Type, int AddedDamage, int Weight, int Value)

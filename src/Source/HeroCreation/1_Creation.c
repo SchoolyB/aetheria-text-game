@@ -409,14 +409,15 @@ void confirm_profession()
 void get_class()
 {
   clear_and_print_step("Class", 6, 8);
-  char possibleClasses[5][15] = {
+  char possibleClasses[6][15] = {
       "1: Warrior",
       "2: Mage",
       "3: Rogue",
       "4: Cleric",
-      "5: Bard"};
+      "5: Bard",
+      "6: Archer"};
   printf("What is your class?\n");
-  PRINT_LIST_ITEMS(5, possibleClasses);
+  PRINT_LIST_ITEMS(6, possibleClasses);
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
 
@@ -424,35 +425,42 @@ void get_class()
   {
     strcpy(hero.Class, "Warrior");
     printf(WarriorArt);
-    PRINT_CLASS("mighty", hero.Class);
+    PRINT_CLASS("Mighty", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "2", "mage", "Mage", "MAGE"))
   {
     strcpy(hero.Class, "Mage");
     printf(MageArt);
-    PRINT_CLASS("powerful", hero.Class);
+    PRINT_CLASS("Mystical", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "3", "rogue", "Rogue", "ROGUE"))
   {
     strcpy(hero.Class, "Rogue");
     printf(RogueArt);
-    PRINT_CLASS("sly", hero.Class);
+    PRINT_CLASS("Sly", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "4", "cleric", "Cleric", "CLERIC"))
   {
     strcpy(hero.Class, "Cleric");
     printf(ClericArt);
-    PRINT_CLASS("holy", hero.Class);
+    PRINT_CLASS("Holy", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "5", "bard", "Bard", "BARD"))
   {
     strcpy(hero.Class, "Bard");
     printf(BardArt);
-    PRINT_CLASS("gifted", hero.Class);
+    PRINT_CLASS("Talented", hero.Class);
+    confirm_class();
+  }
+  else if (IS_CLASS(input, "6", "archer", "Archer", "ARCHER"))
+  {
+    strcpy(hero.Class, "Archer");
+    // printf(BardArt); //todo ascii are to Utils.h then uncomment this
+    PRINT_CLASS("Sharpshooting", hero.Class);
     confirm_class();
   }
   else
