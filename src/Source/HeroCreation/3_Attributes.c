@@ -90,7 +90,6 @@ int set_attributes()
       printf("How many points would you like to allocate to \x1b[31mStrength\x1b[0m? \n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
-
       if (atoi(input) > hero.AttributePointsPool)
       {
         printf("You do not have enough points to allocate %d points to \x1b[31mStrength\x1b[0m.\n", atoi(input));
@@ -103,7 +102,6 @@ int set_attributes()
       }
       else
       {
-        printf("%d\n", MAX_POINTS);
         hero.StrengthAttribute.CurrentPoints += atoi(input);
         hero.AttributePointsPool -= atoi(input);
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
