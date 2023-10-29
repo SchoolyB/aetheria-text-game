@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "HeroCreation.h"
 #include "../../Utils/Utils.h"
 void change_specific_creation_item()
 {

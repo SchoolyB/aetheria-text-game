@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "HeroCreation.h"
 #include "../../Utils/Utils.h"
 
 void confirm_hero_creation_and_stats()

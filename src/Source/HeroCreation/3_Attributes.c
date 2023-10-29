@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "HeroCreation.h"
 #include "../../Utils/Utils.h"
 
 //=================================================================================================//
-void set_attributes()
+int set_attributes()
 {
   clear_and_print_step("Attribute Points", 7, 8);
   // START OF ATTRIBUTE POINT ALLOCATION LOGIC
@@ -89,7 +90,6 @@ void set_attributes()
       printf("How many points would you like to allocate to \x1b[31mStrength\x1b[0m? \n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
-
       if (atoi(input) > hero.AttributePointsPool)
       {
         printf("You do not have enough points to allocate %d points to \x1b[31mStrength\x1b[0m.\n", atoi(input));
@@ -102,7 +102,6 @@ void set_attributes()
       }
       else
       {
-        printf("%d\n", MAX_POINTS);
         hero.StrengthAttribute.CurrentPoints += atoi(input);
         hero.AttributePointsPool -= atoi(input);
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;

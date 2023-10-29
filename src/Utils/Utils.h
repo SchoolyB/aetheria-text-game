@@ -7,6 +7,7 @@
 
 #ifndef UTILS_H
 #define UTILS_H
+// TODO clean this file
 
 /*
 This file is separated into several sections. The sections are labeled and ordered as follows:
@@ -367,46 +368,6 @@ void appendToLog();
 int createNote();
 int readNotes();
 int clearNotes();
-#endif
-
-// HERO CREATION PROTOTYPES//
-#ifndef CREATION_H
-#define CREATION_H
-//---------1_Creation.c Prototypes---------//
-void get_first_name();
-void ask_for_dynasty_name();
-void get_dynasty_name();
-void confirm_dynasty_name();
-void ask_for_gender();
-void get_gender();
-void confirm_no_gender();
-void confirm_gender();
-void get_homeland();
-void confirm_homeland();
-void get_profession();
-void confirm_profession();
-void get_class();
-void confirm_class();
-void log_hero_creation();
-void log_creation_data_to_file();
-//---------2_Abilities.c Prototypes---------//
-int set_abilities();
-//---------3_Attributes.c Prototypes---------//
-void set_attributes();
-//---------4_Inventory.c Prototypes---------//
-void determine_class_for_inventory();
-void initialize_starting_weapon();
-void initialize_starting_head_armor();
-void initialize_starting_chest_armor();
-void initialize_starting_leg_armor();
-void initialize_starting_bag();
-void initialize_inventory();
-//---------5_Confirmation.c Prototypes---------//
-void confirm_hero_creation_and_stats();
-//---------6_Changes.c Prototypes---------//
-void change_specific_creation_item();
-#endif
-// CREATION_H
 
 void calculate_new_hero_dmg_str();
 void calculate_new_hero_dmg_int();
@@ -415,6 +376,7 @@ void calculate_new_hero_mana();
 void calculate_new_mana_cost();
 void calculate_dmg_with_equipped_weapon();
 void set_starting_level(); // TODO need to set hero level
+#endif
 
 // CHAPTER 0 PROTOTYPES//
 #ifndef CHAPTER_0_H
@@ -499,29 +461,6 @@ typedef struct
 
 typedef struct
 {
-  Item Item[20];
-  bool IsSlotOpen;
-} BagSlot;
-typedef struct
-{
-  char Name[20];
-  char Description[50];
-  char Type[15];
-  /*How much weight the bag can hold not items.
-  This is a weight limit, not a slot limit.
-  The bag can have many open slots but can
-  only hold a certain amount of weight.*/
-  int CarryingCapacity;
-  BagSlot Slot1;
-  BagSlot Slot2;
-  BagSlot Slot3;
-  BagSlot Slot4;
-  BagSlot Slot5;
-  // Reach out to Sassafras for help/lesson on linkedlists
-} Bag;
-
-typedef struct
-{
   char Name[20];
   char Description[100];
   char Type[15];
@@ -549,9 +488,10 @@ struct Inventory
   ChestArmor Chest;
   LegArmor Legs;
   // Add more slots if needed
-  Bag Backpack; // Bag is an array of struct Item, where each item has a name
+  int CarryingCapacity;
   int CurrentGold;
 } Inventory;
+
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
