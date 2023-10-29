@@ -348,6 +348,11 @@ void clear_and_print_step(const char *string, int step, int maxsteps)
   system("clear");
   printf("----- %s ----- %d/%d\n", string, step, maxsteps);
 }
+
+void print_step(const char *string, int step, int maxsteps)
+{
+  printf("----- %s ----- %d/%d\n", string, step, maxsteps);
+}
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF PROTOTYPES+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//

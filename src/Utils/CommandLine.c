@@ -383,6 +383,7 @@ int COMMAND_LINE(FILE *logFile)
     else
     {
       printf("Invalid command.\n");
+      system("clear");
     }
   }
   return 0;

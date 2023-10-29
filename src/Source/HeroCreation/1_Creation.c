@@ -13,28 +13,46 @@ Hero hero;
 // ===========================================================================================================//
 void get_first_name()
 {
-  clear_and_print_step("Hero Creation", 1, 8);
+  print_step("Hero Creation", 1, 8);
+  // clear_and_print_step("Hero Creation", 1, 8);
   printf("Enter your first name:");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
-  strcpy(hero.FirstName, input);
-  printf("Your first name is \x1b[1;4m%s\x1b[0m is that correct? (y/n)\n", hero.FirstName);
-  FGETS(confirmation);
-  REMOVE_NEWLINE_CHAR(confirmation);
-  if (INPUT_IS_YES(confirmation))
+  if (strlen(input) > 15)
   {
-    printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
+    printf("Your name is too long. Please enter a name that is less than 15 characters.\n");
+    sleep(2);
     system("clear");
-    ask_for_dynasty_name();
+    get_first_name();
   }
-  else if (INPUT_IS_NO(confirmation))
+  else if (strlen(input) < 2)
   {
+    printf("Your name is too short. Please enter a name that is atleast 2 characters.\n");
+    sleep(2);
+    system("clear");
     get_first_name();
   }
   else
   {
-    MAKE_VALID_DECISION;
-    get_first_name();
+    strcpy(hero.FirstName, input);
+    printf("Your first name is \x1b[1;4m%s\x1b[0m is that correct? (y/n)\n", hero.FirstName);
+    FGETS(confirmation);
+    REMOVE_NEWLINE_CHAR(confirmation);
+    if (INPUT_IS_YES(confirmation))
+    {
+      printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
+      system("clear");
+      ask_for_dynasty_name();
+    }
+    else if (INPUT_IS_NO(confirmation))
+    {
+      get_first_name();
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      get_first_name();
+    }
   }
 }
 // ===========================================================================================================//
@@ -75,15 +93,33 @@ void ask_for_dynasty_name()
 // ===========================================================================================================//
 void get_dynasty_name()
 {
-  clear_and_print_step("Dynasty Name", 2, 8);
+  print_step("Dynasty Name", 2, 8);
   printf("What is the name of the dynasty you come from?\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
-  strcpy(hero.LastName, input);
-  printf("Ah so you are a member of the \x1b[1;4m%s\x1b[0m dynasty.\n", hero.LastName);
-  usleep(40000);
-  printf("Is that correct? (y/n)\n");
-  confirm_dynasty_name();
+  if (strlen(input) > 15)
+  {
+    printf("Your dynasty name is too long. Please enter a name that is less than 15 characters.\n");
+    sleep(2);
+    system("clear");
+    get_dynasty_name();
+  }
+  else if (strlen(input) < 2)
+  {
+    printf("Your dynasty name is too short. Please enter a name that is atleast 2 characters.\n");
+    sleep(2);
+    system("clear");
+    get_dynasty_name();
+  }
+  else
+  {
+
+    strcpy(hero.LastName, input);
+    printf("Ah so you are a member of the \x1b[1;4m%s\x1b[0m dynasty.\n", hero.LastName);
+    usleep(40000);
+    printf("Is that correct? (y/n)\n");
+    confirm_dynasty_name();
+  }
 }
 // ===========================================================================================================//
 void confirm_dynasty_name()
