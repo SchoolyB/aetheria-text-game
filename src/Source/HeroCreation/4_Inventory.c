@@ -107,4 +107,5 @@ void initialize_inventory(struct Inventory *HeroInventory, char *weaponName, cha
   initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "Starting chest armor description", "Chest Armor Type", 10, 5, 30);
   initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "Starting leg armor description", "Leg Armor Type", 10, 5, 30);
   HeroInventory->CurrentGold = Gold;
+  HeroInventory->CarryingCapacity = 100;
 }
