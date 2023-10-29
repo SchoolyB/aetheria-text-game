@@ -112,10 +112,11 @@ void initialize_starting_leg_armor(LegArmor *Armor, char *Name, char *Descriptio
 //=============================================================//
 void initialize_inventory(struct Inventory *HeroInventory, char *weaponName, char *headArmorName, char *chestArmorName, char *legsArmorName, int Gold)
 {
-  initialize_starting_weapon(&HeroInventory->Weapon, weaponName, "Starting weapon description", "Weapon Type", 10, 5, 30);
-  initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "Starting head armor description", "Head Armor Type", 10, 5, 30);
-  initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "Starting chest armor description", "Chest Armor Type", 10, 5, 30);
-  initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "Starting leg armor description", "Leg Armor Type", 10, 5, 30);
+  initialize_starting_weapon(&HeroInventory->Weapon, weaponName, "description", "Crappy", 10, 5, 25);
+  initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "description", "Crappy", 10, 5, 15);
+  initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "description", "Crappy", 10, 5, 10);
+  initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "description", "Crappy", 10, 5, 22);
+  HeroInventory->CarryingCapacity = 50;
+  calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->Weapon, &HeroInventory->Head, &HeroInventory->Chest, &HeroInventory->Legs);
   HeroInventory->CurrentGold = Gold;
-  HeroInventory->CarryingCapacity = 100;
 }

@@ -158,8 +158,8 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
       printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.Weapon.Name, Inventory.Head.Name, Inventory.Chest.Name, Inventory.Legs.Name);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s\n", "Carrying Capacity", "Gold");
-      printf("%-15d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
+      printf("%-20s | %-15s\n", "Capacity Remaining(lbs)", "Gold");
+      printf("%-20d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
       printf("============================================================================\n");
     }
     else if (IS_COMMANDS_COMMAND(input))
@@ -366,19 +366,19 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
-      printf("===============================================\n");
-      printf("Equipped Weapon | Description  | Added Damage\n");
-      printf("%-20s | %-20s | %-20d \n", Inventory.Weapon.Name, Inventory.Weapon.Description, Inventory.Weapon.AddedDamage);
-      printf("-----------------------------------------------\n");
-      printf("Equipped Head Armor | Description \n");
-      printf("%-20s | %-20s | \n", Inventory.Head.Name, Inventory.Head.Description);
-      printf("-----------------------------------------------\n");
-      printf("Equipped Chest Armor | Description \n");
-      printf("%-20s | %-20s | \n", Inventory.Chest.Name, Inventory.Chest.Description);
-      printf("-----------------------------------------------\n");
-      printf("Equipped Leg Armor | About Description \n");
-      printf("%-20s | %-20s | \n", Inventory.Legs.Name, Inventory.Legs.Description);
-      printf("===============================================\n");
+      printf("=======================================================================================================\n");
+      printf("%-20s | %-25s | %-11s | %-10s | %-10s | %-10s \n", "Equipped Wpn", "Desc.", "Dmg Incr", "Type", "Wt(lbs)", "Val(gold)");
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d \n", Inventory.Weapon.Name, Inventory.Weapon.Description, Inventory.Weapon.AddedDamage, Inventory.Weapon.Type, Inventory.Weapon.Weight, Inventory.Weapon.Value);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Head Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Head.Name, Inventory.Head.Description, Inventory.Head.AddedHealth, Inventory.Head.Type, Inventory.Head.Weight, Inventory.Head.Value);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Chest Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Chest.Name, Inventory.Chest.Description, Inventory.Chest.AddedHealth, Inventory.Chest.Type, Inventory.Chest.Weight, Inventory.Chest.Value);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Leg Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Legs.Name, Inventory.Legs.Description, Inventory.Legs.AddedHealth, Inventory.Legs.Type, Inventory.Legs.Weight, Inventory.Legs.Value);
+      printf("=======================================================================================================\n");
     }
     else
     {
