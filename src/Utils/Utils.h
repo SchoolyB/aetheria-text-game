@@ -348,6 +348,11 @@ void clear_and_print_step(const char *string, int step, int maxsteps)
   system("clear");
   printf("----- %s ----- %d/%d\n", string, step, maxsteps);
 }
+
+void print_step(const char *string, int step, int maxsteps)
+{
+  printf("----- %s ----- %d/%d\n", string, step, maxsteps);
+}
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF PROTOTYPES+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -394,8 +399,8 @@ void ch0_go_to_main_deck();
 typedef struct
 {
   // Creation Information
-  char FirstName[10];
-  char LastName[10];
+  char FirstName[15];
+  char LastName[15];
   char Gender[10];
   char Homeland[10];
   char Profession[10];
@@ -546,6 +551,29 @@ void calculate_new_hero_dmg_int(int *base_dmg, char *AbilityName)
   }
   *base_dmg = new_dmg;
 }
+//
+void calculate_new_hero_dmg_dex(int *base_dmg, char *AbilityName)
+{
+  int new_dmg;
+  switch (hero.DexterityAttribute.CurrentPoints)
+  {
+  case 1:
+    new_dmg = *base_dmg += 1 * 2;
+    break;
+  case 2:
+    new_dmg = *base_dmg += 2 * 2;
+    break;
+  case 3:
+    new_dmg = *base_dmg += 3 * 2;
+    break;
+  case 4:
+    new_dmg = *base_dmg += 4 * 2;
+    break;
+  default:
+    break;
+  }
+  *base_dmg = new_dmg;
+}
 // This function calculates the amount how much health the hero has based on how many points are allocated to the strength attribute
 void calculate_new_hero_health(int *base_health)
 {
@@ -646,7 +674,7 @@ extern char current_enemy_ability2[20];
 
 // Origins, classes, and  TODO professions
 extern char possibleHomelands[5][10];
-extern char possibleClasses[5][10];
+extern char possibleClasses[6][10];
 extern char possibleProfessions[6][15];
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -767,5 +795,6 @@ char BardArt[] =
     "....,,;;++++++++;;:,....................\n"
     "........,,::::,,........................\n";
 
+// char ArcherArt[] = ;
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 #endif

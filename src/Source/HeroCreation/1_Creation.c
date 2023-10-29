@@ -13,28 +13,46 @@ Hero hero;
 // ===========================================================================================================//
 void get_first_name()
 {
-  clear_and_print_step("Hero Creation", 1, 8);
+  print_step("Hero Creation", 1, 8);
+  // clear_and_print_step("Hero Creation", 1, 8);
   printf("Enter your first name:");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
-  strcpy(hero.FirstName, input);
-  printf("Your first name is \x1b[1;4m%s\x1b[0m is that correct? (y/n)\n", hero.FirstName);
-  FGETS(confirmation);
-  REMOVE_NEWLINE_CHAR(confirmation);
-  if (INPUT_IS_YES(confirmation))
+  if (strlen(input) > 15)
   {
-    printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
+    printf("Your name is too long. Please enter a name that is less than 15 characters.\n");
+    sleep(2);
     system("clear");
-    ask_for_dynasty_name();
+    get_first_name();
   }
-  else if (INPUT_IS_NO(confirmation))
+  else if (strlen(input) < 2)
   {
+    printf("Your name is too short. Please enter a name that is atleast 2 characters.\n");
+    sleep(2);
+    system("clear");
     get_first_name();
   }
   else
   {
-    MAKE_VALID_DECISION;
-    get_first_name();
+    strcpy(hero.FirstName, input);
+    printf("Your first name is \x1b[1;4m%s\x1b[0m is that correct? (y/n)\n", hero.FirstName);
+    FGETS(confirmation);
+    REMOVE_NEWLINE_CHAR(confirmation);
+    if (INPUT_IS_YES(confirmation))
+    {
+      printf("You have chosen \x1b[1;4m%s\x1b[0m as your first name. This can be changed later.\n", hero.FirstName);
+      system("clear");
+      ask_for_dynasty_name();
+    }
+    else if (INPUT_IS_NO(confirmation))
+    {
+      get_first_name();
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      get_first_name();
+    }
   }
 }
 // ===========================================================================================================//
@@ -75,15 +93,33 @@ void ask_for_dynasty_name()
 // ===========================================================================================================//
 void get_dynasty_name()
 {
-  clear_and_print_step("Dynasty Name", 2, 8);
+  print_step("Dynasty Name", 2, 8);
   printf("What is the name of the dynasty you come from?\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
-  strcpy(hero.LastName, input);
-  printf("Ah so you are a member of the \x1b[1;4m%s\x1b[0m dynasty.\n", hero.LastName);
-  usleep(40000);
-  printf("Is that correct? (y/n)\n");
-  confirm_dynasty_name();
+  if (strlen(input) > 15)
+  {
+    printf("Your dynasty name is too long. Please enter a name that is less than 15 characters.\n");
+    sleep(2);
+    system("clear");
+    get_dynasty_name();
+  }
+  else if (strlen(input) < 2)
+  {
+    printf("Your dynasty name is too short. Please enter a name that is atleast 2 characters.\n");
+    sleep(2);
+    system("clear");
+    get_dynasty_name();
+  }
+  else
+  {
+
+    strcpy(hero.LastName, input);
+    printf("Ah so you are a member of the \x1b[1;4m%s\x1b[0m dynasty.\n", hero.LastName);
+    usleep(40000);
+    printf("Is that correct? (y/n)\n");
+    confirm_dynasty_name();
+  }
 }
 // ===========================================================================================================//
 void confirm_dynasty_name()
@@ -373,14 +409,15 @@ void confirm_profession()
 void get_class()
 {
   clear_and_print_step("Class", 6, 8);
-  char possibleClasses[5][15] = {
+  char possibleClasses[6][15] = {
       "1: Warrior",
       "2: Mage",
       "3: Rogue",
       "4: Cleric",
-      "5: Bard"};
+      "5: Bard",
+      "6: Archer"};
   printf("What is your class?\n");
-  PRINT_LIST_ITEMS(5, possibleClasses);
+  PRINT_LIST_ITEMS(6, possibleClasses);
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
 
@@ -388,35 +425,42 @@ void get_class()
   {
     strcpy(hero.Class, "Warrior");
     printf(WarriorArt);
-    PRINT_CLASS("mighty", hero.Class);
+    PRINT_CLASS("Mighty", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "2", "mage", "Mage", "MAGE"))
   {
     strcpy(hero.Class, "Mage");
     printf(MageArt);
-    PRINT_CLASS("powerful", hero.Class);
+    PRINT_CLASS("Mystical", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "3", "rogue", "Rogue", "ROGUE"))
   {
     strcpy(hero.Class, "Rogue");
     printf(RogueArt);
-    PRINT_CLASS("sly", hero.Class);
+    PRINT_CLASS("Sly", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "4", "cleric", "Cleric", "CLERIC"))
   {
     strcpy(hero.Class, "Cleric");
     printf(ClericArt);
-    PRINT_CLASS("holy", hero.Class);
+    PRINT_CLASS("Holy", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "5", "bard", "Bard", "BARD"))
   {
     strcpy(hero.Class, "Bard");
     printf(BardArt);
-    PRINT_CLASS("gifted", hero.Class);
+    PRINT_CLASS("Talented", hero.Class);
+    confirm_class();
+  }
+  else if (IS_CLASS(input, "6", "archer", "Archer", "ARCHER"))
+  {
+    strcpy(hero.Class, "Archer");
+    // printf(BardArt); //todo ascii are to Utils.h then uncomment this
+    PRINT_CLASS("Sharpshooting", hero.Class);
     confirm_class();
   }
   else
