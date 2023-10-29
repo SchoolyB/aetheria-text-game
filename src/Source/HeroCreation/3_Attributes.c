@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "HeroCreation.h"
 #include "../../Utils/Utils.h"
 
 //=================================================================================================//
-void set_attributes()
+int set_attributes()
 {
   clear_and_print_step("Attribute Points", 7, 8);
   // START OF ATTRIBUTE POINT ALLOCATION LOGIC

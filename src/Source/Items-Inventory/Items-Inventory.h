@@ -15,5 +15,4 @@ void equip_head_armor();
 void equip_chest_armor();
 void equip_leg_armor();
 void equip_weapon();
-void equip_bag();
 #endif

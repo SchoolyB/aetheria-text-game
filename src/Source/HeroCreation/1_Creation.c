@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include "HeroCreation.h"
 #include "../../Utils/Utils.h"
+
 
 char input[100];
 char confirmation[100];
@@ -450,6 +452,14 @@ void show_creation_data(FILE *logFile, const char *category, const char *value)
   fprintf(logFile, "%s: %s\n", category, value);
   fflush(logFile);
 }
+
+// ===========================================================================================================//
+void set_hero_level(Hero *hero, int level)
+{
+  hero->Level = level;
+  // TODO come back to this
+}
+
 // ===========================================================================================================//
 void log_creation_data_to_file()
 {

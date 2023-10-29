@@ -20,7 +20,3 @@ void equip_leg_armor()
 void equip_weapon()
 {
 }
-
-void equip_bag()
-{
-}

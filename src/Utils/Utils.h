@@ -461,29 +461,6 @@ typedef struct
 
 typedef struct
 {
-  Item Item[20];
-  bool IsSlotOpen; // todo change this to an 'int' and use the boolValues enum
-} BagSlot;
-typedef struct
-{
-  char Name[20];
-  char Description[50];
-  char Type[15];
-  /*How much weight the bag can hold not items.
-  This is a weight limit, not a slot limit.
-  The bag can have many open slots but can
-  only hold a certain amount of weight.*/
-  int CarryingCapacity;
-  BagSlot Slot1;
-  BagSlot Slot2;
-  BagSlot Slot3;
-  BagSlot Slot4;
-  BagSlot Slot5;
-  // Reach out to Sassafras for help/lesson on linkedlists
-} Bag;
-
-typedef struct
-{
   char Name[20];
   char Description[100];
   char Type[15];
@@ -511,15 +488,10 @@ struct Inventory
   ChestArmor Chest;
   LegArmor Legs;
   // Add more slots if needed
-  Bag Backpack; // Bag is an array of struct Item, where each item has a name
+  int CarryingCapacity;
   int CurrentGold;
 } Inventory;
 
-enum boolValues
-{
-  TRUE,
-  FALSE
-};
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 

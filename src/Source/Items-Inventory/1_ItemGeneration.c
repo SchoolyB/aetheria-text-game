@@ -1,6 +1,5 @@
 // build a function that randomly generates an armor pickup(could be head, chest, or legs)
 // build a function that randomly generates a weapon pickup. (could be sword, axe, mace, staff, bow, etc)
-// build a function that randomly generates a bag pickup(This will be more rare)
 // build a function that says the hero has found an item. inside this function call all the others
 #include <stdio.h>
 #include <stdlib.h>

@@ -42,13 +42,15 @@ char command_descriptions[20][100] = {
     "Shows the players inventory\n"};
 
 char possibleOrigins[5][10];
+#define FALSE 0
+#define TRUE 1
 
-int isRunning = 0;
+int isRunning = FALSE;
 void start_game()
 {
-  if (isRunning == 0)
+  if (isRunning == FALSE)
   {
-    isRunning = 1;
+    isRunning = TRUE;
     printf("Starting Game...\n");
     get_first_name();                  // from 1_Creation.c
     set_abilities();                   // from 2_Abilities.c
@@ -156,8 +158,8 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
       printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.Weapon.Name, Inventory.Head.Name, Inventory.Chest.Name, Inventory.Legs.Name);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s\n", "Equipped Bag", "Carrying Capacity", "Gold");
-      printf("%-15s | %-15d | %-15d\n", Inventory.Backpack.Name, Inventory.Backpack.CarryingCapacity, Inventory.CurrentGold);
+      printf("%-15s | %-15s\n", "Carrying Capacity", "Gold");
+      printf("%-15d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
       printf("============================================================================\n");
     }
     else if (IS_COMMANDS_COMMAND(input))
@@ -376,9 +378,6 @@ int COMMAND_LINE(FILE *logFile)
       printf("-----------------------------------------------\n");
       printf("Equipped Leg Armor | About Description \n");
       printf("%-20s | %-20s | \n", Inventory.Legs.Name, Inventory.Legs.Description);
-      printf("-----------------------------------------------\n");
-      printf("Equipped Bag | Description \n");
-      printf("%-20s | %-20s | \n", Inventory.Backpack.Name, Inventory.Backpack.Description);
       printf("===============================================\n");
     }
     else
