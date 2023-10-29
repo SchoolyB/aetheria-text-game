@@ -1,5 +1,42 @@
 #ifndef HERO_CREATION_H
 #define HERO_CREATION_H
-// TODO add all hero creation prototypes here. plan to clean up Utils.h
 
+//+=+=+=+=+=+1_HeroCreation.c Prototypes+=+=+=+=+=+//
+void get_first_name();
+void ask_for_dynasty_name();
+void get_dynasty_name();
+void confirm_dynasty_name();
+void ask_for_gender();
+void confirm_no_gender();
+void get_gender();
+void confirm_gender();
+void get_homeland();
+void confirm_homeland();
+void get_profession();
+void confirm_profession();
+void get_class();
+void confirm_class();
+void set_hero_level();
+void log_creation_data_to_file();
+//+=+=+=+=+=+2_Abilities.c Prototypes+=+=+=+=+=+//
+int set_abilities();
+//+=+=+=+=+=+3_Attributes.c Prototypes+=+=+=+=+=+//
+void set_attributes();
+//+=+=+=+=+=+4_Inventory.c Prototypes+=+=+=+=+=+//
+void determine_class_for_inventory();
+void initialize_starting_weapon();
+void initialize_starting_head_armor();
+void initialize_starting_chest_armor();
+void initialize_starting_leg_armor();
+void initialize_starting_bag();
+void initialize_starting_bag_slot1();
+void initialize_starting_bag_slot2();
+void initialize_starting_bag_slot3();
+void initialize_starting_bag_slot4();
+void initialize_starting_bag_slot5();
+void initialize_inventory();
+//+=+=+=+=+=+5_Confirmation.c Prototypes+=+=+=+=+=+//
+void confirm_hero_creation_and_stats();
+//+=+=+=+=+=+6_Changes.c Prototypes+=+=+=+=+=+//
+void change_specific_creation_item();
 #endif
