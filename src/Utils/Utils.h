@@ -239,7 +239,7 @@ START OF COMMAND LINE MACROS
 #define IS_LORE_COMMAND(param) (strcmp(param, "/lore") == 0)
 #define IS_INVENTORY_COMMAND(param) (strcmp(param, "/inventory") == 0 || strcmp(param, "/inv") == 0)
 #define IS_GOD_MODE_COMMAND(param) (strcmp(param, "/godmode") == 0 || strcmp(param, "/god") == 0)
-
+#define IS_DROP_ITEM_COMMAND(param) (strcmp(param, "/drop") == 0)
 //--------------------------------------------------------------------------------//
 /*END OF COMMAND LINE MACROS
 |

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include "./Utils.h"
+#include "../Source/Items-Inventory/Items-Inventory.h"
+#include "../testing.c"
 #include "../Source/HeroCreation/1_Creation.c"
 #include "../Source/HeroCreation/2_Abilities.c"
 #include "../Source/HeroCreation/3_BaselineStats.c"
@@ -406,7 +408,18 @@ int COMMAND_LINE(FILE *logFile)
       printf("Added Damage: %d\n", Inventory.Slot1.Weapon.AddedDamage);
       printf("Value: %d\n", Inventory.Slot1.Weapon.Value);
     }
-
+    else if (IS_DROP_ITEM_COMMAND(input))
+    {
+      drop_item();
+      printf("You dropped the item.\n");
+      printf("Inventory slot one now contains the following data:\n");
+      printf("Name: %s\n", Inventory.Slot1.Weapon.Name);
+      printf("Description: %s\n", Inventory.Slot1.Weapon.Description);
+      printf("Type: %s\n", Inventory.Slot1.Weapon.Type);
+      printf("Weight: %d\n", Inventory.Slot1.Weapon.Weight);
+      printf("Added Damage: %d\n", Inventory.Slot1.Weapon.AddedDamage);
+      printf("Value: %d\n", Inventory.Slot1.Weapon.Value);
+    }
     else
     {
       printf("Invalid command.\n");
