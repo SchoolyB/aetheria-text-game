@@ -389,6 +389,24 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Legs.Name, Inventory.Legs.Description, Inventory.Legs.AddedHealth, Inventory.Legs.Type, Inventory.Legs.Weight, Inventory.Legs.Value);
       printf("=======================================================================================================\n");
     }
+    // GOD MODE IS FOR DEBUGGING. REMOVE BEFORE RELEASE
+    else if (IS_GOD_MODE_COMMAND(input))
+    {
+      activate_god_mode();
+      printf("God mode activated.\n");
+      sleep(1);
+      system("clear");
+      printf("Call all functions that you would like to debug here.\n");
+      hero_steps_on_item();
+      printf(" Inventory slot one now contains the following data:\n");
+      printf("Name: %s\n", Inventory.Slot1.Weapon.Name);
+      printf("Description: %s\n", Inventory.Slot1.Weapon.Description);
+      printf("Type: %s\n", Inventory.Slot1.Weapon.Type);
+      printf("Weight: %d\n", Inventory.Slot1.Weapon.Weight);
+      printf("Added Damage: %d\n", Inventory.Slot1.Weapon.AddedDamage);
+      printf("Value: %d\n", Inventory.Slot1.Weapon.Value);
+    }
+
     else
     {
       printf("Invalid command.\n");

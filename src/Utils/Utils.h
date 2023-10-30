@@ -238,6 +238,8 @@ START OF COMMAND LINE MACROS
 #define IS_CLEAR_NOTES_COMMAND(param) (strcmp(param, "/nc") == 0)
 #define IS_LORE_COMMAND(param) (strcmp(param, "/lore") == 0)
 #define IS_INVENTORY_COMMAND(param) (strcmp(param, "/inventory") == 0 || strcmp(param, "/inv") == 0)
+#define IS_GOD_MODE_COMMAND(param) (strcmp(param, "/godmode") == 0 || strcmp(param, "/god") == 0)
+
 //--------------------------------------------------------------------------------//
 /*END OF COMMAND LINE MACROS
 |
@@ -486,12 +488,25 @@ typedef struct
   int Value;
 } HeadArmor, ChestArmor, LegArmor;
 
+typedef struct
+{
+  Item Item;
+  Weapon Weapon;
+  HeadArmor Head;
+  ChestArmor Chest;
+  LegArmor Legs;
+  int Quantity;
+  int isOpen; // 0 = false, 1 = true
+} InventorySlot;
 struct Inventory
 {
   Weapon Weapon;
   HeadArmor Head;
   ChestArmor Chest;
   LegArmor Legs;
+  InventorySlot Slot1;
+  // InventorySlot Slot2;
+  // InventorySlot Slot3;
   // Add more slots if needed
   int CarryingCapacity;
   int MaxCarryingCapacity;
@@ -858,4 +873,60 @@ char ArcherArt[] =
     "                        :+#*=                              \n";
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+
+//+1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-DEBUGGING+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+void activate_god_mode()
+{
+  strcpy(hero.FirstName, "God");
+  strcpy(hero.LastName, "Mode");
+  strcpy(hero.Gender, "Unknown");
+  strcpy(hero.Homeland, "Empyrea");
+  strcpy(hero.Profession, "Hunter");
+  strcpy(hero.Class, "Mage");
+  hero.Level = 100;
+  hero.Health = 1000;
+  hero.Mana = 1000;
+  strcpy(hero.Ability1.Name, "God Mode Ability 1");
+  strcpy(hero.Ability1.Description, "Ability 1 desc.");
+  hero.Ability1.Damage = 1000;
+  strcpy(hero.Ability2.Name, "God Mode Ability 2");
+  strcpy(hero.Ability2.Description, "Ability 2 desc.");
+  hero.Ability2.Damage = 1000;
+  strcpy(hero.Ability3.Name, "God Mode Ability 3");
+  strcpy(hero.Ability3.Description, "Ability 3 desc.");
+  hero.Ability3.Damage = 1000;
+  hero.StrengthAttribute.CurrentPoints = 10;
+  hero.IntelligenceAttribute.CurrentPoints = 10;
+  hero.DexterityAttribute.CurrentPoints = 10;
+  hero.LuckAttribute.CurrentPoints = 10;
+  hero.AttributePointsPool = 0;
+  Inventory.MaxCarryingCapacity = 1000;
+  strcpy(Inventory.Weapon.Name, "God Mode Sword");
+  strcpy(Inventory.Weapon.Description, "The Sword.");
+  Inventory.Weapon.AddedDamage = 1000;
+  strcpy(Inventory.Weapon.Type, "Sword");
+  Inventory.Weapon.Weight = 0;
+  Inventory.Weapon.Value = 0;
+  strcpy(Inventory.Head.Name, "God Mode Helmet");
+  strcpy(Inventory.Head.Description, "THE Helmet.");
+  Inventory.Head.AddedHealth = 1000;
+  strcpy(Inventory.Head.Type, "Helmet");
+  Inventory.Head.Weight = 0;
+  Inventory.Head.Value = 0;
+  strcpy(Inventory.Chest.Name, "God Mode Chestplate");
+  strcpy(Inventory.Chest.Description, "THE Chestplate.");
+  Inventory.Chest.AddedHealth = 1000;
+  strcpy(Inventory.Chest.Type, "Chestplate");
+  Inventory.Chest.Weight = 0;
+  Inventory.Chest.Value = 0;
+  strcpy(Inventory.Legs.Name, "God Mode Leggings");
+  strcpy(Inventory.Legs.Description, "THE Leggings.");
+  Inventory.Legs.AddedHealth = 1000;
+  strcpy(Inventory.Legs.Type, "Leggings");
+  Inventory.Legs.Weight = 0;
+  Inventory.Legs.Value = 0;
+  Inventory.CurrentGold = 1000000;
+  Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot1.Quantity = 0;
+}
 #endif
