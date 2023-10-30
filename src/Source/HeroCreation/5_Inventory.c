@@ -116,9 +116,50 @@ void initialize_inventory(struct Inventory *HeroInventory, char *weaponName, cha
   initialize_starting_head_armor(&HeroInventory->Head, headArmorName, "description", "Crappy", 10, 10, 15);
   initialize_starting_chest_armor(&HeroInventory->Chest, chestArmorName, "description", "Crappy", 10, 5, 10);
   initialize_starting_leg_armor(&HeroInventory->Legs, legsArmorName, "description", "Crappy", 10, 15, 22);
-  HeroInventory->MaxCarryingCapacity = 60;
+  // HeroInventory->MaxCarryingCapacity = 60;
   // calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->Weapon, &HeroInventory->Head, &HeroInventory->Chest, &HeroInventory->Legs); //old
 
   calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->MaxCarryingCapacity, &HeroInventory->Weapon, &HeroInventory->Head, &HeroInventory->Chest, &HeroInventory->Legs); // new
   HeroInventory->CurrentGold = Gold;
+}
+
+//=============================================================//
+void check_if_empty_show_none()
+{
+  if (strlen(Inventory.Head.Name) == 0)
+  {
+    strcpy(Inventory.Head.Name, "None");
+    strcpy(Inventory.Head.Description, "None");
+    strcpy(Inventory.Head.Type, "None");
+    Inventory.Head.AddedHealth = NULL;
+    Inventory.Head.Weight = NULL;
+    Inventory.Head.Value = NULL;
+  }
+  if (strlen(Inventory.Chest.Name) == 0)
+  {
+    strcpy(Inventory.Chest.Name, "None");
+    strcpy(Inventory.Chest.Description, "None");
+    strcpy(Inventory.Chest.Type, "None");
+    Inventory.Chest.AddedHealth = NULL;
+    Inventory.Chest.Weight = NULL;
+    Inventory.Chest.Value = NULL;
+  }
+  if (strlen(Inventory.Legs.Name) == 0)
+  {
+    strcpy(Inventory.Legs.Name, "None");
+    strcpy(Inventory.Legs.Description, "None");
+    strcpy(Inventory.Legs.Type, "None");
+    Inventory.Legs.AddedHealth = NULL;
+    Inventory.Legs.Weight = NULL;
+    Inventory.Legs.Value = NULL;
+  }
+  if (strlen(Inventory.Weapon.Name) == 0)
+  {
+    strcpy(Inventory.Weapon.Name, "None");
+    strcpy(Inventory.Weapon.Description, "None");
+    strcpy(Inventory.Weapon.Type, "None");
+    Inventory.Weapon.AddedDamage = NULL;
+    Inventory.Weapon.Weight = NULL;
+    Inventory.Weapon.Value = NULL;
+  }
 }

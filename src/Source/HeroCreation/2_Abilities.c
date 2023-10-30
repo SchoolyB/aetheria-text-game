@@ -13,10 +13,6 @@ int set_abilities()
 {
     if (IS_OF_CLASS(hero.Class, "Warrior"))
     {
-        // TODO move the health and mana declarations to their own file
-        //  Setting Starting health and mana
-        hero.Health = 75;
-        hero.Mana = 20;
 
         // Declaring Abilities
         struct Ability1 Slash = {
@@ -51,10 +47,6 @@ int set_abilities()
     else if (IS_OF_CLASS(hero.Class, "Mage"))
     {
 
-        // Setting Starting health and mana
-        hero.Health = 40;
-        hero.Mana = 70;
-
         // Declaring Abilities
         struct Ability1 Fireball = {
             "Fireball",
@@ -87,10 +79,6 @@ int set_abilities()
     else if (IS_OF_CLASS(hero.Class, "Rogue"))
     {
 
-        // Setting Starting health and mana
-        hero.Health = 30;
-        hero.Mana = 40;
-
         // Declaring Abilities
         struct Ability1 Backstab = {
             "Backstab",
@@ -121,10 +109,6 @@ int set_abilities()
     }
     else if (IS_OF_CLASS(hero.Class, "Cleric"))
     {
-
-        // Setting Starting health and mana
-        hero.Health = 60;
-        hero.Mana = 50;
 
         // Declaring Abilities
         struct Ability1 Smite = {
@@ -158,10 +142,6 @@ int set_abilities()
     else if (IS_OF_CLASS(hero.Class, "Bard"))
     {
 
-        // Setting Starting health and mana
-        hero.Health = 40;
-        hero.Mana = 60;
-
         // Declaring Abilities
         struct Ability1 CacophonousBlast = {
             "Cacophonous Blast",
@@ -193,8 +173,6 @@ int set_abilities()
     }
     else if (IS_OF_CLASS(hero.Class, "Archer"))
     {
-        hero.Health = 55;
-        hero.Mana = 20;
 
         struct Ability1 Shoot = {
             "Shoot",

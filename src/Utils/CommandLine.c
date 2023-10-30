@@ -6,10 +6,11 @@
 #include "./Utils.h"
 #include "../Source/HeroCreation/1_Creation.c"
 #include "../Source/HeroCreation/2_Abilities.c"
-#include "../Source/HeroCreation/3_Attributes.c"
-#include "../Source/HeroCreation/4_Inventory.c"
-#include "../Source/HeroCreation/5_Confirmation.c"
-#include "../Source/HeroCreation/6_Changes.c"
+#include "../Source/HeroCreation/3_BaselineStats.c"
+#include "../Source/HeroCreation/4_Attributes.c"
+#include "../Source/HeroCreation/5_Inventory.c"
+#include "../Source/HeroCreation/6_Confirmation.c"
+#include "../Source/HeroCreation/7_Changes.c"
 
 char commands[20][100] = {
     "start"
@@ -54,9 +55,10 @@ void start_game()
     printf("Starting Game...\n");
     get_first_name();                  // from 1_Creation.c
     set_abilities();                   // from 2_Abilities.c
-    set_attributes();                  // from 3_Attributes.c
-    determine_class_for_inventory();   // from 4_Inventory.c
-    confirm_hero_creation_and_stats(); // from 5_Confirmation.c
+    set_baseline_stats();              // from 3_BaselineStats.c
+    set_attributes();                  // from 4_Attributes.c
+    determine_class_for_inventory();   // from 5_Inventory.c
+    confirm_hero_creation_and_stats(); // from 6_Confirmation.c
   }
   else
   {
@@ -366,7 +368,7 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
-
+      check_if_empty_show_none();
       printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
       printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
       if (Inventory.CarryingCapacity <= 0)

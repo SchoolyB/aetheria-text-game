@@ -42,7 +42,7 @@ void confirm_hero_creation_and_stats()
   {
     char input[10];
     printf("Hmmm interesting...\n Would you like to start at the beginning or would you like to change something in particular?\n");
-    printf("You can type 'redo' or '1' to start at the creation process again. You can also type 'change' or '2' to change something in particular.\n");
+    printf("You can type 'redo' or '1' to start at the creation process again. You can also type 'change' or '2' to change something in particular, Lastly you can type 'confirm' or '3' to confirm the information\n");
     FGETS(input);
     REMOVE_NEWLINE_CHAR(input);
 
@@ -56,6 +56,10 @@ void confirm_hero_creation_and_stats()
     else if (STR_CMP_TWO(input, "2", "change"))
     {
       change_specific_creation_item();
+    }
+    else if (STR_CMP_TWO(input, "3", "confirm"))
+    {
+      confirm_hero_creation_and_stats();
     }
     else
     {

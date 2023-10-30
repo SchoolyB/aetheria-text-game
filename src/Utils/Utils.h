@@ -665,14 +665,6 @@ void calculate_dmg_with_equipped_weapon(int *base_dmg, Weapon *weapon)
 }
 
 // this function is used to calculate the amount of carrying capacity the hero has left this func should be called whenever an item is added to the inventory or removed from the inventory
-// void calculate_remaining_carrying_capacity(int *base_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
-// {
-//   // todo when items are added to inventory, add their weight from the carrying capacity
-//   int new_carrying_capacity;
-//   new_carrying_capacity = *base_carrying_capacity -= Inventory.Weapon.Weight + Inventory.Head.Weight + Inventory.Chest.Weight + Inventory.Legs.Weight;
-//   *base_carrying_capacity = new_carrying_capacity;
-// } //old
-
 void calculate_remaining_carrying_capacity(int *base_carrying_capacity, int *max_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
 {
 
@@ -681,7 +673,24 @@ void calculate_remaining_carrying_capacity(int *base_carrying_capacity, int *max
   *base_carrying_capacity = *max_carrying_capacity - Inventory.Weapon.Weight - Inventory.Head.Weight - Inventory.Chest.Weight - Inventory.Legs.Weight;
 
   new_carrying_capacity = *base_carrying_capacity;
-} // new
+}
+// function runs if player adds str points. this increases max carrying capacity
+void calculate_new_max_carrying_capacity_from_str(int *base_max)
+{
+  int new_max;
+  switch (hero.StrengthAttribute.CurrentPoints)
+  {
+  case 1:
+    new_max = *base_max += 1 * 4;
+  case 2:
+    new_max = *base_max += 2 * 4;
+  case 3:
+    new_max = *base_max += 3 * 4;
+  case 4:
+    new_max = *base_max += 4 * 4;
+  }
+  *base_max = new_max;
+}
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//

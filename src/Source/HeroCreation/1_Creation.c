@@ -82,6 +82,11 @@ void ask_for_dynasty_name()
     {
       ask_for_dynasty_name();
     }
+    else
+    {
+      MAKE_VALID_DECISION;
+      ask_for_dynasty_name();
+    }
   }
   else
 
