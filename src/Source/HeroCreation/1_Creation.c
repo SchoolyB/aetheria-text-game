@@ -459,7 +459,7 @@ void get_class()
   else if (IS_CLASS(input, "6", "archer", "Archer", "ARCHER"))
   {
     strcpy(hero.Class, "Archer");
-    // printf(BardArt); //todo ascii are to Utils.h then uncomment this
+    printf(ArcherArt);
     PRINT_CLASS("Sharpshooting", hero.Class);
     confirm_class();
   }
