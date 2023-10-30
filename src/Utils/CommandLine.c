@@ -366,7 +366,7 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
-
+      check_if_empty_show_none();
       printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
       printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
       if (Inventory.CarryingCapacity <= 0)

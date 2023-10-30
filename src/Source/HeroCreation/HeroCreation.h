@@ -29,6 +29,7 @@ void initialize_starting_head_armor();
 void initialize_starting_chest_armor();
 void initialize_starting_leg_armor();
 void initialize_inventory();
+void check_if_empty_show_none();
 //+=+=+=+=+=+5_Confirmation.c Prototypes+=+=+=+=+=+//
 void confirm_hero_creation_and_stats();
 //+=+=+=+=+=+6_Changes.c Prototypes+=+=+=+=+=+//
