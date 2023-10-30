@@ -81,7 +81,10 @@ int set_attributes()
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
 
   printf("You have been given %d points to allocate to you attributes.\n", hero.AttributePointsPool);
-  printf("You can type the associated numbers such as'\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m',\n abbreviations such as\'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m', or the full word of each attribute of your choice.\n");
+  printf("There are three ways to choose which attribute to apply points to. They are:\n");
+  printf("1.Typing the number associated with the attribute. '\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m'\n");
+  printf("2.Typing the abbreviation of the attribute. \'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m'\n");
+  printf("3.Typing the full word of the attribute.\n");
   sleep(2);
   printf("Which attribute would you like to allocate points to?\n");
 

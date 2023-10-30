@@ -98,7 +98,7 @@ void change_specific_creation_item()
       REMOVE_NEWLINE_CHAR(want_gender);
       if (INPUT_IS_YES(want_gender))
       {
-        printf("Very well, tell what your gender is.\n");
+        printf("Very well, what is your gender is.\n");
         char new[10];
         FGETS(new);
         REMOVE_NEWLINE_CHAR(new);
