@@ -251,6 +251,7 @@ int set_attributes()
   // TODO need to find a bette rplace for these...this is stupid and ugly
   calculate_new_hero_health(&hero.Health);
   calculate_new_hero_mana(&hero.Mana);
+  calculate_new_max_carrying_capacity_from_str(&Inventory.MaxCarryingCapacity);
 
   /*
   TODO MAKE A TABLE SHOWING HOW EACH ATTRIBUTE AFFECTS EACH STAT

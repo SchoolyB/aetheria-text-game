@@ -20,9 +20,11 @@ void set_hero_level();
 void log_creation_data_to_file();
 //+=+=+=+=+=+2_Abilities.c Prototypes+=+=+=+=+=+//
 int set_abilities();
-//+=+=+=+=+=+3_Attributes.c Prototypes+=+=+=+=+=+//
+//+=+=+=+=+=+3_BaselineStats.c Prototypes+=+=+=+=+=+//
+void set_baseline_stats();
+//+=+=+=+=+=+4_Attributes.c Prototypes+=+=+=+=+=+//
 int set_attributes();
-//+=+=+=+=+=+4_Inventory.c Prototypes+=+=+=+=+=+//
+//+=+=+=+=+=+5_Inventory.c Prototypes+=+=+=+=+=+//
 void determine_class_for_inventory();
 void initialize_starting_weapon();
 void initialize_starting_head_armor();
@@ -30,8 +32,8 @@ void initialize_starting_chest_armor();
 void initialize_starting_leg_armor();
 void initialize_inventory();
 void check_if_empty_show_none();
-//+=+=+=+=+=+5_Confirmation.c Prototypes+=+=+=+=+=+//
+//+=+=+=+=+=+6_Confirmation.c Prototypes+=+=+=+=+=+//
 void confirm_hero_creation_and_stats();
-//+=+=+=+=+=+6_Changes.c Prototypes+=+=+=+=+=+//
+//+=+=+=+=+=+7_Changes.c Prototypes+=+=+=+=+=+//
 void change_specific_creation_item();
 #endif
