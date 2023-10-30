@@ -494,6 +494,7 @@ struct Inventory
   LegArmor Legs;
   // Add more slots if needed
   int CarryingCapacity;
+  int MaxCarryingCapacity;
   int CurrentGold;
 } Inventory;
 
@@ -664,14 +665,23 @@ void calculate_dmg_with_equipped_weapon(int *base_dmg, Weapon *weapon)
 }
 
 // this function is used to calculate the amount of carrying capacity the hero has left this func should be called whenever an item is added to the inventory or removed from the inventory
-void calculate_remaining_carrying_capacity(int *base_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
-{
-  // todo when items are added to inventory, add their weight from the carrying capacity
-  int new_carrying_capacity;
-  new_carrying_capacity = *base_carrying_capacity -= Inventory.Weapon.Weight + Inventory.Head.Weight + Inventory.Chest.Weight + Inventory.Legs.Weight;
-  *base_carrying_capacity = new_carrying_capacity;
-}
+// void calculate_remaining_carrying_capacity(int *base_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+// {
+//   // todo when items are added to inventory, add their weight from the carrying capacity
+//   int new_carrying_capacity;
+//   new_carrying_capacity = *base_carrying_capacity -= Inventory.Weapon.Weight + Inventory.Head.Weight + Inventory.Chest.Weight + Inventory.Legs.Weight;
+//   *base_carrying_capacity = new_carrying_capacity;
+// } //old
 
+void calculate_remaining_carrying_capacity(int *base_carrying_capacity, int *max_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+{
+
+  int new_carrying_capacity;
+
+  *base_carrying_capacity = *max_carrying_capacity - Inventory.Weapon.Weight - Inventory.Head.Weight - Inventory.Chest.Weight - Inventory.Legs.Weight;
+
+  new_carrying_capacity = *base_carrying_capacity;
+} // new
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//

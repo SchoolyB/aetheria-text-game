@@ -366,6 +366,13 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
+
+      printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
+      printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
+      if (Inventory.CarryingCapacity <= 0)
+      {
+        printf("You are over encumbered and cannot carry any more.\n");
+      }
       printf("=======================================================================================================\n");
       printf("%-20s | %-25s | %-11s | %-10s | %-10s | %-10s \n", "Equipped Wpn", "Desc.", "Dmg Incr", "Type", "Wt(lbs)", "Val(gold)");
       printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d \n", Inventory.Weapon.Name, Inventory.Weapon.Description, Inventory.Weapon.AddedDamage, Inventory.Weapon.Type, Inventory.Weapon.Weight, Inventory.Weapon.Value);
@@ -383,6 +390,7 @@ int COMMAND_LINE(FILE *logFile)
     else
     {
       printf("Invalid command.\n");
+      sleep(1);
       system("clear");
     }
   }
