@@ -23,7 +23,7 @@ void inventory_options()
 
   if (STR_CMP_TWO(input, "1", "equip"))
   {
-    // equip_item();
+    equip_item();
     puts("You chose the equip option.");
   }
   else if (STR_CMP_TWO(input, "2", "unequip"))
@@ -57,6 +57,20 @@ void inventory_options()
   }
 }
 //============================================================================================================//
+// this function takes in and handles the logic for EQUIPPING an item. See logic in void equip_logic()
+void equip_item()
+{
+  puts("What Item from you inventory wold you like to equip? Enter the slot number.");
+  printf("Slot 1: %s\n", Inventory.Slot1.Item.Name);
+  printf("Slot 2: %s\n", Inventory.Slot2.Item.Name);
+  printf("Slot 3: %s\n", Inventory.Slot3.Item.Name);
+
+  char input[10];
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+}
+//============================================================================================================//
+// this function takes in and handles the logic for  UN-EQUIPPING an item. See logic in void unequip_logic()
 void unequip_item()
 {
   printf("Which of these would you like to unequip? you can enter the number,the exact name of the item, or you can enter 'weapon', 'head', 'chests', or 'legs'.\n");
@@ -69,9 +83,27 @@ void unequip_item()
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
 
+  if (STR_CMP(input, Inventory.Slot1.Item.Name) || atoi(input) == 1 || STR_CMP(input, "slot1"))
+  {
+  }
+  else if (STR_CMP(input, Inventory.Slot2.Item.Name) || atoi(input) == 2 || STR_CMP(input, "slot2"))
+  {
+  }
+  else if (STR_CMP(input, Inventory.Slot3.Item.Name) || atoi(input) == 3 || STR_CMP(input, "slot3"))
+  {
+  }
+
+  else
+  {
+    MAKE_VALID_DECISION;
+    unequip_item();
+  }
+
   if (STR_CMP(input, Inventory.EquippedWeapon.Name) || atoi(input) == 1 || STR_CMP(input, "weapon"))
   {
     unequip_logic(&input, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value);
+    // For some reason calling the function below only once only in this if statement causes the program to work as intended
+    // IF it aint broke dont fix it I gu ess
     choose_open_slot_to_move_to(&input);
   }
   else if (STR_CMP(input, Inventory.EquippedHead.Name) || atoi(input) == 2 || STR_CMP(input, "head"))
@@ -280,13 +312,67 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
 //   printf("Would you like to equip an item?\n");
 // }
 
+//============================================================================================================//
+// this function contains all the logic for EQUIPPING an item. See implementation in void equip_item()
+void equip_logic(char *input, char *itemInSlot, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue)
+{
+  printf("You have chosen to equip %s. \n", itemInSlot);
+  if (strcmp(itemInSlot, "Empty") == 0)
+  {
+    puts("There is nothing in this slot.");
+  }
+  /*
+  The following 'else if' statements
+  Run checks to see if an equippable slot is empty
+  AND if the user is trying to equip correct type for
+  that equippable slot then equip it. If not throw error
+  */
+  else if (Inventory.EquippedWeapon.Name == "Empty" && strcmp(Inventory.Slot1.Item.Type, "Weapon" == 0))
+  {
+    puts("You have equipped the weapon.");
+    strcpy(Inventory.EquippedWeapon.Name, Inventory.Slot1.Item.Name);
+    strcpy(Inventory.EquippedWeapon.Description, Inventory.Slot1.Item.Description);
+    strcpy(Inventory.EquippedWeapon.Type, Inventory.Slot1.Item.Type);
+    Inventory.EquippedWeapon.Weight = Inventory.Slot1.Item.Weight;
+    Inventory.EquippedWeapon.AddedDamage = Inventory.Slot1.Item.AddedDamage;
+    Inventory.EquippedWeapon.Value = Inventory.Slot1.Item.Value;
+    strcpy(Inventory.Slot1.Item.Name, "Empty");
+    strcpy(Inventory.Slot1.Item.Description, "Empty");
+    strcpy(Inventory.Slot1.Item.Type, "Empty");
+    Inventory.Slot1.Item.Weight = 0;
+    Inventory.Slot1.Item.AddedDamage = 0;
+    Inventory.Slot1.Item.Value = 0;
+  }
+  else if (Inventory.EquippedHead.Name == "Empty" && strcmp(Inventory.Slot1.Item.Type, "Head" == 0))
+  {
+    puts("You have equipped the head armor.");
+    strcpy(Inventory.EquippedHead.Name, Inventory.Slot1.Item.Name);
+    strcpy(Inventory.EquippedHead.Description, Inventory.Slot1.Item.Description);
+    strcpy(Inventory.EquippedHead.Type, Inventory.Slot1.Item.Type);
+    Inventory.EquippedHead.Weight = Inventory.Slot1.Item.Weight;
+    Inventory.EquippedHead.AddedDamage = Inventory.Slot1.Item.AddedDamage;
+    Inventory.EquippedHead.Value = Inventory.Slot1.Item.Value;
+    strcpy(Inventory.Slot1.Item.Name, "Empty");
+    strcpy(Inventory.Slot1.Item.Description, "Empty");
+    strcpy(Inventory.Slot1.Item.Type, "Empty");
+    Inventory.Slot1.Item.Weight = 0;
+    Inventory.Slot1.Item.AddedHealth = 0;
+    Inventory.Slot1.Item.Value = 0;
+  }
+  else
+  {
+    puts("Check failed.");
+  }
+}
+//============================================================================================================//
+// this function contains all the logic for UN-EQUIPPING an item. See implementation in void unequip_item()
 void unequip_logic(char *input, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue)
 {
   printf("You have chosen to unequip %s.", equippedItemName);
   if (Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
   {
     puts("All slots are full.");
-    puts("Please clear a slot before unequipping this item.");
+    puts("Please clear a slot before un-equipping this item.");
   }
   else if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
   {
