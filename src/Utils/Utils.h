@@ -62,7 +62,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 // Cleaner way to evaluate the users input string
 #define STR_CMP(input, string) (strcmp(input, string) == 0)
 //--------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------//
 
+// Cleaner way to evaluate the users input string for two possible values
+#define STR_CMP_TWO(input, string1, string2) (strcmp(input, string1) == 0 || strcmp(input, string2) == 0)
 // CHANGE TEXT IN TERMINAL
 //  The 'color' param should be a number between 31 and 36
 //  The 'str' param should be the string you want to modify
@@ -238,6 +241,7 @@ START OF COMMAND LINE MACROS
 #define IS_CLEAR_NOTES_COMMAND(param) (strcmp(param, "/nc") == 0)
 #define IS_LORE_COMMAND(param) (strcmp(param, "/lore") == 0)
 #define IS_INVENTORY_COMMAND(param) (strcmp(param, "/inventory") == 0 || strcmp(param, "/inv") == 0)
+#define IS_GOD_MODE_COMMAND(param) (strcmp(param, "/godmode") == 0 || strcmp(param, "/god") == 0)
 //--------------------------------------------------------------------------------//
 /*END OF COMMAND LINE MACROS
 |
@@ -455,44 +459,34 @@ typedef struct
 } Hero;
 extern Hero hero;
 
+// this struct will be applicable to all things in the game that the user can pick up from weapons, armor, and items, to potions, books, etc
 typedef struct
 {
   char Name[20];
-  char Description[50];
-  char Type[20];
+  char Description[100];
+  char Type[20]; // weapon, armors, item, potion, book, etc
+  int AddedDamage;
+  int AddedHealth;
   int Weight;
   int Value;
+  char Art[1000];
 } Item;
 
 typedef struct
 {
-  char Name[20];
-  char Description[100];
-  char Type[15];
-  int AddedDamage; // Rather than having their own damage, weapons will add/subtract damage to the heros abilities
-  int Weight;
-  int Value;
-} Weapon;
-
-typedef struct
-{
-  char Name[20];
-  char Description[100];
-  char Type[15];
-  /*this will add to max health....TODO possibly add an 'Armor'/Defense stat that will reduce damage taken
-  as opposed to adding to max health.*/
-  int AddedHealth;
-  int Weight;
-  int Value;
-} HeadArmor, ChestArmor, LegArmor;
-
+  Item Item;
+  int Quantity;
+  int isOpen; // 0 = false, 1 = true
+} InventorySlot;
 struct Inventory
 {
-  Weapon Weapon;
-  HeadArmor Head;
-  ChestArmor Chest;
-  LegArmor Legs;
-  // Add more slots if needed
+  Item EquippedWeapon;
+  Item EquippedHead;
+  Item EquippedChest;
+  Item EquippedLegs;
+  InventorySlot Slot1;
+  InventorySlot Slot2;
+  InventorySlot Slot3;
   int CarryingCapacity;
   int MaxCarryingCapacity;
   int CurrentGold;
@@ -598,10 +592,10 @@ void calculate_new_hero_health(int *base_health)
   }
 }
 // this function calculates the amount of health the hero has based on the armor they have equipped
-void calculate_new_health_from_armor(int *base_health, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+void calculate_new_health_from_armor(int *base_health, Item *equipped_head_armor, Item *equipped_chest_armor, Item *equipped_leg_armor)
 {
   int new_health;
-  new_health = *base_health += head->AddedHealth + chest->AddedHealth + legs->AddedHealth;
+  new_health = *base_health += equipped_head_armor->AddedHealth + equipped_chest_armor->AddedHealth + equipped_leg_armor->AddedHealth;
   *base_health = new_health;
 }
 // This function calculates the amount how much mana the hero has based on how many points are allocated to the intelligence attribute
@@ -657,20 +651,20 @@ void calculate_new_mana_cost(int param, int *base_mana_cost, char *AbilityName)
   *base_mana_cost = new_mana_cost;
 }
 
-void calculate_dmg_with_equipped_weapon(int *base_dmg, Weapon *weapon)
+void calculate_dmg_with_equipped_weapon(int *base_dmg, Item *item)
 {
   int new_dmg;
-  new_dmg = *base_dmg += weapon->AddedDamage;
+  new_dmg = *base_dmg += item->AddedDamage;
   *base_dmg = new_dmg;
 }
 
 // this function is used to calculate the amount of carrying capacity the hero has left this func should be called whenever an item is added to the inventory or removed from the inventory
-void calculate_remaining_carrying_capacity(int *base_carrying_capacity, int *max_carrying_capacity, Weapon *weapon, HeadArmor *head, ChestArmor *chest, LegArmor *legs)
+void calculate_remaining_carrying_capacity(int *base_carrying_capacity, int *max_carrying_capacity, Item *equipped_weapon, Item *equipped_head_armor, Item *equipped_chest_armor, Item *equipped_leg_armor)
 {
 
   int new_carrying_capacity;
 
-  *base_carrying_capacity = *max_carrying_capacity - Inventory.Weapon.Weight - Inventory.Head.Weight - Inventory.Chest.Weight - Inventory.Legs.Weight;
+  *base_carrying_capacity = *max_carrying_capacity - equipped_weapon->Weight - equipped_head_armor->Weight - equipped_chest_armor->Weight - equipped_leg_armor->Weight;
 
   new_carrying_capacity = *base_carrying_capacity;
 }
@@ -858,4 +852,67 @@ char ArcherArt[] =
     "                        :+#*=                              \n";
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+
+//+1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-DEBUGGING+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+void activate_god_mode()
+{
+  strcpy(hero.FirstName, "God");
+  strcpy(hero.LastName, "Mode");
+  strcpy(hero.Gender, "Unknown");
+  strcpy(hero.Homeland, "Empyrea");
+  strcpy(hero.Profession, "Hunter");
+  strcpy(hero.Class, "Mage");
+  hero.Level = 100;
+  hero.Health = 1000;
+  hero.Mana = 1000;
+  strcpy(hero.Ability1.Name, "God Mode Ability 1");
+  strcpy(hero.Ability1.Description, "Ability 1 desc.");
+  hero.Ability1.Damage = 1000;
+  strcpy(hero.Ability2.Name, "God Mode Ability 2");
+  strcpy(hero.Ability2.Description, "Ability 2 desc.");
+  hero.Ability2.Damage = 1000;
+  strcpy(hero.Ability3.Name, "God Mode Ability 3");
+  strcpy(hero.Ability3.Description, "Ability 3 desc.");
+  hero.Ability3.Damage = 1000;
+  hero.StrengthAttribute.CurrentPoints = 10;
+  hero.IntelligenceAttribute.CurrentPoints = 10;
+  hero.DexterityAttribute.CurrentPoints = 10;
+  hero.LuckAttribute.CurrentPoints = 10;
+  hero.AttributePointsPool = 0;
+  Inventory.MaxCarryingCapacity = 1000;
+  Inventory.CurrentGold = 1000000;
+  Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
+
+  Inventory.Slot1.Quantity = 0;
+  strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");
+  strcpy(Inventory.EquippedWeapon.Description, "God Mode Weapon Desc.");
+  strcpy(Inventory.EquippedWeapon.Type, "Weapon");
+  strcpy(Inventory.EquippedHead.Name, "God Mode Head");
+  strcpy(Inventory.EquippedHead.Description, "God Mode Head Desc.");
+  strcpy(Inventory.EquippedHead.Type, "Head");
+  strcpy(Inventory.EquippedChest.Name, "God Mode Chest");
+  strcpy(Inventory.EquippedChest.Description, "God Mode Chest Desc.");
+  strcpy(Inventory.EquippedChest.Type, "Chest");
+  strcpy(Inventory.EquippedLegs.Name, "God Mode Legs");
+  strcpy(Inventory.EquippedLegs.Description, "God Mode Legs Desc.");
+  strcpy(Inventory.EquippedLegs.Type, "Legs");
+  Inventory.EquippedWeapon.AddedDamage = 1000;
+  Inventory.EquippedWeapon.AddedHealth = 0;
+  Inventory.EquippedWeapon.Weight = 0;
+  Inventory.EquippedWeapon.Value = 0;
+  Inventory.EquippedHead.AddedDamage = 0;
+  Inventory.EquippedHead.AddedHealth = 0;
+  Inventory.EquippedHead.Weight = 0;
+  Inventory.EquippedHead.Value = 0;
+  Inventory.EquippedChest.AddedDamage = 0;
+  Inventory.EquippedChest.AddedHealth = 0;
+  Inventory.EquippedChest.Weight = 0;
+  Inventory.EquippedChest.Value = 0;
+  Inventory.EquippedLegs.AddedDamage = 0;
+  Inventory.EquippedLegs.AddedHealth = 0;
+  Inventory.EquippedLegs.Weight = 0;
+  Inventory.EquippedLegs.Value = 0;
+}
 #endif

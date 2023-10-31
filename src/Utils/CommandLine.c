@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include "./Utils.h"
+#include "../Source/Items-Inventory/Items-Inventory.h"
+#include "../testing.c"
 #include "../Source/HeroCreation/1_Creation.c"
 #include "../Source/HeroCreation/2_Abilities.c"
 #include "../Source/HeroCreation/3_BaselineStats.c"
@@ -158,7 +160,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s \n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);
       printf("----------------------------------------------------------------------------\n");
       printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
-      printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.Weapon.Name, Inventory.Head.Name, Inventory.Chest.Name, Inventory.Legs.Name);
+      printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.EquippedWeapon.Name, Inventory.EquippedHead.Name, Inventory.EquippedChest.Name, Inventory.EquippedLegs.Name);
       printf("----------------------------------------------------------------------------\n");
       printf("%-20s | %-15s\n", "Capacity Remaining(lbs)", "Gold");
       printf("%-20d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
@@ -368,6 +370,7 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
+      system("clear");
       check_if_empty_show_none();
       printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
       printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
@@ -377,18 +380,47 @@ int COMMAND_LINE(FILE *logFile)
       }
       printf("=======================================================================================================\n");
       printf("%-20s | %-25s | %-11s | %-10s | %-10s | %-10s \n", "Equipped Wpn", "Desc.", "Dmg Incr", "Type", "Wt(lbs)", "Val(gold)");
-      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d \n", Inventory.Weapon.Name, Inventory.Weapon.Description, Inventory.Weapon.AddedDamage, Inventory.Weapon.Type, Inventory.Weapon.Weight, Inventory.Weapon.Value);
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d \n", Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.Value);
       printf("-------------------------------------------------------------------------------------------------------\n");
       printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Head Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
-      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Head.Name, Inventory.Head.Description, Inventory.Head.AddedHealth, Inventory.Head.Type, Inventory.Head.Weight, Inventory.Head.Value);
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.EquippedHead.Name, Inventory.EquippedHead.Description, Inventory.EquippedHead.AddedHealth, Inventory.EquippedHead.Type, Inventory.EquippedHead.Weight, Inventory.EquippedHead.Value);
       printf("-------------------------------------------------------------------------------------------------------\n");
       printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Chest Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
-      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Chest.Name, Inventory.Chest.Description, Inventory.Chest.AddedHealth, Inventory.Chest.Type, Inventory.Chest.Weight, Inventory.Chest.Value);
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.EquippedChest.Name, Inventory.EquippedChest.Description, Inventory.EquippedChest.AddedHealth, Inventory.EquippedChest.Type, Inventory.EquippedChest.Weight, Inventory.EquippedChest.Value);
       printf("-------------------------------------------------------------------------------------------------------\n");
       printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Leg Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
-      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Legs.Name, Inventory.Legs.Description, Inventory.Legs.AddedHealth, Inventory.Legs.Type, Inventory.Legs.Weight, Inventory.Legs.Value);
+      printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.Value);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 1");
+      printf("%-15s \n", Inventory.Slot1.Item.Name);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 2");
+      printf("%-15s \n", Inventory.Slot2.Item.Name);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 3");
+      printf("%-15s \n", Inventory.Slot3.Item.Name);
+
       printf("=======================================================================================================\n");
+      inventory_options();
     }
+    // GOD MODE IS FOR DEBUGGING. REMOVE BEFORE RELEASE
+    else if (IS_GOD_MODE_COMMAND(input))
+    {
+      activate_god_mode();
+      printf("God mode activated.\n");
+      sleep(1);
+      system("clear");
+      printf("Call all functions that you would like to debug here.\n");
+      hero_steps_on_item();
+      printf(" Inventory slot one now contains the following data:\n");
+      printf("Name: %s\n", Inventory.Slot1.Item.Name);
+      printf("Description: %s\n", Inventory.Slot1.Item.Description);
+      printf("Type: %s\n", Inventory.Slot1.Item.Type);
+      printf("Weight: %d\n", Inventory.Slot1.Item.Weight);
+      printf("Added Damage: %d\n", Inventory.Slot1.Item.AddedDamage);
+      printf("Value: %d\n", Inventory.Slot1.Item.Value);
+    }
+
     else
     {
       printf("Invalid command.\n");

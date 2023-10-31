@@ -11,6 +11,7 @@ void show_loot_chest_contents();
 void close_loot_chest();
 //+=+=+=+=+=+3_InventoryManagement.c Prototypes+=+=+=+=+=+//
 void drop_item();
+void pick_up_item();
 void equip_head_armor();
 void equip_chest_armor();
 void equip_leg_armor();
