@@ -370,6 +370,7 @@ int COMMAND_LINE(FILE *logFile)
     }
     else if (IS_INVENTORY_COMMAND(input))
     {
+      system("clear");
       check_if_empty_show_none();
       printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
       printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
@@ -389,7 +390,11 @@ int COMMAND_LINE(FILE *logFile)
       printf("-------------------------------------------------------------------------------------------------------\n");
       printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Leg Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
       printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.Legs.Name, Inventory.Legs.Description, Inventory.Legs.AddedHealth, Inventory.Legs.Type, Inventory.Legs.Weight, Inventory.Legs.Value);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 1"); // todo add 4 other slots
+      printf("%-15s \n", Inventory.Slot1.Weapon.Name);
       printf("=======================================================================================================\n");
+      inventory_options();
     }
     // GOD MODE IS FOR DEBUGGING. REMOVE BEFORE RELEASE
     else if (IS_GOD_MODE_COMMAND(input))
@@ -408,18 +413,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("Added Damage: %d\n", Inventory.Slot1.Weapon.AddedDamage);
       printf("Value: %d\n", Inventory.Slot1.Weapon.Value);
     }
-    else if (IS_DROP_ITEM_COMMAND(input))
-    {
-      drop_item();
-      printf("You dropped the item.\n");
-      printf("Inventory slot one now contains the following data:\n");
-      printf("Name: %s\n", Inventory.Slot1.Weapon.Name);
-      printf("Description: %s\n", Inventory.Slot1.Weapon.Description);
-      printf("Type: %s\n", Inventory.Slot1.Weapon.Type);
-      printf("Weight: %d\n", Inventory.Slot1.Weapon.Weight);
-      printf("Added Damage: %d\n", Inventory.Slot1.Weapon.AddedDamage);
-      printf("Value: %d\n", Inventory.Slot1.Weapon.Value);
-    }
+
     else
     {
       printf("Invalid command.\n");

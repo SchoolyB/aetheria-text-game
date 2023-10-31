@@ -62,7 +62,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 // Cleaner way to evaluate the users input string
 #define STR_CMP(input, string) (strcmp(input, string) == 0)
 //--------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------//
 
+// Cleaner way to evaluate the users input string for two possible values
+#define STR_CMP_TWO(input, string1, string2) (strcmp(input, string1) == 0 || strcmp(input, string2) == 0)
 // CHANGE TEXT IN TERMINAL
 //  The 'color' param should be a number between 31 and 36
 //  The 'str' param should be the string you want to modify
@@ -239,7 +242,6 @@ START OF COMMAND LINE MACROS
 #define IS_LORE_COMMAND(param) (strcmp(param, "/lore") == 0)
 #define IS_INVENTORY_COMMAND(param) (strcmp(param, "/inventory") == 0 || strcmp(param, "/inv") == 0)
 #define IS_GOD_MODE_COMMAND(param) (strcmp(param, "/godmode") == 0 || strcmp(param, "/god") == 0)
-#define IS_DROP_ITEM_COMMAND(param) (strcmp(param, "/drop") == 0)
 //--------------------------------------------------------------------------------//
 /*END OF COMMAND LINE MACROS
 |

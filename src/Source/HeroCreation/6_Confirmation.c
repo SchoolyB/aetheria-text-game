@@ -46,8 +46,6 @@ void confirm_hero_creation_and_stats()
     FGETS(input);
     REMOVE_NEWLINE_CHAR(input);
 
-#define STR_CMP_TWO(input, string1, string2) (strcmp(input, string1) == 0 || strcmp(input, string2) == 0)
-
     if (STR_CMP_TWO(input, "1", "redo"))
     {
       printf("Very well then, lets start from the beginning.\n");
