@@ -882,6 +882,9 @@ void activate_god_mode()
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
   Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
+
   Inventory.Slot1.Quantity = 0;
   strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");
   strcpy(Inventory.EquippedWeapon.Description, "God Mode Weapon Desc.");

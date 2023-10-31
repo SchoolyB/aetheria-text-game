@@ -391,8 +391,15 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-20s | %-25s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Leg Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
       printf("%-20s | %-25s | %-11d | %-10s | %-10d | %-10d\n", Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.Value);
       printf("-------------------------------------------------------------------------------------------------------\n");
-      printf("%-15s \n", "Inventory Slot 1"); // todo add 4 other slots
+      printf("%-15s \n", "Inventory Slot 1");
       printf("%-15s \n", Inventory.Slot1.Item.Name);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 2");
+      printf("%-15s \n", Inventory.Slot2.Item.Name);
+      printf("-------------------------------------------------------------------------------------------------------\n");
+      printf("%-15s \n", "Inventory Slot 3");
+      printf("%-15s \n", Inventory.Slot3.Item.Name);
+
       printf("=======================================================================================================\n");
       inventory_options();
     }
