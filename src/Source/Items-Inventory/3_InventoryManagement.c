@@ -31,24 +31,24 @@ void inventory_options()
     unequip_item();
     puts("You chose the unequip option.");
   }
-  else if (STR_CMP_TWO(input, "2", "drop"))
+  else if (STR_CMP_TWO(input, "3", "drop"))
   {
     drop_item();
     puts("You chose the drop option.");
   }
-  else if (STR_CMP_TWO(input, "3", "use"))
+  else if (STR_CMP_TWO(input, "4", "use"))
   {
     // use_item();
     puts("You chose the use option.");
   }
-  else if (STR_CMP_TWO(input, "4", "examine"))
+  else if (STR_CMP_TWO(input, "5", "examine"))
   {
     // examine_item();
     puts("You chose the examine option.");
   }
-  else if (STR_CMP_TWO(input, "5", "exit"))
+  else if (STR_CMP_TWO(input, "6", "exit"))
   {
-    printf("Exiting Inventory.\n");
+    puts("Exiting Inventory.\n");
   }
   else
   {
@@ -59,206 +59,37 @@ void inventory_options()
 //============================================================================================================//
 void unequip_item()
 {
-  printf("Which of these would you like to unequip?\n");
-  printf("1.%s\n", Inventory.EquippedWeapon.Name);
-  printf("2.%s\n", Inventory.EquippedHead.Name);
-  printf("3.%s\n", Inventory.EquippedChest.Name);
-  printf("4.%s\n", Inventory.EquippedLegs.Name);
+  printf("Which of these would you like to unequip? you can enter the number,the exact name of the item, or you can enter 'weapon', 'head', 'chests', or 'legs'.\n");
+  printf("(1)Equipped Weapon:%s\n", Inventory.EquippedWeapon.Name);
+  printf("(2)Equipped Head Armor:%s\n", Inventory.EquippedHead.Name);
+  printf("(3)Equipped Chest Armor:%s\n", Inventory.EquippedChest.Name);
+  printf("(4)Equipped Leg Armor:%s\n", Inventory.EquippedLegs.Name);
 
   char input[10];
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
 
-  if (STR_CMP(input, Inventory.EquippedWeapon.Name) || atoi(input) == 1)
+  if (STR_CMP(input, Inventory.EquippedWeapon.Name) || atoi(input) == 1 || STR_CMP(input, "weapon"))
   {
-    puts("You have chosen to unequip your weapon.");
-    if (Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
-    {
-      puts("All slots are full.");
-      puts("Please clear a slot before unequipping your weapon.");
-    }
-    else if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
-    {
-      puts("Slot 1 is open.");
-      printf("Moving %s to Slot 1.\n", Inventory.EquippedWeapon.Name);
-      Inventory.Slot1.isOpen = 0;
-      strcpy(Inventory.Slot1.Item.Name, Inventory.EquippedWeapon.Name);
-      strcpy(Inventory.Slot1.Item.Description, Inventory.EquippedWeapon.Description);
-      strcpy(Inventory.Slot1.Item.Type, Inventory.EquippedWeapon.Type);
-      Inventory.Slot1.Item.Weight = Inventory.EquippedWeapon.Weight;
-      Inventory.Slot1.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-      Inventory.Slot1.Item.Value = Inventory.EquippedWeapon.Value;
-      printf("%s has been placed in Slot 1\n", Inventory.EquippedWeapon.Name);
-      puts("Slot 1 is now full.");
-      strcpy(Inventory.EquippedWeapon.Name, "Empty");
-      strcpy(Inventory.EquippedWeapon.Description, "Empty");
-      strcpy(Inventory.EquippedWeapon.Type, "Empty");
-      Inventory.EquippedWeapon.Weight = 0;
-      Inventory.EquippedWeapon.AddedDamage = 0;
-      Inventory.EquippedWeapon.Value = 0;
-    }
-    else if (Inventory.Slot2.isOpen == 1 && Inventory.Slot1.isOpen == 0 && Inventory.Slot3.isOpen == 0)
-    {
-      puts("Slot 2 is open.");
-      puts("Moving weapon to slot 2.");
-      Inventory.Slot2.isOpen = 0;
-      strcpy(Inventory.Slot2.Item.Name, Inventory.EquippedWeapon.Name);
-      strcpy(Inventory.Slot2.Item.Description, Inventory.EquippedWeapon.Description);
-      strcpy(Inventory.Slot2.Item.Type, Inventory.EquippedWeapon.Type);
-      Inventory.Slot2.Item.Weight = Inventory.EquippedWeapon.Weight;
-      Inventory.Slot2.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-      Inventory.Slot2.Item.Value = Inventory.EquippedWeapon.Value;
-      puts("Slot 2 is now full.");
-      printf("%s has been placed in Slot 2\n", Inventory.EquippedWeapon.Name);
-      strcpy(Inventory.EquippedWeapon.Name, "Empty");
-      strcpy(Inventory.EquippedWeapon.Description, "Empty");
-      strcpy(Inventory.EquippedWeapon.Type, "Empty");
-      Inventory.EquippedWeapon.Weight = 0;
-      Inventory.EquippedWeapon.AddedDamage = 0;
-      Inventory.EquippedWeapon.Value = 0;
-    }
-    else if (Inventory.Slot3.isOpen == 1 && Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0)
-    {
-      puts("Slot 3 is open.");
-      puts("Moving weapon to slot 3.");
-      Inventory.Slot3.isOpen = 0;
-      strcpy(Inventory.Slot3.Item.Name, Inventory.EquippedWeapon.Name);
-      strcpy(Inventory.Slot3.Item.Description, Inventory.EquippedWeapon.Description);
-      strcpy(Inventory.Slot3.Item.Type, Inventory.EquippedWeapon.Type);
-      Inventory.Slot3.Item.Weight = Inventory.EquippedWeapon.Weight;
-      Inventory.Slot3.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-      Inventory.Slot3.Item.Value = Inventory.EquippedWeapon.Value;
-      puts("Slot 3 is now full.");
-      printf("%s has been placed in Slot 3\n", Inventory.EquippedWeapon.Name);
-      strcpy(Inventory.EquippedWeapon.Name, "Empty");
-      strcpy(Inventory.EquippedWeapon.Description, "Empty");
-      strcpy(Inventory.EquippedWeapon.Type, "Empty");
-      Inventory.EquippedWeapon.Weight = 0;
-      Inventory.EquippedWeapon.AddedDamage = 0;
-      Inventory.EquippedWeapon.Value = 0;
-    }
-    else if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
-    {
-      puts("All slots are open.");
-      puts("Please choose a slot to move your weapon to.");
-      puts("1.Slot 1");
-      puts("2.Slot 2");
-      puts("3.Slot 3");
-      FGETS(input);
-      REMOVE_NEWLINE_CHAR(input);
-      if (STR_CMP(input, "1"))
-      {
-        puts("You have chosen to move your weapon to Slot 1.");
-        Inventory.Slot1.isOpen = 0;
-        strcpy(Inventory.Slot1.Item.Name, Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.Slot1.Item.Description, Inventory.EquippedWeapon.Description);
-        strcpy(Inventory.Slot1.Item.Type, Inventory.EquippedWeapon.Type);
-        Inventory.Slot1.Item.Weight = Inventory.EquippedWeapon.Weight;
-        Inventory.Slot1.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-        Inventory.Slot1.Item.Value = Inventory.EquippedWeapon.Value;
-        puts("Slot 1 is now full.");
-        printf("%s has been placed in Slot 1\n", Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.EquippedWeapon.Name, "Empty");
-        strcpy(Inventory.EquippedWeapon.Description, "Empty");
-        strcpy(Inventory.EquippedWeapon.Type, "Empty");
-        Inventory.EquippedWeapon.Weight = 0;
-        Inventory.EquippedWeapon.AddedDamage = 0;
-        Inventory.EquippedWeapon.Value = 0;
-      }
-      else if (STR_CMP(input, "2"))
-      {
-        puts("You have chosen to move your weapon to Slot 2.");
-        Inventory.Slot2.isOpen = 0;
-        strcpy(Inventory.Slot2.Item.Name, Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.Slot2.Item.Description, Inventory.EquippedWeapon.Description);
-        strcpy(Inventory.Slot2.Item.Type, Inventory.EquippedWeapon.Type);
-        Inventory.Slot2.Item.Weight = Inventory.EquippedWeapon.Weight;
-        Inventory.Slot2.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-        Inventory.Slot2.Item.Value = Inventory.EquippedWeapon.Value;
-        puts("Slot 2 is now full.");
-        printf("%s has been placed in Slot 2\n", Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.EquippedWeapon.Name, "Empty");
-        strcpy(Inventory.EquippedWeapon.Description, "Empty");
-        strcpy(Inventory.EquippedWeapon.Type, "Empty");
-        Inventory.EquippedWeapon.Weight = 0;
-        Inventory.EquippedWeapon.AddedDamage = 0;
-        Inventory.EquippedWeapon.Value = 0;
-      }
-      else if (STR_CMP(input, "3"))
-      {
-        puts("You have chosen to move your weapon to Slot 3.");
-        Inventory.Slot3.isOpen = 0;
-        strcpy(Inventory.Slot3.Item.Name, Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.Slot3.Item.Description, Inventory.EquippedWeapon.Description);
-        strcpy(Inventory.Slot3.Item.Type, Inventory.EquippedWeapon.Type);
-        Inventory.Slot3.Item.Weight = Inventory.EquippedWeapon.Weight;
-        Inventory.Slot3.Item.AddedDamage = Inventory.EquippedWeapon.AddedDamage;
-        Inventory.Slot3.Item.Value = Inventory.EquippedWeapon.Value;
-        puts("Slot 3 is now full.");
-        printf("%s has been placed in Slot 3\n", Inventory.EquippedWeapon.Name);
-        strcpy(Inventory.EquippedWeapon.Name, "Empty");
-        strcpy(Inventory.EquippedWeapon.Description, "Empty");
-        strcpy(Inventory.EquippedWeapon.Type, "Empty");
-        Inventory.EquippedWeapon.Weight = 0;
-        Inventory.EquippedWeapon.AddedDamage = 0;
-        Inventory.EquippedWeapon.Value = 0;
-      }
-      else
-      {
-        puts("Check failed.");
-      }
-    }
-
-    else if (Inventory.Slot1.isOpen == 1 || Inventory.Slot2.isOpen == 1 || Inventory.Slot3.isOpen == 1)
-    {
-      printf("Here is the status of your inventory slots:\n");
-      if (Inventory.Slot1.isOpen == 1)
-      {
-        printf("Slot 1: Open\n");
-      }
-      if (Inventory.Slot2.isOpen == 1)
-      {
-        printf("Slot 2: Open\n");
-      }
-      if (Inventory.Slot3.isOpen == 1)
-      {
-        printf("Slot 3: Open\n");
-      }
-      if (Inventory.Slot1.isOpen == 0)
-      {
-        printf("Slot 1: Full\n");
-      }
-      if (Inventory.Slot2.isOpen == 0)
-      {
-        printf("Slot 2: Full\n");
-      }
-      if (Inventory.Slot3.isOpen == 0)
-      {
-        printf("Slot 3: Full\n");
-      }
-
-      else
-      {
-        puts("Check failed.");
-      }
-    }
+    unequip_logic(&input, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value);
     choose_open_slot_to_move_to(&input);
   }
-  else if (STR_CMP(input, Inventory.EquippedHead.Name) || atoi(input) == 2)
+  else if (STR_CMP(input, Inventory.EquippedHead.Name) || atoi(input) == 2 || STR_CMP(input, "head"))
   {
-    puts("You have chosen to unequip your head armor.");
+    unequip_logic(&input, Inventory.EquippedHead.Name, Inventory.EquippedHead.Description, Inventory.EquippedHead.Type, Inventory.EquippedHead.Weight, Inventory.EquippedHead.AddedDamage, Inventory.EquippedHead.AddedHealth, Inventory.EquippedHead.Value);
   }
-  else if (STR_CMP(input, Inventory.EquippedChest.Name) || atoi(input) == 3)
+  else if (STR_CMP(input, Inventory.EquippedChest.Name) || atoi(input) == 3 || STR_CMP(input, "chest"))
   {
-    puts("You have chosen to unequip your chest armor.");
+    unequip_logic(&input, Inventory.EquippedChest.Name, Inventory.EquippedChest.Description, Inventory.EquippedChest.Type, Inventory.EquippedChest.Weight, Inventory.EquippedChest.AddedDamage, Inventory.EquippedChest.AddedHealth, Inventory.EquippedChest.Value);
   }
-  else if (STR_CMP(input, Inventory.EquippedLegs.Name) || atoi(input) == 4)
+  else if (STR_CMP(input, Inventory.EquippedLegs.Name) || atoi(input) == 4 || STR_CMP(input, "legs"))
   {
-    puts("You have chosen to unequip your leg armor.");
+    unequip_logic(&input, Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.AddedDamage, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Value);
   }
   else
   {
     MAKE_VALID_DECISION;
+    unequip_item();
   }
 }
 
@@ -448,3 +279,194 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
 // {
 //   printf("Would you like to equip an item?\n");
 // }
+
+void unequip_logic(char *input, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue)
+{
+  printf("You have chosen to unequip %s.", equippedItemName);
+  if (Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
+  {
+    puts("All slots are full.");
+    puts("Please clear a slot before unequipping this item.");
+  }
+  else if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
+  {
+    puts("Slot 1 is open.");
+    printf("Moving %s to Slot 1.\n", equippedItemName);
+    Inventory.Slot1.isOpen = 0;
+    strcpy(Inventory.Slot1.Item.Name, equippedItemName);
+    strcpy(Inventory.Slot1.Item.Description, equippedItemDesc);
+    strcpy(Inventory.Slot1.Item.Type, equippedItemType);
+    Inventory.Slot1.Item.Weight = equippedItemWeight;
+    Inventory.Slot1.Item.AddedDamage = equippedItemAddedDamage;
+    Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+    Inventory.Slot1.Item.Value = equippedItemValue;
+    Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+    printf("%s has been placed in Slot 1\n", equippedItemName);
+    puts("Slot 1 is now full.");
+    strcpy(equippedItemName, "Empty");
+    strcpy(equippedItemDesc, "Empty");
+    strcpy(equippedItemType, "Empty");
+    equippedItemWeight = 0;
+    equippedItemAddedHealth = 0;
+    equippedItemAddedDamage = 0;
+    equippedItemValue = 0;
+  }
+  else if (Inventory.Slot2.isOpen == 1 && Inventory.Slot1.isOpen == 0 && Inventory.Slot3.isOpen == 0)
+  {
+    puts("Slot 2 is open.");
+    puts("Moving weapon to slot 2.");
+    Inventory.Slot2.isOpen = 0;
+    strcpy(Inventory.Slot2.Item.Name, equippedItemName);
+    strcpy(Inventory.Slot2.Item.Description, equippedItemDesc);
+    strcpy(Inventory.Slot2.Item.Type, equippedItemType);
+    Inventory.Slot2.Item.Weight = equippedItemWeight;
+    Inventory.Slot2.Item.AddedDamage = equippedItemAddedDamage;
+    Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+    Inventory.Slot2.Item.Value = equippedItemValue;
+    puts("Slot 2 is now full.");
+    printf("%s has been placed in Slot 2\n", equippedItemName);
+    strcpy(equippedItemName, "Empty");
+    strcpy(equippedItemDesc, "Empty");
+    strcpy(equippedItemType, "Empty");
+    equippedItemWeight = 0;
+    equippedItemAddedHealth = 0;
+    equippedItemAddedDamage = 0;
+    equippedItemValue = 0;
+  }
+  else if (Inventory.Slot3.isOpen == 1 && Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0)
+  {
+    puts("Slot 3 is open.");
+    puts("Moving weapon to slot 3.");
+    Inventory.Slot3.isOpen = 0;
+    strcpy(Inventory.Slot3.Item.Name, equippedItemName);
+    strcpy(Inventory.Slot3.Item.Description, equippedItemDesc);
+    strcpy(Inventory.Slot3.Item.Type, equippedItemType);
+    Inventory.Slot3.Item.Weight = equippedItemWeight;
+    Inventory.Slot3.Item.AddedDamage = equippedItemAddedDamage;
+
+    Inventory.Slot3.Item.Value = equippedItemValue;
+    puts("Slot 3 is now full.");
+    printf("%s has been placed in Slot 3\n", equippedItemName);
+    strcpy(equippedItemName, "Empty");
+    strcpy(equippedItemDesc, "Empty");
+    strcpy(equippedItemType, "Empty");
+    equippedItemWeight = 0;
+    equippedItemAddedHealth = 0;
+    equippedItemAddedDamage = 0;
+    equippedItemValue = 0;
+  }
+  else if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
+  {
+    puts("All slots are open.");
+    puts("Please choose a slot to move your weapon to.");
+    puts("1.Slot 1");
+    puts("2.Slot 2");
+    puts("3.Slot 3");
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+    if (STR_CMP(input, "1"))
+    {
+      puts("You have chosen to move your weapon to Slot 1.");
+      Inventory.Slot1.isOpen = 0;
+      strcpy(Inventory.Slot1.Item.Name, equippedItemName);
+      strcpy(Inventory.Slot1.Item.Description, equippedItemDesc);
+      strcpy(Inventory.Slot1.Item.Type, equippedItemType);
+      Inventory.Slot1.Item.Weight = equippedItemWeight;
+      Inventory.Slot1.Item.AddedDamage = equippedItemAddedDamage;
+      Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+      Inventory.Slot1.Item.Value = equippedItemValue;
+      puts("Slot 1 is now full.");
+      printf("%s has been placed in Slot 1\n", equippedItemName);
+      strcpy(equippedItemName, "Empty");
+      strcpy(equippedItemDesc, "Empty");
+      strcpy(equippedItemType, "Empty");
+      equippedItemWeight = 0;
+      equippedItemAddedHealth = 0;
+      equippedItemAddedDamage = 0;
+      equippedItemValue = 0;
+    }
+    else if (STR_CMP(input, "2"))
+    {
+      puts("You have chosen to move your weapon to Slot 2.");
+      Inventory.Slot2.isOpen = 0;
+      strcpy(Inventory.Slot2.Item.Name, equippedItemName);
+      strcpy(Inventory.Slot2.Item.Description, equippedItemDesc);
+      strcpy(Inventory.Slot2.Item.Type, equippedItemType);
+      Inventory.Slot2.Item.Weight = equippedItemWeight;
+      Inventory.Slot2.Item.AddedDamage = equippedItemAddedDamage;
+      Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+
+      Inventory.Slot2.Item.Value = equippedItemValue;
+      puts("Slot 2 is now full.");
+      printf("%s has been placed in Slot 2\n", equippedItemName);
+      strcpy(equippedItemName, "Empty");
+      strcpy(equippedItemDesc, "Empty");
+      strcpy(equippedItemType, "Empty");
+      equippedItemWeight = 0;
+      equippedItemAddedHealth = 0;
+      equippedItemAddedDamage = 0;
+      equippedItemValue = 0;
+    }
+    else if (STR_CMP(input, "3"))
+    {
+      puts("You have chosen to move your weapon to Slot 3.");
+      Inventory.Slot3.isOpen = 0;
+      strcpy(Inventory.Slot3.Item.Name, equippedItemName);
+      strcpy(Inventory.Slot3.Item.Description, equippedItemDesc);
+      strcpy(Inventory.Slot3.Item.Type, equippedItemType);
+      Inventory.Slot3.Item.Weight = equippedItemWeight;
+      Inventory.Slot3.Item.AddedDamage = equippedItemAddedDamage;
+      Inventory.Slot1.Item.AddedHealth = Inventory.EquippedHead.AddedHealth;
+
+      equippedItemAddedHealth = 0;
+
+      Inventory.Slot3.Item.Value = equippedItemValue;
+      puts("Slot 3 is now full.");
+      printf("%s has been placed in Slot 3\n", equippedItemName);
+      strcpy(equippedItemName, "Empty");
+      strcpy(equippedItemDesc, "Empty");
+      strcpy(equippedItemType, "Empty");
+      equippedItemWeight = 0;
+      equippedItemAddedHealth = 0;
+      equippedItemAddedDamage = 0;
+      equippedItemValue = 0;
+    }
+    else
+    {
+      puts("Check failed.");
+    }
+  }
+
+  else if (Inventory.Slot1.isOpen == 1 || Inventory.Slot2.isOpen == 1 || Inventory.Slot3.isOpen == 1)
+  {
+    printf("Here is the status of your inventory slots:\n");
+    if (Inventory.Slot1.isOpen == 1)
+    {
+      puts("Slot 1: Open\n");
+    }
+    if (Inventory.Slot2.isOpen == 1)
+    {
+      puts("Slot 2: Open\n");
+    }
+    if (Inventory.Slot3.isOpen == 1)
+    {
+      puts("Slot 3: Open\n");
+    }
+    if (Inventory.Slot1.isOpen == 0)
+    {
+      printf("Slot 1: Full contains %s\n", Inventory.Slot1.Item.Name);
+    }
+    if (Inventory.Slot2.isOpen == 0)
+    {
+      printf("Slot 2: Full contains %s\n", Inventory.Slot2.Item.Name);
+    }
+    if (Inventory.Slot3.isOpen == 0)
+    {
+      printf("Slot 3: Full contains %s\n", Inventory.Slot3.Item.Name);
+    }
+    else
+    {
+      puts("Check failed.");
+    }
+  }
+}
