@@ -131,35 +131,35 @@ void check_if_empty_show_none()
     strcpy(Inventory.EquippedHead.Name, "None");
     strcpy(Inventory.EquippedHead.Description, "None");
     strcpy(Inventory.EquippedHead.Type, "None");
-    Inventory.EquippedHead.AddedHealth = NULL;
-    Inventory.EquippedHead.Weight = NULL;
-    Inventory.EquippedHead.Value = NULL;
+    Inventory.EquippedHead.AddedHealth = 0;
+    Inventory.EquippedHead.Weight = 0;
+    Inventory.EquippedHead.Value = 0;
   }
   if (strlen(Inventory.EquippedChest.Name) == 0)
   {
     strcpy(Inventory.EquippedChest.Name, "None");
     strcpy(Inventory.EquippedChest.Description, "None");
     strcpy(Inventory.EquippedChest.Type, "None");
-    Inventory.EquippedChest.AddedHealth = NULL;
-    Inventory.EquippedChest.Weight = NULL;
-    Inventory.EquippedChest.Value = NULL;
+    Inventory.EquippedChest.AddedHealth = 0;
+    Inventory.EquippedChest.Weight = 0;
+    Inventory.EquippedChest.Value = 0;
   }
   if (strlen(Inventory.EquippedLegs.Name) == 0)
   {
     strcpy(Inventory.EquippedLegs.Name, "None");
     strcpy(Inventory.EquippedLegs.Description, "None");
     strcpy(Inventory.EquippedLegs.Type, "None");
-    Inventory.EquippedLegs.AddedHealth = NULL;
-    Inventory.EquippedLegs.Weight = NULL;
-    Inventory.EquippedLegs.Value = NULL;
+    Inventory.EquippedLegs.AddedHealth = 0;
+    Inventory.EquippedLegs.Weight = 0;
+    Inventory.EquippedLegs.Value = 0;
   }
   if (strlen(Inventory.EquippedWeapon.Name) == 0)
   {
     strcpy(Inventory.EquippedWeapon.Name, "None");
     strcpy(Inventory.EquippedWeapon.Description, "None");
     strcpy(Inventory.EquippedWeapon.Type, "None");
-    Inventory.EquippedWeapon.AddedDamage = NULL;
-    Inventory.EquippedWeapon.Weight = NULL;
-    Inventory.EquippedWeapon.Value = NULL;
+    Inventory.EquippedWeapon.AddedDamage = 0;
+    Inventory.EquippedWeapon.Weight = 0;
+    Inventory.EquippedWeapon.Value = 0;
   }
 }
