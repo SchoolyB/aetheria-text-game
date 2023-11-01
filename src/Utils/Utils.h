@@ -470,6 +470,8 @@ typedef struct
   int Weight;
   int Value;
   char Art[1000];
+  char Rarity[10];   // common, uncommon, rare, epic, legendary
+  char Material[15]; // wood, iron, steel, etc
 } Item;
 
 typedef struct
@@ -883,7 +885,8 @@ void activate_god_mode()
   Inventory.CurrentGold = 1000000;
   Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
   Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
-  Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot3.isOpen = 1;
+  // 0 = false, 1 = true
 
   Inventory.Slot1.Quantity = 0;
   strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");

@@ -19,4 +19,6 @@ void unequip_item();
 void equip_logic();
 void unequip_logic();
 void is_it_equippable();
+void selected_inventory_option();
+
 #endif
