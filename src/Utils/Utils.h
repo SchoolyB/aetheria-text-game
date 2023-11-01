@@ -472,6 +472,7 @@ typedef struct
   char Art[1000];
   char Rarity[10];   // common, uncommon, rare, epic, legendary
   char Material[15]; // wood, iron, steel, etc
+  char Style[10];    // for weapons..i.e sword,axe,mace,staff,wand,etc
 } Item;
 
 typedef struct
