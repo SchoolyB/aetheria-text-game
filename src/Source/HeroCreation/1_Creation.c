@@ -46,10 +46,12 @@ void get_first_name()
     }
     else if (INPUT_IS_NO(confirmation))
     {
+      system("clear");
       get_first_name();
     }
     else
     {
+      clear_and_print_step("First Name", 1, 8);
       MAKE_VALID_DECISION;
       get_first_name();
     }
@@ -58,6 +60,7 @@ void get_first_name()
 // ===========================================================================================================//
 void ask_for_dynasty_name()
 {
+  clear_and_print_step("Dynasty Name", 2, 8);
   printf("Do you have a dynasty name? (y/n)\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
@@ -84,6 +87,7 @@ void ask_for_dynasty_name()
     }
     else
     {
+      clear_and_print_step("Dynasty Name", 2, 8);
       MAKE_VALID_DECISION;
       ask_for_dynasty_name();
     }
@@ -98,7 +102,7 @@ void ask_for_dynasty_name()
 // ===========================================================================================================//
 void get_dynasty_name()
 {
-  print_step("Dynasty Name", 2, 8);
+  clear_and_print_step("Dynasty Name", 2, 8);
   printf("What is the name of the dynasty you come from?\n");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
@@ -184,6 +188,7 @@ void confirm_no_gender()
   }
   else
   {
+    clear_and_print_step("Gender", 3, 8);
     MAKE_VALID_DECISION;
     confirm_no_gender();
   }
@@ -236,6 +241,7 @@ void confirm_gender()
   }
   else
   {
+    clear_and_print_step("Gender", 3, 8);
     MAKE_VALID_DECISION;
     confirm_gender();
   }
@@ -300,6 +306,7 @@ void get_homeland()
   }
   else
   {
+
     MAKE_VALID_DECISION;
     get_homeland();
   }
@@ -319,6 +326,7 @@ void confirm_homeland()
   }
   else
   {
+    clear_and_print_step("Home of Origin", 4, 8);
     MAKE_VALID_DECISION;
     printf("You hail from the lands of \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Homeland);
     confirm_homeland();
@@ -403,8 +411,19 @@ void confirm_profession()
   }
   else
   {
+    clear_and_print_step("Profession", 5, 8);
     MAKE_VALID_DECISION;
-    confirm_profession();
+
+    if (hero.Profession == "None")
+    {
+      printf("You do not have a profession, is that correct? (y/n)\n");
+      confirm_profession();
+    }
+    else
+    {
+      printf("You have a background as a \x1b[1;4m%s\x1b[0m , is that correct? (y/n)\n", hero.Profession);
+      confirm_profession();
+    }
   }
 }
 // ===========================================================================================================//
@@ -496,7 +515,9 @@ void confirm_class()
   }
   else
   {
+    clear_and_print_step("Class", 6, 8);
     MAKE_VALID_DECISION;
+    printf("You are a \x1b[1;4m%s\x1b[0m is that correct?(y/n) \n", hero.Class);
     confirm_class();
   }
 }
