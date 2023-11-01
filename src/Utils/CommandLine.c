@@ -412,19 +412,19 @@ int COMMAND_LINE(FILE *logFile)
       }
       else
       {
-        printf("%-20s | %-25s | %-5s| %-6s | %-10s | %-10s | %-10s\n", "Inventory Slot 1", "Desc.", "Dmg", "Health", "Type", "Wt(lbs)", "Val(gold)");
+        printf("%-20s | %-25s | %-5s| %-6s | %-10s | %-10s | %-10s\n", "Inventory Slot 2", "Desc.", "Dmg", "Health", "Type", "Wt(lbs)", "Val(gold)");
         printf("%-20s | %-25s | %-5d | %-5d | %-10s | %-10d | %-10d\n", Inventory.Slot2.Item.Name, Inventory.Slot2.Item.Description, Inventory.Slot2.Item.AddedDamage, Inventory.Slot2.Item.AddedHealth, Inventory.Slot2.Item.Type, Inventory.Slot2.Item.Weight, Inventory.Slot2.Item.Value);
         puts("-------------------------------------------------------------------------------------------------------");
       }
 
       if (Inventory.Slot3.Item.Name[0] == '\0')
       {
-        printf("%-15s \n", "Inventory Slot 1");
+        printf("%-15s \n", "Inventory Slot 3");
         printf("%-15s \n", "Empty");
       }
       else
       {
-        printf("%-20s | %-25s | %-5s| %-6s | %-10s | %-10s | %-10s\n", "Inventory Slot 1", "Desc.", "Dmg", "Health", "Type", "Wt(lbs)", "Val(gold)");
+        printf("%-20s | %-25s | %-5s| %-6s | %-10s | %-10s | %-10s\n", "Inventory Slot 3", "Desc.", "Dmg", "Health", "Type", "Wt(lbs)", "Val(gold)");
         printf("%-20s | %-25s | %-5d | %-5d | %-10s | %-10d | %-10d\n", Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description, Inventory.Slot3.Item.AddedDamage, Inventory.Slot3.Item.AddedHealth, Inventory.Slot3.Item.Type, Inventory.Slot3.Item.Weight, Inventory.Slot3.Item.Value);
       }
 
