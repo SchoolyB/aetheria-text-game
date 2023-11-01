@@ -65,6 +65,7 @@ void start_game()
   else
   {
     printf("Game is already running\n");
+    system("clear");
   }
 }
 
