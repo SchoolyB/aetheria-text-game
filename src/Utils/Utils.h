@@ -902,20 +902,20 @@ void activate_god_mode()
   strcpy(Inventory.EquippedLegs.Description, "God Mode Legs Desc.");
   strcpy(Inventory.EquippedLegs.Type, "Legs");
   Inventory.EquippedWeapon.AddedDamage = 1000;
-  Inventory.EquippedWeapon.AddedHealth = 0;
-  Inventory.EquippedWeapon.Weight = 0;
-  Inventory.EquippedWeapon.Value = 0;
-  Inventory.EquippedHead.AddedDamage = 0;
-  Inventory.EquippedHead.AddedHealth = 0;
-  Inventory.EquippedHead.Weight = 0;
-  Inventory.EquippedHead.Value = 0;
-  Inventory.EquippedChest.AddedDamage = 0;
-  Inventory.EquippedChest.AddedHealth = 0;
-  Inventory.EquippedChest.Weight = 0;
-  Inventory.EquippedChest.Value = 0;
-  Inventory.EquippedLegs.AddedDamage = 0;
-  Inventory.EquippedLegs.AddedHealth = 0;
-  Inventory.EquippedLegs.Weight = 0;
-  Inventory.EquippedLegs.Value = 0;
+  Inventory.EquippedWeapon.AddedHealth = 5;
+  Inventory.EquippedWeapon.Weight = 5;
+  Inventory.EquippedWeapon.Value = 5;
+  Inventory.EquippedHead.AddedDamage = 5;
+  Inventory.EquippedHead.AddedHealth = 5;
+  Inventory.EquippedHead.Weight = 5;
+  Inventory.EquippedHead.Value = 5;
+  Inventory.EquippedChest.AddedDamage = 5;
+  Inventory.EquippedChest.AddedHealth = 5;
+  Inventory.EquippedChest.Weight = 5;
+  Inventory.EquippedChest.Value = 5;
+  Inventory.EquippedLegs.AddedDamage = 5;
+  Inventory.EquippedLegs.AddedHealth = 5;
+  Inventory.EquippedLegs.Weight = 5;
+  Inventory.EquippedLegs.Value = 5;
 }
 #endif
