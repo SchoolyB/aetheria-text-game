@@ -16,6 +16,9 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
 
     printf("You currently have a %s equipped. The %s adds %d, because of this the damage for %s in now:%d, the damage for %s is now %d, and the damage for %s is now %d \n", Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.AddedDamage, hero.Ability1.Name, hero.Ability1.Damage, hero.Ability2.Name, hero.Ability2.Damage, hero.Ability3.Name, hero.Ability3.Damage);
   }
@@ -27,6 +30,10 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
   }
   else if (IS_OF_CLASS(hero.Class, "Rogue"))
   {
@@ -36,6 +43,10 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
   }
   else if (IS_OF_CLASS(hero.Class, "Cleric"))
   {
@@ -46,6 +57,10 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
   }
   else if (IS_OF_CLASS(hero.Class, "Bard"))
   {
@@ -55,6 +70,10 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
   }
 
   else if (IS_OF_CLASS(hero.Class, "Archer"))
@@ -65,6 +84,10 @@ void determine_class_for_inventory()
     calculate_dmg_with_equipped_weapon(&hero.Ability1.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability2.Damage, &Inventory.EquippedWeapon);
     calculate_dmg_with_equipped_weapon(&hero.Ability3.Damage, &Inventory.EquippedWeapon);
+
+    Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+    Inventory.Slot3.isOpen = 1; // 0 = false, 1 = true
   }
 }
 //+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=//
@@ -131,35 +154,35 @@ void check_if_empty_show_none()
     strcpy(Inventory.EquippedHead.Name, "None");
     strcpy(Inventory.EquippedHead.Description, "None");
     strcpy(Inventory.EquippedHead.Type, "None");
-    Inventory.EquippedHead.AddedHealth = NULL;
-    Inventory.EquippedHead.Weight = NULL;
-    Inventory.EquippedHead.Value = NULL;
+    Inventory.EquippedHead.AddedHealth = 0;
+    Inventory.EquippedHead.Weight = 0;
+    Inventory.EquippedHead.Value = 0;
   }
   if (strlen(Inventory.EquippedChest.Name) == 0)
   {
     strcpy(Inventory.EquippedChest.Name, "None");
     strcpy(Inventory.EquippedChest.Description, "None");
     strcpy(Inventory.EquippedChest.Type, "None");
-    Inventory.EquippedChest.AddedHealth = NULL;
-    Inventory.EquippedChest.Weight = NULL;
-    Inventory.EquippedChest.Value = NULL;
+    Inventory.EquippedChest.AddedHealth = 0;
+    Inventory.EquippedChest.Weight = 0;
+    Inventory.EquippedChest.Value = 0;
   }
   if (strlen(Inventory.EquippedLegs.Name) == 0)
   {
     strcpy(Inventory.EquippedLegs.Name, "None");
     strcpy(Inventory.EquippedLegs.Description, "None");
     strcpy(Inventory.EquippedLegs.Type, "None");
-    Inventory.EquippedLegs.AddedHealth = NULL;
-    Inventory.EquippedLegs.Weight = NULL;
-    Inventory.EquippedLegs.Value = NULL;
+    Inventory.EquippedLegs.AddedHealth = 0;
+    Inventory.EquippedLegs.Weight = 0;
+    Inventory.EquippedLegs.Value = 0;
   }
   if (strlen(Inventory.EquippedWeapon.Name) == 0)
   {
     strcpy(Inventory.EquippedWeapon.Name, "None");
     strcpy(Inventory.EquippedWeapon.Description, "None");
     strcpy(Inventory.EquippedWeapon.Type, "None");
-    Inventory.EquippedWeapon.AddedDamage = NULL;
-    Inventory.EquippedWeapon.Weight = NULL;
-    Inventory.EquippedWeapon.Value = NULL;
+    Inventory.EquippedWeapon.AddedDamage = 0;
+    Inventory.EquippedWeapon.Weight = 0;
+    Inventory.EquippedWeapon.Value = 0;
   }
 }
