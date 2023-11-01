@@ -64,6 +64,14 @@ void selected_to_unequip()
 
   system("clear");
   selected_inventory_option("Unequip");
+  if (Inventory.Slot1.isOpen == 0 && Inventory.Slot2.isOpen == 0 && Inventory.Slot3.isOpen == 0)
+  {
+    puts("You do not have enough open inventory slots to unequip anything.");
+    puts("Please clear up an inventory slot and try again.");
+    puts("YOu can also drop the item that you want to unequip.");
+    return;
+  }
+
   if (Inventory.EquippedWeapon.Name[0] == '\0' && Inventory.EquippedHead.Name[0] == '\0' && Inventory.EquippedChest.Name[0] == '\0' && Inventory.EquippedLegs.Name[0] == '\0')
   {
     puts("You have nothing equipped.");
@@ -72,42 +80,21 @@ void selected_to_unequip()
   else
   {
     printf("Which of these would you like to unequip?\n");
+    puts("Enter '5', 'exit', or 'cancel' to 'exit' the unequip menu");
     printf("(1)Equipped Weapon:%s\n", Inventory.EquippedWeapon.Name);
     printf("(2)Equipped Head Armor:%s\n", Inventory.EquippedHead.Name);
     printf("(3)Equipped Chest Armor:%s\n", Inventory.EquippedChest.Name);
     printf("(4)Equipped Leg Armor:%s\n", Inventory.EquippedLegs.Name);
+    printf("(5)Exit\n");
   }
-  char input[10];
+
+  char input[10]; // this is the input for the actual item to unequip
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
-  if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && STR_CMP(input, "1"))
-  {
-    puts("You dont have a weapon equipped please try again");
-    sleep(2);
-    selected_to_unequip();
-  }
-  else if (strcmp(Inventory.EquippedHead.Name, "None") == 0 && STR_CMP(input, "2"))
-  {
-    puts("You dont have  head armor equipped please try again");
-    sleep(2);
-    selected_to_unequip();
-  }
-  else if (strcmp(Inventory.EquippedChest.Name, "None") == 0 && STR_CMP(input, "3"))
-  {
-    puts("You dont have chest armor equipped please try again");
-    sleep(2);
-    selected_to_unequip();
-  }
-  else if (strcmp(Inventory.EquippedLegs.Name, "None") == 0 && STR_CMP(input, "4"))
-  {
-    puts("You dont have leg armor equipped please try again");
-    sleep(2);
-    selected_to_unequip();
-  }
 
-  if (STR_CMP(input, "1") || STR_CMP(input, Inventory.EquippedWeapon.Name) || STR_CMP(input, "weapon") && Inventory.EquippedWeapon.Name[0] != '\0')
+  if (STR_CMP(input, "1") || STR_CMP(input, Inventory.EquippedWeapon.Name) || STR_CMP(input, "weapon") && strcmp(Inventory.EquippedWeapon.Name, "None") != 0)
   {
-
+    check_and_see_if_none(&input);
     printf("You have chosen to unequip %s.\n", Inventory.EquippedWeapon.Name);
     printf("Which slot would you like to move %s to?\n", Inventory.EquippedWeapon.Name);
     show_slots(Inventory.Slot1.Item.Name, Inventory.Slot2.Item.Name, Inventory.Slot3.Item.Name);
@@ -129,12 +116,15 @@ void selected_to_unequip()
     }
     else
     {
-      puts("Check 1 failed.");
+      MAKE_VALID_DECISION;
+      sleep(2);
+      selected_to_unequip();
     }
   }
 
   else if (STR_CMP(input, "2") || STR_CMP(input, Inventory.EquippedHead.Name) || STR_CMP(input, "head") && Inventory.EquippedHead.Name[0] != '\0')
   {
+    check_and_see_if_none(&input);
     printf("You have chosen to unequip %s.\n", Inventory.EquippedHead.Name);
     printf("Which slot would you like to move %s to?\n", Inventory.EquippedHead.Name);
     show_slots(Inventory.Slot1.Item.Name, Inventory.Slot2.Item.Name, Inventory.Slot3.Item.Name);
@@ -156,12 +146,14 @@ void selected_to_unequip()
     }
     else
     {
-      puts("Check 2 failed.");
+      MAKE_VALID_DECISION;
+      sleep(2);
+      selected_to_unequip();
     }
   }
-
   else if (STR_CMP(input, "3") || STR_CMP(input, Inventory.EquippedChest.Name) || STR_CMP(input, "chest") && Inventory.EquippedChest.Name[0] != '\0')
   {
+    check_and_see_if_none(&input);
     printf("You have chosen to unequip %s.\n", Inventory.EquippedChest.Name);
     printf("Which slot would you like to move %s to?\n", Inventory.EquippedChest.Name);
     show_slots(Inventory.Slot1.Item.Name, Inventory.Slot2.Item.Name, Inventory.Slot3.Item.Name);
@@ -183,12 +175,14 @@ void selected_to_unequip()
     }
     else
     {
-      puts("Check 3 failed.");
+      MAKE_VALID_DECISION;
+      sleep(2);
+      selected_to_unequip();
     }
   }
-
   else if (STR_CMP(input, "4") || STR_CMP(input, Inventory.EquippedLegs.Name) || STR_CMP(input, "legs") && Inventory.EquippedLegs.Name[0] != '\0')
   {
+    check_and_see_if_none(&input);
     printf("You have chosen to unequip %s.\n", Inventory.EquippedLegs.Name);
     printf("Which slot would you like to move %s to?\n", Inventory.EquippedLegs.Name);
     show_slots(Inventory.Slot1.Item.Name, Inventory.Slot2.Item.Name, Inventory.Slot3.Item.Name);
@@ -196,7 +190,6 @@ void selected_to_unequip()
     char newInput[10];
     FGETS(newInput);
     REMOVE_NEWLINE_CHAR(newInput);
-
     if (STR_CMP(newInput, "1") || STR_CMP(newInput, Inventory.Slot1.Item.Name) || STR_CMP(newInput, "slot1") && Inventory.Slot1.Item.Name[0] == '\0')
     {
       choose_open_slot_to_move_to(&newInput, Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.AddedDamage, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Value, Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description, Inventory.Slot1.Item.Type, Inventory.Slot1.Item.Weight, Inventory.Slot1.Item.AddedDamage, Inventory.Slot1.Item.AddedHealth, Inventory.Slot1.Item.Value);
@@ -209,16 +202,12 @@ void selected_to_unequip()
     {
       choose_open_slot_to_move_to(&newInput, Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.AddedDamage, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Value, Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description, Inventory.Slot3.Item.Type, Inventory.Slot3.Item.Weight, Inventory.Slot3.Item.AddedDamage, Inventory.Slot3.Item.AddedHealth, Inventory.Slot3.Item.Value);
     }
-
     else
     {
-      puts("Check 3 failed.");
+      MAKE_VALID_DECISION;
+      sleep(2);
+      selected_to_unequip();
     }
-  }
-  else
-  {
-    puts("Canceling process.");
-    return;
   }
 }
 //============================================================================================================//
@@ -227,7 +216,7 @@ void show_slots(char *slotItemName1, char *slotItemName2, char *slotItemName3)
   {
     if (Inventory.Slot1.isOpen == 1)
     {
-      printf("(1)Slot 1: Empty\n");
+      printf("(1)Slot 1: None\n");
     }
     else
     {
@@ -236,7 +225,7 @@ void show_slots(char *slotItemName1, char *slotItemName2, char *slotItemName3)
 
     if (Inventory.Slot2.isOpen == 1)
     {
-      printf("(2)Slot 2: Empty\n");
+      printf("(2)Slot 2: None\n");
     }
     else
     {
@@ -245,7 +234,7 @@ void show_slots(char *slotItemName1, char *slotItemName2, char *slotItemName3)
 
     if (Inventory.Slot3.isOpen == 1)
     {
-      printf("(3)Slot 3: Empty\n");
+      printf("(3)Slot 3: None\n");
     }
     else
     {
@@ -256,38 +245,31 @@ void show_slots(char *slotItemName1, char *slotItemName2, char *slotItemName3)
 //============================================================================================================//
 // this function takes in and handles the logic for  UN-EQUIPPING an item. See logic in void unequip_logic()
 
-void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue, char *slotItemName, char *slotItemDesc, char *slotItemType, int slotItemWeight, int slotItemAddedDamage, int slotItemAddedHealth, int slotItemValue)
+void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int *equippedItemWeight, int *equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue, char *slotItemName, char *slotItemDesc, char *slotItemType, int *slotItemWeight, int *slotItemAddedDamage, int *slotItemAddedHealth, int *slotItemValue)
 {
 
   if (STR_CMP(newInput, "1") && Inventory.Slot1.isOpen == 1)
   {
+    // choose_open_slot_to_move_to(&newInput, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value, Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description, Inventory.Slot1.Item.Type, Inventory.Slot1.Item.Weight, Inventory.Slot1.Item.AddedDamage, Inventory.Slot1.Item.AddedHealth, Inventory.Slot1.Item.Value);
     puts("You have chosen to move your item to Slot 1.");
-    if (Inventory.Slot1.isOpen == 0)
-    {
-      printf("Slot one currently has %s in it.\n", Inventory.Slot1.Item.Name);
-      puts("Please choose another slot.");
-    }
-    else
-    {
-      Inventory.Slot1.isOpen = 0;
 
-      strcpy(slotItemName, equippedItemName);
-      strcpy(slotItemDesc, equippedItemDesc);
-      strcpy(slotItemType, equippedItemType);
-      slotItemWeight = equippedItemWeight;
-      slotItemAddedDamage = equippedItemAddedDamage;
-      slotItemAddedHealth = equippedItemAddedHealth;
-      slotItemValue = equippedItemValue;
-      puts("Slot 1 is now full.");
-      printf("%s has been placed in Slot 1\n", equippedItemName);
-      strcpy(equippedItemName, "Empty");
-      strcpy(equippedItemDesc, "Empty");
-      strcpy(equippedItemType, "Empty");
-      equippedItemWeight = 0;
-      equippedItemAddedDamage = 0;
-      equippedItemAddedHealth = 0;
-      equippedItemValue = 0;
-    }
+    Inventory.Slot1.isOpen = 0;
+    strcpy(slotItemName, equippedItemName);
+    strcpy(slotItemDesc, equippedItemDesc);
+    strcpy(slotItemType, equippedItemType);
+    Inventory.Slot1.Item.Weight = equippedItemWeight;
+    Inventory.Slot1.Item.AddedDamage = equippedItemAddedDamage;
+    Inventory.Slot1.Item.AddedHealth = equippedItemAddedHealth;
+    Inventory.Slot1.Item.Value = equippedItemValue;
+    puts("Slot 1 is now full.");
+    printf("%s has been placed in Slot 1\n", equippedItemName);
+    strcpy(equippedItemName, "None");
+    strcpy(equippedItemDesc, "None");
+    strcpy(equippedItemType, "None");
+    Inventory.EquippedWeapon.Weight = 0;
+    Inventory.EquippedWeapon.AddedDamage = 0;
+    Inventory.EquippedWeapon.AddedHealth = 0;
+    Inventory.EquippedWeapon.Value = 0;
   }
   else if (STR_CMP(newInput, "1") && Inventory.Slot1.isOpen == 0)
   {
@@ -298,32 +280,26 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   }
   else if (STR_CMP(newInput, "2") && Inventory.Slot2.isOpen == 1)
   {
+    // choose_open_slot_to_move_to(&newInput, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value, Inventory.Slot2.Item.Name, Inventory.Slot2.Item.Description, Inventory.Slot2.Item.Type, Inventory.Slot2.Item.Weight, Inventory.Slot2.Item.AddedDamage, Inventory.Slot2.Item.AddedHealth, Inventory.Slot2.Item.Value);
     puts("You have chosen to move your item to Slot 2.");
-    if (Inventory.Slot2.isOpen == 0)
-    {
-      printf("Slot two currently has %s in it.\n", Inventory.Slot2.Item.Name);
-      puts("Please choose another slot.");
-    }
-    else
-    {
-      Inventory.Slot2.isOpen = 0;
-      strcpy(slotItemName, equippedItemName);
-      strcpy(slotItemDesc, equippedItemDesc);
-      strcpy(slotItemType, equippedItemType);
-      slotItemWeight = equippedItemWeight;
-      slotItemAddedDamage = equippedItemAddedDamage;
-      slotItemAddedHealth = equippedItemAddedHealth;
-      slotItemValue = equippedItemValue;
-      puts("Slot 2 is now full.");
-      printf("%s has been placed in Slot 2\n", equippedItemName);
-      strcpy(equippedItemName, "Empty");
-      strcpy(equippedItemDesc, "Empty");
-      strcpy(equippedItemType, "Empty");
-      equippedItemWeight = 0;
-      equippedItemAddedDamage = 0;
-      equippedItemAddedHealth = 0;
-      equippedItemValue = 0;
-    }
+
+    Inventory.Slot2.isOpen = 0;
+    strcpy(slotItemName, equippedItemName);
+    strcpy(slotItemDesc, equippedItemDesc);
+    strcpy(slotItemType, equippedItemType);
+    Inventory.Slot2.Item.Weight = equippedItemWeight;
+    Inventory.Slot2.Item.AddedDamage = equippedItemAddedDamage;
+    Inventory.Slot2.Item.AddedHealth = equippedItemAddedHealth;
+    Inventory.Slot2.Item.Value = equippedItemValue;
+    puts("Slot 2 is now full.");
+    printf("%s has been placed in Slot 2\n", equippedItemName);
+    strcpy(equippedItemName, "None");
+    strcpy(equippedItemDesc, "None");
+    strcpy(equippedItemType, "None");
+    Inventory.EquippedWeapon.Weight = 0;
+    Inventory.EquippedWeapon.AddedDamage = 0;
+    Inventory.EquippedWeapon.AddedHealth = 0;
+    Inventory.EquippedWeapon.Value = 0;
   }
   else if (STR_CMP(newInput, "2") && Inventory.Slot2.isOpen == 0)
   {
@@ -334,33 +310,28 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   }
   else if (STR_CMP(newInput, "3") && Inventory.Slot3.isOpen == 1)
   {
+    // choose_open_slot_to_move_to(&newInput, Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value, Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description, Inventory.Slot3.Item.Type, Inventory.Slot3.Item.Weight, Inventory.Slot3.Item.AddedDamage, Inventory.Slot3.Item.AddedHealth, Inventory.Slot3.Item.Value);
     puts("You have chosen to move your item to Slot 3.");
-    if (Inventory.Slot3.isOpen == 0)
-    {
-      printf("Slot three currently has %s in it.\n", Inventory.Slot3.Item.Name);
-      puts("Please choose another slot.");
-    }
-    else
-    {
-      Inventory.Slot3.isOpen = 0;
-      strcpy(slotItemName, equippedItemName);
-      strcpy(slotItemDesc, equippedItemDesc);
-      strcpy(slotItemType, equippedItemType);
-      slotItemWeight = equippedItemWeight;
-      slotItemAddedDamage = equippedItemAddedDamage;
-      slotItemAddedHealth = equippedItemAddedHealth;
-      slotItemValue = equippedItemValue;
-      puts("Slot 3 is now full.");
-      printf("%s has been placed in Slot 3\n", equippedItemName);
-      strcpy(equippedItemName, "Empty");
-      strcpy(equippedItemDesc, "Empty");
-      strcpy(equippedItemType, "Empty");
-      equippedItemWeight = 0;
-      equippedItemAddedDamage = 0;
-      equippedItemAddedHealth = 0;
-      equippedItemValue = 0;
-    }
+
+    Inventory.Slot3.isOpen = 0;
+    strcpy(slotItemName, equippedItemName);
+    strcpy(slotItemDesc, equippedItemDesc);
+    strcpy(slotItemType, equippedItemType);
+    Inventory.Slot3.Item.Weight = equippedItemWeight;
+    Inventory.Slot3.Item.AddedDamage = equippedItemAddedDamage;
+    Inventory.Slot3.Item.AddedHealth = equippedItemAddedHealth;
+    Inventory.Slot3.Item.Value = equippedItemValue;
+    puts("Slot 3 is now full.");
+    printf("%s has been placed in Slot 3\n", equippedItemName);
+    strcpy(equippedItemName, "None");
+    strcpy(equippedItemDesc, "None");
+    strcpy(equippedItemType, "None");
+    Inventory.EquippedWeapon.Weight = 0;
+    Inventory.EquippedWeapon.AddedDamage = 0;
+    Inventory.EquippedWeapon.AddedHealth = 0;
+    Inventory.EquippedWeapon.Value = 0;
   }
+
   else if (STR_CMP(newInput, "3") && Inventory.Slot3.isOpen == 0)
   {
     puts("Slot 3 is full.");
@@ -378,13 +349,13 @@ void equip_item()
 {
   system("clear");
   selected_inventory_option("Equip");
-  // check if slot 1 is empty
+  // check if slot 1 is None
   if (Inventory.Slot1.Item.Name[0] == '\0' && Inventory.Slot2.Item.Name[0] == '\0' && Inventory.Slot3.Item.Name[0] == '\0')
   {
     puts("You have no items in your inventory.");
-    puts("Slot 1: Empty");
-    puts("Slot 2: Empty");
-    puts("Slot 3: Empty");
+    puts("Slot 1: None");
+    puts("Slot 2: None");
+    puts("Slot 3: None");
     puts("Once you have items they will appear here.");
     return;
   }
@@ -415,17 +386,17 @@ void equip_item()
 void equip_logic(char *itemInSlot, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue)
 {
   printf("You have chosen to equip %s. \n", itemInSlot);
-  if (strcmp(itemInSlot, "Empty") == 0)
+  if (strcmp(itemInSlot, "None") == 0)
   {
     puts("There is nothing in this slot.");
   }
   /*
   The following 'else if' statements
-  Run checks to see if an equippable slot is empty
+  Run checks to see if an equippable slot is None
   AND if the user is trying to equip correct type for
   that equippable slot then equip it. If not throw error
   */
-  else if (strcmp(Inventory.EquippedWeapon.Name, "Empty") == 0 && strcmp(Inventory.Slot1.Item.Type, "Weapon") == 0)
+  else if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && strcmp(Inventory.Slot1.Item.Type, "Weapon") == 0)
   {
     is_it_equippable(equippedItemName, equippedItemDesc, equippedItemType, equippedItemWeight, equippedItemAddedHealth, equippedItemAddedDamage, equippedItemValue, Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description, Inventory.Slot1.Item.Type, Inventory.Slot1.Item.Weight, Inventory.Slot1.Item.AddedHealth, Inventory.Slot1.Item.AddedDamage, Inventory.Slot1.Item.Value);
   }
@@ -447,9 +418,9 @@ void is_it_equippable(char *equippedItemName, char *equippedItemDesc, char *equi
   equippedItemWeight = slotItemWeight;
   equippedItemAddedDamage = slotItemAddedDamage;
   equippedItemValue = slotItemValue;
-  strcpy(slotItemName, "Empty");
-  strcpy(slotItemDesc, "Empty");
-  strcpy(slotItemType, "Empty");
+  strcpy(slotItemName, "None");
+  strcpy(slotItemDesc, "None");
+  strcpy(slotItemType, "None");
   slotItemWeight = 0;
   slotItemAddedDamage = 0;
   slotItemAddedHealth = 0;
@@ -457,7 +428,7 @@ void is_it_equippable(char *equippedItemName, char *equippedItemDesc, char *equi
 }
 
 //============================================================================================================//
-// this function is used to drop an item if the slot is not empty
+// this function is used to drop an item if the slot is not None
 void drop_item()
 {
   system("clear");
@@ -482,16 +453,16 @@ void drop_item()
       {
         printf("You have dropped '%s'.\n", Inventory.Slot1.Item.Name);
         Inventory.Slot1.isOpen = 1;
-        strcpy(Inventory.Slot1.Item.Name, "Empty");
-        strcpy(Inventory.Slot1.Item.Description, "Empty");
-        strcpy(Inventory.Slot1.Item.Type, "Empty");
+        strcpy(Inventory.Slot1.Item.Name, "None");
+        strcpy(Inventory.Slot1.Item.Description, "None");
+        strcpy(Inventory.Slot1.Item.Type, "None");
         Inventory.Slot1.Item.Weight = 0;
         Inventory.Slot1.Item.AddedDamage = 0;
         Inventory.Slot1.Item.Value = 0;
       }
       else if (Inventory.Slot1.isOpen == 1)
       {
-        printf("Slot 1 is already empty.\n");
+        printf("Slot 1 is already None.\n");
       }
       else
       {
@@ -505,16 +476,16 @@ void drop_item()
       {
         printf("You have dropped '%s'.\n", Inventory.Slot2.Item.Name);
         Inventory.Slot2.isOpen = 1;
-        strcpy(Inventory.Slot2.Item.Name, "Empty");
-        strcpy(Inventory.Slot2.Item.Description, "Empty");
-        strcpy(Inventory.Slot2.Item.Type, "Empty");
+        strcpy(Inventory.Slot2.Item.Name, "None");
+        strcpy(Inventory.Slot2.Item.Description, "None");
+        strcpy(Inventory.Slot2.Item.Type, "None");
         Inventory.Slot2.Item.Weight = 0;
         Inventory.Slot2.Item.AddedDamage = 0;
         Inventory.Slot2.Item.Value = 0;
       }
       else if (Inventory.Slot2.isOpen == 1)
       {
-        printf("Slot 2 is already empty.\n");
+        printf("Slot 2 is already None.\n");
       }
       else
       {
@@ -529,16 +500,16 @@ void drop_item()
         printf("The address of %s is at %p\n", Inventory.Slot3.Item.Name, &Inventory.Slot3.Item.Name);
         printf("You have dropped '%s'.\n", Inventory.Slot3.Item.Name);
         Inventory.Slot3.isOpen = 1;
-        strcpy(Inventory.Slot3.Item.Name, "Empty");
-        strcpy(Inventory.Slot3.Item.Description, "Empty");
-        strcpy(Inventory.Slot3.Item.Type, "Empty");
+        strcpy(Inventory.Slot3.Item.Name, "None");
+        strcpy(Inventory.Slot3.Item.Description, "None");
+        strcpy(Inventory.Slot3.Item.Type, "None");
         Inventory.Slot3.Item.Weight = 0;
         Inventory.Slot3.Item.AddedDamage = 0;
         Inventory.Slot3.Item.Value = 0;
       }
       else if (Inventory.Slot3.isOpen == 1)
       {
-        printf("Slot 3 is already empty.\n");
+        printf("Slot 3 is already None.\n");
       }
       else
       {
@@ -605,4 +576,32 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
 void selected_inventory_option(const char *string)
 {
   printf("--- %s ---\n", string);
+}
+
+void check_and_see_if_none(char *input)
+{
+  if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && STR_CMP(input, "1"))
+  {
+    puts("You dont have a weapon equipped please try again");
+    sleep(2);
+    selected_to_unequip();
+  }
+  else if (strcmp(Inventory.EquippedHead.Name, "None") == 0 && STR_CMP(input, "2"))
+  {
+    puts("You dont have head armor equipped please try again");
+    sleep(2);
+    selected_to_unequip();
+  }
+  else if (strcmp(Inventory.EquippedChest.Name, "None") == 0 && STR_CMP(input, "3"))
+  {
+    puts("You dont have chest armor equipped please try again");
+    sleep(2);
+    selected_to_unequip();
+  }
+  else if (strcmp(Inventory.EquippedLegs.Name, "None") == 0 && STR_CMP(input, "4"))
+  {
+    puts("You dont have leg armor equipped please try again");
+    sleep(2);
+    selected_to_unequip();
+  }
 }
