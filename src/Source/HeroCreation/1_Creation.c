@@ -382,6 +382,11 @@ void get_profession()
     printf("Ah so you \x1b[1;4mdo not\x1b[0m have a profession is that correct? (y/n)\n");
     confirm_profession();
   }
+  else
+  {
+    MAKE_VALID_DECISION;
+    get_profession();
+  }
 }
 // ===========================================================================================================//
 void confirm_profession()
