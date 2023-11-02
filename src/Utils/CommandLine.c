@@ -41,8 +41,8 @@ char command_descriptions[20][100] = {
     "Opens the notepad and allows the user to make an entry\n",
     "Opens the notepad and allows the user to read all entries\n",
     "Clears all entries from the notepad",
-    "Shows the players inventory\n",
-    "Shows the players inventory\n"};
+    "Allows the player to see and manage their inventory\n",
+    "Allows the player to see and manage their inventory\n"};
 
 char possibleOrigins[5][10];
 #define FALSE 0

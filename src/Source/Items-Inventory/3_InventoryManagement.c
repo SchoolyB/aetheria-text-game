@@ -5,12 +5,12 @@
 
 //============================================================================================================//
 char possibleInventoryOptions[10][20] = {
-    "1.Equip",
-    "2.Unequip",
-    "3.Drop",
-    "4.Use",     // only if consumable
-    "5.Examine", // this will be a description of the item/weapon/armor
-    "6.Exit"};
+    "1.Equip",   // TODO Close but not working yet
+    "2.Unequip", // Works
+    "3.Drop",    // Works
+    "4.Use",     // TODO only if type consumable
+    "5.Examine", // Works
+    "6.Exit"};   // Works
 // todo add new option called 'move' that allows you to move an item from one slot to another
 void inventory_options()
 {
@@ -40,12 +40,14 @@ void inventory_options()
   }
   else if (STR_CMP_TWO(input, "5", "examine"))
   {
-    // examine_item();
-    puts("You chose the examine option.");
+    examine_item();
   }
   else if (STR_CMP_TWO(input, "6", "exit"))
   {
     puts("Exiting Inventory.\n");
+    sleep(2);
+    system("clear");
+    return;
   }
   else
   {
@@ -53,12 +55,8 @@ void inventory_options()
     inventory_options();
   }
 }
-//============================================================================================================//
-// this function takes in and handles the logic for EQUIPPING an item. See logic in void equip_logic()
 
 //============================================================================================================//
-//= == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = //
-
 void selected_to_unequip()
 {
 
@@ -220,7 +218,6 @@ void selected_to_unequip()
 //============================================================================================================//
 
 // this function takes in and handles the logic for  UN-EQUIPPING an item. See logic in void unequip_logic()
-
 void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int *equippedItemWeight, int *equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue, char *slotItemName, char *slotItemDesc, char *slotItemType, int *slotItemWeight, int *slotItemAddedDamage, int *slotItemAddedHealth, int *slotItemValue)
 {
 
@@ -501,6 +498,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   }
 }
 //============================================================================================================//
+// this function is used to equip an item from the players inventory into one of there "equippable" slots
 void equip_item()
 {
   system("clear");
@@ -568,11 +566,6 @@ void equip_item()
     MAKE_VALID_DECISION;
     equip_item();
   }
-  // else
-  // {
-  //   MAKE_VALID_DECISION;
-  //   equip_item();
-  // }
 }
 //============================================================================================================//
 // this function contains all the logic for EQUIPPING an item. See implementation in void equip_item()
@@ -643,7 +636,7 @@ void equip_logic(char *itemInSlot, char *equippedItemName, char *equippedItemDes
   }
 }
 //============================================================================================================//
-// this function runs a check to so if an item is equippable to the correct equippable slot see implementation in void equip_logic()
+// The following 4 function run a check to so if an item is equippable to the correct equippable slot see implementation in void equip_logic()
 void is_weapon_equippable(char *equippedItemName, char *equippedItemDesc, char *equippedItemType, int equippedItemWeight, int equippedItemAddedDamage, int equippedItemAddedHealth, int equippedItemValue, char *slotItemName, char *slotItemDesc, char *slotItemType, int slotItemWeight, int slotItemAddedDamage, int slotItemAddedHealth, int slotItemValue)
 {
   if (strcmp(slotItemType, "Weapon") == 0)
@@ -875,6 +868,7 @@ int drop_item(int *val)
           strcpy(Inventory.EquippedWeapon.Type, "None");
           Inventory.EquippedWeapon.Weight = 0;
           Inventory.EquippedWeapon.AddedDamage = 0;
+          Inventory.EquippedWeapon.AddedHealth = 0;
           Inventory.EquippedWeapon.Value = 0;
         }
         else if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0)
@@ -897,6 +891,7 @@ int drop_item(int *val)
           strcpy(Inventory.EquippedHead.Type, "None");
           Inventory.EquippedHead.Weight = 0;
           Inventory.EquippedHead.AddedDamage = 0;
+          Inventory.EquippedHead.AddedHealth = 0;
           Inventory.EquippedHead.Value = 0;
         }
         else if (strcmp(Inventory.EquippedHead.Name, "None") == 0)
@@ -919,6 +914,7 @@ int drop_item(int *val)
           strcpy(Inventory.EquippedChest.Type, "None");
           Inventory.EquippedChest.Weight = 0;
           Inventory.EquippedChest.AddedDamage = 0;
+          Inventory.EquippedChest.AddedHealth = 0;
           Inventory.EquippedChest.Value = 0;
         }
         else if (strcmp(Inventory.EquippedChest.Name, "None") == 0)
@@ -941,6 +937,7 @@ int drop_item(int *val)
           strcpy(Inventory.EquippedLegs.Type, "None");
           Inventory.EquippedLegs.Weight = 0;
           Inventory.EquippedLegs.AddedDamage = 0;
+          Inventory.EquippedLegs.AddedHealth = 0;
           Inventory.EquippedLegs.Value = 0;
         }
         else if (strcmp(Inventory.EquippedLegs.Name, "None") == 0)
@@ -1089,7 +1086,8 @@ void selected_inventory_option(const char *string)
 {
   printf("--- %s ---\n", string);
 }
-
+//============================================================================================================//
+// this function is similar to get_and_show_inventory_slot_status() but has different use cases. TBH this can prob be deleted or combined
 void check_and_see_if_none(char *input)
 {
   if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && STR_CMP(input, "1"))
@@ -1117,7 +1115,8 @@ void check_and_see_if_none(char *input)
     selected_to_unequip();
   }
 }
-
+//============================================================================================================//
+// this function is used to check if slot is empty or full and show the name of its content see implementation in void unequip_item()
 void get_and_show_inventory_slot_status()
 {
   if (Inventory.Slot1.isOpen == 1)
@@ -1158,6 +1157,8 @@ void get_and_show_inventory_slot_status()
   }
 }
 
+//============================================================================================================//
+// this function evaluates if slots are empty or full then return a value. see use in drop_item()
 int get_inv_status_and_return_val(int *val)
 {
   if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && strcmp(Inventory.EquippedHead.Name, "None") == 0 && strcmp(Inventory.EquippedChest.Name, "None") == 0 && strcmp(Inventory.EquippedLegs.Name, "None") == 0)
@@ -1170,4 +1171,113 @@ int get_inv_status_and_return_val(int *val)
     int val = 2;
     return val;
   }
+}
+//============================================================================================================//
+// this function is used to check if the player wants to examine an item in there inventory. as well as show the item information see implementation in void selected_inventory_option()
+void examine_item()
+{
+  char input[10];
+  system("clear");
+  selected_inventory_option("Examine Item");
+  if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && strcmp(Inventory.EquippedHead.Name, "None") == 0 && strcmp(Inventory.EquippedChest.Name, "None") == 0 && strcmp(Inventory.EquippedLegs.Name, "None") == 0)
+  {
+    puts("You have no items equipped nor in your inventory.");
+    return;
+  }
+  else if (strcmp(Inventory.EquippedWeapon.Name, "None") != 0 || strcmp(Inventory.EquippedHead.Name, "None") != 0 || strcmp(Inventory.EquippedChest.Name, "None") != 0 || strcmp(Inventory.EquippedLegs.Name, "None") != 0 || Inventory.Slot1.Item.Name[0] != '\0' || Inventory.Slot2.Item.Name[0] != '\0' || Inventory.Slot3.Item.Name[0] != '\0')
+  {
+    puts("Which item would you like to examine?");
+    puts("Enter an inventory slot number or equip slot name.");
+    printf("Slot 1: %s\n", Inventory.Slot1.Item.Name);
+    printf("Slot 2: %s\n", Inventory.Slot2.Item.Name);
+    printf("Slot 3: %s\n", Inventory.Slot3.Item.Name);
+    printf("Weapon: %s\n", Inventory.EquippedWeapon.Name);
+    printf("Head: %s\n", Inventory.EquippedHead.Name);
+    printf("Chest: %s\n", Inventory.EquippedChest.Name);
+    printf("Legs: %s\n", Inventory.EquippedLegs.Name);
+
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+    if (strcmp(input, "1") == 0 && Inventory.Slot1.isOpen == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.Slot1.Item.Name);
+      show_item_information(Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description, Inventory.Slot1.Item.Type, Inventory.Slot1.Item.Weight, Inventory.Slot1.Item.AddedDamage, Inventory.Slot1.Item.AddedHealth, Inventory.Slot1.Item.Value);
+    }
+    else if (strcmp(input, "1") == 0 && Inventory.Slot1.isOpen == 1)
+    {
+      puts("There is nothing in this slot.");
+      puts("Please choose a slot that has an item in it.");
+      examine_item();
+    }
+
+    else if (strcmp(input, "2") == 0 && Inventory.Slot2.isOpen == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.Slot2.Item.Name);
+      show_item_information(Inventory.Slot2.Item.Name, Inventory.Slot2.Item.Description, Inventory.Slot2.Item.Type, Inventory.Slot2.Item.Weight, Inventory.Slot2.Item.AddedDamage, Inventory.Slot2.Item.AddedHealth, Inventory.Slot2.Item.Value);
+    }
+    else if (strcmp(input, "2") == 0 && Inventory.Slot2.isOpen == 1)
+    {
+      puts("There is nothing in this slot.");
+      puts("Please choose a slot that has an item in it.");
+      examine_item();
+    }
+
+    else if (strcmp(input, "3") == 0 && Inventory.Slot3.isOpen == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.Slot3.Item.Name);
+      show_item_information(Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description, Inventory.Slot3.Item.Type, Inventory.Slot3.Item.Weight, Inventory.Slot3.Item.AddedDamage, Inventory.Slot3.Item.AddedHealth, Inventory.Slot3.Item.Value);
+    }
+    else if (strcmp(input, "3") == 0 && Inventory.Slot3.isOpen == 1)
+    {
+      puts("There is nothing in this slot.");
+      puts("Please choose a slot that has an item in it.");
+      examine_item();
+    }
+    else if (strcmp(input, "weapon") == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.EquippedWeapon.Name);
+      show_item_information(Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.AddedHealth, Inventory.EquippedWeapon.Value);
+    }
+    else if (strcmp(input, "head") == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.EquippedHead.Name);
+      show_item_information(Inventory.EquippedHead.Name, Inventory.EquippedHead.Description, Inventory.EquippedHead.Type, Inventory.EquippedHead.Weight, Inventory.EquippedHead.AddedDamage, Inventory.EquippedHead.AddedHealth, Inventory.EquippedHead.Value);
+    }
+    else if (strcmp(input, "chest") == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.EquippedChest.Name);
+      show_item_information(Inventory.EquippedChest.Name, Inventory.EquippedChest.Description, Inventory.EquippedChest.Type, Inventory.EquippedChest.Weight, Inventory.EquippedChest.AddedDamage, Inventory.EquippedChest.AddedHealth, Inventory.EquippedChest.Value);
+    }
+    else if (strcmp(input, "legs") == 0)
+    {
+      system("clear");
+      printf("You have chosen to examine %s.\n", Inventory.EquippedLegs.Name);
+      show_item_information(Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.AddedDamage, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Value);
+    }
+    else
+    {
+      puts("Invalid input.");
+      puts("Please try again.");
+      examine_item();
+    }
+  }
+}
+//============================================================================================================//
+// this function shows a chart of information and some ascii art of the current item being examined see implementation in void examine_item()
+void show_item_information(char *itemName, char *itemDesc, char *itemType, int itemWeight, int itemAddedDamage, int itemAddedHealth, int itemValue)
+{
+  printf("Name: %s\n", itemName);
+  printf("Description: %s\n", itemDesc);
+  printf("Type: %s\n", itemType);
+  printf("Weight: %d\n", itemWeight);
+  printf("Added Damage: %d\n", itemAddedDamage);
+  printf("Added Health: %d\n", itemAddedHealth);
+  printf("Value: %d\n", itemValue);
+  return;
 }
