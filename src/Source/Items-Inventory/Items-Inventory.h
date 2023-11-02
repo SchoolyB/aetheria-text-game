@@ -12,7 +12,7 @@ void close_loot_chest();
 //+=+=+=+=+=+3_InventoryManagement.c Prototypes+=+=+=+=+=+//
 void inventory_options();
 void choose_open_slot_to_move_to();
-void drop_item();
+int drop_item();
 void pick_up_item();
 void equip_item();
 void unequip_item();
