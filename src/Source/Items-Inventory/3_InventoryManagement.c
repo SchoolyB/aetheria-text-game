@@ -45,7 +45,7 @@ void inventory_options()
   else if (STR_CMP_TWO(input, "6", "exit"))
   {
     puts("Exiting Inventory.\n");
-    sleep(2);
+    sleep(1);
     system("clear");
     return;
   }
@@ -125,7 +125,7 @@ void selected_to_unequip()
     else
     {
       MAKE_VALID_DECISION;
-      sleep(2);
+      sleep(1);
       selected_to_unequip();
     }
   }
@@ -154,7 +154,7 @@ void selected_to_unequip()
     else
     {
       MAKE_VALID_DECISION;
-      sleep(2);
+      sleep(1);
       selected_to_unequip();
     }
   }
@@ -182,7 +182,7 @@ void selected_to_unequip()
     else
     {
       MAKE_VALID_DECISION;
-      sleep(2);
+      sleep(1);
       selected_to_unequip();
     }
   }
@@ -210,9 +210,16 @@ void selected_to_unequip()
     else
     {
       MAKE_VALID_DECISION;
-      sleep(2);
+      sleep(1);
       selected_to_unequip();
     }
+  }
+  else if (STR_CMP(input, "5") || STR_CMP(input, "exit") || STR_CMP(input, "cancel"))
+  {
+    puts("Exiting...");
+    sleep(1);
+    system("clear");
+    return;
   }
 }
 //============================================================================================================//
@@ -310,7 +317,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   {
     puts("Slot 1 is full.");
     puts("Please try again.");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else if (STR_CMP(newInput, "2") && Inventory.Slot2.isOpen == 1)
@@ -403,7 +410,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   {
     puts("Slot 2 is full.");
     puts("Please try again.");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else if (STR_CMP(newInput, "3") && Inventory.Slot3.isOpen == 1)
@@ -497,7 +504,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   {
     puts("Slot 3 is full.");
     puts("Please try again.");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else
@@ -990,7 +997,7 @@ int drop_item(int *val)
           printf("Check failed.\n");
         }
       }
-      else if (strcmp(input, "legs" || "leg") == 0)
+      else if (strcmp(input, "legs") == 0)
       {
         printf("You have chosen to drop your leg armor.\n");
         if (strcmp(Inventory.EquippedLegs.Name, "None") != 0)
@@ -1068,7 +1075,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
       {
         puts("Slot 1 is already full.");
         puts("Please try again.");
-        sleep(2);
+        sleep(1);
         pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
       }
       else
@@ -1095,7 +1102,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
       {
         puts("Slot 2 is already full.");
         puts("Please try again.");
-        sleep(2);
+        sleep(1);
         pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
       }
       else
@@ -1122,7 +1129,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
       {
         puts("Slot 3 is already full.");
         puts("Please try again.");
-        sleep(2);
+        sleep(1);
         pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
       }
       else
@@ -1134,7 +1141,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
     {
       puts("Invalid input.");
       puts("Please try again.");
-      sleep(2);
+      sleep(1);
       pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
     }
   }
@@ -1157,25 +1164,25 @@ void check_and_see_if_none(char *input)
   if (strcmp(Inventory.EquippedWeapon.Name, "None") == 0 && STR_CMP(input, "1"))
   {
     puts("You dont have a weapon equipped please try again");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else if (strcmp(Inventory.EquippedHead.Name, "None") == 0 && STR_CMP(input, "2"))
   {
     puts("You dont have head armor equipped please try again");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else if (strcmp(Inventory.EquippedChest.Name, "None") == 0 && STR_CMP(input, "3"))
   {
     puts("You dont have chest armor equipped please try again");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
   else if (strcmp(Inventory.EquippedLegs.Name, "None") == 0 && STR_CMP(input, "4"))
   {
     puts("You dont have leg armor equipped please try again");
-    sleep(2);
+    sleep(1);
     selected_to_unequip();
   }
 }
