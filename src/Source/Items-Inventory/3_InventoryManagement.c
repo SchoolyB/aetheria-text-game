@@ -224,10 +224,10 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   if (STR_CMP(newInput, "1") && Inventory.Slot1.isOpen == 1)
   {
     puts("You have chosen to move your item to Slot 1.");
-    Inventory.Slot1.isOpen = 0;
 
     if (strcmp(equippedItemType, "Weapon") == 0)
     {
+      Inventory.Slot1.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -247,6 +247,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Head") == 0)
     {
+      Inventory.Slot1.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -266,6 +267,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Chest") == 0)
     {
+      Inventory.Slot1.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -285,6 +287,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Legs") == 0)
     {
+      Inventory.Slot1.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -314,10 +317,10 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   {
 
     puts("You have chosen to move your item to Slot 2.");
-    Inventory.Slot2.isOpen = 0;
 
     if (strcmp(equippedItemType, "Weapon") == 0)
     {
+      Inventory.Slot2.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -337,6 +340,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Head") == 0)
     {
+      Inventory.Slot2.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -356,6 +360,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Chest") == 0)
     {
+      Inventory.Slot2.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -375,6 +380,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Legs") == 0)
     {
+      Inventory.Slot2.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -405,10 +411,9 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
 
     puts("You have chosen to move your item to Slot 3.");
 
-    Inventory.Slot3.isOpen = 0;
-
     if (strcmp(equippedItemType, "Weapon") == 0)
     {
+      Inventory.Slot3.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -428,6 +433,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Head") == 0)
     {
+      Inventory.Slot3.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -447,6 +453,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Chest") == 0)
     {
+      Inventory.Slot3.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -466,6 +473,7 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
     }
     else if (strcmp(equippedItemType, "Legs") == 0)
     {
+      Inventory.Slot3.isOpen = 0;
       strcpy(slotItemName, equippedItemName);
       strcpy(slotItemDesc, equippedItemDesc);
       strcpy(slotItemType, equippedItemType);
@@ -504,7 +512,7 @@ void equip_item()
 
   system("clear");
   selected_inventory_option("Equip Item");
-  if (Inventory.Slot1.Item.Name[0] == '\0' && Inventory.Slot2.Item.Name[0] == '\0' && Inventory.Slot3.Item.Name[0] == '\0')
+  if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
   {
     puts("You have no items in your inventory.");
     puts("Slot 1: None");
@@ -911,6 +919,7 @@ int drop_item(int *val)
           printf("Check failed.\n");
         }
       }
+      // start evaluating equippable slots
       else if (strcmp(input, "weapon") == 0)
       {
         printf("You have chosen to drop your weapon.\n");
