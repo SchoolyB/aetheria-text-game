@@ -8,13 +8,12 @@ void generate_chest_armor();
 void generate_leg_armor();
 int generate_item();
 int call_generate_function();
-//+=+=+=+=+=+2_Chests.c Prototypes+=+=+=+=+=+//
-void found_loot_chests();
-void generate_loot_chest_contents();
+void found_loot_chest();
 void open_loot_chest();
+void generate_loot_chest_contents();
 void show_loot_chest_contents();
-void close_loot_chest();
-//+=+=+=+=+=+3_InventoryManagement.c Prototypes+=+=+=+=+=+//
+void ask_to_pick_up();
+//+=+=+=+=+=+2_InventoryManagement.c Prototypes+=+=+=+=+=+//
 void inventory_options();
 void equip_item();
 void unequip_item();
@@ -27,8 +26,7 @@ void selected_inventory_option();
 void check_and_see_if_none();
 void selected_inventory_option();
 void get_and_show_inventory_slot_status();
-int get_status_and_return_val();
+int get_inv_status_and_return_val();
 void examine_item();
 void show_item_information();
-
 #endif

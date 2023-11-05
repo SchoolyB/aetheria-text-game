@@ -4,6 +4,7 @@
 #include "Items-Inventory.h"
 #include "../../Utils/Utils.h"
 
+Hero hero;
 // START OF WEAPON GENERATION. FOR LOGIC SEE generate_item() FUNCTION BELOW
 //===============================================================================//
 char WeaponList[50][10][100] = {
@@ -72,8 +73,8 @@ char HeadArmorList[50][10][100] = {
     {"Shadow Veil", "Veil of Shadows", "Head", "Common", "4", "15", "0", "25"},
     {"Enchanted Tiara", "Mystic Enchantment", "Head", "Rare", "22", "0", "75", "90"},
     {"Tribal Feathered Headdress", "Tribal Spirit Feather", "Head", "Common", "0,", "9", "32", "45"},
-    {"Eldritch Diadem", "Mystical headpiece", "Head", "Common", "15", "0", "45", "60"},
-    {"Sylvan Hood", "Lightweight and flexible", "Head", "Common", "5", "0", "20", "25"},
+    {"Eldritch Diadem", "Mystical headpiece", "Head", "Common", "0", "15", "45", "60"},
+    {"Sylvan Hood", "Lightweight and flexible", "Head", "Common", "0", "5", "20", "25"},
     {"Dragonhide Helmet", "Scale of the Fire Drakes", "Head", "Rare", "0", "25", "90", "110"},
     {"Elven Circlet", "Elegance of the Woodlands", "Head", "Uncommon", "0", "8", "35", "50"},
     {"Dwarven Forged Helm", "Craftsmanship of the Mountain Folk", "Head", "Rare", "0", "12", "65", "75"},
@@ -213,7 +214,7 @@ int generate_item(char ArmorList[50][10][100])
                 strcpy(itemDesc, ArmorList[randomIndex][1]);
                 strcpy(itemType, ArmorList[randomIndex][2]);
                 strcpy(itemRarity, ArmorList[randomIndex][3]);
-                pick_up_item(itemName, itemDesc, itemType, itemRarity, itemDamageAdded, itemHealthAdded, itemWeight, itemValue);
+                show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
                 itemGenerated = 1;
             }
             else if (strcmp(ArmorList[randomIndex][3], "Common") == 0)
@@ -222,7 +223,7 @@ int generate_item(char ArmorList[50][10][100])
                 strcpy(itemDesc, ArmorList[randomIndex][1]);
                 strcpy(itemType, ArmorList[randomIndex][2]);
                 strcpy(itemRarity, ArmorList[randomIndex][3]);
-                pick_up_item(itemName, itemDesc, itemType, itemRarity, itemDamageAdded, itemHealthAdded, itemWeight, itemValue);
+                show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
                 itemGenerated = 1;
             }
             else if (strcmp(ArmorList[randomIndex][3], "Rare") == 0)
@@ -231,7 +232,7 @@ int generate_item(char ArmorList[50][10][100])
                 strcpy(itemDesc, ArmorList[randomIndex][1]);
                 strcpy(itemType, ArmorList[randomIndex][2]);
                 strcpy(itemRarity, ArmorList[randomIndex][3]);
-                pick_up_item(itemName, itemDesc, itemType, itemRarity, itemDamageAdded, itemHealthAdded, itemWeight, itemValue);
+                show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
                 itemGenerated = 1;
             }
             else
@@ -277,4 +278,88 @@ int call_generate_function()
         return 1;
     }
     return 0;
+}
+
+//==========================================================================================//
+void found_loot_chest()
+{
+    char input[10];
+    printf("You've found a chest what would you like to do?\n");
+    printf("1:Search The Chest\n");
+    printf("2:Leave the chest\n");
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+
+    if (strcmp(input, "1") == 0 || strcmp(input, "search") == 0 || strcmp(input, "Search") == 0)
+    {
+        open_loot_chest();
+    }
+    else if (strcmp(input, "2") == 0 || strcmp(input, "leave") == 0 || strcmp(input, "Leave") == 0)
+    {
+        printf("You decided to leave the chest alone.\n");
+        return 0;
+        // do more stuff
+    }
+    else
+    {
+        MAKE_VALID_DECISION;
+        found_loot_chest();
+    }
+}
+
+void open_loot_chest()
+{
+    PRINT_SLOWLY("Opening Chest......", 40000);
+    sleep(1);
+    PRINT_SLOWLY("Searching......", 40000);
+    sleep(2);
+    generate_loot_chest_contents();
+}
+
+void generate_loot_chest_contents()
+{
+    /*putting this function in here because might get to the
+    point where I want to have up to 3 items be found in a chest.*/
+    call_generate_function();
+}
+
+void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
+{
+    printf("You've found: %s!\n", itemName);
+    printf("Description: %s\n", itemDesc);
+    printf("Type: %s\n", itemType);
+    printf("Rarity: %s\n", itemRarity);
+    if (strcmp(itemType, "Head") == 0 || strcmp(itemType, "Chest") == 0 || strcmp(itemType, "Legs") == 0)
+    {
+        printf("Health Points Added: %d. If equipped your new health would be %d\n", itemHealthAdded, itemHealthAdded + hero.Health);
+    }
+    else if (strcmp(itemType, "Weapon") == 0)
+    {
+        printf("Damage Points Added: %d.\n", itemDamageAdded);
+        printf("%s Damage if equipped: %d\n", hero.Ability1.Name, itemDamageAdded + hero.Ability1.Damage);
+        printf("%s Damage if equipped: %d\n", hero.Ability2.Name, itemDamageAdded + hero.Ability2.Damage);
+        printf("%s Damage if equipped: %d\n", hero.Ability3.Name, itemDamageAdded + hero.Ability3.Damage);
+    }
+    printf("Weight(lbs): %d\n", itemWeight);
+    printf("Value(gold): %d\n", itemValue);
+
+    ask_to_pick_up(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
+}
+
+void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
+{
+    char input[10];
+    printf("Would you like to pick up %s?(y/n)", itemName);
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+
+    if (INPUT_IS_YES(input))
+    {
+        pick_up_item(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
+    }
+    else if (INPUT_IS_NO(input))
+    {
+        puts("Very well you left the item behind...");
+        return 0;
+    }
 }

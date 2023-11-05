@@ -1039,7 +1039,7 @@ int drop_item(int *val)
 
 //============================================================================================================//
 // this function is used to pick up an item and place it in an open slot
-void pick_up_item(char itemName[30], char itemDesc[50], char itemType[15], char ItemRarity[10], int itemAddedDamage, int itemHealthAdded, int itemWeight, int itemValue)
+void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRarity, int *itemHealthAdded, int *itemAddedDamage, int *itemWeight, int *itemValue)
 {
   char input[10];
 
