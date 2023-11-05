@@ -470,9 +470,8 @@ typedef struct
   int Weight;
   int Value;
   char Art[1000];
-  char Rarity[10];   // common, uncommon, rare, epic, legendary
-  char Material[15]; // wood, iron, steel, etc
-  char Style[10];    // for weapons..i.e sword,axe,mace,staff,wand,etc
+  char Rarity[10]; // common, uncommon, rare, epic, legendary // wood, iron, steel, etc
+  // char Style[10];  // for weapons..i.e sword,axe,mace,staff,wand,etc
 } Item;
 
 typedef struct
@@ -884,12 +883,12 @@ void activate_god_mode()
   hero.AttributePointsPool = 0;
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
-  Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
-  Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
-  Inventory.Slot3.isOpen = 1;
-  // 0 = false, 1 = true
+  // Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+  // Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+  // Inventory.Slot3.isOpen = 1;
+  // // 0 = false, 1 = true
 
-  Inventory.Slot1.Quantity = 0;
+  // Inventory.Slot1.Quantity = 0;
   strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");
   strcpy(Inventory.EquippedWeapon.Description, "God Mode Weapon Desc.");
   strcpy(Inventory.EquippedWeapon.Type, "Weapon");
