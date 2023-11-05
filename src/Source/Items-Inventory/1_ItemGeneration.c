@@ -50,7 +50,7 @@ char WeaponList[50][10][100] = {
     {"Blazing Sunblade", "Burns with the power of the sun", "Weapon", "Epic", "58", "0", "0", "108"},
     {"Staff of the Moonlit Enchanter", "Wields the magic of moonlight", "Weapon", "Rare", "43", "0", "0", "83"}};
 
-int generate_weapon()
+void generate_weapon()
 {
     generate_item(WeaponList);
 }
@@ -93,7 +93,7 @@ char HeadArmorList[50][10][100] = {
     {"Mystic Sentinel Helm", "Ancient Empire's Headpiece", "Head", "Rare", "0", "17", "60", "75"},
     {"Kraken's Helm", "Helm of the Deep Seas", "Head", "Epic", "0", "32", "120", "150"}};
 
-int generate_head_armor()
+void generate_head_armor()
 {
     generate_item(HeadArmorList);
 }
@@ -134,7 +134,7 @@ char ChestArmorList[50][10][100] = {
     {"Ancient Runekeeper Vestment", "Inscribed with ancient runes", "Chest", "Rare", "0", "65", "130", "160"},
     {"Leviathan's Oceanic Armor", "Crafted from leviathan scales", "Chest", "Epic", "0", "100", "190", "230"}};
 
-int generate_chest_armor()
+void generate_chest_armor()
 {
     generate_item(ChestArmorList);
 }
@@ -173,7 +173,7 @@ char LegArmorList[50][10][100] = {
     {"Leviathan Leviathanhide Legguards", "Crafted from formidable leviathanhide", "Legs", "Epic", "0", "90", "180", "220"},
     {"Ghostly Ethereal Leggings", "Infused with ethereal ghostly essence", "Legs", "Rare", "0", "70", "150", "180"}};
 
-int generate_leg_armor()
+void generate_leg_armor()
 {
     generate_item(LegArmorList);
 }
@@ -244,6 +244,37 @@ int generate_item(char ArmorList[50][10][100])
         {
             break;
         }
+    }
+    return 0;
+}
+//===============================================================================//
+// This function takes a random number and then uses that number to determine which function is called thus determining which item to generate
+
+int call_generate_function()
+{
+    srand(time(NULL));
+    int randomNum = rand() % 4;
+
+    if (randomNum == 0)
+    {
+        generate_weapon();
+    }
+    else if (randomNum == 1)
+    {
+        generate_head_armor();
+    }
+    else if (randomNum == 2)
+    {
+        generate_chest_armor();
+    }
+    else if (randomNum == 3)
+    {
+        generate_leg_armor();
+    }
+    else
+    {
+        puts("You should not be here...Turn back now");
+        return 1;
     }
     return 0;
 }

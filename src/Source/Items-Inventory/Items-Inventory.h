@@ -2,7 +2,12 @@
 #define ITEMS_INVENTORY_H
 
 //+=+=+=+=+=+1_ItemGeneration.c Prototypes+=+=+=+=+=+//
-int generate_head_armor();
+void generate_weapon();
+void generate_head_armor();
+void generate_chest_armor();
+void generate_leg_armor();
+int generate_item();
+int call_generate_function();
 //+=+=+=+=+=+2_Chests.c Prototypes+=+=+=+=+=+//
 void found_loot_chests();
 void generate_loot_chest_contents();
