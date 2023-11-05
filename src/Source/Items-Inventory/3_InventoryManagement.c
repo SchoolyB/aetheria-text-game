@@ -5,7 +5,7 @@
 
 //============================================================================================================//
 char possibleInventoryOptions[10][20] = {
-    "1.Equip",   // TODO Close but not working yet
+    "1.Equip",   // Works
     "2.Unequip", // Works
     "3.Drop",    // Works
     "4.Use",     // TODO only if type consumable
@@ -1039,7 +1039,7 @@ int drop_item(int *val)
 
 //============================================================================================================//
 // this function is used to pick up an item and place it in an open slot
-void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int itemWeight, int itemAddedDamage, int itemValue)
+void pick_up_item(char itemName[30], char itemDesc[50], char itemType[15], char ItemRarity[10], int itemAddedDamage, int itemHealthAdded, int itemWeight, int itemValue)
 {
   char input[10];
 
@@ -1065,8 +1065,9 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
         strcpy(Inventory.Slot1.Item.Name, itemName);
         strcpy(Inventory.Slot1.Item.Description, itemDesc);
         strcpy(Inventory.Slot1.Item.Type, itemType);
-        Inventory.Slot1.Item.Weight = itemWeight;
         Inventory.Slot1.Item.AddedDamage = itemAddedDamage;
+        Inventory.Slot1.Item.AddedHealth = itemHealthAdded;
+        Inventory.Slot1.Item.Weight = itemWeight;
         Inventory.Slot1.Item.Value = itemValue;
         Inventory.Slot1.isOpen = 0;
         printf("You have placed '%s' in slot 1.\n", itemName);
@@ -1076,7 +1077,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
         puts("Slot 1 is already full.");
         puts("Please try again.");
         sleep(1);
-        pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
+        pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
       }
       else
       {
@@ -1103,7 +1104,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
         puts("Slot 2 is already full.");
         puts("Please try again.");
         sleep(1);
-        pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
+        pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
       }
       else
       {
@@ -1130,7 +1131,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
         puts("Slot 3 is already full.");
         puts("Please try again.");
         sleep(1);
-        pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
+        pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
       }
       else
       {
@@ -1142,7 +1143,7 @@ void pick_up_item(char itemName[20], char itemDesc[50], char itemType[15], int i
       puts("Invalid input.");
       puts("Please try again.");
       sleep(1);
-      pick_up_item(itemName, itemDesc, itemType, itemWeight, itemAddedDamage, itemValue);
+      pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
     }
   }
   else

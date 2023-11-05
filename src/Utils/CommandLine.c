@@ -74,6 +74,11 @@ int COMMAND_LINE(FILE *logFile)
 {
   Hero NewHero;
   char input[100];
+  // TODO remove these 3. They are only here when debugging inventory and god mode. see activate_god_mode() in Utils.h
+  Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
+  Inventory.Slot3.isOpen = 1;
+
   while (1)
   {
     // Prompt the user for input
@@ -440,14 +445,7 @@ int COMMAND_LINE(FILE *logFile)
       sleep(1);
       system("clear");
       printf("Call all functions that you would like to debug here.\n");
-      hero_steps_on_item();
-      printf(" Inventory slot one now contains the following data:\n");
-      printf("Name: %s\n", Inventory.Slot1.Item.Name);
-      printf("Description: %s\n", Inventory.Slot1.Item.Description);
-      printf("Type: %s\n", Inventory.Slot1.Item.Type);
-      printf("Weight: %d\n", Inventory.Slot1.Item.Weight);
-      printf("Added Damage: %d\n", Inventory.Slot1.Item.AddedDamage);
-      printf("Value: %d\n", Inventory.Slot1.Item.Value);
+      hero_steps_on_item(); // see testing.c TODO remove this after completing inventory
     }
 
     else
