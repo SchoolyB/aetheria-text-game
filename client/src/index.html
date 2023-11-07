@@ -5,27 +5,33 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./dist/output.css" rel="stylesheet">
   <title>Aetheria | Home</title>
 </head>
 <body>
   <div id="app">
   </div>
-  <header>
-    Aetheria
-    <nav>
-      <ul>
-        <li>
-          <a href="index.html">Home</a>
-        </li>
-        <li>
-          <a href="index2.html">Media</a>
-        </li>
-        <li>
-          <a href="index3.html">Patch Notes & Progression</a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+<div class="navbar bg-base-100">
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li><a>Link</a></li>
+      <li>
+        <details>
+          <summary>
+            Parent
+          </summary>
+          <ul class="p-2 bg-base-100">
+            <li><a>Link 1</a></li>
+            <li><a>Link 2</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+</div>
   <div id="content-container">
   <div class="gameInfo" id="gameInformationContainer">
     <h1 class="heading">Info</h1>
