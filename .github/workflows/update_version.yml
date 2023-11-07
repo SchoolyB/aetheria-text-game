@@ -1,4 +1,4 @@
-name: Update Game Version
+name: Update Game & Website Versions
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         cd $GITHUB_WORKSPACE
 
         # Run your version update script
-        ./bump_game_version.sh
+        ./bump_version.sh
 
         # Set the user name
         git config --global user.name "SchoolyB"
