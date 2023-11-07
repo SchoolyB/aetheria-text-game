@@ -9,48 +9,75 @@
   <title>Aetheria | Home</title>
 </head>
 <body>
-  <div id="app">
-  </div>
 <div class="navbar bg-base-100">
   <div class="flex-1">
-    <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+    <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <li><a>Link</a></li>
+      <li><a href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
       <li>
         <details>
           <summary>
-            Parent
+            Pages
           </summary>
           <ul class="p-2 bg-base-100">
-            <li><a>Link 1</a></li>
-            <li><a>Link 2</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/media.html">Media</a></li>
+            <li><a href="/patch_notes.html">Patch Notes</a></li>
           </ul>
         </details>
       </li>
     </ul>
   </div>
 </div>
-  <div id="content-container">
-  <div class="gameInfo" id="gameInformationContainer">
-    <h1 class="heading">Info</h1>
-    <div class="gameInfo" id="aboutTheGame">
-      <p class="para">
-        I am currently taking a break from large framework projects to work on a small and fun text based game written entirely in
-        my favorite programming language "C". I am doing this to help me learn the language. This was initially prompted by me receiving
-        my C Programming Language book by Brian W. Kernighan and Dennis M. Ritchie in the mail! No on to the game. Currently the game is untitled but it will allow users to create their own hero and launch into a fantasy world or magic and adventure. I have many ideas that I want to bring to life but Im sure it will take a long time. Im treating this project as a marathon not a sprint. For all I know I can be working on this years from now just for fun. 
-      </p>
+    <div class="hero min-h-screen bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Welcome To Aetheria</h1>
+          <p class="py-6">A terminal based text adventure/fantasy/rpg game written in "C" that has quickly become the passion project of its sole developer Marshall Burns. From this site you can access media files from the games development as well as patch notes from the developer.</p>
+
+        </div>
+      </div>
     </div>
   </div>
+  <h1>Installation & Execution</h1>
+  <div class="mockup-code">
+    <pre data-prefix="$"><code>git clone https://github.com/SchoolyB/aetheria-text-game.git</code></pre>
+    <pre data-prefix=">" class="text-success"><code>Repository Cloned!</code></pre>
+  </div>
+<h1>Navigate to the "scripts" directory</h1>
+  <div class="mockup-code">
+    <pre data-prefix="$"><code>cd your/file/path/aetheria-text-game/scripts</code></pre>
+  </div>
+<h1>To run and execute the program run the "execute.sh" script</h1>
+  <div class="mockup-code">
+    <pre data-prefix="$"><code>./execute.sh</code></pre>
+    <pre data-prefix=">" class="text-success"><code>Build Successful!</code></pre>
+    <pre data-prefix=">" class="text"><code>Clearing Terminal</code></pre>
+    <pre data-prefix=">" class="text"><code>Running Aetheria...</code></pre>
+  </div>
+  <h1>If you <u><b>ONLY</b></u> want to compile the program run the "compile.sh" script</h1>
+  <div class="mockup-code">
+    <pre data-prefix="$"><code>./compile.sh</code></pre>
+    <pre data-prefix=">" class="text-success"><code>Build Successful!</code></pre>
+  </div>
+<div id="release-list"></div>
   <!-- Footer -->
 <footer class="footer footer-center p-4 bg-base-300 text-base-content ">
   <aside>
     <p>
       Created by: Marshall Burns
     </p>
-    <p id="game-version"></p>
-    <p id="website-version"></p>
+    
+      <a href="">
+        <p>Current Game Build:</p>
+        <p id="game-version" class="text-lg"></p>
+      </a>
+      <a href="">
+        <p>Current Website Build:</p>
+        <p id="website-version" class="text-lg"></p>
+      </a>
   </aside>
   
 </footer>
