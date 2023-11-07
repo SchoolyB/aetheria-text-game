@@ -1,24 +1,40 @@
 #!/bin/bash
 
-# Specify the path to your version.txt file
-VERSION_FILE="./VERSION"
+# Path to the JSON file
+json_file="../version.json"
 
-# Read the current version from the version.txt file
-CURRENT_VERSION=$(grep -oP "(?<=Build: Pre_Rel_v)[0-9]+\.[0-9]+\.[0-9]+" "$VERSION_FILE")
+# Check if the JSON file exists
+if [ ! -f "$json_file" ]; then
+  echo "Version JSON file not found: $json_file"
+  exit 1
+fi
 
-# Split the current version into major, minor, and patch
-IFS="." read -ra parts <<< "$CURRENT_VERSION"
-MAJOR="${parts[0]}"
-MINOR="${parts[1]}"
-PATCH="${parts[2]}"
+# Extract the current version numbers
+current_game_version=$(jq -r .game_version "$json_file")
+current_website_version=$(jq -r .website_version "$json_file")
 
-# Increment the patch number
-((PATCH++))
+# Function to increment version numbers
+increment_version() {
+  local version=$1
+  local updated_version=""
+  local patch=""
+  if [[ $version =~ ([0-9]+)$ ]]; then
+    patch="${BASH_REMATCH[1]}"
+    updated_patch=$((patch + 1))
+    updated_version="${version%$patch}$updated_patch"
+    echo "$updated_version"
+  else
+    echo "Invalid version format: $version"
+  fi
+}
 
-# Create the new version in the format "Build: Pre_Rel_v.x.y.z"
-NEW_VERSION="Build: Pre_Rel_v$MAJOR.$MINOR.$PATCH"
+# Increment the patch numbers
+patch_game=$(increment_version "$current_game_version")
+patch_website=$(increment_version "$current_website_version")
 
-# Update the version in the version.txt file
-sed -i "s/Build: Pre_Rel_v$CURRENT_VERSION/$NEW_VERSION/" "$VERSION_FILE"
+# Update the JSON file with the new version numbers
+jq ".game_version = \"$patch_game\" | .website_version = \"$patch_website\"" "$json_file" > "$json_file.tmp"
+mv "$json_file.tmp" "$json_file"
 
-echo "Updating to build: $NEW_VERSION"
+echo "Updated game_version to $patch_game"
+echo "Updated website_version to $patch_website"

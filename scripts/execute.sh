@@ -1,4 +1,4 @@
-gcc -o Aetheria.o main.c -lncurses
+gcc -o ../game/src/Aetheria.exe ../game/src/main.c -lncurses
 # When not using ncurses use the following command:
 # gcc -o Aetheria.o main.c
 
@@ -9,7 +9,7 @@ if [ $? -eq 0 ]; then
     clear
     echo "Build Successful"
     echo "Running Aetheria"
-    ./Aetheria.o
+    ./../game/src/Aetheria.exe
 else
     echo "Build Failed"
     exit 1
