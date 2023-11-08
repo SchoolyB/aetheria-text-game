@@ -18,7 +18,7 @@ You can find information about the game on the games website.
 - Screenshots During Development
 - And More!!!
   
-So head on over to https://untitled-text-game.vercel.app/
+So head on over to https://aetheria-game.vercel.app/
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ To embark on your quest in the world of "Heros of Aetheria," follow these steps:
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/SchoolyB/untitled-text-game.git
+git clone https://github.com/SchoolyB/aetheria-text-game.git
 ```
 2. **Navigate to the Directory:**
 

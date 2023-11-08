@@ -3,9 +3,9 @@ gcc -o ../game/src/Aetheria.exe ../game/src/main.c -lncurses
 # gcc -o Aetheria.o main.c
 
 if [ $? -eq 0 ]; then
-    echo "Build Successful"  
+    echo "\e[32mBuild Successful!\e[0m" 
 else
-    echo "Build Failed"
+    echo "\e[31mBuild Failed.\e[0m"
     exit 1
 fi
 
