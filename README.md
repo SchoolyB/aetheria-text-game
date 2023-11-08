@@ -3,7 +3,7 @@
 Welcome to the world of "Heros of Aetheria," a text-based adventure game written in the C programming language. In this game, you'll venture through the mystical realm of Aetheria, make critical choices, and strive to achieve your ultimate destiny. Your decisions will shape the course of your epic journey.
 
 ## Table of Contents
-  - [The Games Website](https://untitled-text-game.vercel.app/)
+  - [The Games Website](https://aetheria-game.vercel.app/)
   - [Getting Started](#getting-started)
   - MORE TO COME
 
@@ -40,19 +40,19 @@ cd your/path/untitled-text-game
 I have included a shell script to make compiling and running the program easier. To <i><b><u>COMPILE AND RUN</u></b></i> the program at once, run the following command:
 
 ```bash
-./build_n_run.sh
+./execute.sh
 ```
 
 This will create an executable file called `Aetheria.o`. You can run the executable if you <i><b><u>DO NOT</u></b></i> need/want to compile again by running the following command:
 
 ```bash
-./Aethoria.o
+./Aethoria.exe
 ```
 
 To compile the program <i><b><u>WITHOUT</u></b></i>  running it, run the following command:
 
 ```bash
-./build.sh
+./compile.sh
 ```
 <hr>
 
