@@ -7,29 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="navbar bg-base-100">
-  <div class="flex-1">
-    <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
+  <div class="navbar bg-base-100 text-white">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-4">
+        <li><a target="_blank" href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
+        <li>
+          <details>
+            <summary>
+              Pages
+            </summary>
+            <ul class="p-2 bg-base-100">
+              <li><a href="/">Home</a></li>
+              <li><a href="/media.html">Media</a></li>
+              <li><a href="/patch_notes.html">Patch Notes</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <li><a href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
-      <li>
-        <details>
-          <summary>
-            Pages
-          </summary>
-          <ul class="p-2 bg-base-100">
-            <li><a href="/">Home</a></li>
-            <li><a href="/media.html">Media</a></li>
-            <li><a href="/patch_notes.html">Patch Notes</a></li>
-          </ul>
-        </details>
-      </li>
-    </ul>
-  </div>
-</div>
   <div id="mediaContainer">
     <h1 class="heading">Media</h1>
     <div class="mediaContainer" id="screenshots">
@@ -44,15 +43,35 @@
     <div class="media" id="videos"></div>
   </div>
   </div>
-<footer>
-  <div id="footerContainer">
-    <p class="footerPara">Created by: Marshall Burns</p>
-    <p class="footerPara" id="build_version"></p>
-    <p class="footerPara">
-      <a href="https://github.com/SchoolyB/untitled-text-game">Github</a>
-    </p>
-  </div>
-</footer>
+    <!-- Footer -->
+    <footer class="footer footer-center p-4 bg-base-300 text-white">
+      <aside>
+        <p>
+          Created by: Marshall Burns
+        </p>
+    
+        <a href="">
+          <p class="lg:text-xl">Current Game Build:</p>
+          <b>
+            <p id="game-version" class="lg:text-lg"></p>
+          </b>
+        </a>
+        <a href="">
+          <p class="lg:text-xl">Current Website Build:</p>
+          <b>
+            <p id="website-version" class="lg:text-lg "></p>
+          </b>
+        </a>
+      </aside>
+      <div id="footer-icons" class="flex">
+        <a target="_blank" href="https://github.com/SchoolyB/aetheria-text-game/releases">
+          <img class="w-9/12" src="./assets/crates.png" />
+        </a>
+        <a target="_blank" href="https://twitter.com/Fedora__Tipper">
+          <img class="w-9/12" src="./assets/x-logo.png" />
+        </a>
+      </div>
+    </footer>
 <script type="module" src="script.js"></script>
 <script type="module" src="/main.js"></script>
 </body>
