@@ -9,79 +9,110 @@
   <title>Aetheria | Home</title>
 </head>
 <body>
-<div class="navbar bg-base-100">
-  <div class="flex-1">
-    <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
+  <div class="navbar bg-base-100">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-4">
+        <li><a href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
+        <li>
+          <details>
+            <summary>
+              Pages
+            </summary>
+            <ul class="p-2 bg-base-100">
+              <li><a href="/">Home</a></li>
+              <li><a href="/media.html">Media</a></li>
+              <li><a href="/patch_notes.html">Patch Notes</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <li><a href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
-      <li>
-        <details>
-          <summary>
-            Pages
-          </summary>
-          <ul class="p-2 bg-base-100">
-            <li><a href="/">Home</a></li>
-            <li><a href="/media.html">Media</a></li>
-            <li><a href="/patch_notes.html">Patch Notes</a></li>
-          </ul>
-        </details>
-      </li>
-    </ul>
-  </div>
-</div>
-    <div class="hero min-h-screen bg-base-200">
-      <div class="hero-content text-center">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold">Welcome To Aetheria</h1>
-          <p class="py-6">A terminal based text adventure/fantasy/rpg game written in "C" that has quickly become the passion project of its sole developer Marshall Burns. From this site you can access media files from the games development as well as patch notes from the developer.</p>
-
+      <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Welcome To Aetheria</h1>
+            <p class="py-6">A terminal based text adventure/fantasy/rpg game written in "C" that has quickly become the passion project of its sole developer Marshall Burns. From this site you can access media files from the games development as well as patch notes from the developer.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <h1>Installation & Execution</h1>
-  <div class="mockup-code">
-    <pre data-prefix="$"><code>git clone https://github.com/SchoolyB/aetheria-text-game.git</code></pre>
-    <pre data-prefix=">" class="text-success"><code>Repository Cloned!</code></pre>
-  </div>
-<h1>Navigate to the "scripts" directory</h1>
-  <div class="mockup-code">
-    <pre data-prefix="$"><code>cd your/file/path/aetheria-text-game/scripts</code></pre>
-  </div>
-<h1>To run and execute the program run the "execute.sh" script</h1>
-  <div class="mockup-code">
-    <pre data-prefix="$"><code>./execute.sh</code></pre>
-    <pre data-prefix=">" class="text-success"><code>Build Successful!</code></pre>
-    <pre data-prefix=">" class="text"><code>Clearing Terminal</code></pre>
-    <pre data-prefix=">" class="text"><code>Running Aetheria...</code></pre>
-  </div>
-  <h1>If you <u><b>ONLY</b></u> want to compile the program run the "compile.sh" script</h1>
-  <div class="mockup-code">
-    <pre data-prefix="$"><code>./compile.sh</code></pre>
-    <pre data-prefix=">" class="text-success"><code>Build Successful!</code></pre>
-  </div>
-<div id="release-list"></div>
-  <!-- Footer -->
-<footer class="footer footer-center p-4 bg-base-300 text-base-content ">
-  <aside>
-    <p>
-      Created by: Marshall Burns
-    </p>
-    
-      <a href="">
-        <p>Current Game Build:</p>
-        <p id="game-version" class="text-lg"></p>
-      </a>
-      <a href="">
-        <p>Current Website Build:</p>
-        <p id="website-version" class="text-lg"></p>
-      </a>
-  </aside>
+  <br>
+    <div>
+      <h1 class="text-center font-black lg:text-5xl md:text-3xl ">Clone, Compile, & Play!</h1>
+    </div>
+  <br>
+      <!-- CODE MOCKUPS -->
+    <div id="code-mockups" class="p-10" >
+      <!-- MOCKUP 1 -->
+      <div id="clone-mockup" class="pb-10" >
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">Clone the repository</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$" ><code>git clone https://github.com/SchoolyB/aetheria-text-game.git</code></pre>
+            <pre data-prefix=">" ><code  class="text-success">Repository Cloned!</code></pre>
+          </div>
+
+        </div>
+      </div>
+      <!-- MOCKUP 2 -->
+      <div id="changedir-mockup" class="pb-10">
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">Navigate to the "scripts" directory</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>cd your/file/path/aetheria-text-game/scripts</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <!-- MOCKUP 3  -->
+      <div id="compile-mockup" class="pb-10">
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">If you <u><b>ONLY</b></u> want to compile the program run the "compile.sh" script</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>./compile.sh</code></pre>
+            <pre data-prefix=">" ><code  class="text-success">Build Successful!</code></pre>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!-- MOCKUP 4 -->
+      <div id="execute-mockup" class="pb-10" >
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">To compile <u><b>AND</b></u> run the program run the "execute.sh" script</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>./execute.sh</code></pre>
+            <pre data-prefix=">"><code class="text-success">Build Successful!</code></pre>
+            <pre data-prefix=">" class="text"><code>Clearing Terminal</code></pre>
+            <pre data-prefix=">" class="text"><code>Running Aetheria...</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+  <footer class="footer footer-center p-4 bg-base-300 text-base-content ">
+    <aside>
+      <p>
+        Created by: Marshall Burns
+      </p>
+      
+        <a href="">
+          <p class="lg:text-xl">Current Game Build:</p>
+          <b><p id="game-version" class="lg:text-lg"></p></b>
+        </a>
+        <a href="">
+          <p class="lg:text-xl">Current Website Build:</p>
+          <b><p id="website-version" class="lg:text-lg "></p></b>
+          
+        </a>
+    </aside>
+  </footer>
   
-</footer>
-<script type= "module" src="script.js"></script>
-<script type="module" src="/main.js"></script>
+  <script type= "module" src="script.js"></script>
+  <script type="module" src="/main.js"></script>
 </body>
 </html>
