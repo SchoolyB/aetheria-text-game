@@ -1,17 +1,17 @@
-gcc -o Aetheria.o main.c -lncurses
+gcc -o ../game/src/Aetheria.exe ../game/src/main.c -lncurses
 # When not using ncurses use the following command:
 # gcc -o Aetheria.o main.c
 
 if [ $? -eq 0 ]; then
+    echo "\e[32mBuild Successful!\e[0m"
     sleep 1
     echo "Clearing Terminal"
     sleep 1
     clear
-    echo "Build Successful"
-    echo "Running Aetheria"
-    ./Aetheria.o
+    echo "Running Aetheria..."
+    ./../game/src/Aetheria.exe
 else
-    echo "Build Failed"
+    echo "\e[31mBuild Failed.\e[0m"
     exit 1
 fi
 

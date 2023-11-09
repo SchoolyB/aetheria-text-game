@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./dist/output.css" rel="stylesheet">
+  <title>Aetheria | Home</title>
+</head>
+<body>
+  <div class="navbar bg-base-100 text-white">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">Aetheria</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-4">
+        <li><a target="_blank" href="https://github.com/SchoolyB/aetheria-text-game">GitHub</a></li>
+        <li>
+          <details>
+            <summary>
+              Pages
+            </summary>
+            <ul class="p-2 bg-base-100">
+              <li><a href="/">Home</a></li>
+              <li><a href="/media.html">Media</a></li>
+              <li><a href="/patch_notes.html">Patch Notes</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br>
+    <div class="text-center font-black  text-white">
+      <h1 class="lg:text-5xl md:text-3xl pb-3 ">Clone, Compile, & Play!</h1>
+      <p>Follow these simple steps to begin your journey in Aetheria</p>
+      <p>**This program assumes you have <a target="_blank" href="https://gcc.gnu.org/"><u class="text-orange-400">GCC</u></a> installed on your system**</p>
+    </div>
+  <br>
+      <!-- CODE MOCKUPS -->
+    <div id="code-mockups" class="p-10" >
+      <!-- MOCKUP 1 -->
+      <div id="clone-mockup" class="pb-10" >
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">Clone the repository</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$" ><code>git clone https://github.com/SchoolyB/aetheria-text-game.git</code></pre>
+            <pre data-prefix=">" ><code  class="text-success">Repository Cloned!</code></pre>
+          </div>
+
+        </div>
+      </div>
+      <!-- MOCKUP 2 -->
+      <div id="changedir-mockup" class="pb-10">
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">Navigate to the "scripts" directory</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>cd your/file/path/aetheria-text-game/scripts</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <!-- MOCKUP 3  -->
+      <div id="compile-mockup" class="pb-10">
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">OPTIONAL: To compile <u><b>WITHOUT</b></u> running the program use "./compile.sh"</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>./compile.sh</code></pre>
+            <pre data-prefix=">" ><code  class="text-success">Build Successful!</code></pre>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!-- MOCKUP 4 -->
+      <div id="execute-mockup" class="pb-10" >
+        <h1 class="text-center lg:text-2xl pb-2 font-black text-white">To compile <u><b>AND</b></u> run the program use "./execute.sh"</h1>
+        <div class="flex justify-center ">
+          <div class="mockup-code w-1/2 shadow-2xl">
+            <pre data-prefix="$"><code>./execute.sh</code></pre>
+            <pre data-prefix=">"><code class="text-success">Build Successful!</code></pre>
+            <pre data-prefix=">" class="text"><code>Clearing Terminal</code></pre>
+            <pre data-prefix=">" class="text"><code>Running Aetheria...</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+  <footer class="footer footer-center p-4 bg-base-300 text-white">
+    <aside>      
+          <p class="lg:text-xl">Current Game Build:</p>
+          <b><p id="game-version" class="lg:text-lg"></p></b>
+
+          <p class="lg:text-xl">Current Website Build:</p>
+          <b><p id="website-version" class="lg:text-lg "></p></b>
+      </aside>
+      <p class="text-lg">
+        <a href="https://marshallb.vercel.app">
+          Created by: Marshall Burns
+        </a>
+      </p>
+      <div id="footer-icons" class="flex">
+        <a target="_blank" href="https://github.com/SchoolyB/aetheria-text-game/releases">
+          <img class="w-9/12 invert"   src="./assets/crates.png"/>
+        </a>
+        <a target="_blank" href="https://twitter.com/Fedora__Tipper">
+          <img class="w-9/12 invert" src="./assets/x-logo.png"/>
+        </a>
+      </div>
+  </footer>
+
+  <script type= "module" src="script.js"></script>
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
