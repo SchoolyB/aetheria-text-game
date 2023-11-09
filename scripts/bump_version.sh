@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the JSON file
-json_file="../version.json"
+json_file="/version.json"
 
 # Check if the JSON file exists
 if [ ! -f "$json_file" ]; then
