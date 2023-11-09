@@ -537,7 +537,8 @@ void set_hero_level(Hero *hero)
 // ===========================================================================================================//
 void log_creation_data_to_file()
 {
-  FILE *logFile = fopen("logs/creation.log", "a");
+  // !IMPORTANT the path of the log file is accessed from where the executable is located
+  FILE *logFile = fopen("../game/src/logs/runtime.log", "a");
   if (logFile == NULL)
   {
     perror("Error opening file");
