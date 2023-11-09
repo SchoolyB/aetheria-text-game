@@ -5,7 +5,10 @@
 #include <ncurses.h>
 #include "./Utils.h"
 #include "../Source/Items-Inventory/Items-Inventory.h"
+#include "../Source/Items-Inventory/2_InventoryManagement.c"
+
 #include "../testing.c"
+// start creation includes
 #include "../Source/HeroCreation/1_Creation.c"
 #include "../Source/HeroCreation/2_Abilities.c"
 #include "../Source/HeroCreation/3_BaselineStats.c"
@@ -13,6 +16,7 @@
 #include "../Source/HeroCreation/5_Inventory.c"
 #include "../Source/HeroCreation/6_Confirmation.c"
 #include "../Source/HeroCreation/7_Changes.c"
+// end hero creation includes
 
 char commands[20][100] = {
     "start"
@@ -444,7 +448,7 @@ int COMMAND_LINE(FILE *logFile)
       sleep(1);
       system("clear");
       printf("Call all functions that you would like to debug here.\n");
-      hero_steps_on_item(); // see testing.c TODO remove this after completing inventory
+      testing_xp_stuff();
     }
 
     else

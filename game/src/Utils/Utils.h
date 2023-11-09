@@ -422,8 +422,11 @@ typedef struct
     int CurrentPoints;
     int MaxPoints;
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
-  // Hero Level
+  // Hero Level & XP pool
   int Level;
+  int CurrentXP;
+  int XPToNextLevel;
+  int MaxXP;
   // Attack and Defense
   int Atk;
   int Def;
@@ -864,7 +867,8 @@ void activate_god_mode()
   strcpy(hero.Homeland, "Empyrea");
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
-  hero.Level = 100;
+  hero.Level = 20;
+  hero.MaxXP;
   hero.Health = 1000;
   hero.Mana = 1000;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
@@ -883,10 +887,6 @@ void activate_god_mode()
   hero.AttributePointsPool = 0;
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
-  // Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
-  // Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
-  // Inventory.Slot3.isOpen = 1;
-  // // 0 = false, 1 = true
 
   // Inventory.Slot1.Quantity = 0;
   strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");
