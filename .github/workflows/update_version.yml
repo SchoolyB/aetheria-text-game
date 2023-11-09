@@ -20,7 +20,8 @@ jobs:
         cd $GITHUB_WORKSPACE
 
         # Run your version update script
-        ../../scripts/bump_version.sh
+        ./scripts/bump_version.sh 
+       
 
         # Set the user name
         git config --global user.name "SchoolyB"
