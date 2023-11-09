@@ -1,4 +1,4 @@
-name: Update Version
+name: Update Game & Website Versions
 
 on:
   push:
@@ -29,9 +29,11 @@ jobs:
         git config --global user.email ${{ secrets.GIT_USER_EMAIL }}
 
         # Add and commit the changes
-        git add VERSION
-        git commit -m "Bump build version"
+        git add version.json
+        git commit -m "Bump game & website build versions"
         git push
       env:
         GITHUB_WORKSPACE: ${{ github.workspace }}
         GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+
+        
