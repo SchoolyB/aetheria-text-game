@@ -532,6 +532,8 @@ void show_creation_data(FILE *logFile, const char *category, const char *value)
 void set_hero_level(Hero *hero)
 {
   hero->Level = 1;
+  // See "../XP-Enemies-Combat/1_ExperienceSystem.c for logic of this func"
+  calculate_max_xp_at_level(hero->Level);
 }
 
 // ===========================================================================================================//

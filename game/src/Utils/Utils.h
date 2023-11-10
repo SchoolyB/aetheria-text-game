@@ -875,7 +875,6 @@ void activate_god_mode()
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
   hero.Level = 20;
-  hero.MaxXP;
   hero.Health = 1000;
   hero.Mana = 1000;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");

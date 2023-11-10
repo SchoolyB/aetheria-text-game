@@ -11,5 +11,5 @@ void generate_enemy()
   strcpy(enemy.Description, "A small, green creature.");
   strcpy(enemy.Type, "Common");
   enemy.Health = 100;
-  enemy.ExperienceDroppedOnDeath = 2000;
+  enemy.ExperienceDroppedOnDeath = 20;
 }

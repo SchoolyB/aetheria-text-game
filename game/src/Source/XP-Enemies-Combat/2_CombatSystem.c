@@ -11,7 +11,6 @@ int initiate_combat()
 
   while (enemy.Health > 0)
   {
-
     printf("Now fighting: %s\n", enemy.Name);
     printf("Enemy health: %d\n", enemy.Health);
 
@@ -56,16 +55,27 @@ int initiate_combat()
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
       }
     }
+    // handle exp functions
+    if (enemy.Health <= 0)
+    {
+      update_current_xp(hero.CurrentXP, enemy.ExperienceDroppedOnDeath);
+      printf("You've defeated %s and have gained %d xp your xp is now at %d! your max xp at level:%d is %d\n", enemy.Name, enemy.ExperienceDroppedOnDeath, hero.CurrentXP, hero.Level, hero.MaxXP);
+      calculate_xp_to_next_level(hero.CurrentXP, hero.MaxXP);
+
+      if (hero.CurrentXP >= hero.MaxXP)
+      {
+        level_up(&hero.Level);
+        return 0;
+      }
+    }
   }
 }
 
+//===================================================================================
+// this function calculates the enemies new health. Called after each time an ability is used by the hero
 void calculate_dmg_done_to_enemy(int *enemyHealth, int heroAbilityDmg)
 {
   int enemyRemainingHealth = *enemyHealth - heroAbilityDmg;
   int dmgDoneToEnemy = heroAbilityDmg;
-
-  printf("Enemy's remaining health %d \n", enemyRemainingHealth);
-  printf("You've done %d damage\n", dmgDoneToEnemy);
-
   *enemyHealth = enemyRemainingHealth;
 }

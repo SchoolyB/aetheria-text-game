@@ -7,18 +7,17 @@
 Hero hero;
 
 // this function will be called when the hero kills an enemy
-void update_current_xp(int currentXP, int *xpFromEnemy)
+void update_current_xp(int currentXP, int xpFromEnemy)
 {
-  currentXP += *xpFromEnemy;
+  currentXP += xpFromEnemy;
   hero.CurrentXP = currentXP;
-  printf("Current XP: %d\n", hero.CurrentXP);
 }
 // this function will be called when the hero levels up
-void calculate_max_xp_at_level(int *level)
+void calculate_max_xp_at_level(int level)
 {
-  int maxXP = *level * 100;
+  int maxXP = level * 50;
   hero.MaxXP = maxXP;
-  printf("Max XP at level %d: %d\n", *level, hero.MaxXP);
+  printf("Max XP at level %d: %d\n", level, hero.MaxXP);
 }
 
 // this function will be called when the hero kills an enemy
@@ -38,7 +37,7 @@ void level_up(int *level)
 
 void run_funcs(maxXP)
 {
-  // calculate_max_xp_at_level(&hero.Level);
+  calculate_max_xp_at_level(hero.Level);
   // calculate_xp_to_next_level(100, hero.MaxXP);
   generate_enemy();
   initiate_combat();
