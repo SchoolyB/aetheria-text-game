@@ -12,9 +12,8 @@ int initiate_combat()
 
   while (enemy.Health > 0)
   {
-    printf("Now fighting: %s\n", enemy.Name);
-    printf("Enemy health: %d\n", enemy.Health);
-
+    // system("clear");
+    MAKE_BOLD_N_UNDERLINED("IN COMBAT\n");
     // Creating combat ui
     puts("==================================================================================");
     printf("%s %s %-50s %-50s\n", "|", hero.FirstName, hero.LastName, enemy.Name);
@@ -52,21 +51,27 @@ int initiate_combat()
 
       if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1)
       {
-        printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
+        sleep(2);
         calculate_mana_spent(&hero.Mana, hero.Ability1.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
+        system("clear");
       }
       else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2)
       {
-        printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+        sleep(2);
         calculate_mana_spent(&hero.Mana, hero.Ability2.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+        system("clear");
       }
       else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3)
       {
-        printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+        sleep(2);
         calculate_mana_spent(&hero.Mana, hero.Ability3.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+        system("clear");
       }
       else
       {
@@ -115,6 +120,7 @@ void calculate_dmg_done_to_enemy(int *enemyHealth, int heroAbilityDmg)
   *enemyHealth = enemyRemainingHealth;
 }
 //===================================================================================
+// this function calculates the mana spent by the hero. Called after each time an ability is used by the hero
 void calculate_mana_spent(int *heroMana, int heroAbilityManaCost)
 {
   int remainingMana = *heroMana - heroAbilityManaCost;
