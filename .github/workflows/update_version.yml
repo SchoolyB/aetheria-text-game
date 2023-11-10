@@ -3,7 +3,7 @@ name: Update Game & Website Versions
 on:
   push:
     branches:
-      - development
+      - main
 
 jobs:
   update-version:

@@ -14,9 +14,7 @@ fi
 
 # Extract the current version numbers
 current_game_version=$(jq -r .game_version "$json_file")
-
-# !uncomment when when website code is updated 
-# current_website_version=$(jq -r .website_version "$json_file")
+current_website_version=$(jq -r .website_version "$json_file")
 
 # Function to increment version numbers
 increment_version() {
@@ -35,19 +33,11 @@ increment_version() {
 
 # Increment the patch numbers
 patch_game=$(increment_version "$current_game_version")
-
-# !uncomment when when website code is updated
-# patch_website=$(increment_version "$current_website_version")
+patch_website=$(increment_version "$current_website_version")
 
 # Update the JSON file with the new version numbers
-
-jq ".game_version = \"$patch_game\"" "$json_file" > "$json_file.tmp"
-
-# !use this when website code is updated
-# jq ".game_version = \"$patch_game\" | .website_version = \"$patch_website\"" "$json_file" > "$json_file.tmp"
+jq ".game_version = \"$patch_game\" | .website_version = \"$patch_website\"" "$json_file" > "$json_file.tmp"
 mv "$json_file.tmp" "$json_file"
 
 echo "Updated game_version to $patch_game"
-
-# !uncomment when when website code is updated
-# echo "Updated website_version to $patch_website"
+echo "Updated website_version to $patch_website"
