@@ -9,8 +9,9 @@ int initiate_combat()
   char input[10];
   printf("Entering combat!\n");
 
-  do
+  while (enemy.Health > 0)
   {
+
     printf("Now fighting: %s\n", enemy.Name);
     printf("Enemy health: %d\n", enemy.Health);
 
@@ -55,23 +56,10 @@ int initiate_combat()
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
       }
     }
-  } while (enemy.Health > 0);
-  // handle exp functions
-  if (enemy.Health <= 0)
-  {
-    update_current_xp(hero.CurrentXP, &enemy.ExperienceDroppedOnDeath);
-    printf("You've defeated %s!\n", enemy.Name);
-    calculate_xp_to_next_level(hero.CurrentXP, hero.MaxXP);
-
-    if (hero.CurrentXP >= hero.MaxXP)
-    {
-      level_up(&hero.Level);
-      return 0;
-    }
   }
 }
 
-void calculate_dmg_done_to_enemy(char *enemyHealth, int heroAbilityDmg)
+void calculate_dmg_done_to_enemy(int *enemyHealth, int heroAbilityDmg)
 {
   int enemyRemainingHealth = *enemyHealth - heroAbilityDmg;
   int dmgDoneToEnemy = heroAbilityDmg;
@@ -81,9 +69,3 @@ void calculate_dmg_done_to_enemy(char *enemyHealth, int heroAbilityDmg)
 
   *enemyHealth = enemyRemainingHealth;
 }
-
-// void update_enemy_health(int *enemyHealth)
-// {
-// *enemyHealth =
-
-// }
