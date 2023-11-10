@@ -89,6 +89,13 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 #define MAKE_UNDERLINED_N_COLOR(str, color) printf("\x1b[4;%dm%s\x1b[0m", color, str)
 #define MAKE_BLINK_N_COLOR(str, color) printf("\x1b[5;%dm%s\x1b[0m", color, str)
 #define MAKE_REVERSED_N_COLOR(str, color) printf("\x1b[7;%dm%s\x1b[0m", color, str)
+
+#define RESET "\x1B[0m"
+#define RED "\x1B[31m"
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
+
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
 #define PRINT_SLOWLY(str, delayMicroseconds) \
@@ -873,13 +880,13 @@ void activate_god_mode()
   hero.Mana = 1000;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");
-  hero.Ability1.Damage = 1000;
+  hero.Ability1.Damage = 25;
   strcpy(hero.Ability2.Name, "God Mode Ability 2");
   strcpy(hero.Ability2.Description, "Ability 2 desc.");
-  hero.Ability2.Damage = 1000;
+  hero.Ability2.Damage = 25;
   strcpy(hero.Ability3.Name, "God Mode Ability 3");
   strcpy(hero.Ability3.Description, "Ability 3 desc.");
-  hero.Ability3.Damage = 1000;
+  hero.Ability3.Damage = 25;
   hero.StrengthAttribute.CurrentPoints = 10;
   hero.IntelligenceAttribute.CurrentPoints = 10;
   hero.DexterityAttribute.CurrentPoints = 10;
@@ -901,7 +908,7 @@ void activate_god_mode()
   strcpy(Inventory.EquippedLegs.Name, "God Mode Legs");
   strcpy(Inventory.EquippedLegs.Description, "God Mode Legs Desc.");
   strcpy(Inventory.EquippedLegs.Type, "Legs");
-  Inventory.EquippedWeapon.AddedDamage = 1000;
+  Inventory.EquippedWeapon.AddedDamage = 10;
   Inventory.EquippedWeapon.AddedHealth = 5;
   Inventory.EquippedWeapon.Weight = 5;
   Inventory.EquippedWeapon.Value = 5;

@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include "XP-Combat.h"
 #include "../../Utils/Utils.h"
-#include "../XP-Enemies-Combat/XP-Combat.h"
+#include "2_CombatSystem.c"
+#include "3_EnemyGeneration.c"
 
 Hero hero;
 
@@ -37,6 +38,8 @@ void level_up(int *level)
 
 void run_funcs(maxXP)
 {
-  calculate_max_xp_at_level(&hero.Level);
-  calculate_xp_to_next_level(100, hero.MaxXP);
+  // calculate_max_xp_at_level(&hero.Level);
+  // calculate_xp_to_next_level(100, hero.MaxXP);
+  generate_enemy();
+  initiate_combat();
 }
