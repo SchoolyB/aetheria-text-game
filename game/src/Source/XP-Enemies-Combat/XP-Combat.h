@@ -21,6 +21,7 @@ typedef struct
   char Description[100];
   char Type[15];
   int Health;
+  int Level;
   int ExperienceDroppedOnDeath;
   int GoldDroppedOnDeath; // might not be used
   // int mana; might be used

@@ -40,13 +40,20 @@ char CommonEnemyList[30][30][30] = {
 
 void generate_enemy()
 {
+  // todo need to add a way to generate enemy based on player level
   srand(time(NULL));
   int randomEnemy;
   int enemyGenerated = 0; // 0 false 1 true
   for (int i = 0; i < 10; i++)
   {
     randomEnemy = rand() % 10;
-    char Type = CommonEnemyList
+    char *enemyName = CommonEnemyList[randomEnemy][0];
+    char *enemyDesc = CommonEnemyList[randomEnemy][1];
+    char *enemyType = CommonEnemyList[randomEnemy][2];
+
+    if (strcmp(CommonEnemyList[randomEnemy][3], "Non-Magical Human") == 0)
+    {
+        }
   }
 }
 //==================================================================================//
