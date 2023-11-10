@@ -880,12 +880,15 @@ void activate_god_mode()
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");
   hero.Ability1.Damage = 25;
+  hero.Ability1.ManaCost = 50;
   strcpy(hero.Ability2.Name, "God Mode Ability 2");
   strcpy(hero.Ability2.Description, "Ability 2 desc.");
-  hero.Ability2.Damage = 25;
+  hero.Ability2.Damage = 30;
+  hero.Ability2.ManaCost = 80;
   strcpy(hero.Ability3.Name, "God Mode Ability 3");
   strcpy(hero.Ability3.Description, "Ability 3 desc.");
-  hero.Ability3.Damage = 25;
+  hero.Ability3.Damage = 40;
+  hero.Ability3.ManaCost = 100;
   hero.StrengthAttribute.CurrentPoints = 10;
   hero.IntelligenceAttribute.CurrentPoints = 10;
   hero.DexterityAttribute.CurrentPoints = 10;

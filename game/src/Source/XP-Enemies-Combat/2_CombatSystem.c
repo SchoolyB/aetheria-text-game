@@ -44,7 +44,7 @@ int initiate_combat()
     FGETS(input);
     REMOVE_NEWLINE_CHAR(input);
 
-    if (strcmp(input, "attack") == 0 || strcmp(input, "fight") == 0)
+    if (strcmp(input, "attack") == 0 || strcmp(input, "fight") == 0 || strcmp(input, "charge") == 0)
     {
       puts("Which ability will you use? Enter the name or number.");
       FGETS(input);
@@ -53,16 +53,19 @@ int initiate_combat()
       if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1)
       {
         printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        calculate_mana_spent(&hero.Mana, hero.Ability1.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
       }
       else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2)
       {
         printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        calculate_mana_spent(&hero.Mana, hero.Ability2.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
       }
       else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3)
       {
         printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        calculate_mana_spent(&hero.Mana, hero.Ability3.ManaCost);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
       }
       else
@@ -71,7 +74,7 @@ int initiate_combat()
         return;
       }
     }
-    else if (strcmp(input, "run") == 0)
+    else if (strcmp(input, "run") == 0 || strcmp(input, "run away") == 0 || strcmp(input, "escape") == 0 || strcmp(input, "leave") == 0)
     {
       srand(time(NULL));
       int chance;
@@ -110,4 +113,11 @@ void calculate_dmg_done_to_enemy(int *enemyHealth, int heroAbilityDmg)
   int enemyRemainingHealth = *enemyHealth - heroAbilityDmg;
   int dmgDoneToEnemy = heroAbilityDmg;
   *enemyHealth = enemyRemainingHealth;
+}
+//===================================================================================
+void calculate_mana_spent(int *heroMana, int heroAbilityManaCost)
+{
+  int remainingMana = *heroMana - heroAbilityManaCost;
+  int manaCost = heroAbilityManaCost;
+  *heroMana = remainingMana;
 }
