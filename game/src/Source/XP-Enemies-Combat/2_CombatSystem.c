@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "XP-Combat.h"
 #include "../../Utils/Utils.h"
 
@@ -53,6 +54,37 @@ int initiate_combat()
       {
         printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
         calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
+      }
+      else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2)
+      {
+        printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+      }
+      else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3)
+      {
+        printf("%s used %s\n", hero.FirstName, hero.Ability1.Name);
+        calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+      }
+      else
+      {
+        MAKE_VALID_DECISION;
+        return;
+      }
+    }
+    else if (strcmp(input, "run") == 0)
+    {
+      srand(time(NULL));
+      int chance;
+
+      chance = rand() % 100;
+      if (chance < 40)
+      {
+        puts("You've successfully ran away.");
+        return 0;
+      }
+      else
+      {
+        puts("You've failed to run away!");
       }
     }
     // handle exp functions
