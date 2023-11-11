@@ -31,7 +31,7 @@ typedef struct
     char Description[100];
     char Type[15];
     int Damage;
-  } EnemyAbility1, EnemyAbility2, EnemyAbility3, EnemyAbility4;
+  } EnemyAbility1, EnemyAbility2
 
 } Enemy;
 
