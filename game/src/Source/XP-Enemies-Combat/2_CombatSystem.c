@@ -142,6 +142,7 @@ void calculate_mana_spent(int *heroMana, int heroAbilityManaCost)
 //===================================================================================
 // this function calculates the damage don eot the hero. Called after each time an ability is used by the enemy
 // For cleanliness sake, I could just create one function to handle both enemy and hero dmg done to each other but I feel that could cause confusion later on
+// TODO this also needs to take into consideration the enemies level
 void calculate_dmg_done_to_hero(int *heroHealth, int enemyAbilityDmg)
 {
   int heroRemainingHealth = *heroHealth - enemyAbilityDmg;

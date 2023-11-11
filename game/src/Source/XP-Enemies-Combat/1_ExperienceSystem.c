@@ -43,7 +43,8 @@ void level_up(int *level)
 // TODO delete when done with debugging Called when the hero kills an enemy
 void run_funcs(maxXP)
 {
-  calculate_max_xp_at_level(hero.Level);
   generate_enemy();
-  initiate_combat();
+  // calculate_max_xp_at_level(hero.Level);
+  // generate_enemy();
+  // initiate_combat();
 }
