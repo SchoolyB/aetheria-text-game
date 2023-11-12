@@ -7,11 +7,12 @@ Enemy enemy;
 
 int initiate_combat()
 {
-  char input[10];
-  int whoseTurnIsIt = roll_whose_turn_it_is();
+  srand(time(NULL));
+  int heroMadeMove = 0;
+  int enemyMadeMove = 0;
   printf("Entering combat!\n");
-
-  while (enemy.Health > 0)
+  int CombatOnGoing = 1;
+  do
   {
     // system("clear");
     MAKE_BOLD_N_UNDERLINED("IN COMBAT\n");
@@ -32,6 +33,13 @@ int initiate_combat()
     printf("%s \n", "|");
     printf("%s \n", "|");
     printf("%s \n", "|");
+    printf("%s" YELLOW "Name:%-50s" RESET "\n", "|", enemy.Name);
+    printf("%s" YELLOW "Type:%-50s" RESET "\n", "|", enemy.Type);
+    printf("%s" YELLOW "Health:%-50d" RESET "\n", "|", enemy.Health);
+    printf("%s" YELLOW "Ability1:%-50s" RESET "\n", "|", enemy.EnemyAbility1.Name);
+    printf("%s" YELLOW "Ability2:%-50s" RESET "\n", "|", enemy.EnemyAbility2.Name);
+    printf("%s" YELLOW "Ability1Dmg:%-50d" RESET "\n", "|", enemy.EnemyAbility1.Damage);
+    printf("%s" YELLOW "Ability2Dmg:%-50d" RESET "\n", "|", enemy.EnemyAbility2.Damage);
 
     printf("%s 1:%s Dmg:%d Mana Cost:%d\n", "|", hero.Ability1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage, hero.Ability1.ManaCost);
     printf("%s 2:%s Dmg:%d Mana Cost:%d\n", "|", hero.Ability2.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage, hero.Ability2.ManaCost);
@@ -40,9 +48,16 @@ int initiate_combat()
     printf("%s \n", "|");
     puts("==================================================================================");
 
-    if (roll_whose_turn_it_is() == 1)
+    int heroMadeMove = 0;
+    int enemyMadeMove = 0;
+
+    int chance = rand() % 100;
+    if (chance < 50)
     {
       puts("It's your turn!");
+      char input[10];
+
+      int heroMadeMove = 0;
       puts("What would you like to do?");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
@@ -53,60 +68,83 @@ int initiate_combat()
         FGETS(input);
         REMOVE_NEWLINE_CHAR(input);
 
-        if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1)
+        if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1 && hero.Mana >= hero.Ability1.ManaCost)
         {
           printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability1.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
+          heroMadeMove = 1;
           system("clear");
         }
-        else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2)
+        else if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1 && hero.Mana < hero.Ability1.ManaCost)
         {
-          printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+          printf("You don't have enough mana to use %s!\n", hero.Ability1.Name);
+        }
+        //===================================================================================================
+
+        if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2 && hero.Mana >= hero.Ability2.ManaCost)
+        {
+          printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability2.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability2.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+          heroMadeMove = 1;
           system("clear");
         }
-        else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3)
+        else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2 && hero.Mana < hero.Ability2.ManaCost)
         {
-          printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+          printf("You don't have enough mana to use %s!\n", hero.Ability2.Name);
+        }
+        //===================================================================================================
+
+        if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3 && hero.Mana >= hero.Ability3.ManaCost)
+        {
+          printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability3.Name, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability3.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+          heroMadeMove = 1;
           system("clear");
         }
-        else
+        else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3 && hero.Mana < hero.Ability3.ManaCost)
         {
-          MAKE_VALID_DECISION;
-          return;
+          printf("You don't have enough mana to use %s!\n", hero.Ability3.Name);
         }
       }
       else if (strcmp(input, "run") == 0 || strcmp(input, "run away") == 0 || strcmp(input, "escape") == 0 || strcmp(input, "leave") == 0)
       {
-        srand(time(NULL));
         int chance;
 
         chance = rand() % 100;
         if (chance < 40)
         {
           puts("You've successfully ran away.");
-          return 0;
+          CombatOnGoing = 0;
         }
         else
         {
           puts("You've failed to run away!");
+          heroMadeMove = 1;
         }
       }
+      heroMadeMove = 1;
     }
-    else if (roll_whose_turn_it_is() == 0)
+    else if (chance >= 50)
     {
+      // handling the enemy's turn
       puts("It's the enemy's turn!");
       sleep(2);
+      enemy_makes_move();
+      enemyMadeMove = 1;
+    }
+    else
+    {
+      puts("Something went wrong!");
+      return 1;
     }
 
-    // handle exp functions
+    // START OF ENEMY AND HERO DEATH HANDLING
     if (enemy.Health <= 0)
     {
       update_current_xp(hero.CurrentXP, enemy.ExperienceDroppedOnDeath);
@@ -116,19 +154,17 @@ int initiate_combat()
       if (hero.CurrentXP >= hero.MaxXP)
       {
         level_up(&hero.Level);
-        return 0;
       }
     }
-  }
+  } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
 }
 
 //===================================================================================
 // this function calculates the enemies new health. Called after each time an ability is used by the hero
-void calculate_dmg_done_to_enemy(int *enemyHealth, int heroAbilityDmg)
+void calculate_dmg_done_to_enemy(int *currentEnemyHealth, int heroAbilityDmg)
 {
-  int enemyRemainingHealth = *enemyHealth - heroAbilityDmg;
-  int dmgDoneToEnemy = heroAbilityDmg;
-  *enemyHealth = enemyRemainingHealth;
+  int enemyRemainingHealth = *currentEnemyHealth - heroAbilityDmg;
+  *currentEnemyHealth = enemyRemainingHealth;
 }
 //===================================================================================
 // this function calculates the mana spent by the hero. Called after each time an ability is used by the hero
@@ -143,46 +179,44 @@ void calculate_mana_spent(int *heroMana, int heroAbilityManaCost)
 // this function calculates the damage don eot the hero. Called after each time an ability is used by the enemy
 // For cleanliness sake, I could just create one function to handle both enemy and hero dmg done to each other but I feel that could cause confusion later on
 // TODO this also needs to take into consideration the enemies level
-void calculate_dmg_done_to_hero(int *heroHealth, int enemyAbilityDmg)
+void calculate_dmg_done_to_hero(int *heroHealth, int *enemyAbilityDmg, const char *abilityName)
 {
-  int heroRemainingHealth = *heroHealth - enemyAbilityDmg;
-  int dmgDoneToHero = enemyAbilityDmg;
+  int heroRemainingHealth = *heroHealth - *enemyAbilityDmg;
   *heroHealth = heroRemainingHealth;
-}
-//===================================================================================
-// this returns a value of 1 or 0. determines whose turn it is to make a move
-int roll_whose_turn_it_is()
-{
-  srand(time(NULL));
-  int chance;
+  printf("The enemy used %s dealing %d damage to you!\n", abilityName, *enemyAbilityDmg);
 
-  chance = rand() % 100;
-  if (chance < 50)
+  if (*heroHealth <= 0)
   {
-    return 1; // hero's turn
-  }
-  else
-  {
-    return 0; // enemy's turn
+
+    MAKE_BOLD_N_COLOR(31, "You've died!\n");
+    // Add further actions if needed when the hero dies
   }
 }
+
 //===================================================================================
 void enemy_makes_move()
 {
-  srand(time(NULL));
-  int choice;
-
-  choice = rand() % 3;
-  if (choice == 1)
+  int choice = rand() % 2;
+  if (choice == 0)
   {
-    // enemy uses move 1
-  }
-  else if (choice == 2)
-  {
-    // enemy uses move 2
+    calculate_dmg_done_to_hero(&hero.Health, &enemy.EnemyAbility1.Damage, enemy.EnemyAbility1.Name);
   }
   else
   {
-    // enemy uses move 3
+    calculate_dmg_done_to_hero(&hero.Health, &enemy.EnemyAbility2.Damage, enemy.EnemyAbility2.Name);
+  }
+}
+//===================================================================================
+int check_hero_remaining_mana(char *heroAbilityManaCost, char *heroAbilityName)
+{
+  if (hero.Mana < *heroAbilityManaCost)
+  {
+    printf("You do not have enough mana to use %s!\n", *heroAbilityName);
+    return 0;
+  }
+
+  else if (hero.Mana >= *heroAbilityManaCost)
+  {
+    return 1;
   }
 }

@@ -19,7 +19,7 @@ typedef struct
 {
   char Name[20];
   char Description[100];
-  char Type[15];
+  char Type[20];
   int Health;
   int Level;
   int ExperienceDroppedOnDeath;

@@ -44,7 +44,5 @@ void level_up(int *level)
 void run_funcs(maxXP)
 {
   generate_enemy();
-  // calculate_max_xp_at_level(hero.Level);
-  // generate_enemy();
-  // initiate_combat();
+  initiate_combat();
 }
