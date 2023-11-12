@@ -160,8 +160,8 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Country of Origin");
       printf("%-15s | %-15s | %-15s | %-15s \n", hero.FirstName, hero.LastName, hero.Gender, hero.Homeland);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s | %-15s | %-15s \n", "Profession", "Class", "Level", "Health", "Mana");
-      printf("%-15s | %-15s | %-15d | %-15d | %-15d \n", hero.Profession, hero.Class, hero.Level, hero.Health, hero.Mana);
+      printf("%-15s | %-15s | %-15s | %-10s | %-10s \n", "Profession", "Class", "Level", "Health", "Mana");
+      printf("%-15s | %-15s | %-15d | %-10d | %-10d \n", hero.Profession, hero.Class, hero.Level, hero.Health, hero.Mana);
       printf("----------------------------------------------------------------------------\n");
       printf("%-15s | %-15s | %-15s | %-15s \n", "Strength", "Intelligence", "Dexterity", "Luck");
       printf("%-15d | %-15d | %-15d | %-15d \n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
@@ -172,8 +172,12 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
       printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.EquippedWeapon.Name, Inventory.EquippedHead.Name, Inventory.EquippedChest.Name, Inventory.EquippedLegs.Name);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-20s | %-15s\n", "Capacity Remaining(lbs)", "Gold");
-      printf("%-20d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
+      printf("%-25s | %-15s\n", "Capacity Remaining(lbs)", "Gold");
+      printf("%-25d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
+      printf("----------------------------------------------------------------------------\n");
+      printf("%-15s |%-15s \n", "Hero Level", "Current XP", "Max XP", "XP To Next Level");
+      printf("%-15d |%-f/%-15f \n", hero.Level, hero.CurrentXP, hero.MaxXP);
+
       printf("============================================================================\n");
     }
     else if (IS_COMMANDS_COMMAND(input))
@@ -448,6 +452,10 @@ int COMMAND_LINE(FILE *logFile)
       sleep(1);
       system("clear");
       printf("Call all functions that you would like to debug here.\n");
+      testing_xp_stuff();
+    }
+    else if (strcmp(input, "test") == 0)
+    {
       testing_xp_stuff();
     }
 
