@@ -166,16 +166,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "Strength", "Intelligence", "Dexterity", "Luck");
       printf("%-15d | %-15d | %-15d | %-15d \n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s \n", "Ability 1", "Ability 2", "Ability 3");
-      printf("%-15s | %-15s | %-15s \n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);
-      printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s | %-15s \n", "Equipped Weapon", "Head Armor", "Chest Armor", "Leg Armor");
-      printf("%-15s | %-15s | %-15s | %-15s \n", Inventory.EquippedWeapon.Name, Inventory.EquippedHead.Name, Inventory.EquippedChest.Name, Inventory.EquippedLegs.Name);
-      printf("----------------------------------------------------------------------------\n");
-      printf("%-25s | %-15s\n", "Capacity Remaining(lbs)", "Gold");
-      printf("%-25d | %-15d\n", Inventory.CarryingCapacity, Inventory.CurrentGold);
-      printf("----------------------------------------------------------------------------\n");
-      printf("%-15s |%-15s \n", "Hero Level", "Current XP", "Max XP", "XP To Next Level");
+      printf("%-15s |%-15s \n", "Hero Level", "Current XP");
       printf("%-15d |%-f/%-15f \n", hero.Level, hero.CurrentXP, hero.MaxXP);
 
       printf("============================================================================\n");
