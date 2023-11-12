@@ -128,7 +128,24 @@ int initiate_combat()
           heroMadeMove = 1;
         }
       }
-      heroMadeMove = 1;
+      else if (strcmp(input, "skip") == 0 || strcmp(input, "Skip") == 0)
+      {
+        puts("You've skipped your turn!");
+        heroMadeMove = 1;
+      }
+      else if (strcmp(input, "help") == 0)
+      {
+        // TODO need to clean this menu up
+        puts("Here are the commands you can use:");
+        MAKE_YELLOW("attack/fight/charge - use an ability\n");
+        MAKE_YELLOW("run/run away/escape/leave - attempt to run away\n");
+        MAKE_RED("Skip - Be warned, skipping your turn will result in the enemy attacking you!\n");
+        MAKE_YELLOW("help - display this message\n");
+      }
+      else
+      {
+        puts("Invalid command! Type help to see the commands you can use.");
+      }
     }
     else if (chance >= 50)
     {
@@ -147,13 +164,15 @@ int initiate_combat()
     // START OF ENEMY AND HERO DEATH HANDLING
     if (enemy.Health <= 0)
     {
-      update_current_xp(hero.CurrentXP, enemy.ExperienceDroppedOnDeath);
-      printf("You've defeated %s and have gained %d xp your xp is now at %d! your max xp at level:%d is %d\n", enemy.Name, enemy.ExperienceDroppedOnDeath, hero.CurrentXP, hero.Level, hero.MaxXP);
-      calculate_xp_to_next_level(hero.CurrentXP, hero.MaxXP);
 
+      printf("You've defeated %s!\n", enemy.Name);
+      printf("You've gained %f XP!\n", enemy.ExperienceDroppedOnDeath);
+      calculate_current_xp(enemy.ExperienceDroppedOnDeath);
+      calculate_xp_cap_at_current_level(hero.Level);
+      // calculate_max_xp_at_level(hero.Level);
       if (hero.CurrentXP >= hero.MaxXP)
       {
-        level_up(&hero.Level);
+        level_up(&hero.Level, &hero.CurrentXP);
       }
     }
   } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
@@ -188,7 +207,7 @@ void calculate_dmg_done_to_hero(int *heroHealth, int *enemyAbilityDmg, const cha
   if (*heroHealth <= 0)
   {
 
-    MAKE_BOLD_N_COLOR(31, "You've died!\n");
+    MAKE_BOLD_N_COLOR("You've died!\n", 31);
     // Add further actions if needed when the hero dies
   }
 }
