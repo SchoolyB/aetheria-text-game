@@ -13,8 +13,6 @@ void calculate_current_xp(float *XPGainedFromEnemy)
   float *currentXP;
   currentXP = &(hero.CurrentXP); // this is dereferencing the pointer.
   *currentXP = *currentXP + *XPGainedFromEnemy;
-
-  printf("The hero's current XP is %f\n", *currentXP);
 }
 
 //================================================================================================
@@ -24,7 +22,6 @@ void calculate_xp_cap_at_current_level(int level)
 {
   float maxXP = level * 25;
   hero.MaxXP = maxXP;
-  printf("Max XP at level %d: %f\n", level, hero.MaxXP);
 }
 //================================================================================================
 // Called when the heros current xp is greater than or equal to the max xp
