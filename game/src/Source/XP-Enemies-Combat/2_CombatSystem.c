@@ -175,8 +175,6 @@ int initiate_combat()
       if (hero.CurrentXP >= hero.MaxXP)
       {
         level_up(&hero.Level, &hero.CurrentXP);
-        // calling this function again to recalculate the max xp at the heros new level
-        calculate_xp_cap_at_current_level(hero.Level);
       }
     }
   } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
