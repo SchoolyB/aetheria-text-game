@@ -6,6 +6,7 @@ void generate_weapon();
 void generate_head_armor();
 void generate_chest_armor();
 void generate_leg_armor();
+void generate_consumable_item();
 int generate_item();
 int call_generate_function();
 void found_loot_chest();
