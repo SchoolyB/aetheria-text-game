@@ -4,18 +4,17 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <time.h>
+#include "../Source/Items-Inventory/Items-Inventory.h"
 
 #ifndef UTILS_H
 #define UTILS_H
-// TODO clean this file
 
 /*
 This file is separated into several sections. The sections are labeled and ordered as follows:
-1. Macros
-2. Functions
-3. Prototypes
-4. Structs
-5. Global Variables
+1. Global Macros
+2. Global Functions
+3. Global Prototypes
+4. Global Structs
 */
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -146,6 +145,9 @@ The Macros section holds all macros used in the program. Macros are sorted in th
     }                              \
   } while (0)
 //--------------------------------------------------------------------------------//
+// HANDLING TRUE AND FALSE
+#define FALSE 0
+#define TRUE 1
 
 /*
 END OF COMMON MACROS
@@ -467,46 +469,7 @@ typedef struct
 
 } Hero;
 extern Hero hero;
-
-// this struct will be applicable to all things in the game that the user can pick up from weapons, armor, and items, to potions, books, etc
-typedef struct
-{
-  char Name[20];
-  char Description[100];
-  char Type[20]; // weapon, armors, item, potion, book, etc
-  int AddedDamage;
-  int AddedHealth;
-  int Weight;
-  int Value;
-  char Art[1000];
-  char Rarity[10]; // common, uncommon, rare, epic, legendary // wood, iron, steel, etc
-  // char Style[10];  // for weapons..i.e sword,axe,mace,staff,wand,etc
-} Item;
-
-typedef struct
-{
-  Item Item;
-  int Quantity;
-  int isOpen; // 0 = false, 1 = true
-} InventorySlot;
-struct Inventory
-{
-  Item EquippedWeapon;
-  Item EquippedHead;
-  Item EquippedChest;
-  Item EquippedLegs;
-  InventorySlot Slot1;
-  InventorySlot Slot2;
-  InventorySlot Slot3;
-  int CarryingCapacity;
-  int MaxCarryingCapacity;
-  int CurrentGold;
-} Inventory;
-
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
@@ -698,21 +661,6 @@ void calculate_new_max_carrying_capacity_from_str(int *base_max)
 }
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
-// Enemy Variables
-extern char current_enemy_name[20];
-extern int current_enemy_health;
-extern char current_enemy_ability1[20];
-extern char current_enemy_ability2[20];
-
-// Origins, classes, and  TODO professions
-extern char possibleHomelands[5][10];
-extern char possibleClasses[6][10];
-extern char possibleProfessions[6][15];
-
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 char WarriorArt[] =
     "..............................,:::::,::.\n"
@@ -894,9 +842,9 @@ void activate_god_mode()
   hero.DexterityAttribute.CurrentPoints = 10;
   hero.LuckAttribute.CurrentPoints = 10;
   hero.AttributePointsPool = 0;
-  Inventory.Slot1.isOpen = 1;
-  Inventory.Slot2.isOpen = 1;
-  Inventory.Slot3.isOpen = 1;
+  Inventory.Slot1.isOpen = TRUE;
+  Inventory.Slot2.isOpen = TRUE;
+  Inventory.Slot3.isOpen = TRUE;
 
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;

@@ -8,10 +8,10 @@ Enemy enemy;
 int initiate_combat()
 {
   srand(time(NULL));
-  int heroMadeMove = 0;
-  int enemyMadeMove = 0;
+  int heroMadeMove = FALSE;
+  int enemyMadeMove = FALSE;
   printf("Entering combat!\n");
-  int CombatOnGoing = 1;
+  int CombatOnGoing = TRUE;
   refresh_combat_ui(0);
   do
   {
@@ -46,7 +46,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability1.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
-          heroMadeMove = 1;
+          heroMadeMove = TRUE;
           refresh_combat_ui(2);
         }
         else if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1 && hero.Mana < hero.Ability1.ManaCost)
@@ -62,7 +62,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability2.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
-          heroMadeMove = 1;
+          heroMadeMove = TRUE;
           refresh_combat_ui(1);
         }
         else if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2 && hero.Mana < hero.Ability2.ManaCost)
@@ -79,7 +79,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability3.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
-          heroMadeMove = 1;
+          heroMadeMove = TRUE;
           refresh_combat_ui(1);
         }
         else if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3 && hero.Mana < hero.Ability3.ManaCost)
@@ -97,14 +97,14 @@ int initiate_combat()
         if (chance < 40)
         {
           puts("You've successfully ran away.");
-          CombatOnGoing = 0;
+          CombatOnGoing = FALSE;
 
           MAKE_BOLD_N_UNDERLINED("EXITING COMBAT\n");
         }
         else
         {
           puts("You've failed to run away!");
-          heroMadeMove = 1;
+          heroMadeMove = TRUE;
           refresh_combat_ui(2);
         }
       }
@@ -112,12 +112,12 @@ int initiate_combat()
       else if (strcmp(input, "skip") == 0 || strcmp(input, "Skip") == 0)
       {
         puts("You've skipped your turn!");
-        heroMadeMove = 1;
+        heroMadeMove = TRUE;
       }
       // This else if block handles the heros attempt to use an item
       else if (strcmp(input, "item") == 0 || strcmp(input, "Item") == 0)
       {
-        if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
+        if (Inventory.Slot1.isOpen == TRUE && Inventory.Slot2.isOpen == TRUE && Inventory.Slot3.isOpen == TRUE)
         {
           puts("You have no usable items in your inventory");
           refresh_combat_ui(1);
@@ -131,7 +131,7 @@ int initiate_combat()
       // This else if block handles the heros attempt to use an items
       else if (strcmp(input, "help") == 0 || strcmp(input, "Help") == 0)
       {
-        int goBack = 0;
+        int goBack = FALSE;
         char input[10];
         do
         {
@@ -149,7 +149,7 @@ int initiate_combat()
             system("clear");
             refresh_combat_ui(0);
           }
-        } while (goBack == 0);
+        } while (goBack == FALSE);
       }
       else
       {
@@ -164,7 +164,7 @@ int initiate_combat()
       sleep(2);
       enemy_makes_move();
       refresh_combat_ui(2);
-      enemyMadeMove = 1;
+      enemyMadeMove = TRUE;
     }
     else
     {
@@ -199,7 +199,7 @@ int initiate_combat()
       MAKE_BOLD_N_COLOR("You've died!\n", 31);
     }
     // END HERO DEATH HANDLING
-  } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
+  } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == TRUE);
 }
 
 //===================================================================================
@@ -313,7 +313,7 @@ void show_combat_inventory_menu()
   REMOVE_NEWLINE_CHAR(input);
   if (strcmp(input, "1") == 0)
   {
-    if (Inventory.Slot1.isOpen == 1)
+    if (Inventory.Slot1.isOpen == TRUE)
     {
       puts("You don't have an item in this slot!");
     }
@@ -355,7 +355,7 @@ void show_combat_inventory_menu()
   // in the event that the user enters 2
   else if (strcmp(input, "2") == 0)
   {
-    if (Inventory.Slot2.isOpen == 1)
+    if (Inventory.Slot2.isOpen == TRUE)
     {
       puts("You don't have an item in this slot!");
     }
@@ -397,7 +397,7 @@ void show_combat_inventory_menu()
   // in the event the user enter 3
   else if (strcmp(input, "3") == 0)
   {
-    if (Inventory.Slot3.isOpen == 1)
+    if (Inventory.Slot3.isOpen == TRUE)
     {
       puts("You don't have an item in this slot!");
     }

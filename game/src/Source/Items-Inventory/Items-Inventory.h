@@ -30,4 +30,41 @@ void get_and_show_inventory_slot_status();
 int get_inv_status_and_return_val();
 void examine_item();
 void show_item_information();
+
+// INVENTORY STRUCTS
+// this struct will be applicable to all things in the game that the user can pick up from weapons, armor, and items, to potions, books, etc
+typedef struct
+{
+  char Name[20];
+  char Description[100];
+  char Type[20]; // weapon, armors, consumable, etc
+  int AddedDamage;
+  int AddedHealth;
+  int Weight;
+  int Value;
+  char Art[1000];
+  char Rarity[10]; // common, uncommon, rare, epic,
+  // char Style[10];  // for weapons..i.e sword,axe,mace,staff,wand,etc
+} Item;
+
+typedef struct
+{
+  Item Item;
+  int Quantity;
+  int isOpen; // 0 = false, 1 = true
+} InventorySlot;
+struct Inventory
+{
+  Item EquippedWeapon;
+  Item EquippedHead;
+  Item EquippedChest;
+  Item EquippedLegs;
+  InventorySlot Slot1;
+  InventorySlot Slot2;
+  InventorySlot Slot3;
+  int CarryingCapacity;
+  int MaxCarryingCapacity;
+  int CurrentGold;
+} Inventory;
+
 #endif
