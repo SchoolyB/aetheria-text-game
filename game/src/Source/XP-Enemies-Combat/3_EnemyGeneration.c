@@ -163,12 +163,12 @@ Trust me by the time I got here it was too far gone. Spent hours
 backtracking and was like....Fuck it Just let it be....*/
 void generate_random_enemy_ability1(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
 {
-  static int srand_flag = 0;
+  static int srand_flag = FALSE;
 
   if (!srand_flag)
   {
     srand(time(NULL));
-    srand_flag = 1;
+    srand_flag = TRUE;
   }
   // if the enemy is a non magical human then it will have a different set of abilities
   if (strcmp(enemy.Type, "Non-Magical Human") == 0)
@@ -343,12 +343,12 @@ Trust me by the time I got here it was too far gone. Spent hours
 backtracking and was like....Fuck it Just let it be....*/
 void generate_random_enemy_ability2(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
 {
-  static int srand_flag = 0;
+  static int srand_flag = FALSE;
 
   if (!srand_flag)
   {
     srand(time(NULL));
-    srand_flag = 1;
+    srand_flag = TRUE;
   }
   // if the enemy is a non magical human then it will have a different set of abilities
   if (strcmp(enemy.Type, "Non-Magical Human") == 0)
@@ -616,7 +616,6 @@ int calculate_new_enemy_ability_dmg2(char *EnemyAbility2Name, int *EnemyAbility2
 }
 //==================================================================================//
 // This function will calculate the base xp dropped based on the hero's level then call the function to calculate the xp modifier
-// TODO need to add a function that will calculate the enemies health based on the hero's level
 void set_enemy_health(int heroLevel)
 {
   int *enemyHealth;

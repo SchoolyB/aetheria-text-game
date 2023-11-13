@@ -37,6 +37,7 @@ void confirm_hero_creation_and_stats()
   if (INPUT_IS_YES(confirmation))
   {
     printf("Great! It seems you are ready to begin your adventure!\n I wish you the best of luck in your endeavors\n");
+    log_creation_data_to_file();
   }
   else if (INPUT_IS_NO(confirmation))
   {
@@ -105,3 +106,31 @@ void confirm_hero_creation_and_stats()
   }
 }
 //=================================================================================================//
+// ===========================================================================================================//
+void log_creation_data_to_file()
+{
+  // !IMPORTANT the path of the log file is accessed from where the executable is located
+  FILE *logFile = fopen("../game/src/logs/creation.log", "a");
+  if (logFile == NULL)
+  {
+    perror("Error opening file");
+    exit(1);
+  }
+  fprintf(logFile, "Hero Information: \n");
+  fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
+  show_creation_data(logFile, "First Name", hero.FirstName);
+  show_creation_data(logFile, "Dynasty Name", hero.LastName);
+  show_creation_data(logFile, "Gender", hero.Gender);
+  show_creation_data(logFile, "Home of Origin", hero.Homeland);
+  show_creation_data(logFile, "Profession", hero.Profession);
+  show_creation_data(logFile, "Class", hero.Class);
+  show_creation_data(logFile, "+===========================+", NULL);
+  fclose(logFile);
+}
+//=================================================================================================//
+// ===========================================================================================================//
+void show_creation_data(FILE *logFile, const char *category, const char *value)
+{
+  fprintf(logFile, "%s: %s\n", category, value);
+  fflush(logFile);
+}
