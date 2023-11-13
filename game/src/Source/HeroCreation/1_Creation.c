@@ -290,7 +290,7 @@ void get_homeland()
     printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from?(y/n)\n", hero.Homeland);
     confirm_homeland();
   }
-  else if (IS_NATION(input, "4", "magdalar", "Magdlar", "MAGDALAR"))
+  else if (IS_NATION(input, "4", "magdalar", "Magdalar", "MAGDALAR"))
   {
     strcpy(hero.Homeland, "Magdalar");
     // READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
@@ -453,42 +453,42 @@ void get_class()
   if (IS_CLASS(input, "1", "warrior", "Warrior", "WARRIOR"))
   {
     strcpy(hero.Class, "Warrior");
-    printf(WarriorArt);
+    printf("%s", WarriorArt);
     PRINT_CLASS("Mighty", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "2", "mage", "Mage", "MAGE"))
   {
     strcpy(hero.Class, "Mage");
-    printf(MageArt);
+    printf("%s", MageArt);
     PRINT_CLASS("Mystical", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "3", "rogue", "Rogue", "ROGUE"))
   {
     strcpy(hero.Class, "Rogue");
-    printf(RogueArt);
+    printf("%s", RogueArt);
     PRINT_CLASS("Sly", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "4", "cleric", "Cleric", "CLERIC"))
   {
     strcpy(hero.Class, "Cleric");
-    printf(ClericArt);
+    printf("%s", ClericArt);
     PRINT_CLASS("Holy", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "5", "bard", "Bard", "BARD"))
   {
     strcpy(hero.Class, "Bard");
-    printf(BardArt);
+    printf("%s", BardArt);
     PRINT_CLASS("Talented", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "6", "archer", "Archer", "ARCHER"))
   {
     strcpy(hero.Class, "Archer");
-    printf(ArcherArt);
+    printf("%s", ArcherArt);
     PRINT_CLASS("Sharpshooting", hero.Class);
     confirm_class();
   }

@@ -35,14 +35,12 @@ char commands[20][100] = {
 char command_descriptions[20][100] = {
     "Shows all hero info\n",
     "Exit the program\n",
-    "Exit the program\n",
     "Restart the program\n",
     "Lists all available commands\n",
     "Clears the terminal\n",
     "Opens the notepad and allows the user to make an entry\n",
     "Opens the notepad and allows the user to read all entries\n",
     "Clears all entries from the notepad",
-    "Allows the player to see and manage their inventory\n",
     "Allows the player to see and manage their inventory\n"};
 
 char possibleOrigins[5][10];
@@ -98,25 +96,17 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_RESTART_COMMAND(input))
     {
       // Check if the input is "restart
-      char restartConfirmation[10];
+      char input[10];
 
       logMessage(logFile, "Requesting To Restart Program.");
-      printf("\x1b[31mRequesting to restart program... \x1b[0m\n");
-      printf("\x1b[31mAre you sure you want to restart? (y/n): \x1b[0m\n");
-      fgets(restartConfirmation, sizeof(restartConfirmation), stdin);
-      REMOVE_NEWLINE_CHAR(restartConfirmation);
-      if (INPUT_IS_YES(restartConfirmation))
-      {
-        printf("Restarting...\n");
-        puts("gets here");
-        if (execv("../game/Aetheria.exe", NULL) == -1)
-        {
-          // logMessage(logFile, "Restarted Program.");
-          perror("execv");
-          exit(1);
-        }
+      printf(RED "Requesting to restart program..." RESET "\n");
+      printf(RED "mAre you sure you want to restart? (y/n):" RESET "\n");
+      FGETS(input);
+      REMOVE_NEWLINE_CHAR(input);
+      if (INPUT_IS_YES(input))
+      { // TODO need to find out why path is read  but not execute
       }
-      else if (INPUT_IS_NO(restartConfirmation))
+      else if (INPUT_IS_NO(input))
       {
         printf("Restart canceled.\n");
         COMMAND_LINE(logFile);
@@ -127,6 +117,7 @@ int COMMAND_LINE(FILE *logFile)
         COMMAND_LINE(logFile);
       }
     }
+
     else if (IS_INFO_COMMAND(input))
     {
       logMessage(logFile, "Requested hero information.\n");

@@ -246,7 +246,7 @@ int check_hero_remaining_mana(char *heroAbilityManaCost, char *heroAbilityName)
 {
   if (hero.Mana < *heroAbilityManaCost)
   {
-    printf("You do not have enough mana to use %s!\n", *heroAbilityName);
+    printf("You do not have enough mana to use %s!\n", heroAbilityName);
     return 0;
   }
 
@@ -438,4 +438,3 @@ void show_combat_inventory_menu()
   }
 }
 //===================================================================================
-// handles the logic for using an item in combat SEE use in show_combat_inventory_menu()
