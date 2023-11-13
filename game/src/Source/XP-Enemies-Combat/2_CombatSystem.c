@@ -124,8 +124,8 @@ int initiate_combat()
         }
         else
         {
-          puts("What item would you like to use?");
-          // TODO keep working on this
+          show_combat_inventory_menu();
+          refresh_combat_ui(1);
         }
       }
       // This else if block handles the heros attempt to use an items
@@ -255,6 +255,8 @@ int check_hero_remaining_mana(char *heroAbilityManaCost, char *heroAbilityName)
     return 1;
   }
 }
+//===================================================================================
+// refreshes amd shows the combat ui
 void refresh_combat_ui(int sleepTime)
 {
   sleep(sleepTime);
@@ -284,7 +286,8 @@ void refresh_combat_ui(int sleepTime)
   printf("%s \n", "|");
   puts("==================================================================================");
 }
-
+//===================================================================================
+// shows the combat help menu
 void show_combat_help_menu()
 {
   printf("=============================================================================\n");
@@ -298,3 +301,141 @@ void show_combat_help_menu()
   printf("=============================================================================\n");
   printf("Type 'back' to go back to the combat ui.\n");
 }
+//===================================================================================
+// this function  handles all the logic for using an item in combat
+// see use in show_combat_inventory_menu()
+void show_combat_inventory_menu()
+{
+  char input[10];
+  puts("What item would you like to use?");
+  puts("Enter the slot number");
+  FGETS(input);
+  REMOVE_NEWLINE_CHAR(input);
+  if (strcmp(input, "1") == 0)
+  {
+    if (Inventory.Slot1.isOpen == 1)
+    {
+      puts("You don't have an item in this slot!");
+    }
+    else
+    {
+      if (strcmp(Inventory.Slot1.Item.Type, "Consumable") == 0)
+      {
+        char input[10];
+        printf("Using %s has the following effects: %s\n", Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description);
+        puts("Are you sure you want to use this item?");
+        FGETS(input);
+        REMOVE_NEWLINE_CHAR(input);
+        if (INPUT_IS_YES(input))
+        {
+          printf("You've used %s.\n", Inventory.Slot1.Item.Name);
+          hero.Health += Inventory.Slot1.Item.AddedHealth;
+          // TODO might add one for mana later
+          hero.Ability1.Damage += Inventory.Slot1.Item.AddedDamage;
+          hero.Ability2.Damage += Inventory.Slot1.Item.AddedDamage;
+          hero.Ability3.Damage += Inventory.Slot1.Item.AddedDamage;
+        }
+        else
+        {
+          printf("You've decided not to use %s.", Inventory.Slot1.Item.Name);
+          show_combat_inventory_menu();
+        }
+      }
+      else if (strcmp(Inventory.Slot1.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot1.Item.Type, "Head") == 0 || strcmp(Inventory.Slot1.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+      {
+        puts("You cannot use this item in combat!");
+        show_combat_inventory_menu();
+      }
+      else
+      {
+        puts("ERROR");
+      }
+    }
+  }
+  // in the event that the user enters 2
+  else if (strcmp(input, "2") == 0)
+  {
+    if (Inventory.Slot2.isOpen == 1)
+    {
+      puts("You don't have an item in this slot!");
+    }
+    else
+    {
+      if (strcmp(Inventory.Slot2.Item.Type, "Consumable") == 0)
+      {
+        char input[10];
+        printf("Using %s has the following effects: %s\n", Inventory.Slot2.Item.Name, Inventory.Slot2.Item.Description);
+        puts("Are you sure you want to use this item?");
+        FGETS(input);
+        REMOVE_NEWLINE_CHAR(input);
+        if (INPUT_IS_YES(input))
+        {
+          printf("You've used %s.\n", Inventory.Slot2.Item.Name);
+          hero.Health += Inventory.Slot2.Item.AddedHealth;
+          // TODO might add one for mana later
+          hero.Ability1.Damage += Inventory.Slot2.Item.AddedDamage;
+          hero.Ability2.Damage += Inventory.Slot2.Item.AddedDamage;
+          hero.Ability3.Damage += Inventory.Slot2.Item.AddedDamage;
+        }
+        else
+        {
+          printf("You've decided not to use %s.", Inventory.Slot2.Item.Name);
+          show_combat_inventory_menu();
+        }
+      }
+      else if (strcmp(Inventory.Slot2.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot2.Item.Type, "Head") == 0 || strcmp(Inventory.Slot2.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+      {
+        puts("You cannot use this item in combat!");
+        show_combat_inventory_menu();
+      }
+      else
+      {
+        puts("ERROR");
+      }
+    }
+  }
+  // in the event the user enter 3
+  else if (strcmp(input, "3") == 0)
+  {
+    if (Inventory.Slot3.isOpen == 1)
+    {
+      puts("You don't have an item in this slot!");
+    }
+    else
+    {
+      if (strcmp(Inventory.Slot3.Item.Type, "Consumable") == 0)
+      {
+        char input[10];
+        printf("Using %s has the following effects: %s\n", Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description);
+        puts("Are you sure you want to use this item?");
+        FGETS(input);
+        REMOVE_NEWLINE_CHAR(input);
+        if (INPUT_IS_YES(input))
+        {
+          printf("You've used %s.\n", Inventory.Slot3.Item.Name);
+          hero.Health += Inventory.Slot3.Item.AddedHealth;
+          // TODO might add one for mana later
+          hero.Ability1.Damage += Inventory.Slot3.Item.AddedDamage;
+          hero.Ability2.Damage += Inventory.Slot3.Item.AddedDamage;
+          hero.Ability3.Damage += Inventory.Slot3.Item.AddedDamage;
+        }
+        else
+        {
+          printf("You've decided not to use %s.", Inventory.Slot3.Item.Name);
+          show_combat_inventory_menu();
+        }
+      }
+      else if (strcmp(Inventory.Slot3.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot3.Item.Type, "Head") == 0 || strcmp(Inventory.Slot3.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+      {
+        puts("You cannot use this item in combat!");
+        show_combat_inventory_menu();
+      }
+      else
+      {
+        puts("ERROR");
+      }
+    }
+  }
+}
+//===================================================================================
+// handles the logic for using an item in combat SEE use in show_combat_inventory_menu()

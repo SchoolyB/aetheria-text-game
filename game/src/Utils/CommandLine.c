@@ -450,12 +450,23 @@ int COMMAND_LINE(FILE *logFile)
       printf("God mode activated.\n");
       sleep(1);
       system("clear");
-      printf("Call all functions that you would like to debug here.\n");
-      testing_stuff();
     }
     else if (strcmp(input, "test") == 0)
     {
-      testing_stuff();
+      int inTestMode = TRUE;
+      puts("Booting testing module...");
+      printf("This testing module is for testing new features and functions.\n");
+      sleep(1);
+
+      while (inTestMode == TRUE)
+      {
+        puts("============================================================================");
+        puts("In testing module");
+        // RUN FUNCTIONS HERE
+        testing_stuff();
+        // END FUNCTIONS HERE
+        inTestMode = FALSE;
+      }
     }
 
     else

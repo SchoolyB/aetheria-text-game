@@ -8,7 +8,6 @@ void calculate_xp_cap_at_current_level();
 void level_up();
 void calculate_enemy_base_xp_dropped();
 void calculate_enemy_xp_dropped_with_modifier();
-void run_funcs(); // TODO delete when done with debugging
 //+=+=+=+=+=+2_CombatSystem.c Prototypes+=+=+=+=+=+//
 int initiate_combat();
 void calculate_dmg_done_to_enemy();

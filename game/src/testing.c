@@ -9,5 +9,6 @@
 void testing_stuff()
 {
   found_loot_chest();
-  // run_funcs();
+  generate_enemy();
+  initiate_combat();
 }
