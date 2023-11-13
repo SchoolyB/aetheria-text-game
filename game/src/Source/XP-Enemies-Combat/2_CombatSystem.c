@@ -16,8 +16,8 @@ int initiate_combat()
   do
   {
 
-    int heroMadeMove = 0;
-    int enemyMadeMove = 0;
+    int heroMadeMove = FALSE;
+    int enemyMadeMove = FALSE;
 
     int chance = rand() % 100;
     puts("Rolling for turn order...");

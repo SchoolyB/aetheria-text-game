@@ -8,10 +8,9 @@ char possibleInventoryOptions[10][20] = {
     "1.Equip",
     "2.Unequip",
     "3.Drop",
-    "4.Use", // TODO only if type consumable
+    "4.Use",
     "5.Examine",
     "6.Exit"};
-// todo add new option called 'move' that allows you to move an item from one slot to another
 void inventory_options()
 {
   printf("What would you like to do?\n");
@@ -35,7 +34,7 @@ void inventory_options()
   }
   else if (STR_CMP_TWO(input, "4", "use"))
   {
-    // use_item();
+    use_consumable();
     puts("You chose the use option.");
   }
   else if (STR_CMP_TWO(input, "5", "examine"))
@@ -1352,4 +1351,156 @@ void show_item_information(char *itemName, char *itemDesc, char *itemType, int i
   printf("Added Health: %d\n", itemAddedHealth);
   printf("Value: %d\n", itemValue);
   return;
+}
+//============================================================================================================//
+// this function handles consumables
+
+void use_consumable()
+{
+  char input[10];
+  system("clear");
+  selected_inventory_option("Use Item");
+
+  if (strcmp(Inventory.Slot1.Item.Type, "Consumable") != 0 && strcmp(Inventory.Slot2.Item.Type, "Consumable") != 0 && strcmp(Inventory.Slot3.Item.Type, "Consumable") != 0)
+  {
+    puts("You have no items that can be used.");
+  }
+  else if (strcmp(Inventory.Slot1.Item.Type, "Consumable") == 0 || strcmp(Inventory.Slot2.Item.Type, "Consumable") == 0 || strcmp(Inventory.Slot3.Item.Type, "Consumable") == 0)
+  {
+    puts("Which item would you like to use?");
+    puts("Enter an inventory slot number.");
+    printf("Slot 1: %s\n", Inventory.Slot1.Item.Name);
+    printf("Slot 2: %s\n", Inventory.Slot2.Item.Name);
+    printf("Slot 3: %s\n", Inventory.Slot3.Item.Name);
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+    if (strcmp(input, "1") == 0)
+    {
+      if (Inventory.Slot1.isOpen == TRUE)
+      {
+        puts("You don't have an item in this slot!");
+      }
+      else
+      {
+        if (strcmp(Inventory.Slot1.Item.Type, "Consumable") == 0)
+        {
+          char input[10];
+          printf("Using %s has the following effects: %s\n", Inventory.Slot1.Item.Name, Inventory.Slot1.Item.Description);
+          puts("Are you sure you want to use this item?");
+          FGETS(input);
+          REMOVE_NEWLINE_CHAR(input);
+          if (INPUT_IS_YES(input))
+          {
+            printf("You've used %s.\n", Inventory.Slot1.Item.Name);
+            hero.Health += Inventory.Slot1.Item.AddedHealth;
+            // TODO might add one for mana later
+            hero.Ability1.Damage += Inventory.Slot1.Item.AddedDamage;
+            hero.Ability2.Damage += Inventory.Slot1.Item.AddedDamage;
+            hero.Ability3.Damage += Inventory.Slot1.Item.AddedDamage;
+          }
+          else
+          {
+            printf("You've decided not to use %s.", Inventory.Slot1.Item.Name);
+            show_combat_inventory_menu();
+          }
+        }
+        else if (strcmp(Inventory.Slot1.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot1.Item.Type, "Head") == 0 || strcmp(Inventory.Slot1.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+        {
+          puts("You cannot use this item!");
+          puts("But you can" YELLOW "examine" RESET "it.");
+          inventory_options();
+        }
+        else
+        {
+          puts("ERROR");
+        }
+      }
+    }
+    // in the event that the user enters 2
+    else if (strcmp(input, "2") == 0)
+    {
+      if (Inventory.Slot2.isOpen == TRUE)
+      {
+        puts("You don't have an item in this slot!");
+      }
+      else
+      {
+        if (strcmp(Inventory.Slot2.Item.Type, "Consumable") == 0)
+        {
+          char input[10];
+          printf("Using %s has the following effects: %s\n", Inventory.Slot2.Item.Name, Inventory.Slot2.Item.Description);
+          puts("Are you sure you want to use this item?");
+          FGETS(input);
+          REMOVE_NEWLINE_CHAR(input);
+          if (INPUT_IS_YES(input))
+          {
+            printf("You've used %s.\n", Inventory.Slot2.Item.Name);
+            hero.Health += Inventory.Slot2.Item.AddedHealth;
+            // TODO might add one for mana later
+            hero.Ability1.Damage += Inventory.Slot2.Item.AddedDamage;
+            hero.Ability2.Damage += Inventory.Slot2.Item.AddedDamage;
+            hero.Ability3.Damage += Inventory.Slot2.Item.AddedDamage;
+          }
+          else
+          {
+            printf("You've decided not to use %s.\n", Inventory.Slot2.Item.Name);
+            inventory_options();
+          }
+        }
+        else if (strcmp(Inventory.Slot2.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot2.Item.Type, "Head") == 0 || strcmp(Inventory.Slot2.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+        {
+          puts("You cannot use this item!");
+          puts("But you can" YELLOW "examine" RESET "it.");
+          inventory_options();
+        }
+        else
+        {
+          puts("ERROR");
+        }
+      }
+    }
+    // in the event the user enter 3
+    else if (strcmp(input, "3") == 0)
+    {
+      if (Inventory.Slot3.isOpen == TRUE)
+      {
+        puts("You don't have an item in this slot!");
+      }
+      else
+      {
+        if (strcmp(Inventory.Slot3.Item.Type, "Consumable") == 0)
+        {
+          char input[10];
+          printf("Using %s has the following effects: %s\n", Inventory.Slot3.Item.Name, Inventory.Slot3.Item.Description);
+          puts("Are you sure you want to use this item?");
+          FGETS(input);
+          REMOVE_NEWLINE_CHAR(input);
+          if (INPUT_IS_YES(input))
+          {
+            printf("You've used %s.\n", Inventory.Slot3.Item.Name);
+            hero.Health += Inventory.Slot3.Item.AddedHealth;
+            // TODO might add one for mana later
+            hero.Ability1.Damage += Inventory.Slot3.Item.AddedDamage;
+            hero.Ability2.Damage += Inventory.Slot3.Item.AddedDamage;
+            hero.Ability3.Damage += Inventory.Slot3.Item.AddedDamage;
+          }
+          else
+          {
+            printf("You've decided not to use %s.", Inventory.Slot3.Item.Name);
+            inventory_options();
+          }
+        }
+        else if (strcmp(Inventory.Slot3.Item.Type, "Weapon") == 0 || strcmp(Inventory.Slot3.Item.Type, "Head") == 0 || strcmp(Inventory.Slot3.Item.Type, "Chest") == 0 || strcmp(Inventory.Slot1.Item.Type, "Legs") == 0)
+        {
+          puts("You cannot use this item!");
+          puts("But you can" YELLOW "examine" RESET "it.");
+          inventory_options();
+        }
+        else
+        {
+          puts("ERROR");
+        }
+      }
+    }
+  }
 }

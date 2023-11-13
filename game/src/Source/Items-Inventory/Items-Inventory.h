@@ -23,6 +23,7 @@ void choose_open_slot_to_move_to();
 void unequip_logic();
 int drop_item();
 void pick_up_item();
+void use_consumable();
 void selected_inventory_option();
 void check_and_see_if_none();
 void selected_inventory_option();
