@@ -176,8 +176,8 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_EXIT_COMMAND(input))
     {
       char exitConfirmation[10];
-      printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
-      printf("\x1b[31mAre you sure you want to exit? (y/n): \x1b[0m\n");
+      printf(RED "Requesting to exit program..." RESET "\n");
+      printf(RED "Are you sure you want to exit? (y/n):" RESET "\n");
       fgets(exitConfirmation, sizeof(exitConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(exitConfirmation);
       if (INPUT_IS_YES(exitConfirmation))
@@ -201,9 +201,9 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_CLEAR_COMMAND(input))
     {
       char clearConfirmation[10];
-      printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
+      printf(RED "Requesting to clear terminal..." RESET "\n");
       sleep(1);
-      printf("\x1b[31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      printf(RED "31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)" RESET "\n");
       fgets(clearConfirmation, sizeof(clearConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(clearConfirmation);
       if (INPUT_IS_YES(clearConfirmation))
@@ -235,9 +235,9 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_CLEAR_NOTES_COMMAND(input))
     {
       char clearNotesConfirmation[10];
-      printf("\x1b[31mRequesting to clear notepad...\x1b[0m\n");
+      printf(RED "Requesting to clear notepad..." RESET "\n");
       sleep(1);
-      printf("\x1b[31mOnce you clear your notepad you will be unable see past notes. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      printf(RED "Once you clear your notepad you will be unable see past notes. Are you sure you'd like to continue?(y/n)" RESET "\n");
       fgets(clearNotesConfirmation, sizeof(clearNotesConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(clearNotesConfirmation);
       if (INPUT_IS_YES(clearNotesConfirmation))

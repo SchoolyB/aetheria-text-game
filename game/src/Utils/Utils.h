@@ -91,9 +91,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 
 #define RESET "\x1B[0m"
 #define RED "\x1B[31m"
-#define GREEN "\x1B[32m"
-#define YELLOW "\x1B[33m"
 #define BLUE "\x1B[34m"
+#define GREEN "\x1B[32m"
+#define PURPLE "\x1B[35m"
+#define YELLOW "\x1B[33m"
 
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
