@@ -29,6 +29,9 @@ void calculate_xp_cap_at_current_level(int level)
 void level_up(int *level, int *heroCurrentXP)
 {
   *level += 1;
+  calculate_xp_cap_at_current_level(hero.Level);
+  calculate_hero_health_after_level_up(&hero.Health, hero.Level);
+  calculate_hero_mana_after_level_up(&hero.Mana, hero.Level);
   // Not sure if I want to reset the xp to 0 or keep it at the current xp
   *heroCurrentXP = 0;
   printf("Hero is now level: %d\n", *level);
@@ -142,9 +145,71 @@ void calculate_enemy_xp_dropped_with_modifier(float *XPDroppedOnDeath, int heroL
   }
 }
 //================================================================================================
-// TODO delete when done with debugging Called when the hero kills an enemy
+// this function handles the heros  health increase. should be called when the hero levels up
+void calculate_hero_health_after_level_up(int *heroHealth, int heroLvl)
+{
+  switch (heroLvl)
+  {
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+  case 6:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+  case 11:
+  case 12:
+  case 13:
+  case 14:
+  case 15:
+  case 16:
+  case 17:
+  case 18:
+  case 19:
+  case 20:
+    hero.Health += 12;
+    break;
+  }
+  hero.Health = *heroHealth;
+}
+//=================================================================================================
+// this function handles the heros mana increase. should be called when the hero levels up
+void calculate_hero_mana_after_level_up(int *heroMana, int heroLvl)
+{
+  switch (heroLvl)
+  {
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+  case 6:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+  case 11:
+  case 12:
+  case 13:
+  case 14:
+  case 15:
+  case 16:
+  case 17:
+  case 18:
+  case 19:
+  case 20:
+    hero.Mana += 8;
+    break;
+  }
+  hero.Mana = *heroMana;
+}
+//================================================================================================
 void run_funcs(maxXP)
 {
   generate_enemy();
-  initiate_combat();
+  // initiate_combat();
+  level_up(&hero.Level, &hero.CurrentXP);
 }
