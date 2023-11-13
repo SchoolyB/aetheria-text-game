@@ -254,7 +254,7 @@ int generate_item(char ItemList[50][10][100])
                 strcpy(itemType, ItemList[randomIndex][2]);
                 strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
             else if (strcmp(ItemList[randomIndex][3], "Common") == 0)
             {
@@ -263,7 +263,7 @@ int generate_item(char ItemList[50][10][100])
                 strcpy(itemType, ItemList[randomIndex][2]);
                 strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
             else if (strcmp(ItemList[randomIndex][3], "Rare") == 0)
             {
@@ -272,7 +272,7 @@ int generate_item(char ItemList[50][10][100])
                 strcpy(itemType, ItemList[randomIndex][2]);
                 strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
             else if (strcmp(ItemList[randomIndex][3], "Epic") == 0)
             {
@@ -281,7 +281,7 @@ int generate_item(char ItemList[50][10][100])
                 strcpy(itemType, ItemList[randomIndex][2]);
                 strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
             else
             {
@@ -353,7 +353,6 @@ void found_loot_chest()
     {
         printf("You decided to leave the chest alone.\n");
         return 0;
-        // do more stuff
     }
     else
     {

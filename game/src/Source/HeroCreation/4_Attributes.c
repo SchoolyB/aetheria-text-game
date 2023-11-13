@@ -18,37 +18,37 @@ int set_attributes()
   if (STR_CMP(hero.Class, "Warrior"))
   {
     printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("it is recommended that you apply some points to \x1b[31mStrength\x1b[0m\n");
+    printf("it is recommended that you apply some points to" RED "Strength" RESET "\n");
     printf("Doing so means you can deliver more powerful physical blows to enemies and endure more damage in battle.\n");
   }
   else if (STR_CMP(hero.Class, "Mage"))
   {
     printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("it is recommended that you apply some points to" BLUE "Intelligence" RESET "\n");
     printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
   }
   else if (STR_CMP(hero.Class, "Rogue"))
   {
     printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("it is recommended that you apply some points to \x1b[35mDexterity\x1b[0m\n");
+    printf("it is recommended that you apply some points to" PURPLE "Dexterity" RESET "\n");
     printf("Doing so means you can deliver more powerful physical blows to enemies and endure more damage in battle.\n");
   }
   else if (STR_CMP(hero.Class, "Cleric"))
   {
     printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("it is recommended that you apply some points to" BLUE "Intelligence" RESET "\n");
     printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
   }
   else if (STR_CMP(hero.Class, "Bard"))
   {
     printf("If you are playing as a \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("it is recommended that you apply some points to \x1b[34mIntelligence\x1b[0m\n");
+    printf("it is recommended that you apply some points to" BLUE "Intelligence" RESET "\n");
     printf("Doing so means you can deliver more powerful magical blows to enemies and endure more magical damage in battle.\n");
   }
   else if (STR_CMP(hero.Class, "Archer"))
   {
     printf("If you are playing as an \x1b[1;4m%s\x1b[0m ", hero.Class);
-    printf("It is recommended that you apply some points to \x1b[35mDexterity\x1b[0m\n");
+    printf("It is recommended that you apply some points to" PURPLE "Dexterity" RESET "\n");
     printf("Doing so means you can to land precise and fatal shots on your targets in battle\n");
   }
   else
@@ -82,8 +82,8 @@ int set_attributes()
 
   printf("You have been given %d points to allocate to you attributes.\n", hero.AttributePointsPool);
   printf("There are three ways to choose which attribute to apply points to. They are:\n");
-  printf("1.Typing the number associated with the attribute. '\x1b[31m1\x1b[0m,\x1b[34m2\x1b[0m,\x1b[35m3\x1b[0m,\x1b[32m4\x1b[0m'\n");
-  printf("2.Typing the abbreviation of the attribute. \'\x1b[31mstr\x1b[0m,\x1b[34mint\x1b[0m,\x1b[35mdex\x1b[0m,\x1b[32mlck\x1b[0m'\n");
+  printf("1.Typing the number associated with the attribute." RED "1, " BLUE "2, " PURPLE "3, " GREEN "4" RESET "\n");
+  printf("2.Typing the abbreviation of the attribute." RED "str, " BLUE "int, " PURPLE "dex, " GREEN "lck" RESET "\n");
   printf("3.Typing the full word of the attribute.\n");
   sleep(2);
   printf("Which attribute would you like to allocate points to?\n");
@@ -96,17 +96,17 @@ int set_attributes()
     if (IS_ATTRIBUTE("1", "str", "strength", "Strength", input))
     {
       system("clear");
-      printf("How many points would you like to allocate to \x1b[31mStrength\x1b[0m? \n");
+      printf("How many points would you like to allocate to " RED "Strength" RESET "\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to \x1b[31mStrength\x1b[0m.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to " RED "Strength" RESET "\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to \x1b[31mStrength\x1b[0m.\n");
+        printf("You cannot allocate more than 4 points to " RED "Strength" RESET "\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -119,18 +119,18 @@ int set_attributes()
     else if (IS_ATTRIBUTE("2", "int", "intelligence", "Intelligence", input))
     {
       system("clear");
-      printf("How many points would you like to allocate to \x1b[34mIntelligence\x1b[0m?\n");
+      printf("How many points would you like to allocate to " BLUE "Intelligence" RESET "\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to \x1b[34mIntelligence\x1b[0m.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to " BLUE "Intelligence" RESET "\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to \x1b[34mIntelligence\x1b[0m.\n");
+        printf("You cannot allocate more than 4 points to " BLUE "Intelligence" RESET "\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -143,18 +143,18 @@ int set_attributes()
     else if (IS_ATTRIBUTE("3", "dex", "dexterity", "Dexterity", input))
     {
       system("clear");
-      printf("How many points would you like to allocate to \x1b[35mDexterity\x1b[0m?\n");
+      printf("How many points would you like to allocate to" PURPLE "Dexterity" RESET "\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to \x1b[35mDexterity\x1b[0m.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to" PURPLE "Dexterity" RESET "\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to \x1b[35mDexterity\x1b[0m.\n");
+        printf("You cannot allocate more than 4 points to" PURPLE "Dexterity" RESET "\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else
@@ -167,18 +167,18 @@ int set_attributes()
     else if (IS_ATTRIBUTE("4", "lck", "luck", "Luck", input))
     {
       system("clear");
-      printf("How many points would you like to allocate to \x1b[32mLuck\x1b[0m?\n");
+      printf("How many points would you like to allocate to " GREEN "Luck" RESET "\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
       if (atoi(input) > hero.AttributePointsPool)
       {
-        printf("You do not have enough points to allocate %d points to \x1b[32mLuck\x1b[0m.\n", atoi(input));
+        printf("You do not have enough points to allocate %d points to " GREEN "Luck" RESET "\n", atoi(input));
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else if (atoi(input) > MAX_POINTS)
       {
-        printf("You cannot allocate more than 4 points to \x1b[32mLuck\x1b[0m.\n");
+        printf("You cannot allocate more than 4 points to to " GREEN "Luck" RESET "\n");
         MAKE_STAT_COLOR_AND_PRINT_REMAINING;
       }
       else

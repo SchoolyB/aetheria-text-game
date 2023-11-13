@@ -25,7 +25,7 @@ void change_specific_creation_item()
   printf("(6)Class:");
   MAKE_BOLD_N_UNDERLINED(hero.Class);
   printf("\n");
-  printf("(7)Stat Allocation: \x1b[31mstr:%d\x1b[0m  \x1b[34mint:%d\x1b[0m \x1b[35mdex%d\x1b[0m \x1b[32mlck:%d\x1b[0m\n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
+  printf("(7)Stat Allocation:" RED "str:%d " BLUE "int:%d " PURPLE "dex%d " GREEN "lck:%d " RESET "\n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
   printf("(8)Confirm Hero\n");
 
   char input[10];

@@ -21,8 +21,7 @@
 char commands[20][100] = {
     "start"
     "/info"
-    "/exit"
-    "/quit"
+    "/exit or /quit"
     "/restart"
     "/commands"
     "/game"
@@ -31,26 +30,20 @@ char commands[20][100] = {
     "/nr"
     "/nc"
     "/lore"
-    "/inventory"
-    "/inv"};
+    "/inventory or /inv"};
 // TODO possibly make commands single letters example: /i for inventory or /c for commands
 char command_descriptions[20][100] = {
     "Shows all hero info\n",
     "Exit the program\n",
-    "Exit the program\n",
     "Restart the program\n",
     "Lists all available commands\n",
-    "Logs info about the game\n",
     "Clears the terminal\n",
     "Opens the notepad and allows the user to make an entry\n",
     "Opens the notepad and allows the user to read all entries\n",
     "Clears all entries from the notepad",
-    "Allows the player to see and manage their inventory\n",
     "Allows the player to see and manage their inventory\n"};
 
 char possibleOrigins[5][10];
-#define FALSE 0
-#define TRUE 1
 
 int isRunning = FALSE;
 void start_game()
@@ -78,11 +71,6 @@ int COMMAND_LINE(FILE *logFile)
 {
   Hero NewHero;
   char input[100];
-  // TODO remove these 3. They are only here when debugging inventory and god mode. see activate_god_mode() in Utils.h
-  Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
-  Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
-  Inventory.Slot3.isOpen = 1;
-
   while (1)
   {
     // Prompt the user for input
@@ -100,16 +88,7 @@ int COMMAND_LINE(FILE *logFile)
     {
       logMessage(logFile, "Program started.");
       start_game();
-      char titleArt[] =
-          "  ______               __      __                            __ \n"
-          " /      \             /  |    /  |                          /  |\n"
-          "/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"
-          "$$ |__$$ | /      \ / $$   |  $$      \  /      \  /      \ /  | /      \ \n"
-          "$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"
-          "$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
-          "$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
-          "$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
-          "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
+
       printf("%s\n", titleArt);
       // TODO Read introduction then do hero creation
       // start_ch0(); //TODO uncomment this when working on story
@@ -117,23 +96,17 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_RESTART_COMMAND(input))
     {
       // Check if the input is "restart
-      char restartConfirmation[10];
-      // Log a restart message
-      logMessage(logFile, "Restarting Program.");
-      printf("\x1b[31mRequesting to restart program... \x1b[0m\n");
-      printf("\x1b[31mAre you sure you want to restart? (y/n): \x1b[0m\n");
-      fgets(restartConfirmation, sizeof(restartConfirmation), stdin);
-      REMOVE_NEWLINE_CHAR(restartConfirmation);
-      if (INPUT_IS_YES(restartConfirmation))
-      {
-        printf("Restarting...\n");
-        if (execv("./Aetheria.o", NULL) == -1)
-        {
-          perror("execv");
-          exit(1);
-        }
+      char input[10];
+
+      logMessage(logFile, "Requesting To Restart Program.");
+      printf(RED "Requesting to restart program..." RESET "\n");
+      printf(RED "mAre you sure you want to restart? (y/n):" RESET "\n");
+      FGETS(input);
+      REMOVE_NEWLINE_CHAR(input);
+      if (INPUT_IS_YES(input))
+      { // TODO need to find out why path is read  but not execute
       }
-      else if (INPUT_IS_NO(restartConfirmation))
+      else if (INPUT_IS_NO(input))
       {
         printf("Restart canceled.\n");
         COMMAND_LINE(logFile);
@@ -144,6 +117,7 @@ int COMMAND_LINE(FILE *logFile)
         COMMAND_LINE(logFile);
       }
     }
+
     else if (IS_INFO_COMMAND(input))
     {
       logMessage(logFile, "Requested hero information.\n");
@@ -188,32 +162,22 @@ int COMMAND_LINE(FILE *logFile)
       printf("----------------------------------------------------------------------------\n");
       printf("%-10s | %-30s \n", "start", "Start the program");
       printf("%-10s | %-30s \n", "/info", "Shows all hero info");
-      printf("%-10s | %-30s \n", "/exit", "Exit the program");
-      printf("%-10s | %-30s \n", "/quit", "Exit the program");
+      printf("%-10s | %-30s \n", "/exit or /qui", "Exit the program");
       printf("%-10s | %-30s \n", "/restart", "Restart the program");
       printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
-      printf("%-10s | %-30s \n", "/game", "Logs info about the game");
       printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
       printf("%-10s | %-30s \n", "/lore", "Opens the lore menu");
       printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
       printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
       printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
-      printf("%-10s | %-30s \n", "/inventory", "Shows the players inventory");
-      printf("%-10s | %-30s \n", "/inv", "Shows the players inventory");
+      printf("%-10s | %-30s \n", "/inventory or /inv", "Shows the players inventory");
       printf("=============================================================================\n");
-    }
-
-    else if (IS_GAME_COMMAND(input))
-    {
-      printf("\x1b[32mGAME INFORMATION: \x1b[0m\n");
-      printf("Game Version: v0.0.1 \n");
-      printf("Game Author: Marshall Burns\n");
     }
     else if (IS_EXIT_COMMAND(input))
     {
       char exitConfirmation[10];
-      printf("\x1b[31mRequesting to exit program... \x1b[0m\n");
-      printf("\x1b[31mAre you sure you want to exit? (y/n): \x1b[0m\n");
+      printf(RED "Requesting to exit program..." RESET "\n");
+      printf(RED "Are you sure you want to exit? (y/n):" RESET "\n");
       fgets(exitConfirmation, sizeof(exitConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(exitConfirmation);
       if (INPUT_IS_YES(exitConfirmation))
@@ -237,9 +201,9 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_CLEAR_COMMAND(input))
     {
       char clearConfirmation[10];
-      printf("\x1b[31mRequesting to clear terminal...\x1b[0m\n");
+      printf(RED "Requesting to clear terminal..." RESET "\n");
       sleep(1);
-      printf("\x1b[31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      printf(RED "31mThis can potentially be a destructive decision. Are you sure you'd like to continue?(y/n)" RESET "\n");
       fgets(clearConfirmation, sizeof(clearConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(clearConfirmation);
       if (INPUT_IS_YES(clearConfirmation))
@@ -271,9 +235,9 @@ int COMMAND_LINE(FILE *logFile)
     else if (IS_CLEAR_NOTES_COMMAND(input))
     {
       char clearNotesConfirmation[10];
-      printf("\x1b[31mRequesting to clear notepad...\x1b[0m\n");
+      printf(RED "Requesting to clear notepad..." RESET "\n");
       sleep(1);
-      printf("\x1b[31mOnce you clear your notepad you will be unable see past notes. Are you sure you'd like to continue?(y/n)\x1b[0m\n");
+      printf(RED "Once you clear your notepad you will be unable see past notes. Are you sure you'd like to continue?(y/n)" RESET "\n");
       fgets(clearNotesConfirmation, sizeof(clearNotesConfirmation), stdin);
       REMOVE_NEWLINE_CHAR(clearNotesConfirmation);
       if (INPUT_IS_YES(clearNotesConfirmation))
@@ -404,7 +368,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-30s | %-35s | %-10s | %-10s | %-10s | %-10s\n", "Eqpd Leg Armr", "Desc.", "Health Incr", "Type", "Wt(lbs)", "Val(gold)");
       printf("%-30s | %-35s | %-11d | %-10s | %-10d | %-10d\n", Inventory.EquippedLegs.Name, Inventory.EquippedLegs.Description, Inventory.EquippedLegs.AddedHealth, Inventory.EquippedLegs.Type, Inventory.EquippedLegs.Weight, Inventory.EquippedLegs.Value);
       printf("-------------------------------------------------------------------------------------------------------------------------------------\n");
-      if (Inventory.Slot1.isOpen == 1)
+      if (Inventory.Slot1.isOpen == TRUE)
       {
         printf("%-15s \n", "Inventory Slot 1");
         printf("%-15s \n", "None");
@@ -417,7 +381,7 @@ int COMMAND_LINE(FILE *logFile)
         printf("-------------------------------------------------------------------------------------------------------------------------------------\n");
       }
 
-      if (Inventory.Slot2.isOpen == 1)
+      if (Inventory.Slot2.isOpen == TRUE)
       {
         printf("%-15s \n", "Inventory Slot 2");
         printf("%-15s \n", "None");
@@ -430,7 +394,7 @@ int COMMAND_LINE(FILE *logFile)
         printf("-------------------------------------------------------------------------------------------------------------------------------------\n");
       }
 
-      if (Inventory.Slot3.isOpen == 1)
+      if (Inventory.Slot3.isOpen == TRUE)
       {
         printf("%-15s \n", "Inventory Slot 3");
         printf("%-15s \n", "None");
@@ -443,7 +407,7 @@ int COMMAND_LINE(FILE *logFile)
       printf("=====================================================================================================================================\n");
       inventory_options();
     }
-    // GOD MODE IS FOR DEBUGGING. REMOVE BEFORE RELEASE
+    // TODO GOD MODE & TEST IS FOR DEBUGGING. REMOVE BEFORE RELEASE
     else if (IS_GOD_MODE_COMMAND(input))
     {
       activate_god_mode();
