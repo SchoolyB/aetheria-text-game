@@ -894,6 +894,10 @@ void activate_god_mode()
   hero.DexterityAttribute.CurrentPoints = 10;
   hero.LuckAttribute.CurrentPoints = 10;
   hero.AttributePointsPool = 0;
+  Inventory.Slot1.isOpen = 1;
+  Inventory.Slot2.isOpen = 1;
+  Inventory.Slot3.isOpen = 1;
+
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
 
