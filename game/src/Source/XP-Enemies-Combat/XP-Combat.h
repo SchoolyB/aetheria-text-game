@@ -22,6 +22,8 @@ void generate_random_enemy_ability1();
 void generate_random_enemy_ability2();
 int calculate_new_enemy_ability_dmg1();
 int calculate_new_enemy_ability_dmg2();
+void set_enemy_health();
+void calculate_enemy_health_with_modifier();
 //+=+=+=+=+=+4_HeroGeneration.c Prototypes+=+=+=+=+=+//
 
 // Enemy struct TODO prob move this to utils.h

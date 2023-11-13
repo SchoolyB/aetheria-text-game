@@ -47,7 +47,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -58,7 +58,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -69,7 +69,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -80,7 +80,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -91,7 +91,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -102,7 +102,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -113,7 +113,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -124,7 +124,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -135,7 +135,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -146,7 +146,7 @@ void generate_enemy()
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
     calculate_enemy_base_xp_dropped(hero.Level);
-    enemy.Health = 50;
+    set_enemy_health(hero.Level);
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
@@ -614,5 +614,106 @@ int calculate_new_enemy_ability_dmg2(char *EnemyAbility2Name, int *EnemyAbility2
 
   return 0;
 }
-
+//==================================================================================//
+// This function will calculate the base xp dropped based on the hero's level then call the function to calculate the xp modifier
 // TODO need to add a function that will calculate the enemies health based on the hero's level
+void set_enemy_health(int heroLevel)
+{
+  int *enemyHealth;
+
+  if (heroLevel <= 3)
+  {
+    enemyHealth = 20;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 3 && heroLevel <= 6)
+  {
+    enemyHealth = 30;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 6 && heroLevel <= 9)
+  {
+    enemyHealth = 40;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 9 && heroLevel <= 12)
+  {
+    enemyHealth = 50;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 12 && heroLevel <= 15)
+  {
+    enemyHealth = 60;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 15 && heroLevel <= 18)
+  {
+    enemyHealth = 70;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 18 && heroLevel <= 21)
+  {
+    enemyHealth = 80;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+  else if (heroLevel > 21 && heroLevel <= 24)
+  {
+    enemyHealth = 90;
+    calculate_enemy_health_with_modifier(&enemyHealth, heroLevel);
+  }
+}
+//==================================================================================//
+// this function calculates the enemy health with the modifier
+void calculate_enemy_health_with_modifier(int *enemyHealth, int heroLevel)
+{
+  int enemyHealthModifier;
+  int newEnemyHealth;
+  if (heroLevel <= 3)
+  {
+    enemyHealthModifier = 1;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 3 && heroLevel <= 6)
+  {
+    enemyHealthModifier = 2;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 6 && heroLevel <= 9)
+  {
+    enemyHealthModifier = 3;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 9 && heroLevel <= 12)
+  {
+    enemyHealthModifier = 4;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 12 && heroLevel <= 15)
+  {
+    enemyHealthModifier = 5;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 15 && heroLevel <= 18)
+  {
+    enemyHealthModifier = 6;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 18 && heroLevel <= 21)
+  {
+    enemyHealthModifier = 7;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+  else if (heroLevel > 21 && heroLevel <= 24)
+  {
+    enemyHealthModifier = 8;
+    newEnemyHealth = *enemyHealth * enemyHealthModifier;
+    enemy.Health = newEnemyHealth;
+  }
+}
