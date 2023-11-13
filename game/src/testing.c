@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./Utils/Utils.h"
-#include "Source/Items-Inventory/Items-Inventory.h"
-#include "Source/Items-Inventory/2_InventoryManagement.c"
+#include "./Source/XP-Enemies-Combat/XP-Combat.h"
+#include "./Source/XP-Enemies-Combat/1_ExperienceSystem.c"
 
-void hero_steps_on_item()
+void testing_xp_stuff()
 {
-  printf("You have stepped on an something.\n");
-  printf("You should pick it up.\n");
-  // pick_up_item("Sword", "A sword", "Weapon", 10, 10, 10);
+  run_funcs();
 }

@@ -85,10 +85,17 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 #define MAKE_BOLD_N_BLINK(str) printf("\x1b[1;5m%s\x1b[0m", str)
 #define MAKE_BOLD_N_REVERSED(str) printf("\x1b[1;7m%s\x1b[0m", str)
 
-#define MAKE_BOLD_N_COLOR(str, color) printf("\x1b[1;%dm%s\x1b[0m", color, str)
-#define MAKE_UNDERLINED_N_COLOR(str, color) printf("\x1b[4;%dm%s\x1b[0m", color, str)
-#define MAKE_BLINK_N_COLOR(str, color) printf("\x1b[5;%dm%s\x1b[0m", color, str)
-#define MAKE_REVERSED_N_COLOR(str, color) printf("\x1b[7;%dm%s\x1b[0m", color, str)
+#define MAKE_BOLD_N_COLOR(str, num) printf("\x1b[1;%dm%s\x1b[0m", num, str)
+#define MAKE_UNDERLINED_N_COLOR(str, num) printf("\x1b[4;%dm%s\x1b[0m", num, str)
+#define MAKE_BLINK_N_COLOR(str, num) printf("\x1b[5;%dm%s\x1b[0m", num, str)
+#define MAKE_REVERSED_N_COLOR(str, num) printf("\x1b[7;%dm%s\x1b[0m", num, str)
+
+#define RESET "\x1B[0m"
+#define RED "\x1B[31m"
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
+
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
 #define PRINT_SLOWLY(str, delayMicroseconds) \
@@ -422,8 +429,10 @@ typedef struct
     int CurrentPoints;
     int MaxPoints;
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
-  // Hero Level
+  // Hero Level & XP pool
   int Level;
+  float CurrentXP;
+  float MaxXP;
   // Attack and Defense
   int Atk;
   int Def;
@@ -864,18 +873,22 @@ void activate_god_mode()
   strcpy(hero.Homeland, "Empyrea");
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
-  hero.Level = 100;
+  hero.Level = 10;
+  hero.CurrentXP = 100;
   hero.Health = 1000;
-  hero.Mana = 1000;
+  hero.Mana = 100;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");
-  hero.Ability1.Damage = 1000;
+  hero.Ability1.Damage = 50;
+  hero.Ability1.ManaCost = 40;
   strcpy(hero.Ability2.Name, "God Mode Ability 2");
   strcpy(hero.Ability2.Description, "Ability 2 desc.");
-  hero.Ability2.Damage = 1000;
+  hero.Ability2.Damage = 3;
+  hero.Ability2.ManaCost = 20;
   strcpy(hero.Ability3.Name, "God Mode Ability 3");
   strcpy(hero.Ability3.Description, "Ability 3 desc.");
-  hero.Ability3.Damage = 1000;
+  hero.Ability3.Damage = 6;
+  hero.Ability3.ManaCost = 50;
   hero.StrengthAttribute.CurrentPoints = 10;
   hero.IntelligenceAttribute.CurrentPoints = 10;
   hero.DexterityAttribute.CurrentPoints = 10;
@@ -883,10 +896,6 @@ void activate_god_mode()
   hero.AttributePointsPool = 0;
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
-  // Inventory.Slot1.isOpen = 1; // 0 = false, 1 = true
-  // Inventory.Slot2.isOpen = 1; // 0 = false, 1 = true
-  // Inventory.Slot3.isOpen = 1;
-  // // 0 = false, 1 = true
 
   // Inventory.Slot1.Quantity = 0;
   strcpy(Inventory.EquippedWeapon.Name, "God Mode Weapon");
@@ -901,7 +910,7 @@ void activate_god_mode()
   strcpy(Inventory.EquippedLegs.Name, "God Mode Legs");
   strcpy(Inventory.EquippedLegs.Description, "God Mode Legs Desc.");
   strcpy(Inventory.EquippedLegs.Type, "Legs");
-  Inventory.EquippedWeapon.AddedDamage = 1000;
+  Inventory.EquippedWeapon.AddedDamage = 10;
   Inventory.EquippedWeapon.AddedHealth = 5;
   Inventory.EquippedWeapon.Weight = 5;
   Inventory.EquippedWeapon.Value = 5;
