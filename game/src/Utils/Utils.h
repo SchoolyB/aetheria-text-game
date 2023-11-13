@@ -85,10 +85,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 #define MAKE_BOLD_N_BLINK(str) printf("\x1b[1;5m%s\x1b[0m", str)
 #define MAKE_BOLD_N_REVERSED(str) printf("\x1b[1;7m%s\x1b[0m", str)
 
-#define MAKE_BOLD_N_COLOR(str, color) printf("\x1b[1;%dm%s\x1b[0m", color, str)
-#define MAKE_UNDERLINED_N_COLOR(str, color) printf("\x1b[4;%dm%s\x1b[0m", color, str)
-#define MAKE_BLINK_N_COLOR(str, color) printf("\x1b[5;%dm%s\x1b[0m", color, str)
-#define MAKE_REVERSED_N_COLOR(str, color) printf("\x1b[7;%dm%s\x1b[0m", color, str)
+#define MAKE_BOLD_N_COLOR(str, num) printf("\x1b[1;%dm%s\x1b[0m", num, str)
+#define MAKE_UNDERLINED_N_COLOR(str, num) printf("\x1b[4;%dm%s\x1b[0m", num, str)
+#define MAKE_BLINK_N_COLOR(str, num) printf("\x1b[5;%dm%s\x1b[0m", num, str)
+#define MAKE_REVERSED_N_COLOR(str, num) printf("\x1b[7;%dm%s\x1b[0m", num, str)
 
 #define RESET "\x1B[0m"
 #define RED "\x1B[31m"
@@ -431,9 +431,8 @@ typedef struct
   } StrengthAttribute, IntelligenceAttribute, DexterityAttribute, LuckAttribute;
   // Hero Level & XP pool
   int Level;
-  int CurrentXP;
-  int XPToNextLevel;
-  int MaxXP;
+  float CurrentXP;
+  float MaxXP;
   // Attack and Defense
   int Atk;
   int Def;
@@ -874,21 +873,22 @@ void activate_god_mode()
   strcpy(hero.Homeland, "Empyrea");
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
-  hero.Level = 20;
+  hero.Level = 10;
+  hero.CurrentXP = 100;
   hero.Health = 1000;
-  hero.Mana = 1000;
+  hero.Mana = 100;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");
-  hero.Ability1.Damage = 25;
-  hero.Ability1.ManaCost = 50;
+  hero.Ability1.Damage = 50;
+  hero.Ability1.ManaCost = 40;
   strcpy(hero.Ability2.Name, "God Mode Ability 2");
   strcpy(hero.Ability2.Description, "Ability 2 desc.");
-  hero.Ability2.Damage = 30;
-  hero.Ability2.ManaCost = 80;
+  hero.Ability2.Damage = 3;
+  hero.Ability2.ManaCost = 20;
   strcpy(hero.Ability3.Name, "God Mode Ability 3");
   strcpy(hero.Ability3.Description, "Ability 3 desc.");
-  hero.Ability3.Damage = 40;
-  hero.Ability3.ManaCost = 100;
+  hero.Ability3.Damage = 6;
+  hero.Ability3.ManaCost = 50;
   hero.StrengthAttribute.CurrentPoints = 10;
   hero.IntelligenceAttribute.CurrentPoints = 10;
   hero.DexterityAttribute.CurrentPoints = 10;

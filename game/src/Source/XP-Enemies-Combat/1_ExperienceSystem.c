@@ -6,44 +6,145 @@
 
 Hero hero;
 
-// Called when the hero kills an enemy
-void update_current_xp(int currentXP, int xpFromEnemy)
+// First func called when the hero kills an enemy
+// this function calculates the current xp that the hero has
+void calculate_current_xp(float *XPGainedFromEnemy)
 {
-  currentXP += xpFromEnemy;
-  hero.CurrentXP = currentXP;
+  float *currentXP;
+  currentXP = &(hero.CurrentXP); // this is dereferencing the pointer.
+  *currentXP = *currentXP + *XPGainedFromEnemy;
 }
+
 //================================================================================================
-// Called when the hero levels up
+// Second func called when the hero kills an enemy
 // this function calculates the max xp at the heros current level
-void calculate_max_xp_at_level(int level)
+void calculate_xp_cap_at_current_level(int level)
 {
-  int maxXP = level * 50;
+  float maxXP = level * 25;
   hero.MaxXP = maxXP;
-  printf("Max XP at level %d: %d\n", level, hero.MaxXP);
-}
-//================================================================================================
-// Called when the hero kills an enemy
-// this function calculates the xp needed to achieve the to next level
-void calculate_xp_to_next_level(int currentXP, int maxXP)
-{
-  int xpToNextLevel = maxXP - currentXP;
-  hero.XPToNextLevel = xpToNextLevel;
-  printf("XP to next level: %d\n", hero.XPToNextLevel);
 }
 //================================================================================================
 // Called when the heros current xp is greater than or equal to the max xp
 // this function levels up the hero
-void level_up(int *level)
+void level_up(int *level, int *heroCurrentXP)
 {
   *level += 1;
+  // Not sure if I want to reset the xp to 0 or keep it at the current xp
+  *heroCurrentXP = 0;
   printf("Hero is now level: %d\n", *level);
 }
 
 //================================================================================================
+// START ENEMY XP STUFF
+// this function calculates the xp dropped by the enemy
+// then calls the function to calculate the xp dropped with the modifier
+void calculate_enemy_base_xp_dropped(int heroLevel)
+{
+  int XPDroppedOnDeath;
+  float XPAsFloat;
+  if (heroLevel <= 3)
+  {
+    XPDroppedOnDeath = 10;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 3 && heroLevel <= 6)
+  {
+    XPDroppedOnDeath = 20;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 6 && heroLevel <= 9)
+  {
+    XPDroppedOnDeath = 30;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 9 && heroLevel <= 12)
+  {
+    XPDroppedOnDeath = 40;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 12 && heroLevel <= 15)
+  {
+    XPDroppedOnDeath = 50;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 15 && heroLevel <= 18)
+  {
+    XPDroppedOnDeath = 60;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 18 && heroLevel <= 21)
+  {
+    XPDroppedOnDeath = 70;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+  else if (heroLevel > 21 && heroLevel <= 24)
+  {
+    XPDroppedOnDeath = 80;
+    XPAsFloat = (float)XPDroppedOnDeath;
+    calculate_enemy_xp_dropped_with_modifier(&XPAsFloat, heroLevel);
+  }
+}
+//================================================================================================
+// this function calculates the xp dropped by the enemy with the modifier
+// this is called by the calculate_enemy_base_xp_dropped() function
+void calculate_enemy_xp_dropped_with_modifier(float *XPDroppedOnDeath, int heroLevel)
+{
+  float xpDroppedOnDeath = *XPDroppedOnDeath;
+  int heroLvl = heroLevel;
+  float xpDroppedOnDeathModifier;
+  if (heroLvl <= 3)
+  {
+    xpDroppedOnDeathModifier = 1.0;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 3 && heroLvl <= 6)
+  {
+    xpDroppedOnDeathModifier = 1.50;
+    // if someone dropped 100 xp and the modifier is 2 then the new xp dropped would be 200
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 6 && heroLvl <= 9)
+  {
+    xpDroppedOnDeathModifier = 2.25;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 9 && heroLvl <= 12)
+  {
+    xpDroppedOnDeathModifier = 3.0;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 12 && heroLvl <= 15)
+  {
+    xpDroppedOnDeathModifier = 3.75;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 15 && heroLvl <= 18)
+  {
+    xpDroppedOnDeathModifier = 4.50;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 18 && heroLvl <= 21)
+  {
+    xpDroppedOnDeathModifier = 5.25;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+  else if (heroLvl > 21 && heroLvl <= 24)
+  {
+    xpDroppedOnDeathModifier = 6.0;
+    enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
+  }
+}
+//================================================================================================
 // TODO delete when done with debugging Called when the hero kills an enemy
 void run_funcs(maxXP)
 {
-  calculate_max_xp_at_level(hero.Level);
   generate_enemy();
   initiate_combat();
 }
