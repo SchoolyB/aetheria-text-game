@@ -5,7 +5,7 @@
 #include "../../Utils/Utils.h"
 Enemy enemy;
 
-char CommonEnemyList[30][30][30] = {
+char CommonEnemyList[50][50][50] = {
     // name, desc, type,
     {"Thief", "desc", "Non-Magical Human"},
     {"Cutthroat", "desc", "Non-Magical Human"},
@@ -46,101 +46,111 @@ void generate_enemy()
   case 0:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 1:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 2:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 3:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 4:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 5:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 6:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 7:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 8:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   case 9:
     strcpy(enemy.Name, enemyName);
     strcpy(enemy.Type, enemyType);
+    calculate_enemy_base_xp_dropped(hero.Level);
     enemy.Health = 50;
-    generate_random_hero_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     // need time a sec before calling next func() without this program crash
     usleep(550000);
-    generate_random_hero_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
     break;
   }
@@ -151,7 +161,7 @@ void generate_enemy()
 /*I know what you may be thinking seeing multiple repeat functions...
 Trust me by the time I got here it was too far gone. Spent hours
 backtracking and was like....Fuck it Just let it be....*/
-void generate_random_hero_ability1(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
+void generate_random_enemy_ability1(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
 {
   static int srand_flag = 0;
 
@@ -163,7 +173,7 @@ void generate_random_hero_ability1(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a non magical human then it will have a different set of abilities
   if (strcmp(enemy.Type, "Non-Magical Human") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type, base dmg
         {"Backstab", "ability desc", "Physical", "3"},
         {"Slash", "ability desc", "Physical", "4"},
@@ -219,7 +229,7 @@ void generate_random_hero_ability1(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a magical human then it will have a different set of abilities
   else if (strcmp(enemy.Type, "Magical Human") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type
         {"Fireball", "ability desc", "Fire", "6"},
         {"Icebolt", "ability desc", "Frost", "7"},
@@ -274,7 +284,7 @@ void generate_random_hero_ability1(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a non magical beast then it will have a different set of abilities
   else if (strcmp(enemy.Type, "Non-Magical Beast") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type
         {"Bite", "ability desc", "Physical", "4"},
         {"Slash", "ability desc", "Physical", "3"},
@@ -331,7 +341,7 @@ void generate_random_hero_ability1(char *AbilityName, char *AbilityDesc, char *A
 /*I know what you may be thinking seeing multiple repeat functions...
 Trust me by the time I got here it was too far gone. Spent hours
 backtracking and was like....Fuck it Just let it be....*/
-void generate_random_hero_ability2(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
+void generate_random_enemy_ability2(char *AbilityName, char *AbilityDesc, char *AbilityType, int *AbilityDmg)
 {
   static int srand_flag = 0;
 
@@ -343,7 +353,7 @@ void generate_random_hero_ability2(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a non magical human then it will have a different set of abilities
   if (strcmp(enemy.Type, "Non-Magical Human") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type, base dmg
         {"Backstab", "ability desc", "Physical", "10"},
         {"Slash", "ability desc", "Physical", "12"},
@@ -399,7 +409,7 @@ void generate_random_hero_ability2(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a magical human then it will have a different set of abilities
   else if (strcmp(enemy.Type, "Magical Human") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type
         {"Fireball", "ability desc", "Fire", "6"},
         {"Icebolt", "ability desc", "Frost", "7"},
@@ -453,7 +463,7 @@ void generate_random_hero_ability2(char *AbilityName, char *AbilityDesc, char *A
   // if the enemy is a non magical beast then it will have a different set of abilities
   else if (strcmp(enemy.Type, "Non-Magical Beast") == 0)
   {
-    char EnemyAbilities[15][30][30] = {
+    char EnemyAbilities[15][50][50] = {
         // ability name, ability desc, ability type
         {"Bite", "ability desc", "Physical", "10"},
         {"Slash", "ability desc", "Physical", "5"},

@@ -164,15 +164,16 @@ int initiate_combat()
     // START OF ENEMY AND HERO DEATH HANDLING
     if (enemy.Health <= 0)
     {
-
       printf("You've defeated %s!\n", enemy.Name);
       printf("You've gained %f XP!\n", enemy.ExperienceDroppedOnDeath);
-      calculate_current_xp(enemy.ExperienceDroppedOnDeath);
+      calculate_current_xp(&enemy.ExperienceDroppedOnDeath);
       calculate_xp_cap_at_current_level(hero.Level);
-      // calculate_max_xp_at_level(hero.Level);
+
       if (hero.CurrentXP >= hero.MaxXP)
       {
         level_up(&hero.Level, &hero.CurrentXP);
+        // calling this function again to recalculate the max xp at the heros new level
+        calculate_xp_cap_at_current_level(hero.Level);
       }
     }
   } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
