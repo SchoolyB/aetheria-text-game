@@ -616,7 +616,6 @@ int calculate_new_enemy_ability_dmg2(char *EnemyAbility2Name, int *EnemyAbility2
 }
 //==================================================================================//
 // This function will calculate the base xp dropped based on the hero's level then call the function to calculate the xp modifier
-// TODO need to add a function that will calculate the enemies health based on the hero's level
 void set_enemy_health(int heroLevel)
 {
   int *enemyHealth;

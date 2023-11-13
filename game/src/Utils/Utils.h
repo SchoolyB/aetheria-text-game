@@ -242,7 +242,6 @@ START OF COMMAND LINE MACROS
 #define IS_RESTART_COMMAND(param) (strcmp(param, "/restart") == 0)
 #define IS_EXIT_COMMAND(param) (strcmp(param, "/exit") == 0 || strcmp(param, "/quit") == 0)
 #define IS_COMMANDS_COMMAND(param) (strcmp(param, "/commands") == 0)
-#define IS_GAME_COMMAND(param) (strcmp(param, "/game") == 0)
 #define IS_INFO_COMMAND(param) (strcmp(param, "/info") == 0)
 #define IS_CLEAR_COMMAND(param) (strcmp(param, "/clear") == 0)
 #define IS_WRITE_NOTE_COMMAND(param) (strcmp(param, "/nw") == 0 || strcmp(param, "/write") == 0)
@@ -662,6 +661,17 @@ void calculate_new_max_carrying_capacity_from_str(int *base_max)
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+char titleArt[] =
+    "  ______               __      __                            __ \n"
+    " /      \             /  |    /  |                          /  |\n"
+    "/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"
+    "$$ |__$$ | /      \ / $$   |  $$      \  /      \  /      \ /  | /      \ \n"
+    "$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"
+    "$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
+    "$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
+    "$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
+    "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/\n";
+
 char WarriorArt[] =
     "..............................,:::::,::.\n"
     "............................,::,,,,,:;;.\n"

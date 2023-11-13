@@ -346,7 +346,7 @@ void get_profession()
       "1: Merchant",
       "2: Hunter",
       "3: Soldier",
-      "4: thief",
+      "4: Thief",
       "5: Scholar",
       "6: None"};
 
@@ -520,38 +520,4 @@ void confirm_class()
     printf("You are a \x1b[1;4m%s\x1b[0m is that correct?(y/n) \n", hero.Class);
     confirm_class();
   }
-}
-// ===========================================================================================================//
-void show_creation_data(FILE *logFile, const char *category, const char *value)
-{
-  fprintf(logFile, "%s: %s\n", category, value);
-  fflush(logFile);
-}
-
-// ===========================================================================================================//
-void set_hero_level(Hero *hero)
-{
-  hero->Level = 1;
-}
-
-// ===========================================================================================================//
-void log_creation_data_to_file()
-{
-  // !IMPORTANT the path of the log file is accessed from where the executable is located
-  FILE *logFile = fopen("../game/src/logs/runtime.log", "a");
-  if (logFile == NULL)
-  {
-    perror("Error opening file");
-    exit(1);
-  }
-  fprintf(logFile, "Hero Information: \n");
-  fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
-  show_creation_data(logFile, "First Name", hero.FirstName);
-  show_creation_data(logFile, "Dynasty Name", hero.LastName);
-  show_creation_data(logFile, "Gender", hero.Gender);
-  show_creation_data(logFile, "Home of Origin", hero.Homeland);
-  show_creation_data(logFile, "Profession", hero.Profession);
-  show_creation_data(logFile, "Class", hero.Class);
-  show_creation_data(logFile, "+===========================+", NULL);
-  fclose(logFile);
 }

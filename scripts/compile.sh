@@ -1,4 +1,4 @@
-gcc -o ../game/src/Aetheria.exe ../game/src/main.c -lncurses
+gcc -o ../game/Aetheria.exe ../game/src/main.c -lncurses
 # When not using ncurses use the following command:
 # gcc -o Aetheria.o main.c
 
