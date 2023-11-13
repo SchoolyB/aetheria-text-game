@@ -26,7 +26,7 @@ int initiate_combat()
       char input[10];
 
       int heroMadeMove = 0;
-      puts("What would you like to do?(fight, run, skip, help)");
+      puts("What would you like to do?(fight, item, run, skip, help)");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
 
@@ -106,6 +106,19 @@ int initiate_combat()
       {
         puts("You've skipped your turn!");
         heroMadeMove = 1;
+      }
+      else if (strcmp(input, "item") == 0 || strcmp(input, "Item") == 0)
+      {
+        if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
+        {
+          puts("You have no usable items in your inventory");
+          refresh_combat_ui(1);
+        }
+        else
+        {
+          puts("What item would you like to use?");
+          // TODO keep working on this
+        }
       }
       else if (strcmp(input, "help") == 0 || strcmp(input, "Help") == 0)
       {
@@ -188,7 +201,6 @@ void calculate_mana_spent(int *heroMana, int heroAbilityManaCost)
 //===================================================================================
 // this function calculates the damage don eot the hero. Called after each time an ability is used by the enemy
 // For cleanliness sake, I could just create one function to handle both enemy and hero dmg done to each other but I feel that could cause confusion later on
-// TODO this also needs to take into consideration the enemies level
 void calculate_dmg_done_to_hero(int *heroHealth, int *enemyAbilityDmg, const char *abilityName)
 {
   int heroRemainingHealth = *heroHealth - *enemyAbilityDmg;
@@ -273,6 +285,7 @@ void show_combat_help_menu()
   printf("%-10s | %-30s \n", "Combat Commands", "Description");
   printf("----------------------------------------------------------------------------\n");
   printf("%-10s | %-30s \n", "Fight", "Use powerful abilities to destroy your enemy");
+  printf("%-10s | %-30s \n", "Item", "Use an item from your inventory");
   printf("%-10s | %-30s \n", "Run", "Attempt to run away like a coward");
   printf(RED "%-10s | %-30s \n", "Skip", "Skip your turn be warned you may take damage from the enemy" RESET);
   printf("%-10s | %-30s \n", "Help", "Display helpful commands to use during");

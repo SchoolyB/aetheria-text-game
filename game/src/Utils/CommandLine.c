@@ -160,8 +160,8 @@ int COMMAND_LINE(FILE *logFile)
       printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Country of Origin");
       printf("%-15s | %-15s | %-15s | %-15s \n", hero.FirstName, hero.LastName, hero.Gender, hero.Homeland);
       printf("----------------------------------------------------------------------------\n");
-      printf("%-15s | %-15s | %-15s | %-10s | %-10s \n", "Profession", "Class", "Level", "Health", "Mana");
-      printf("%-15s | %-15s | %-15d | %-10d | %-10d \n", hero.Profession, hero.Class, hero.Level, hero.Health, hero.Mana);
+      printf("%-15s | %-15s | %-15s | %-15s \n", "Profession", "Class", "Health", "Mana");
+      printf("%-15s | %-15s | %-15d | %-15d \n", hero.Profession, hero.Class, hero.Health, hero.Mana);
       printf("----------------------------------------------------------------------------\n");
       printf("%-15s | %-15s | %-15s | %-15s \n", "Strength", "Intelligence", "Dexterity", "Luck");
       printf("%-15d | %-15d | %-15d | %-15d \n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
@@ -448,6 +448,7 @@ int COMMAND_LINE(FILE *logFile)
     else if (strcmp(input, "test") == 0)
     {
       testing_xp_stuff();
+      hero.Mana = 100;
     }
 
     else
