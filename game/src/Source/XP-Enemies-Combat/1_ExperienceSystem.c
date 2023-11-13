@@ -210,6 +210,5 @@ void calculate_hero_mana_after_level_up(int *heroMana, int heroLvl)
 void run_funcs(maxXP)
 {
   generate_enemy();
-  // initiate_combat();
-  level_up(&hero.Level, &hero.CurrentXP);
+  initiate_combat();
 }

@@ -20,8 +20,11 @@ int initiate_combat()
     int enemyMadeMove = 0;
 
     int chance = rand() % 100;
+    puts("Rolling for turn order...");
+    sleep(2);
     if (chance < 50)
     {
+      puts("Hero Advantage!");
       puts("It's your turn!");
       char input[10];
 
@@ -35,7 +38,8 @@ int initiate_combat()
         puts("Which ability will you use? Enter the name or number.");
         FGETS(input);
         REMOVE_NEWLINE_CHAR(input);
-
+        //===================================================================================================
+        // this if block handles the heros first ability
         if (strcmp(input, hero.Ability1.Name) == 0 || atoi(input) == 1 && hero.Mana >= hero.Ability1.ManaCost)
         {
           printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
@@ -51,7 +55,7 @@ int initiate_combat()
           refresh_combat_ui(2);
         }
         //===================================================================================================
-
+        // this if block handles the heros second ability
         if (strcmp(input, hero.Ability2.Name) == 0 || atoi(input) == 2 && hero.Mana >= hero.Ability2.ManaCost)
         {
           printf("%s used %s dealing %d damage.\n", hero.FirstName, hero.Ability2.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
@@ -67,6 +71,7 @@ int initiate_combat()
           refresh_combat_ui(1);
         }
         //===================================================================================================
+        // This if block handles the heros third ability
 
         if (strcmp(input, hero.Ability3.Name) == 0 || atoi(input) == 3 && hero.Mana >= hero.Ability3.ManaCost)
         {
@@ -83,6 +88,7 @@ int initiate_combat()
           refresh_combat_ui(1);
         }
       }
+      // This else if block handles the heros attempt to run away
       else if (strcmp(input, "run") == 0 || strcmp(input, "run away") == 0 || strcmp(input, "escape") == 0 || strcmp(input, "leave") == 0 || strcmp(input, "flee") == 0 || strcmp(input, "Run") == 0 || strcmp(input, "Run Away") == 0 || strcmp(input, "Escape") == 0 || strcmp(input, "Leave") == 0 || strcmp(input, "Flee") == 0)
       {
         int chance;
@@ -93,7 +99,7 @@ int initiate_combat()
           puts("You've successfully ran away.");
           CombatOnGoing = 0;
 
-          MAKE_BOLD_N_UNDERLINED("EXIT COMBAT\n");
+          MAKE_BOLD_N_UNDERLINED("EXITING COMBAT\n");
         }
         else
         {
@@ -102,11 +108,13 @@ int initiate_combat()
           refresh_combat_ui(2);
         }
       }
+      // This else if block handles the heros attempt to skip their turn
       else if (strcmp(input, "skip") == 0 || strcmp(input, "Skip") == 0)
       {
         puts("You've skipped your turn!");
         heroMadeMove = 1;
       }
+      // This else if block handles the heros attempt to use an item
       else if (strcmp(input, "item") == 0 || strcmp(input, "Item") == 0)
       {
         if (Inventory.Slot1.isOpen == 1 && Inventory.Slot2.isOpen == 1 && Inventory.Slot3.isOpen == 1)
@@ -120,6 +128,7 @@ int initiate_combat()
           // TODO keep working on this
         }
       }
+      // This else if block handles the heros attempt to use an items
       else if (strcmp(input, "help") == 0 || strcmp(input, "Help") == 0)
       {
         int goBack = 0;
@@ -147,9 +156,10 @@ int initiate_combat()
         puts("Invalid command! Type help to see the commands you can use.");
       }
     }
+    // This else if block handles the enemy's turn
     else if (chance >= 50)
     {
-      // handling the enemy's turn
+      puts("Enemy Advantage!");
       puts("It's the enemy's turn!");
       sleep(2);
       enemy_makes_move();
@@ -162,7 +172,7 @@ int initiate_combat()
       return 1;
     }
 
-    // START OF ENEMY AND HERO DEATH HANDLING
+    // START ENEMY AND DEATH HANDLING
     if (enemy.Health <= 0)
     {
       system("clear");
@@ -172,11 +182,23 @@ int initiate_combat()
       calculate_current_xp(&enemy.ExperienceDroppedOnDeath);
       calculate_xp_cap_at_current_level(hero.Level);
 
+      // When the current xp matches or passes the max xp, the hero levels up
       if (hero.CurrentXP >= hero.MaxXP)
       {
         level_up(&hero.Level, &hero.CurrentXP);
       }
     }
+    // END ENEMY AND DEATH HANDLING
+
+    // START HERO DEATH HANDLING
+    if (hero.Health <= 0)
+    {
+      MAKE_BOLD("EXITING COMBAT\n");
+      sleep(1);
+      system("clear");
+      MAKE_BOLD_N_COLOR("You've died!\n", 31);
+    }
+    // END HERO DEATH HANDLING
   } while (hero.Health > 0 && enemy.Health > 0 && CombatOnGoing == 1);
 }
 
@@ -204,13 +226,6 @@ void calculate_dmg_done_to_hero(int *heroHealth, int *enemyAbilityDmg, const cha
   int heroRemainingHealth = *heroHealth - *enemyAbilityDmg;
   *heroHealth = heroRemainingHealth;
   printf("The enemy used %s dealing %d damage to you!\n", abilityName, *enemyAbilityDmg);
-
-  if (*heroHealth <= 0)
-  {
-
-    MAKE_BOLD_N_COLOR("You've died!\n", 31);
-    // Add further actions if needed when the hero dies
-  }
 }
 
 //===================================================================================
@@ -247,12 +262,12 @@ void refresh_combat_ui(int sleepTime)
   MAKE_BOLD_N_UNDERLINED("IN COMBAT\n");
   puts("==================================================================================");
   printf("%s %s %-50s %-50s\n", "|", hero.FirstName, hero.LastName, enemy.Name);
-
+  puts("|---------------------------------------------------------------------------------");
   printf("%s" GREEN "Health: %-50d", "|", hero.Health);
   printf(GREEN "Health:%-50d" RESET "\n", enemy.Health);
+  printf("%s" BLUE "Mana: %-50d" RESET, "|", hero.Mana);
+  printf(YELLOW "Type:%-50s" RESET "\n", enemy.Type);
 
-  printf("%s" BLUE "Mana: %-50d" RESET "\n", "|", hero.Mana);
-
   printf("%s \n", "|");
   printf("%s \n", "|");
   printf("%s \n", "|");
@@ -261,13 +276,6 @@ void refresh_combat_ui(int sleepTime)
   printf("%s \n", "|");
   printf("%s \n", "|");
   printf("%s \n", "|");
-  printf("%s" YELLOW "Name:%-50s" RESET "\n", "|", enemy.Name);
-  printf("%s" YELLOW "Type:%-50s" RESET "\n", "|", enemy.Type);
-  printf("%s" YELLOW "Health:%-50d" RESET "\n", "|", enemy.Health);
-  printf("%s" YELLOW "Ability1:%-50s" RESET "\n", "|", enemy.EnemyAbility1.Name);
-  printf("%s" YELLOW "Ability2:%-50s" RESET "\n", "|", enemy.EnemyAbility2.Name);
-  printf("%s" YELLOW "Ability1Dmg:%-50d" RESET "\n", "|", enemy.EnemyAbility1.Damage);
-  printf("%s" YELLOW "Ability2Dmg:%-50d" RESET "\n", "|", enemy.EnemyAbility2.Damage);
 
   printf("%s 1:%s Dmg:%d Mana Cost:%d\n", "|", hero.Ability1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage, hero.Ability1.ManaCost);
   printf("%s 2:%s Dmg:%d Mana Cost:%d\n", "|", hero.Ability2.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage, hero.Ability2.ManaCost);
@@ -288,5 +296,5 @@ void show_combat_help_menu()
   printf(RED "%-10s | %-30s \n", "Skip", "Skip your turn be warned you may take damage from the enemy" RESET);
   printf("%-10s | %-30s \n", "Help", "Display helpful commands to use during");
   printf("=============================================================================\n");
-  printf("Type 'back' to go back to the combat menu.\n");
+  printf("Type 'back' to go back to the combat ui.\n");
 }

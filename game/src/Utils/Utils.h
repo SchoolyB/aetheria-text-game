@@ -873,9 +873,9 @@ void activate_god_mode()
   strcpy(hero.Homeland, "Empyrea");
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
-  hero.Level = 10;
-  hero.CurrentXP = 100;
-  hero.Health = 1000;
+  hero.Level = 1;
+  hero.CurrentXP = 0;
+  hero.Health = 100;
   hero.Mana = 100;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");

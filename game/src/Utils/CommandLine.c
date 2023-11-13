@@ -451,12 +451,10 @@ int COMMAND_LINE(FILE *logFile)
       sleep(1);
       system("clear");
       printf("Call all functions that you would like to debug here.\n");
-      testing_xp_stuff();
     }
     else if (strcmp(input, "test") == 0)
     {
       testing_xp_stuff();
-      hero.Mana = 100;
     }
 
     else
