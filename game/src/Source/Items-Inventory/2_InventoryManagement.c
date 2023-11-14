@@ -1426,7 +1426,8 @@ void use_consumable()
         }
         else
         {
-          puts("ERROR");
+          perror("Invalid item type in slot 1. Neither consumable nor weapon nor armor.");
+          log_error("Invalid item type in slot 1. Neither consumable nor weapon nor armor.", "use_consumable", "exit");
         }
       }
     }
@@ -1469,7 +1470,9 @@ void use_consumable()
         }
         else
         {
-          puts("ERROR");
+
+          perror("Invalid item type in slot 2. Neither consumable nor weapon nor armor.");
+          log_error("Invalid item type in slot 2. Neither consumable nor weapon nor armor.", "use_consumable", "exit");
         }
       }
     }
@@ -1512,7 +1515,8 @@ void use_consumable()
         }
         else
         {
-          puts("ERROR");
+          perror("Invalid item type in slot 3. Neither consumable nor weapon nor armor.");
+          log_error("Invalid item type in slot 3. Neither consumable nor weapon nor armor.", "use_consumable", "exit");
         }
       }
     }
