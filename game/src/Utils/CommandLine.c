@@ -79,6 +79,7 @@ int COMMAND_LINE(FILE *logFile)
     {
       // Handle input error
       perror("fgets");
+      log_error("fgets is NULL", "COMMAND_LINE", "return");
       exit(1);
     }
     // Remove the newline character from the input

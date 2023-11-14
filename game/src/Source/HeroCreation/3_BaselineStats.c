@@ -43,6 +43,11 @@ void set_baseline_stats()
     hero.Health = 55;
     hero.Mana = 20;
   }
+  else
+  {
+    perror("Invalid class name you should'nt have made it this far\n");
+    log_error("Invalid class", "set_baseline_stats", "exit");
+  }
 }
 // ===========================================================================================================//
 void set_hero_level(Hero *hero)
