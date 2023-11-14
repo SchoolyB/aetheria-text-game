@@ -430,7 +430,6 @@ int COMMAND_LINE(FILE *logFile)
         // RUN FUNCTIONS HERE
         // testing_stuff();
         // END FUNCTIONS HERE
-        log_error("Testing module exited", "COMMAND_LINE", "exit");
         inTestMode = FALSE;
       }
     }
