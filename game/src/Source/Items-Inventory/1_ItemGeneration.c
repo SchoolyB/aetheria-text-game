@@ -285,9 +285,8 @@ int generate_item(char ItemList[50][10][100])
             }
             else
             {
-                puts("Error in generate_item()");
-                puts("You should not be here...Turn back now");
-                return 1;
+                perror("Could not generate item");
+                log_error("Could not generate item", "generate_item", "return");
             }
         }
         if (itemGenerated)
@@ -326,9 +325,8 @@ int call_generate_function()
     }
     else
     {
-
-        puts("Error in call_generate_function()");
-        return 1;
+        perror("Could not generate random item seed");
+        log_error("Could not generate random item seed", "call_generate_function", "return");
     }
     return 0;
 }

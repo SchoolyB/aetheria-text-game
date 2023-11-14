@@ -89,6 +89,11 @@ void determine_class_for_inventory()
     Inventory.Slot2.isOpen = TRUE;
     Inventory.Slot3.isOpen = TRUE;
   }
+  else
+  {
+    perror("Invalid class");
+    log_error("Invalid class", "determine_class_for_inventory", "exit");
+  }
 }
 //+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=//
 void initialize_starting_weapon(Item *equipped_weapon, char *Name, char *Description, char *Type, int AddedDamage, int Weight, int Value)

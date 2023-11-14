@@ -206,8 +206,7 @@ int set_abilities()
 
     else
     {
-        perror("Invalid class name you should'nt have made it this far, that means you broke something..\n");
-
-        return 1;
+        perror("Invalid class name you should'nt have made it this far\n");
+        log_error("Invalid class", "set_abilities", "exit");
     }
 }

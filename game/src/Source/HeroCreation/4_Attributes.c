@@ -53,8 +53,8 @@ int set_attributes()
   }
   else
   {
-    perror("Invalid class name you should'nt have made it this far, that means you broke something..\n");
-    return 1;
+    perror("Invalid class name you should'nt have made it this far\n");
+    log_error("Invalid class", "set_attributes", "exit");
   }
 
 #define MAKE_STAT_COLOR_AND_PRINT_REMAINING                                           \
@@ -246,7 +246,7 @@ int set_attributes()
   else
   {
     perror("Invalid ability type\n");
-    return 1;
+    logMessage("Invalid ability type", "set_attributes()");
   }
   // TODO need to find a bette rplace for these...this is stupid and ugly
   calculate_new_hero_health(&hero.Health);
