@@ -273,17 +273,43 @@ START OF FILE/LOGGING MACROS
     exit(1);                                \
   }
 
-#define LOG_MESSAGE(logFile, message)                            \
-  do                                                             \
-  {                                                              \
-    time_t currentTime;                                          \
-    time(&currentTime);                                          \
-    fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message); \
-    fflush(logFile);                                             \
-  } while (0)
 //---------------------------------------------------------------lck:%d-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+// very useful function for logging errors and finding exactly what function the error occurred in
+void log_error(char *errorMessage, char *function, char *action)
+{
+  FILE *errorLog;
+  errorLog = fopen("../game/src/logs/errors.log", "a");
+
+  if (errorLog == NULL)
+  {
+    perror("Error opening the error log file");
+    exit(1);
+  }
+
+  time_t currentTime;
+  time(&currentTime);
+
+  if (strcmp(action, "exit") == 0 || strcmp(action, "EXIT") == 0)
+  {
+    fprintf(errorLog, "Logged: %s", ctime(&currentTime));
+    fprintf(errorLog, "Critical Error: %s in function: %s()\n", errorMessage, function);
+    fprintf(errorLog, "Exited program\n");
+    fflush(errorLog);
+    fclose(errorLog);
+    exit(1);
+  }
+  else if (strcmp(action, "return") == 0 || strcmp(action, "RETURN") == 0)
+  {
+    fprintf(errorLog, "Logged: %s", ctime(&currentTime));
+    fprintf(errorLog, "Minor Error: %s in function: %s()\n", errorMessage, function);
+    fflush(errorLog);
+    fclose(errorLog);
+    return 1;
+  }
+}
+// logs a message to the runtime.log file could technically be used for anything
 // TODO may not need this function if the 'LOG_MESSAGE' macro works
 void logMessage(FILE *logFile, const char *message)
 {

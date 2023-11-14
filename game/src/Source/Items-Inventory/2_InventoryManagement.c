@@ -508,7 +508,9 @@ void choose_open_slot_to_move_to(char *newInput, char *equippedItemName, char *e
   }
   else
   {
-    puts("Check failed.");
+    MAKE_VALID_DECISION;
+    sleep(1);
+    selected_to_unequip();
   }
 }
 //============================================================================================================//
@@ -874,7 +876,8 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Inventory slot 1 item has neither a name nor a name of 'None'.");
+          log_error("Inventory slot 1 item has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       else if (strcmp(input, "2") == 0)
@@ -898,7 +901,9 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+
+          perror("Inventory slot 2 item has neither a name nor a name of 'None'.");
+          log_error("Inventory slot 2 item has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       else if (strcmp(input, "3") == 0)
@@ -922,7 +927,8 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Inventory slot 3 item has neither a name nor a name of 'None'.");
+          log_error("Inventory slot 3 item has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       // start evaluating equippable slots
@@ -947,7 +953,8 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Equipped weapon has neither a name nor a name of 'None'.");
+          log_error("Equipped weapon has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       else if (strcmp(input, "head") == 0)
@@ -970,7 +977,8 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Equipped head armor has neither a name nor a name of 'None'.");
+          log_error("Equipped head armor has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       else if (strcmp(input, "chest") == 0)
@@ -993,7 +1001,8 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Equipped chest armor has neither a name nor a name of 'None'.");
+          log_error("Equipped chest armor has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
       }
       else if (strcmp(input, "legs") == 0)
@@ -1016,12 +1025,9 @@ int drop_item(int *val)
         }
         else
         {
-          printf("Check failed.\n");
+          perror("Equipped leg armor has neither a name nor a name of 'None'.");
+          log_error("Equipped leg armor has neither a name nor a name of 'None'.", "drop_item", "exit");
         }
-      }
-      else
-      {
-        printf("Invalid input.\n");
       }
     }
     else if (INPUT_IS_NO(input))
@@ -1030,7 +1036,8 @@ int drop_item(int *val)
     }
     else
     {
-      printf("Invalid input.\n");
+      MAKE_VALID_DECISION;
+      drop_item(val);
     }
   }
   return 0;
@@ -1080,7 +1087,8 @@ void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRari
       }
       else
       {
-        puts("Check failed.");
+        perror("Inventory slot 1 is neither open nor closed.");
+        log_error("Inventory slot 1 is neither open nor closed.", "pick_up_item", "exit");
       }
     }
     else if (atoi(input) == 2)
@@ -1107,7 +1115,8 @@ void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRari
       }
       else
       {
-        puts("Check failed.");
+        perror("Inventory slot 2 is neither open nor closed.");
+        log_error("Inventory slot 2 is neither open nor closed.", "pick_up_item", "exit");
       }
     }
     else if (atoi(input) == 3)
@@ -1134,7 +1143,8 @@ void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRari
       }
       else
       {
-        puts("Check failed.");
+        perror("Inventory slot 3 is neither open nor closed.");
+        log_error("Inventory slot 3 is neither open nor closed.", "pick_up_item", "exit");
       }
     }
     else
@@ -1147,7 +1157,8 @@ void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRari
   }
   else
   {
-    printf("Check failed.\n");
+    perror("Required inventory slot conditions not met.");
+    log_error("Required inventory slot conditions not met.", "pick_up_item", "exit");
   }
 }
 
@@ -1200,7 +1211,8 @@ void get_and_show_inventory_slot_status()
   }
   else
   {
-    puts("Check failed.");
+    perror("Inventory slot 1 is neither open nor closed.");
+    log_error("Inventory slot 1 is neither open nor closed.", "get_and_show_inventory_slot_status", "exit");
   }
   if (Inventory.Slot2.isOpen == TRUE)
   {
@@ -1212,7 +1224,8 @@ void get_and_show_inventory_slot_status()
   }
   else
   {
-    puts("Check failed.");
+    perror("Inventory slot 2 is neither open nor closed.");
+    log_error("Inventory slot 2 is neither open nor closed.", "get_and_show_inventory_slot_status", "exit");
   }
   if (Inventory.Slot3.isOpen == TRUE)
   {
@@ -1224,7 +1237,8 @@ void get_and_show_inventory_slot_status()
   }
   else
   {
-    puts("Check failed.");
+    perror("Inventory slot 3 is neither open nor closed.");
+    log_error("Inventory slot 3 is neither open nor closed.", "get_and_show_inventory_slot_status", "exit");
   }
 }
 

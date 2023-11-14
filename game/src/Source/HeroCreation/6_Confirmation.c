@@ -114,7 +114,7 @@ void log_creation_data_to_file()
   if (logFile == NULL)
   {
     perror("Error opening file");
-    exit(1);
+    log_error("Error opening file", "log_creation_data_to_file", "return");
   }
   fprintf(logFile, "Hero Information: \n");
   fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
