@@ -407,6 +407,7 @@ int COMMAND_LINE();
 // UTIL FUNCTIONS PROTOTYPES//
 #ifndef UTIL_FUNCS_H
 #define UTIL_FUNCS_H
+void log_error();
 void logMessage(FILE *logFile, const char *message);
 void appendToLog();
 int createNote();

@@ -46,6 +46,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability1.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
+          log_combat_hero_actions(hero.Ability1.Name, enemy.EnemyAbility1.Name, hero.Ability1.Damage + Inventory.EquippedWeapon.AddedDamage);
           heroMadeMove = TRUE;
           refresh_combat_ui(2);
         }
@@ -62,6 +63,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability2.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
+          log_combat_hero_actions(hero.Ability2.Name, enemy.EnemyAbility1.Name, hero.Ability2.Damage + Inventory.EquippedWeapon.AddedDamage);
           heroMadeMove = TRUE;
           refresh_combat_ui(1);
         }
@@ -79,6 +81,7 @@ int initiate_combat()
           sleep(2);
           calculate_mana_spent(&hero.Mana, hero.Ability3.ManaCost);
           calculate_dmg_done_to_enemy(&enemy.Health, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
+          log_combat_hero_actions(hero.Ability3.Name, enemy.EnemyAbility1.Name, hero.Ability3.Damage + Inventory.EquippedWeapon.AddedDamage);
           heroMadeMove = TRUE;
           refresh_combat_ui(1);
         }
@@ -111,6 +114,7 @@ int initiate_combat()
       // This else if block handles the heros attempt to skip their turn
       else if (strcmp(input, "skip") == 0 || strcmp(input, "Skip") == 0)
       {
+        printf(RED "Warning! This might result in you talking several turns of damage from the enemy!" RESET "\n");
         puts("You've skipped your turn!");
         heroMadeMove = TRUE;
       }
@@ -145,7 +149,7 @@ int initiate_combat()
           }
           else
           {
-            puts("Invalid command! Type help to see the commands you can use.");
+            puts("Invalid command! Type 'help' to see the commands you can use.");
             system("clear");
             refresh_combat_ui(0);
           }
@@ -235,10 +239,12 @@ void enemy_makes_move()
   if (choice == 0)
   {
     calculate_dmg_done_to_hero(&hero.Health, &enemy.EnemyAbility1.Damage, enemy.EnemyAbility1.Name);
+    log_combat_enemy_actions(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Damage);
   }
   else
   {
     calculate_dmg_done_to_hero(&hero.Health, &enemy.EnemyAbility2.Damage, enemy.EnemyAbility2.Name);
+    log_combat_enemy_actions(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Damage);
   }
 }
 //===================================================================================
@@ -348,7 +354,8 @@ void show_combat_inventory_menu()
       }
       else
       {
-        puts("ERROR");
+        perror("Invalid item type in slot 1. Neither consumable nor weapon nor armor.");
+        log_error("Invalid item type in slot 1. Neither consumable nor weapon nor armor.", "show_combat_inventory_menu", "exit");
       }
     }
   }
@@ -390,7 +397,8 @@ void show_combat_inventory_menu()
       }
       else
       {
-        puts("ERROR");
+        perror("Invalid item type in slot 2. Neither consumable nor weapon nor armor.");
+        log_error("Invalid item type in slot 2. Neither consumable nor weapon nor armor.", "show_combat_inventory_menu", "exit");
       }
     }
   }
@@ -432,9 +440,48 @@ void show_combat_inventory_menu()
       }
       else
       {
-        puts("ERROR");
+
+        perror("Invalid item type in slot 3. Neither consumable nor weapon nor armor.");
+        log_error("Invalid item type in slot 3. Neither consumable nor weapon nor armor.", "show_combat_inventory_menu", "exit");
       }
     }
   }
 }
+
 //===================================================================================
+// logs the heros actions to combat.log
+void log_combat_hero_actions(char *heroAbilityName, char *enemyAbilityName, int heroAbilityDmg)
+{
+  FILE *combatLog;
+  combatLog = fopen("../game/src/logs/combat.log", "a");
+  if (combatLog == NULL)
+  {
+    perror("Error opening combat.log");
+    log_error("Error opening combat.log", "log_combat_actions", "return");
+  }
+  time_t currentTime;
+  time(&currentTime);
+  fprintf(combatLog, "%s", ctime(&currentTime));
+  fprintf(combatLog, "%s used %s dealing %d damage to %s\n", hero.FirstName, heroAbilityName, heroAbilityDmg, enemy.Name);
+  fflush(combatLog);
+  fclose(combatLog);
+}
+
+//===================================================================================
+// logs the enemy's actions to combat.log
+void log_combat_enemy_actions(char *enemyAbilityName, int enemyAbilityDmg)
+{
+  FILE *combatLog;
+  combatLog = fopen("../game/src/logs/combat.log", "a");
+  if (combatLog == NULL)
+  {
+    perror("Error opening combat.log");
+    log_error("Error opening combat.log", "log_combat_actions", "return");
+  }
+  time_t currentTime;
+  time(&currentTime);
+  fprintf(combatLog, "%s", ctime(&currentTime));
+  fprintf(combatLog, "%s used %s dealing %d damage to %s\n", enemy.Name, enemyAbilityName, enemyAbilityDmg, hero.FirstName);
+  fflush(combatLog);
+  fclose(combatLog);
+}

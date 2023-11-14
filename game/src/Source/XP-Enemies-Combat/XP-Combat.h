@@ -21,6 +21,8 @@ int check_hero_remaining_mana();
 void refresh_combat_ui();
 void show_combat_help_menu();
 void show_combat_inventory_menu();
+void log_combat_hero_actions();
+void log_combat_enemy_actions();
 //+=+=+=+=+=+3_EnemyGeneration.c Prototypes+=+=+=+=+=+//
 void generate_enemy();
 void generate_random_enemy_ability1();

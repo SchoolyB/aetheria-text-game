@@ -428,7 +428,7 @@ int COMMAND_LINE(FILE *logFile)
         puts("============================================================================");
         puts("In testing module");
         // RUN FUNCTIONS HERE
-        // testing_stuff();
+        testing_stuff();
         // END FUNCTIONS HERE
         inTestMode = FALSE;
       }
