@@ -3,8 +3,12 @@
 #include "./Utils/Utils.h"
 #include "./Source/XP-Enemies-Combat/XP-Combat.h"
 #include "./Source/XP-Enemies-Combat/1_ExperienceSystem.c"
+#include "./Source/Items-Inventory/Items-Inventory.h"
+#include "./Source/Items-Inventory/1_ItemGeneration.c"
 
-void testing_xp_stuff()
+void testing_stuff()
 {
-  run_funcs();
+  found_loot_chest();
+  generate_enemy();
+  initiate_combat();
 }

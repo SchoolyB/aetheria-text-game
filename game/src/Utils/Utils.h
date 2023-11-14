@@ -4,18 +4,17 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <time.h>
+#include "../Source/Items-Inventory/Items-Inventory.h"
 
 #ifndef UTILS_H
 #define UTILS_H
-// TODO clean this file
 
 /*
 This file is separated into several sections. The sections are labeled and ordered as follows:
-1. Macros
-2. Functions
-3. Prototypes
-4. Structs
-5. Global Variables
+1. Global Macros
+2. Global Functions
+3. Global Prototypes
+4. Global Structs
 */
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -92,9 +91,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 
 #define RESET "\x1B[0m"
 #define RED "\x1B[31m"
-#define GREEN "\x1B[32m"
-#define YELLOW "\x1B[33m"
 #define BLUE "\x1B[34m"
+#define GREEN "\x1B[32m"
+#define PURPLE "\x1B[35m"
+#define YELLOW "\x1B[33m"
 
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
@@ -146,6 +146,9 @@ The Macros section holds all macros used in the program. Macros are sorted in th
     }                              \
   } while (0)
 //--------------------------------------------------------------------------------//
+// HANDLING TRUE AND FALSE
+#define FALSE 0
+#define TRUE 1
 
 /*
 END OF COMMON MACROS
@@ -240,7 +243,6 @@ START OF COMMAND LINE MACROS
 #define IS_RESTART_COMMAND(param) (strcmp(param, "/restart") == 0)
 #define IS_EXIT_COMMAND(param) (strcmp(param, "/exit") == 0 || strcmp(param, "/quit") == 0)
 #define IS_COMMANDS_COMMAND(param) (strcmp(param, "/commands") == 0)
-#define IS_GAME_COMMAND(param) (strcmp(param, "/game") == 0)
 #define IS_INFO_COMMAND(param) (strcmp(param, "/info") == 0)
 #define IS_CLEAR_COMMAND(param) (strcmp(param, "/clear") == 0)
 #define IS_WRITE_NOTE_COMMAND(param) (strcmp(param, "/nw") == 0 || strcmp(param, "/write") == 0)
@@ -271,17 +273,43 @@ START OF FILE/LOGGING MACROS
     exit(1);                                \
   }
 
-#define LOG_MESSAGE(logFile, message)                            \
-  do                                                             \
-  {                                                              \
-    time_t currentTime;                                          \
-    time(&currentTime);                                          \
-    fprintf(logFile, "[%s] %s\n", ctime(&currentTime), message); \
-    fflush(logFile);                                             \
-  } while (0)
 //---------------------------------------------------------------lck:%d-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+// very useful function for logging errors and finding exactly what function the error occurred in
+void log_error(char *errorMessage, char *function, char *action)
+{
+  FILE *errorLog;
+  errorLog = fopen("../game/src/logs/errors.log", "a");
+
+  if (errorLog == NULL)
+  {
+    perror("Error opening the error log file");
+    exit(1);
+  }
+
+  time_t currentTime;
+  time(&currentTime);
+
+  if (strcmp(action, "exit") == 0 || strcmp(action, "EXIT") == 0)
+  {
+    fprintf(errorLog, "Logged: %s", ctime(&currentTime));
+    fprintf(errorLog, "Critical Error: %s in function: %s()\n", errorMessage, function);
+    fprintf(errorLog, "Exited program\n");
+    fflush(errorLog);
+    fclose(errorLog);
+    exit(1);
+  }
+  else if (strcmp(action, "return") == 0 || strcmp(action, "RETURN") == 0)
+  {
+    fprintf(errorLog, "Logged: %s", ctime(&currentTime));
+    fprintf(errorLog, "Minor Error: %s in function: %s()\n", errorMessage, function);
+    fflush(errorLog);
+    fclose(errorLog);
+    return 1;
+  }
+}
+// logs a message to the runtime.log file could technically be used for anything
 // TODO may not need this function if the 'LOG_MESSAGE' macro works
 void logMessage(FILE *logFile, const char *message)
 {
@@ -379,6 +407,7 @@ int COMMAND_LINE();
 // UTIL FUNCTIONS PROTOTYPES//
 #ifndef UTIL_FUNCS_H
 #define UTIL_FUNCS_H
+void log_error();
 void logMessage(FILE *logFile, const char *message);
 void appendToLog();
 int createNote();
@@ -467,46 +496,7 @@ typedef struct
 
 } Hero;
 extern Hero hero;
-
-// this struct will be applicable to all things in the game that the user can pick up from weapons, armor, and items, to potions, books, etc
-typedef struct
-{
-  char Name[20];
-  char Description[100];
-  char Type[20]; // weapon, armors, item, potion, book, etc
-  int AddedDamage;
-  int AddedHealth;
-  int Weight;
-  int Value;
-  char Art[1000];
-  char Rarity[10]; // common, uncommon, rare, epic, legendary // wood, iron, steel, etc
-  // char Style[10];  // for weapons..i.e sword,axe,mace,staff,wand,etc
-} Item;
-
-typedef struct
-{
-  Item Item;
-  int Quantity;
-  int isOpen; // 0 = false, 1 = true
-} InventorySlot;
-struct Inventory
-{
-  Item EquippedWeapon;
-  Item EquippedHead;
-  Item EquippedChest;
-  Item EquippedLegs;
-  InventorySlot Slot1;
-  InventorySlot Slot2;
-  InventorySlot Slot3;
-  int CarryingCapacity;
-  int MaxCarryingCapacity;
-  int CurrentGold;
-} Inventory;
-
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF STRUCTS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF INVENTORY RELATED FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
@@ -698,22 +688,18 @@ void calculate_new_max_carrying_capacity_from_str(int *base_max)
 }
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF MATH FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
-// Enemy Variables
-extern char current_enemy_name[20];
-extern int current_enemy_health;
-extern char current_enemy_ability1[20];
-extern char current_enemy_ability2[20];
-
-// Origins, classes, and  TODO professions
-extern char possibleHomelands[5][10];
-extern char possibleClasses[6][10];
-extern char possibleProfessions[6][15];
-
-//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+END OF GLOBAL VARIABLE+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
-
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF ART+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
+char titleArt[] =
+    "  ______               __      __                            __ \n"
+    " /      \\             /  |    /  |                          /  |\n"
+    "/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"
+    "$$ |__$$ | /      \\ / $$   |  $$      \\  /      \\  /      \\ /  | /   \\  n"
+    "$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"
+    "$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
+    "$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
+    "$$ |  $$ |$$       |  $$  $$/ $$ |  $$ |$$       |$$ |      $$ |$$    $$ |\n"
+    "$$/   $$/  $$$$$$$/    $$$$/  $$/   $$/  $$$$$$$/ $$/       $$/  $$$$$$$/ \n";
+
 char WarriorArt[] =
     "..............................,:::::,::.\n"
     "............................,::,,,,,:;;.\n"
@@ -873,9 +859,9 @@ void activate_god_mode()
   strcpy(hero.Homeland, "Empyrea");
   strcpy(hero.Profession, "Hunter");
   strcpy(hero.Class, "Mage");
-  hero.Level = 10;
-  hero.CurrentXP = 100;
-  hero.Health = 1000;
+  hero.Level = 1;
+  hero.CurrentXP = 0;
+  hero.Health = 100;
   hero.Mana = 100;
   strcpy(hero.Ability1.Name, "God Mode Ability 1");
   strcpy(hero.Ability1.Description, "Ability 1 desc.");
@@ -894,6 +880,10 @@ void activate_god_mode()
   hero.DexterityAttribute.CurrentPoints = 10;
   hero.LuckAttribute.CurrentPoints = 10;
   hero.AttributePointsPool = 0;
+  Inventory.Slot1.isOpen = TRUE;
+  Inventory.Slot2.isOpen = TRUE;
+  Inventory.Slot3.isOpen = TRUE;
+
   Inventory.MaxCarryingCapacity = 1000;
   Inventory.CurrentGold = 1000000;
 

@@ -180,9 +180,48 @@ void generate_leg_armor()
 }
 // END OF LEG ARMOR GENERATION. FOR LOGIC SEE generate_item() FUNCTION BELOW
 //===============================================================================//
+
+//===============================================================================//
+// START OF CONSUMABLE ITEM GENERATION. FOR LOGIC SEE generate_item() FUNCTION BELOW
+char ConsumableItemList[50][10][100] = {
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Uncommon", "0", "75", "0", "30"},
+    {"Potion of Max Healing", "Heal All of The Heros health", "Consumable", "Rare", "0", "25", "0", "50"},
+    {"Daal's Grace", "Increase your damage by 5", "Consumable", "Uncommon", "5", "0", "0", "13"},
+    {"Elixir of Steel", "Increase your damage by 20", "Consumable", "Rare", "20", "0", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Rare", "0", "75", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Rare", "0", "75", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Uncommon", "0", "75", "0", "30"},
+    {"Potion of Max Healing", "Heal All of The Heros health", "Consumable", "Rare", "0", "25", "0", "50"},
+    {"Daal's Grace", "Increase your damage by 5", "Consumable", "Uncommon", "5", "0", "0", "13"},
+    {"Elixir of Steel", "Increase your damage by 20", "Consumable", "Rare", "20", "0", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Rare", "0", "75", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Rare", "0", "75", "0", "30"},
+    {"Potion of Minor Healing", "Heal 1/4 of The Heros health", "Consumable", "Common", "0", "25", "0", "10"},
+    {"Potion of Humble Healing", "Heal 1/2 of The Heros health", "Consumable", "Uncommon", "0", "50", "0", "20"},
+    {"Potion of Grand Healing", "Heal 3/4 of The Heros health", "Consumable", "Uncommon", "0", "75", "0", "30"},
+    {"Potion of Max Healing", "Heal All of The Heros health", "Consumable", "Rare", "0", "25", "0", "50"},
+    {"Daal's Grace", "Increase your damage by 5", "Consumable", "Uncommon", "5", "0", "0", "13"}};
+// TODO need to add in mana potions. This means I need to add in a member called 'manaAdded'to the Item struct
+void generate_consumable_item()
+{
+    generate_item(ConsumableItemList);
+}
+// END OF CONSUMABLE ITEM GENERATION. FOR LOGIC SEE generate_item() FUNCTION BELOW
 //===============================================================================//
 // this is all the logic that is used to generate items. It is used in the above functions. pass in the appropriate array to generate the items example: generate_item(HeadArmorList);
-int generate_item(char ArmorList[50][10][100])
+int generate_item(char ItemList[50][10][100])
 {
     srand(time(NULL));
 
@@ -192,53 +231,62 @@ int generate_item(char ArmorList[50][10][100])
     for (int i = 0; i < 30; i++)
     {
         int randomIndex = rand() % 30;
-        char *itemName = ArmorList[randomIndex][0];
-        char *itemDesc = ArmorList[randomIndex][1];
-        char *itemType = ArmorList[randomIndex][2];
-        char *itemRarity = ArmorList[randomIndex][3];
-        int itemDamageAdded = atoi(ArmorList[randomIndex][4]);
-        int itemHealthAdded = atoi(ArmorList[randomIndex][5]);
-        int itemWeight = atoi(ArmorList[randomIndex][6]);
-        int itemValue = atoi(ArmorList[randomIndex][7]);
+        char *itemName = ItemList[randomIndex][0];
+        char *itemDesc = ItemList[randomIndex][1];
+        char *itemType = ItemList[randomIndex][2];
+        char *itemRarity = ItemList[randomIndex][3];
+        int itemDamageAdded = atoi(ItemList[randomIndex][4]);
+        int itemHealthAdded = atoi(ItemList[randomIndex][5]);
+        int itemWeight = atoi(ItemList[randomIndex][6]);
+        int itemValue = atoi(ItemList[randomIndex][7]);
 
-        if ((strcmp(ArmorList[randomIndex][3], "Common") == 0 ||
-             strcmp(ArmorList[randomIndex][3], "Uncommon") == 0 ||
-             strcmp(ArmorList[randomIndex][3], "Rare") == 0 ||
-             strcmp(ArmorList[randomIndex][3], "Epic") == 0) &&
+        if ((strcmp(ItemList[randomIndex][3], "Common") == 0 ||
+             strcmp(ItemList[randomIndex][3], "Uncommon") == 0 ||
+             strcmp(ItemList[randomIndex][3], "Rare") == 0 ||
+             strcmp(ItemList[randomIndex][3], "Epic") == 0) &&
             itemGenerated == 0)
         {
             randomIndex = rand() % 30;
-            if (strcmp(ArmorList[randomIndex][3], "Uncommon") == 0)
+            if (strcmp(ItemList[randomIndex][3], "Uncommon") == 0)
             {
-                strcpy(itemName, ArmorList[randomIndex][0]);
-                strcpy(itemDesc, ArmorList[randomIndex][1]);
-                strcpy(itemType, ArmorList[randomIndex][2]);
-                strcpy(itemRarity, ArmorList[randomIndex][3]);
+                strcpy(itemName, ItemList[randomIndex][0]);
+                strcpy(itemDesc, ItemList[randomIndex][1]);
+                strcpy(itemType, ItemList[randomIndex][2]);
+                strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
-            else if (strcmp(ArmorList[randomIndex][3], "Common") == 0)
+            else if (strcmp(ItemList[randomIndex][3], "Common") == 0)
             {
-                strcpy(itemName, ArmorList[randomIndex][0]);
-                strcpy(itemDesc, ArmorList[randomIndex][1]);
-                strcpy(itemType, ArmorList[randomIndex][2]);
-                strcpy(itemRarity, ArmorList[randomIndex][3]);
+                strcpy(itemName, ItemList[randomIndex][0]);
+                strcpy(itemDesc, ItemList[randomIndex][1]);
+                strcpy(itemType, ItemList[randomIndex][2]);
+                strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
             }
-            else if (strcmp(ArmorList[randomIndex][3], "Rare") == 0)
+            else if (strcmp(ItemList[randomIndex][3], "Rare") == 0)
             {
-                strcpy(itemName, ArmorList[randomIndex][0]);
-                strcpy(itemDesc, ArmorList[randomIndex][1]);
-                strcpy(itemType, ArmorList[randomIndex][2]);
-                strcpy(itemRarity, ArmorList[randomIndex][3]);
+                strcpy(itemName, ItemList[randomIndex][0]);
+                strcpy(itemDesc, ItemList[randomIndex][1]);
+                strcpy(itemType, ItemList[randomIndex][2]);
+                strcpy(itemRarity, ItemList[randomIndex][3]);
                 show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
-                itemGenerated = 1;
+                itemGenerated = TRUE;
+            }
+            else if (strcmp(ItemList[randomIndex][3], "Epic") == 0)
+            {
+                strcpy(itemName, ItemList[randomIndex][0]);
+                strcpy(itemDesc, ItemList[randomIndex][1]);
+                strcpy(itemType, ItemList[randomIndex][2]);
+                strcpy(itemRarity, ItemList[randomIndex][3]);
+                show_loot_chest_contents(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
+                itemGenerated = TRUE;
             }
             else
             {
-                puts("You should not be here...Turn back now");
-                return 1;
+                perror("Could not generate item");
+                log_error("Could not generate item", "generate_item", "return");
             }
         }
         if (itemGenerated)
@@ -250,11 +298,10 @@ int generate_item(char ArmorList[50][10][100])
 }
 //===============================================================================//
 // This function takes a random number and then uses that number to determine which function is called thus determining which item to generate
-
 int call_generate_function()
 {
     srand(time(NULL));
-    int randomNum = rand() % 4;
+    int randomNum = rand() % 5;
 
     if (randomNum == 0)
     {
@@ -272,15 +319,21 @@ int call_generate_function()
     {
         generate_leg_armor();
     }
+    else if (randomNum == 4)
+    {
+        generate_consumable_item();
+    }
     else
     {
-        puts("You should not be here...Turn back now");
-        return 1;
+        perror("Could not generate random item seed");
+        log_error("Could not generate random item seed", "call_generate_function", "return");
     }
     return 0;
 }
 
 //==========================================================================================//
+// this function is called when the player finds a loot chest. It asks the player if they want to search the chest or leave it alone.
+// if searched then the open_loot_chest() function is called
 void found_loot_chest()
 {
     char input[10];
@@ -298,7 +351,6 @@ void found_loot_chest()
     {
         printf("You decided to leave the chest alone.\n");
         return 0;
-        // do more stuff
     }
     else
     {
@@ -306,7 +358,8 @@ void found_loot_chest()
         found_loot_chest();
     }
 }
-
+//==========================================================================================//
+// this function is called when the player decides to search the chest. It prints out a message and then calls the generate_loot_chest_contents() function
 void open_loot_chest()
 {
     PRINT_SLOWLY("Opening Chest......", 40000);
@@ -315,14 +368,16 @@ void open_loot_chest()
     sleep(2);
     generate_loot_chest_contents();
 }
-
+//==========================================================================================//
+// this function is called when the player decides to search the chest.  the call_generate_function() function is called
 void generate_loot_chest_contents()
 {
     /*putting this function in here because might get to the
     point where I want to have up to 3 items be found in a chest.*/
     call_generate_function();
 }
-
+//==========================================================================================//
+// this function shows the player the contents of the chest and asks them if they want to pick up the item or leave it behind
 void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
 {
     printf("You've found: %s!\n", itemName);
@@ -331,14 +386,14 @@ void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, ch
     printf("Rarity: %s\n", itemRarity);
     if (strcmp(itemType, "Head") == 0 || strcmp(itemType, "Chest") == 0 || strcmp(itemType, "Legs") == 0)
     {
-        printf("Health Points Added: %d. If equipped your new health would be %d\n", itemHealthAdded, itemHealthAdded + hero.Health);
+        printf("Health Points Added:" GREEN "%d. " RESET "If equipped your new health would be " GREEN "%d" RESET "\n", itemHealthAdded, itemHealthAdded + hero.Health);
     }
     else if (strcmp(itemType, "Weapon") == 0)
     {
         printf("Damage Points Added: %d.\n", itemDamageAdded);
-        printf("%s Damage if equipped: %d\n", hero.Ability1.Name, itemDamageAdded + hero.Ability1.Damage);
-        printf("%s Damage if equipped: %d\n", hero.Ability2.Name, itemDamageAdded + hero.Ability2.Damage);
-        printf("%s Damage if equipped: %d\n", hero.Ability3.Name, itemDamageAdded + hero.Ability3.Damage);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability1.Name, itemDamageAdded + hero.Ability1.Damage);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability2.Name, itemDamageAdded + hero.Ability2.Damage);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability3.Name, itemDamageAdded + hero.Ability3.Damage);
     }
     printf("Weight(lbs): %d\n", itemWeight);
     printf("Value(gold): %d\n", itemValue);
@@ -346,10 +401,12 @@ void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, ch
     ask_to_pick_up(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
 }
 
+//==========================================================================================//
+// asks the player if they want to pick up the item or leave it behind
 void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
 {
     char input[10];
-    printf("Would you like to pick up %s?(y/n)", itemName);
+    printf("Would you like to pick up %s?(y/n)\n", itemName);
     FGETS(input);
     REMOVE_NEWLINE_CHAR(input);
 
@@ -360,6 +417,7 @@ void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRa
     else if (INPUT_IS_NO(input))
     {
         puts("Very well you left the item behind...");
+        system("clear");
         return 0;
     }
 }

@@ -290,7 +290,7 @@ void get_homeland()
     printf("Are the lands of \x1b[1;4m%s\x1b[0m where you hail from?(y/n)\n", hero.Homeland);
     confirm_homeland();
   }
-  else if (IS_NATION(input, "4", "magdalar", "Magdlar", "MAGDALAR"))
+  else if (IS_NATION(input, "4", "magdalar", "Magdalar", "MAGDALAR"))
   {
     strcpy(hero.Homeland, "Magdalar");
     // READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
@@ -346,7 +346,7 @@ void get_profession()
       "1: Merchant",
       "2: Hunter",
       "3: Soldier",
-      "4: thief",
+      "4: Thief",
       "5: Scholar",
       "6: None"};
 
@@ -453,42 +453,42 @@ void get_class()
   if (IS_CLASS(input, "1", "warrior", "Warrior", "WARRIOR"))
   {
     strcpy(hero.Class, "Warrior");
-    printf(WarriorArt);
+    printf("%s", WarriorArt);
     PRINT_CLASS("Mighty", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "2", "mage", "Mage", "MAGE"))
   {
     strcpy(hero.Class, "Mage");
-    printf(MageArt);
+    printf("%s", MageArt);
     PRINT_CLASS("Mystical", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "3", "rogue", "Rogue", "ROGUE"))
   {
     strcpy(hero.Class, "Rogue");
-    printf(RogueArt);
+    printf("%s", RogueArt);
     PRINT_CLASS("Sly", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "4", "cleric", "Cleric", "CLERIC"))
   {
     strcpy(hero.Class, "Cleric");
-    printf(ClericArt);
+    printf("%s", ClericArt);
     PRINT_CLASS("Holy", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "5", "bard", "Bard", "BARD"))
   {
     strcpy(hero.Class, "Bard");
-    printf(BardArt);
+    printf("%s", BardArt);
     PRINT_CLASS("Talented", hero.Class);
     confirm_class();
   }
   else if (IS_CLASS(input, "6", "archer", "Archer", "ARCHER"))
   {
     strcpy(hero.Class, "Archer");
-    printf(ArcherArt);
+    printf("%s", ArcherArt);
     PRINT_CLASS("Sharpshooting", hero.Class);
     confirm_class();
   }
@@ -520,38 +520,4 @@ void confirm_class()
     printf("You are a \x1b[1;4m%s\x1b[0m is that correct?(y/n) \n", hero.Class);
     confirm_class();
   }
-}
-// ===========================================================================================================//
-void show_creation_data(FILE *logFile, const char *category, const char *value)
-{
-  fprintf(logFile, "%s: %s\n", category, value);
-  fflush(logFile);
-}
-
-// ===========================================================================================================//
-void set_hero_level(Hero *hero)
-{
-  hero->Level = 1;
-}
-
-// ===========================================================================================================//
-void log_creation_data_to_file()
-{
-  // !IMPORTANT the path of the log file is accessed from where the executable is located
-  FILE *logFile = fopen("../game/src/logs/runtime.log", "a");
-  if (logFile == NULL)
-  {
-    perror("Error opening file");
-    exit(1);
-  }
-  fprintf(logFile, "Hero Information: \n");
-  fprintf(logFile, "Hero Creation Date: %s \n", __DATE__);
-  show_creation_data(logFile, "First Name", hero.FirstName);
-  show_creation_data(logFile, "Dynasty Name", hero.LastName);
-  show_creation_data(logFile, "Gender", hero.Gender);
-  show_creation_data(logFile, "Home of Origin", hero.Homeland);
-  show_creation_data(logFile, "Profession", hero.Profession);
-  show_creation_data(logFile, "Class", hero.Class);
-  show_creation_data(logFile, "+===========================+", NULL);
-  fclose(logFile);
 }

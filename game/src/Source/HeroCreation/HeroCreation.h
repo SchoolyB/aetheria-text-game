@@ -34,6 +34,7 @@ void initialize_inventory();
 void check_if_empty_show_none();
 //+=+=+=+=+=+6_Confirmation.c Prototypes+=+=+=+=+=+//
 void confirm_hero_creation_and_stats();
+void show_creation_data();
 //+=+=+=+=+=+7_Changes.c Prototypes+=+=+=+=+=+//
 void change_specific_creation_item();
 #endif
