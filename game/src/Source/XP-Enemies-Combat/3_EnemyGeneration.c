@@ -52,6 +52,8 @@ void generate_enemy()
     // need time a sec before calling next func() without this program crash
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
 
     break;
   case 1:
@@ -64,6 +66,9 @@ void generate_enemy()
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+
     break;
   case 2:
     strcpy(enemy.Name, enemyName);
@@ -74,6 +79,9 @@ void generate_enemy()
     // need time a sec before calling next func() without this program crash
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
 
     break;
   case 3:
@@ -86,6 +94,9 @@ void generate_enemy()
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+
     break;
   case 4:
     strcpy(enemy.Name, enemyName);
@@ -96,6 +107,9 @@ void generate_enemy()
     // need time a sec before calling next func() without this program crash
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
 
     break;
   case 5:
@@ -108,6 +122,9 @@ void generate_enemy()
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+
     break;
   case 6:
     strcpy(enemy.Name, enemyName);
@@ -118,6 +135,9 @@ void generate_enemy()
     // need time a sec before calling next func() without this program crash
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
 
     break;
   case 7:
@@ -130,6 +150,9 @@ void generate_enemy()
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+
     break;
   case 8:
     strcpy(enemy.Name, enemyName);
@@ -141,6 +164,9 @@ void generate_enemy()
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
 
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+
     break;
   case 9:
     strcpy(enemy.Name, enemyName);
@@ -151,6 +177,9 @@ void generate_enemy()
     // need time a sec before calling next func() without this program crash
     usleep(550000);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+
+    // check if the abilities are the same
+    check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
 
     break;
   }
@@ -714,5 +743,23 @@ void calculate_enemy_health_with_modifier(int *enemyHealth, int heroLevel)
     enemyHealthModifier = 8;
     newEnemyHealth = *enemyHealth * enemyHealthModifier;
     enemy.Health = newEnemyHealth;
+  }
+}
+//==================================================================================//
+int check_if_ability_regeneration_is_needed(char *Ability1Name, char *Ability2Name)
+{
+  int generated_duplicate = FALSE;
+
+  if (strcmp(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name) == 0)
+  {
+    generated_duplicate == TRUE;
+    generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
+    generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
+    log_error("Duplicate abilities generated", "generate_random_enemy_ability1 or generate_random_enemy_ability2\n", "return");
+    return check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
+  }
+  else
+  {
+    return FALSE;
   }
 }
