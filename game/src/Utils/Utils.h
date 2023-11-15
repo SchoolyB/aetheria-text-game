@@ -280,7 +280,7 @@ START OF FILE/LOGGING MACROS
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+START OF FUNCTIONS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 // very useful function for logging errors and finding exactly what function the error occurred in
-void log_error(char *errorMessage, char *function, char *action)
+int log_error(char *errorMessage, char *function, char *action)
 {
   FILE *errorLog;
   errorLog = fopen("../game/src/logs/errors.log", "a");
@@ -415,7 +415,7 @@ int COMMAND_LINE();
 // UTIL FUNCTIONS PROTOTYPES//
 #ifndef UTIL_FUNCS_H
 #define UTIL_FUNCS_H
-void log_error();
+int log_error();
 void logMessage(FILE *logFile, const char *message);
 void appendToLog();
 int createNote();
