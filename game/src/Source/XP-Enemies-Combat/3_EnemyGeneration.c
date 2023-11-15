@@ -755,7 +755,7 @@ int check_if_ability_regeneration_is_needed(char *Ability1Name, char *Ability2Na
     generated_duplicate == TRUE;
     generate_random_enemy_ability1(enemy.EnemyAbility1.Name, enemy.EnemyAbility1.Description, enemy.EnemyAbility1.Type, enemy.EnemyAbility1.Damage);
     generate_random_enemy_ability2(enemy.EnemyAbility2.Name, enemy.EnemyAbility2.Description, enemy.EnemyAbility2.Type, enemy.EnemyAbility2.Damage);
-    log_error("Duplicate abilities generated", "generate_random_enemy_ability1 or generate_random_enemy_ability2\n", "return");
+    log_error("Duplicate abilities generated", "generate_random_enemy_ability1() generate_random_enemy_ability2", "return");
     return check_if_ability_regeneration_is_needed(enemy.EnemyAbility1.Name, enemy.EnemyAbility2.Name);
   }
   else
