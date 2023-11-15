@@ -96,6 +96,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 #define PURPLE "\x1B[35m"
 #define YELLOW "\x1B[33m"
 
+#define UNDERLINED "\x1B[4m"
+#define BOLD "\x1B[1m"
+#define BOLD_UNDERLINE "\x1B[1;4m"
+
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
 #define PRINT_SLOWLY(str, delayMicroseconds) \

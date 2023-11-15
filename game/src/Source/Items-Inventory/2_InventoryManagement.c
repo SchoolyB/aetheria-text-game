@@ -1051,9 +1051,29 @@ void pick_up_item(char *itemName, char *itemDesc, char *itemType, char *ItemRari
 
   if (Inventory.Slot1.isOpen == FALSE && Inventory.Slot2.isOpen == FALSE && Inventory.Slot3.isOpen == FALSE)
   {
+    char input[10];
     puts("You have no open slots.");
     puts("You must drop an item before you can pick up this item.");
-    return;
+
+    puts("Would you like to drop an item?");
+    FGETS(input);
+    REMOVE_NEWLINE_CHAR(input);
+
+    if (INPUT_IS_YES(input))
+    {
+      drop_item(0);
+      pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
+    }
+    else if (INPUT_IS_NO(input))
+    {
+      puts("It seems like you dont want to drop an item.");
+      printf("Very well you will not be able to pick up %s.", itemName);
+    }
+    else
+    {
+      MAKE_VALID_DECISION;
+      pick_up_item(itemName, itemDesc, itemType, ItemRarity, itemAddedDamage, itemHealthAdded, itemWeight, itemValue);
+    }
   }
   else if (Inventory.Slot1.isOpen == TRUE || Inventory.Slot2.isOpen == TRUE || Inventory.Slot3.isOpen == TRUE)
   {

@@ -159,19 +159,19 @@ int COMMAND_LINE(FILE *logFile)
           "..######...#######..##.....##.##.....##.##.....##.##....##.########...######.\n";
       MAKE_GREEN(commands_art);
       printf("=============================================================================\n");
-      printf("%-10s | %-30s \n", "Command", "Description");
+      printf("%-20s | %-30s \n", "Command", "Description");
       printf("----------------------------------------------------------------------------\n");
-      printf("%-10s | %-30s \n", "start", "Start the program");
-      printf("%-10s | %-30s \n", "/info", "Shows all hero info");
-      printf("%-10s | %-30s \n", "/exit or /qui", "Exit the program");
-      printf("%-10s | %-30s \n", "/restart", "Restart the program");
-      printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
-      printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
-      printf("%-10s | %-30s \n", "/lore", "Opens the lore menu");
-      printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
-      printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
-      printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
-      printf("%-10s | %-30s \n", "/inventory or /inv", "Shows the players inventory");
+      printf("%-20s | %-30s \n", "start", "Start the program");
+      printf("%-20s | %-30s \n", "/info", "Shows all hero info");
+      printf("%-20s | %-30s \n", "/exit or /quit", "Exit the program");
+      printf("%-20s | %-30s \n", "/restart", "Restart the program");
+      printf("%-20s | %-30s \n", "/commands", "Lists all available commands");
+      printf("%-20s | %-30s \n", "/clear", "Clears the terminal");
+      printf("%-20s | %-30s \n", "/lore", "Opens the lore menu");
+      printf("%-20s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
+      printf("%-20s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
+      printf("%-20s | %-30s \n", "/nc", "Clears all entries from the notepad");
+      printf("%-20s | %-30s \n", "/inventory or /inv", "Shows and manage the heros inventory");
       printf("=============================================================================\n");
     }
     else if (IS_EXIT_COMMAND(input))
