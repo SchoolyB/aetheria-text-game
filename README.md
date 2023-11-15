@@ -29,10 +29,10 @@ To embark on your quest in the world of "Heros of Aetheria," follow these steps:
 ```bash
 git clone https://github.com/SchoolyB/aetheria-text-game.git
 ```
-2. **Navigate to the Directory:**
+2. **Navigate to the scripts directory:**
 
 ```bash
-cd your/path/untitled-text-game
+cd your/path/aehteria-text-game/scripts
 ```
 
 3. **Compile and run the Program:**

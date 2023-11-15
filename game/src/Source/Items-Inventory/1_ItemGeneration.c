@@ -285,8 +285,8 @@ int generate_item(char ItemList[50][10][100])
             }
             else
             {
-                perror("Could not generate item");
-                log_error("Could not generate item", "generate_item", "return");
+                perror("Could not generate item or item is not of rarity Common, Uncommon, Rare, or Epic");
+                log_error("Could not generate item or item is not of rarity Common, Uncommon, Rare, or Epic", "generate_item", "return");
             }
         }
         if (itemGenerated)
@@ -362,10 +362,12 @@ void found_loot_chest()
 // this function is called when the player decides to search the chest. It prints out a message and then calls the generate_loot_chest_contents() function
 void open_loot_chest()
 {
+    system("clear");
     PRINT_SLOWLY("Opening Chest......", 40000);
     sleep(1);
     PRINT_SLOWLY("Searching......", 40000);
     sleep(2);
+    system("clear");
     generate_loot_chest_contents();
 }
 //==========================================================================================//
@@ -380,23 +382,32 @@ void generate_loot_chest_contents()
 // this function shows the player the contents of the chest and asks them if they want to pick up the item or leave it behind
 void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
 {
-    printf("You've found: %s!\n", itemName);
-    printf("Description: %s\n", itemDesc);
-    printf("Type: %s\n", itemType);
-    printf("Rarity: %s\n", itemRarity);
+    printf("You've found:" BOLD_UNDERLINE " %s" RESET "!\n", itemName);
+    printf("Description: %s \n", itemDesc);
     if (strcmp(itemType, "Head") == 0 || strcmp(itemType, "Chest") == 0 || strcmp(itemType, "Legs") == 0)
     {
-        printf("Health Points Added:" GREEN "%d. " RESET "If equipped your new health would be " GREEN "%d" RESET "\n", itemHealthAdded, itemHealthAdded + hero.Health);
+        printf("Type:" BOLD_UNDERLINE "%s Armor" RESET "\n", itemType);
+        printf("Rarity: " BOLD_UNDERLINE "%s" RESET "\n", itemRarity);
+        printf("Health Points Added: " GREEN "%d. " RESET "If equipped your new health would be " GREEN "%d." RESET "\n", itemHealthAdded, itemHealthAdded + hero.Health);
     }
     else if (strcmp(itemType, "Weapon") == 0)
     {
-        printf("Damage Points Added: %d.\n", itemDamageAdded);
+        printf("Type:" BOLD_UNDERLINE "%s" RESET "\n", itemType);
+        printf("Rarity:" BOLD_UNDERLINE "%s" RESET "\n", itemRarity);
+        printf("Damage Points Added:" GREEN "%d." RESET "\n", itemDamageAdded);
         printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability1.Name, itemDamageAdded + hero.Ability1.Damage);
         printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability2.Name, itemDamageAdded + hero.Ability2.Damage);
         printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability3.Name, itemDamageAdded + hero.Ability3.Damage);
     }
-    printf("Weight(lbs): %d\n", itemWeight);
-    printf("Value(gold): %d\n", itemValue);
+    else if (strcmp(itemType, "Consumable") == 0)
+    {
+        printf("Type:" BOLD_UNDERLINE "%s" RESET "\n", itemType);
+        printf("Rarity: " BOLD_UNDERLINE "%s" RESET "\n", itemRarity);
+        printf("Health Points Added:" GREEN " %d." RESET "\n", itemHealthAdded);
+        printf("Damage Points Added:" GREEN " %d." RESET "\n", itemDamageAdded);
+    }
+    printf("Weight(lbs): " BOLD_UNDERLINE "%d" RESET "\n", itemWeight);
+    printf("Value(gold): " BOLD_UNDERLINE "%d" RESET "\n", itemValue);
 
     ask_to_pick_up(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
 }
@@ -418,6 +429,10 @@ void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRa
     {
         puts("Very well you left the item behind...");
         system("clear");
-        return 0;
+    }
+    else
+    {
+        MAKE_VALID_DECISION;
+        ask_to_pick_up(itemName, itemDesc, itemType, itemRarity, itemHealthAdded, itemDamageAdded, itemWeight, itemValue);
     }
 }

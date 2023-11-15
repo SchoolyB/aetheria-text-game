@@ -79,7 +79,7 @@ int COMMAND_LINE(FILE *logFile)
     {
       // Handle input error
       perror("fgets");
-      log_error("fgets is NULL", "COMMAND_LINE", "return");
+      log_error("input is NULL", "COMMAND_LINE", "return");
       exit(1);
     }
     // Remove the newline character from the input
@@ -87,9 +87,8 @@ int COMMAND_LINE(FILE *logFile)
 
     if (strcmp(input, "start") == 0)
     {
-      logMessage(logFile, "Program started.");
       start_game();
-
+      system("clear");
       printf("%s\n", titleArt);
       // TODO Read introduction then do hero creation
       // start_ch0(); //TODO uncomment this when working on story
@@ -101,11 +100,17 @@ int COMMAND_LINE(FILE *logFile)
 
       logMessage(logFile, "Requesting To Restart Program.");
       printf(RED "Requesting to restart program..." RESET "\n");
-      printf(RED "mAre you sure you want to restart? (y/n):" RESET "\n");
+      printf(RED "Are you sure you want to restart? (y/n):" RESET "\n");
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
       if (INPUT_IS_YES(input))
-      { // TODO need to find out why path is read  but not execute
+      { // TODO need to find out why path is read but not execute
+        printf("Restarting...\n");
+        if (execv("Aetheria.exe", NULL) == -1)
+        {
+          perror("execv failed due to no such file or directory");
+          log_error("execv failed due to no such file or directory", "COMMAND_LINE", "exit");
+        }
       }
       else if (INPUT_IS_NO(input))
       {
@@ -159,19 +164,19 @@ int COMMAND_LINE(FILE *logFile)
           "..######...#######..##.....##.##.....##.##.....##.##....##.########...######.\n";
       MAKE_GREEN(commands_art);
       printf("=============================================================================\n");
-      printf("%-10s | %-30s \n", "Command", "Description");
+      printf("%-20s | %-30s \n", "Command", "Description");
       printf("----------------------------------------------------------------------------\n");
-      printf("%-10s | %-30s \n", "start", "Start the program");
-      printf("%-10s | %-30s \n", "/info", "Shows all hero info");
-      printf("%-10s | %-30s \n", "/exit or /qui", "Exit the program");
-      printf("%-10s | %-30s \n", "/restart", "Restart the program");
-      printf("%-10s | %-30s \n", "/commands", "Lists all available commands");
-      printf("%-10s | %-30s \n", "/clear", "Clears the terminal");
-      printf("%-10s | %-30s \n", "/lore", "Opens the lore menu");
-      printf("%-10s | %-30s \n", "/nw", "Opens the notepad and allows the user to make an entry");
-      printf("%-10s | %-30s \n", "/nr", "Opens the notepad and allows the user to read all entries");
-      printf("%-10s | %-30s \n", "/nc", "Clears all entries from the notepad");
-      printf("%-10s | %-30s \n", "/inventory or /inv", "Shows the players inventory");
+      printf("%-20s | %-30s \n", "start", "Start the program");
+      printf("%-20s | %-30s \n", "/info", "Shows all hero info");
+      printf("%-20s | %-30s \n", "/exit or /quit", "Exit the program");
+      printf("%-20s | %-30s \n", "/restart", "Restart the program");
+      printf("%-20s | %-30s \n", "/commands", "Lists all available commands");
+      printf("%-20s | %-30s \n", "/clear", "Clears the terminal");
+      printf("%-20s | %-30s \n", "/lore", "Opens the lore menu");
+      printf("%-20s | %-30s \n", "/nw or /write", "Opens the notepad and allows the user to make an entry");
+      printf("%-20s | %-30s \n", "/nr or /read", "Opens the notepad and allows the user to read all entries");
+      printf("%-20s | %-30s \n", "/nc", "Clears all entries from the notepad");
+      printf("%-20s | %-30s \n", "/inventory or /inv", "Shows and manage the heros inventory");
       printf("=============================================================================\n");
     }
     else if (IS_EXIT_COMMAND(input))
@@ -342,12 +347,7 @@ int COMMAND_LINE(FILE *logFile)
     {
       system("clear");
       check_if_empty_show_none();
-      printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
-      printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
-      if (Inventory.CarryingCapacity <= 0)
-      {
-        printf("You are over encumbered and cannot carry any more.\n");
-      }
+
       char inventoryArt[1000] = ".####.##....##.##.....##.########.##....##.########..#######..########..##....##\n"
                                 "..##..###...##.##.....##.##.......###...##....##....##.....##.##.....##..##..##.\n"
                                 "..##..####..##.##.....##.##.......####..##....##....##.....##.##.....##...####..\n"
@@ -356,6 +356,12 @@ int COMMAND_LINE(FILE *logFile)
                                 "..##..##...###...##.##...##.......##...###....##....##.....##.##....##.....##...\n"
                                 ".####.##....##....###....########.##....##....##.....#######..##.....##....##...\n";
       MAKE_GREEN(inventoryArt);
+      printf("Max Carrying Capacity: %d(lbs)\n", Inventory.MaxCarryingCapacity);
+      printf("Current Carrying Capacity Remaining: %d(lbs)\n", Inventory.CarryingCapacity);
+      if (Inventory.CarryingCapacity <= 0)
+      {
+        printf("You are over encumbered and cannot carry any more.\n");
+      }
       printf("=====================================================================================================================================\n");
       printf("%-30s | %-35s | %-11s | %-10s | %-10s | %-10s \n", "Equipped Wpn", "Desc.", "Dmg Incr", "Type", "Wt(lbs)", "Val(gold)");
       printf("%-30s | %-35s | %-11d | %-10s | %-10d | %-10d \n", Inventory.EquippedWeapon.Name, Inventory.EquippedWeapon.Description, Inventory.EquippedWeapon.AddedDamage, Inventory.EquippedWeapon.Type, Inventory.EquippedWeapon.Weight, Inventory.EquippedWeapon.Value);
