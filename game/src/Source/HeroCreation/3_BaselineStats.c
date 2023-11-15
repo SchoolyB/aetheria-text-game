@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "HeroCreation.h"
 #include "../../Utils/Utils.h"
-// #include "../XP-Enemies-Combat/1_ExperienceSystem.c"
 
 Hero hero;
 #define IS_OF_CLASS(classname, string) (strcmp(classname, string) == 0)

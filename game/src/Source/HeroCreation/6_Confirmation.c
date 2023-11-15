@@ -11,20 +11,18 @@ void confirm_hero_creation_and_stats()
   printf("But before you go lets go over everything one more time.\n");
 
   printf("Take a look at this table...\n");
-
   printf("============================================================================\n");
   printf("%-15s | %-15s | %-15s | %-15s \n", "First Name", "Dynasty Name", "Gender", "Nation of Origin");
   printf("%-15s | %-15s | %-15s | %-15s \n", hero.FirstName, hero.LastName, hero.Gender, hero.Homeland);
   printf("----------------------------------------------------------------------------\n");
   printf("%-15s | %-15s \n", "Profession", "Class");
-  // TODO create hero level
   printf("%-15s | %-15s \n", hero.Profession, hero.Class);
   printf("----------------------------------------------------------------------------\n");
   printf("%-15s | %-15s | %-15s | %-15s \n", "Strength Points", "Intelligence Points", "Dexterity Points", "Luck Points");
   printf("%-15d | %-15d | %-15d | %-15d \n", hero.StrengthAttribute.CurrentPoints, hero.IntelligenceAttribute.CurrentPoints, hero.DexterityAttribute.CurrentPoints, hero.LuckAttribute.CurrentPoints);
   printf("----------------------------------------------------------------------------\n");
-  printf("%-15s | %-15s \n", "Health", "Mana");
-  printf("%-15d | %-15d \n", hero.Health, hero.Mana);
+  printf("%-15s | %-15s | %-15s \n", "Level", "Health", "Mana");
+  printf("%-15d | %-15d | %-15d \n", hero.Level, hero.Health, hero.Mana);
   printf("----------------------------------------------------------------------------\n");
   printf("%-15s | %-15s | %-15s \n", "Ability 1", "Ability 2", "Ability 3");
   printf("%-15s | %-15s | %-15s \n", hero.Ability1.Name, hero.Ability2.Name, hero.Ability3.Name);
@@ -38,6 +36,8 @@ void confirm_hero_creation_and_stats()
   {
     printf("Great! It seems you are ready to begin your adventure!\n I wish you the best of luck in your endeavors\n");
     log_creation_data_to_file();
+    FILE *logFile = fopen("../game/src/logs/runtime.log", "a");
+    logMessage(logFile, "Hero creation completed");
   }
   else if (INPUT_IS_NO(confirmation))
   {

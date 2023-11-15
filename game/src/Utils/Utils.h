@@ -96,6 +96,10 @@ The Macros section holds all macros used in the program. Macros are sorted in th
 #define PURPLE "\x1B[35m"
 #define YELLOW "\x1B[33m"
 
+#define UNDERLINED "\x1B[4m"
+#define BOLD "\x1B[1m"
+#define BOLD_UNDERLINE "\x1B[1;4m"
+
 //--------------------------------------------------------------------------------//
 // Prints a string slowly to the terminal
 #define PRINT_SLOWLY(str, delayMicroseconds) \
@@ -270,7 +274,6 @@ START OF FILE/LOGGING MACROS
   if (variable == NULL)                     \
   {                                         \
     perror("Error opening the log file");   \
-    exit(1);                                \
   }
 
 //---------------------------------------------------------------lck:%d-+END OF MACROS+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
@@ -323,17 +326,21 @@ void logMessage(FILE *logFile, const char *message)
 // Create a note in the notepad also creates notepad if it doesn't exist
 int createNote()
 {
-
-  CREATE_LOG_FILE(notePad, "notepad.txt");
-  CREATE_LOG_FILE(logFile, "logs/runtime.log");
   char note[MAX_NOTE_LENGTH];
+  FILE *logFile;
+  FILE *notePad;
+  logFile = fopen("../game/src/logs/runtime.log", "a");
+  notePad = fopen("../game/src/notepad.txt", "a");
+  puts("Creating a note...");
+  logMessage(logFile, "Requested to create a note");
   printf("Enter a note: ");
-  if (fgets(note, sizeof(note), stdin) == NULL)
+
+  if (logFile == NULL)
   {
-    // Handle note error
-    perror("fgets");
-    exit(1);
+    perror("Error opening the log file");
+    log_error("Error opening the log file", "createNote", "return");
   }
+  FGETS(note);
   REMOVE_NEWLINE_CHAR(note);
   time_t entryTimeAndDate;
   time(&entryTimeAndDate);
@@ -342,7 +349,7 @@ int createNote()
   fprintf(notePad, "----------End of Entry----------\n");
   fflush(notePad);
   usleep(500000);
-  printf("\x1b[32mNote Added Successfully!\x1b[0m\n");
+  printf(GREEN "Note Added Successfully!" RESET "\n");
   logMessage(logFile, "Note Added Successfully!");
   fclose(logFile);
   return 0;
@@ -350,13 +357,14 @@ int createNote()
 // Read all notes from the notepad
 int readNotes()
 {
-  FILE *notePad = fopen("notepad.txt", "r");
+  FILE *notePad = fopen("../game/src/notepad.txt", "r");
   if (notePad == NULL)
   {
     perror("Error opening the log file");
-    exit(1);
+    log_error("Error opening the log file", "readNotes", "return");
   }
   char note[MAX_NOTE_LENGTH];
+  puts("Reading notepad entries...");
   while (fgets(note, sizeof(note), notePad) != NULL)
   {
     printf("%s", note);
@@ -368,14 +376,14 @@ int readNotes()
 // Clears all notes from the notepad
 int clearNotes()
 {
-  FILE *notePad = fopen("notepad.txt", "w");
+  FILE *notePad = fopen("../game/src/notepad.txt", "w");
   if (notePad == NULL)
   {
     perror("Error opening the log file");
-    exit(1);
+    log_error("Error opening the log file", "clearNotes", "return");
   }
   fclose(notePad);
-  printf("\x1b[32mNotes Cleared Successfully!\x1b[0m\n");
+  printf(GREEN "Notes Cleared Successfully!" RESET "\n");
   return 0;
 }
 
@@ -693,7 +701,7 @@ char titleArt[] =
     "  ______               __      __                            __ \n"
     " /      \\             /  |    /  |                          /  |\n"
     "/$$$$$$  |  ______   _$$ |_   $$ |____    ______    ______  $$/   ______\n"
-    "$$ |__$$ | /      \\ / $$   |  $$      \\  /      \\  /      \\ /  | /   \\  n"
+    "$$ |__$$ | /      \\ / $$   |  $$      \\  /      \\  /      \\ /  | /   \\  \n"
     "$$    $$ |/$$$$$$  |$$$$$$/   $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | $$$$$$  |\n"
     "$$$$$$$$ |$$    $$ |  $$ | __ $$ |  $$ |$$    $$ |$$ |  $$/ $$ | /    $$ |\n"
     "$$ |  $$ |$$$$$$$$/   $$ |/  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |/$$$$$$$ |\n"
