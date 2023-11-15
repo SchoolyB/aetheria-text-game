@@ -275,6 +275,14 @@ void refresh_combat_ui(int sleepTime)
   printf(GREEN "Health:%-50d" RESET "\n", enemy.Health);
   printf("%s" BLUE "Mana: %-50d" RESET, "|", hero.Mana);
   printf(YELLOW "Type:%-50s" RESET "\n", enemy.Type);
+  printf("%s"
+         "%-55s",
+         "|", "");
+  printf(YELLOW "Ability1:%-50s" RESET "\n", enemy.EnemyAbility1.Name);
+  printf("%s"
+         "%-55s",
+         "|", "");
+  printf(YELLOW "Ability2:%-50s" RESET "\n", enemy.EnemyAbility2.Name);
 
   printf("%s \n", "|");
   printf("%s \n", "|");

@@ -43,10 +43,10 @@ I have included a shell script to make compiling and running the program easier.
 ./execute.sh
 ```
 
-This will create an executable file called `Aetheria.o`. You can run the executable if you <i><b><u>DO NOT</u></b></i> need/want to compile again by running the following command:
+This will create an executable file called `Aetheria.exe`. You can run the executable if you <i><b><u>DO NOT</u></b></i> need/want to compile again by running the following command:
 
 ```bash
-./Aethoria.exe
+./Aetheria.exe
 ```
 
 To compile the program <i><b><u>WITHOUT</u></b></i>  running it, run the following command:
