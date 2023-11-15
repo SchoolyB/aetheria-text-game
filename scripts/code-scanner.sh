@@ -1,5 +1,5 @@
 # !This is only used for code scanning actions on GitHub
-gcc -o ../game/Aetheria.exe src/main.c -lncurses
+gcc -o ../game/Aetheria.exe ../game/src/main.c -lncurses
 
 if [ $? -eq 0 ]; then
     echo "\e[32mBuild Successful!\e[0m"
@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
     sleep 1
     clear
     echo "Running Aetheria..."
-    ./../game/Aetheria.exe
+    ../game/Aetheria.exe
 else
     echo "\e[31mBuild Failed.\e[0m"
     exit 1
