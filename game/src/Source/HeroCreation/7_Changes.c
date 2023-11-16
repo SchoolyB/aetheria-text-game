@@ -2,6 +2,9 @@
 #include <string.h>
 #include "HeroCreation.h"
 #include "../../Utils/Utils.h"
+
+//=============================================================================================
+// Takes care of all the logic for changing a specific hero creation item such as name, class, gender, etc.
 void change_specific_creation_item()
 {
   system("clear");

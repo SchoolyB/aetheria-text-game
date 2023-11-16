@@ -746,6 +746,9 @@ void calculate_enemy_health_with_modifier(int *enemyHealth, int heroLevel)
   }
 }
 //==================================================================================//
+/*This checks to see if the enemy that was generated has the 2 same abilities.
+if it does we fire the generate_random_enemy_ability1() and 2 funcs again.
+We also log and error.*/
 int check_if_ability_regeneration_is_needed(char *Ability1Name, char *Ability2Name)
 {
   int generated_duplicate = FALSE;
@@ -760,6 +763,6 @@ int check_if_ability_regeneration_is_needed(char *Ability1Name, char *Ability2Na
   }
   else
   {
-    return FALSE;
+    return 0;
   }
 }

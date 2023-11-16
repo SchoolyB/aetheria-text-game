@@ -110,7 +110,6 @@ void calculate_enemy_xp_dropped_with_modifier(float *XPDroppedOnDeath, int heroL
   else if (heroLvl > 3 && heroLvl <= 6)
   {
     xpDroppedOnDeathModifier = 1.50;
-    // if someone dropped 100 xp and the modifier is 2 then the new xp dropped would be 200
     enemy.ExperienceDroppedOnDeath = xpDroppedOnDeath * xpDroppedOnDeathModifier;
   }
   else if (heroLvl > 6 && heroLvl <= 9)
