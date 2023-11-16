@@ -96,6 +96,7 @@ void determine_class_for_inventory()
   }
 }
 //+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=//
+// initialize the heros weapon see initialize_starting_inventory() for its use
 void initialize_starting_weapon(Item *equipped_weapon, char *Name, char *Description, char *Type, int AddedDamage, int Weight, int Value)
 {
   strcpy(equipped_weapon->Name, Name);
@@ -106,6 +107,7 @@ void initialize_starting_weapon(Item *equipped_weapon, char *Name, char *Descrip
   equipped_weapon->Value = Value;
 }
 //=============================================================//
+// initialize the heros starting head armor see initialize_starting_inventory() for its use
 void initialize_starting_head_armor(Item *equipped_head_armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
 {
   strcpy(equipped_head_armor->Name, Name);
@@ -116,6 +118,7 @@ void initialize_starting_head_armor(Item *equipped_head_armor, char *Name, char 
   equipped_head_armor->Value = Value;
 }
 //=============================================================//
+// initialize the heros starting chest armor see initialize_starting_inventory() for its use
 void initialize_starting_chest_armor(Item *equipped_chest_armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
 {
   strcpy(equipped_chest_armor->Name, Name);
@@ -126,6 +129,7 @@ void initialize_starting_chest_armor(Item *equipped_chest_armor, char *Name, cha
   equipped_chest_armor->Value = Value;
 }
 //=============================================================//
+// initialize the heros starting leg armor see initialize_starting_inventory() for its use
 void initialize_starting_leg_armor(Item *equipped_leg_armor, char *Name, char *Description, char *Type, int AddedHealth, int Weight, int Value)
 {
   strcpy(equipped_leg_armor->Name, Name);
@@ -135,23 +139,26 @@ void initialize_starting_leg_armor(Item *equipped_leg_armor, char *Name, char *D
   equipped_leg_armor->Weight = Weight;
   equipped_leg_armor->Value = Value;
 }
-//=============================================================//
 
 //=============================================================//
+// initialize the heros inventory at the start of the game
 void initialize_inventory(struct Inventory *HeroInventory, char *weaponName, char *headArmorName, char *chestArmorName, char *legsArmorName, int Gold)
 {
+  // TODO need to come back to this and make it so that the inventory is not hard coded
   initialize_starting_weapon(&HeroInventory->EquippedWeapon, weaponName, "description", "Weapon", 10, 20, 25);
   initialize_starting_head_armor(&HeroInventory->EquippedHead, headArmorName, "description", "Head", 10, 10, 15);
   initialize_starting_chest_armor(&HeroInventory->EquippedChest, chestArmorName, "description", "Chest", 10, 5, 10);
   initialize_starting_leg_armor(&HeroInventory->EquippedLegs, legsArmorName, "description", "Legs", 10, 15, 22);
-  // HeroInventory->MaxCarryingCapacity = 60;
-  // calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->Weapon, &HeroInventory->Head, &HeroInventory->Chest, &HeroInventory->Legs); //old
 
-  calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->MaxCarryingCapacity, &HeroInventory->EquippedWeapon, &HeroInventory->EquippedHead, &HeroInventory->EquippedChest, &HeroInventory->EquippedLegs); // new
+  calculate_remaining_carrying_capacity(&HeroInventory->CarryingCapacity, &HeroInventory->MaxCarryingCapacity, &HeroInventory->EquippedWeapon, &HeroInventory->EquippedHead, &HeroInventory->EquippedChest, &HeroInventory->EquippedLegs);
   HeroInventory->CurrentGold = Gold;
 }
 
 //=============================================================//
+/*this function checks if the inventory is empty
+if it is it will set the name, description and type to none.
+And set added health/damage, weight, and value to 0
+*/
 void check_if_empty_show_none()
 {
   if (strlen(Inventory.EquippedHead.Name) == 0)
