@@ -35,7 +35,6 @@ void inventory_options()
   else if (STR_CMP_TWO(input, "4", "use"))
   {
     use_consumable();
-    puts("You chose the use option.");
   }
   else if (STR_CMP_TWO(input, "5", "examine"))
   {
