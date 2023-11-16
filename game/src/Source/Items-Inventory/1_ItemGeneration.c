@@ -350,7 +350,6 @@ void found_loot_chest()
     else if (strcmp(input, "2") == 0 || strcmp(input, "leave") == 0 || strcmp(input, "Leave") == 0)
     {
         printf("You decided to leave the chest alone.\n");
-        return 0;
     }
     else
     {
@@ -380,24 +379,31 @@ void generate_loot_chest_contents()
 }
 //==========================================================================================//
 // this function shows the player the contents of the chest and asks them if they want to pick up the item or leave it behind
-void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
+void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int itemHealthAdded, int itemDamageAdded, int itemWeight, int itemValue)
 {
+
+    int newAbility1DMG = hero.Ability1.Damage + itemDamageAdded;
+    int newAbility2DMG = hero.Ability2.Damage + itemDamageAdded;
+    int newAbility3DMG = hero.Ability3.Damage + itemDamageAdded;
+
+    int newHealth = hero.Health + itemHealthAdded;
+
     printf("You've found:" BOLD_UNDERLINE " %s" RESET "!\n", itemName);
     printf("Description: %s \n", itemDesc);
     if (strcmp(itemType, "Head") == 0 || strcmp(itemType, "Chest") == 0 || strcmp(itemType, "Legs") == 0)
     {
         printf("Type:" BOLD_UNDERLINE "%s Armor" RESET "\n", itemType);
         printf("Rarity: " BOLD_UNDERLINE "%s" RESET "\n", itemRarity);
-        printf("Health Points Added: " GREEN "%d. " RESET "If equipped your new health would be " GREEN "%d." RESET "\n", itemHealthAdded, itemHealthAdded + hero.Health);
+        printf("Health Points Added: " GREEN "%d. " RESET "If equipped your new health would be " GREEN "%d." RESET "\n", itemHealthAdded, newHealth);
     }
     else if (strcmp(itemType, "Weapon") == 0)
     {
         printf("Type:" BOLD_UNDERLINE "%s" RESET "\n", itemType);
         printf("Rarity:" BOLD_UNDERLINE "%s" RESET "\n", itemRarity);
         printf("Damage Points Added:" GREEN "%d." RESET "\n", itemDamageAdded);
-        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability1.Name, itemDamageAdded + hero.Ability1.Damage);
-        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability2.Name, itemDamageAdded + hero.Ability2.Damage);
-        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability3.Name, itemDamageAdded + hero.Ability3.Damage);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability1.Name, newAbility1DMG);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability2.Name, newAbility2DMG);
+        printf("%s damage Increase if equipped: " GREEN "%d." RESET "\n", hero.Ability3.Name, newAbility3DMG);
     }
     else if (strcmp(itemType, "Consumable") == 0)
     {
@@ -414,7 +420,7 @@ void show_loot_chest_contents(char *itemName, char *itemDesc, char *itemType, ch
 
 //==========================================================================================//
 // asks the player if they want to pick up the item or leave it behind
-void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int *itemHealthAdded, int *itemDamageAdded, int *itemWeight, int *itemValue)
+void ask_to_pick_up(char *itemName, char *itemDesc, char *itemType, char *itemRarity, int itemHealthAdded, int itemDamageAdded, int itemWeight, int itemValue)
 {
     char input[10];
     printf("Would you like to pick up %s?(y/n)\n", itemName);
