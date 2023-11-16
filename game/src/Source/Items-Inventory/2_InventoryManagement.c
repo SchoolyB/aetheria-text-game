@@ -11,6 +11,8 @@ char possibleInventoryOptions[10][20] = {
     "4.Use",
     "5.Examine",
     "6.Exit"};
+//============================================================================================================//
+// shows the inventory options menu
 void inventory_options()
 {
   printf("What would you like to do?\n");
@@ -35,7 +37,6 @@ void inventory_options()
   else if (STR_CMP_TWO(input, "4", "use"))
   {
     use_consumable();
-    puts("You chose the use option.");
   }
   else if (STR_CMP_TWO(input, "5", "examine"))
   {
@@ -56,6 +57,8 @@ void inventory_options()
 }
 
 //============================================================================================================//
+// used in the event that the user wants to unequip an item and put it into an open inventory slot
+// also handles logic for if the user has no open inventory slots
 void selected_to_unequip()
 {
 
@@ -1387,8 +1390,7 @@ void show_item_information(char *itemName, char *itemDesc, char *itemType, int i
   return;
 }
 //============================================================================================================//
-// this function handles consumables
-
+// this function handles consumables when not in combat
 void use_consumable()
 {
   char input[10];

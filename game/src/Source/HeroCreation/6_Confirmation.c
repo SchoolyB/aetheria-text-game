@@ -4,6 +4,7 @@
 #include "../../Utils/Utils.h"
 
 void confirm_hero_creation_and_stats()
+// Takes care of all the logic for confirming the hero creation and stats
 {
   clear_and_print_step("Confirmation", 8, 8);
   char confirmation[10];
@@ -105,8 +106,8 @@ void confirm_hero_creation_and_stats()
     change_specific_creation_item();
   }
 }
-//=================================================================================================//
 // ===========================================================================================================//
+// logs the creation data to the creation.log file
 void log_creation_data_to_file()
 {
   // !IMPORTANT the path of the log file is accessed from where the executable is located
@@ -127,8 +128,8 @@ void log_creation_data_to_file()
   show_creation_data(logFile, "+===========================+", NULL);
   fclose(logFile);
 }
-//=================================================================================================//
-// ===========================================================================================================//
+// ===========================================================================================================//\
+//just a helper function used in the log_creation_data_to_file() function above
 void show_creation_data(FILE *logFile, const char *category, const char *value)
 {
   fprintf(logFile, "%s: %s\n", category, value);

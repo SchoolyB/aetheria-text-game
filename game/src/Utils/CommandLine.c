@@ -104,9 +104,12 @@ int COMMAND_LINE(FILE *logFile)
       FGETS(input);
       REMOVE_NEWLINE_CHAR(input);
       if (INPUT_IS_YES(input))
-      { // TODO need to find out why path is read but not execute
-        printf("Restarting...\n");
-        if (execv("Aetheria.exe", NULL) == -1)
+      {
+        system("clear");
+        PRINT_SLOWLY("Restarting...\n", 60000);
+        sleep(1);
+        system("clear");
+        if (execv("../game/Aetheria.exe", NULL) == -1)
         {
           perror("execv failed due to no such file or directory");
           log_error("execv failed due to no such file or directory", "COMMAND_LINE", "exit");
@@ -289,7 +292,7 @@ int COMMAND_LINE(FILE *logFile)
           {
             attron(A_REVERSE); // Highlight the selected option
           }
-          mvprintw(i, 0, possibleOrigins[i]);
+          mvprintw(i, 0, "%s", possibleOrigins[i]);
           attroff(A_REVERSE);
         }
 
@@ -315,23 +318,23 @@ int COMMAND_LINE(FILE *logFile)
           // Handle the selected option here
           if (selected_option == 0)
           {
-            READ_FULL_TXT_FILE("./Lore/Countries/Empyrea.txt");
+            READ_FULL_TXT_FILE("../game/src/Lore/Countries/Empyrea.txt");
           }
           else if (selected_option == 1)
           {
-            READ_FULL_TXT_FILE("./Lore/Countries/Wesward.txt");
+            READ_FULL_TXT_FILE("../game/src/Lore/Countries/Wesward.txt");
           }
           else if (selected_option == 2)
           {
-            READ_FULL_TXT_FILE("./Lore/Countries/Magdalar.txt");
+            READ_FULL_TXT_FILE("../game/src/Lore/Countries/Magdalar.txt");
           }
           else if (selected_option == 3)
           {
-            READ_FULL_TXT_FILE("./Lore/Countries/Ashvadan.txt");
+            READ_FULL_TXT_FILE("../game/src/Lore/Countries/Ashvadan.txt");
           }
           else if (selected_option == 4)
           {
-            READ_FULL_TXT_FILE("./Lore/Countries/Nadafia.txt");
+            READ_FULL_TXT_FILE("../game/src/Lore/Countries/Nadafia.txt");
           }
           else if (selected_option == 5)
           {

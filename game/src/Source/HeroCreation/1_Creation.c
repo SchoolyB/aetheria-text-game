@@ -17,7 +17,6 @@ void get_first_name()
   logMessage(logFile, "Hero creation initiated.");
 
   print_step("Hero Creation", 1, 8);
-  // clear_and_print_step("Hero Creation", 1, 8);
   printf("Enter your first name: ");
   FGETS(input);
   REMOVE_NEWLINE_CHAR(input);
