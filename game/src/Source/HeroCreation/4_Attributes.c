@@ -246,7 +246,7 @@ int set_attributes()
   else
   {
     perror("Invalid ability type\n");
-    logMessage("Invalid ability type", "set_attributes()");
+    log_error("Invalid ability type", "set_attributes()", "return");
   }
   // TODO need to find a bette rplace for these...this is stupid and ugly
   calculate_new_hero_health(&hero.Health);
